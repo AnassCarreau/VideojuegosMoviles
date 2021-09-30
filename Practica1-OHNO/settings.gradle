@@ -1,0 +1,2 @@
+rootProject.name = "OHNO-Practica1"
+include ':app'
