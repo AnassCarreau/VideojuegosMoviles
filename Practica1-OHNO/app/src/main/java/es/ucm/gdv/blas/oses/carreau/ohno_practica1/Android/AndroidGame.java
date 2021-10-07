@@ -8,11 +8,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Android.AndroidFastRenderView;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Android.AndroidGraphics;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Graphics;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Input;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Game;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
 
 public abstract class AndroidGame extends Activity implements Game {

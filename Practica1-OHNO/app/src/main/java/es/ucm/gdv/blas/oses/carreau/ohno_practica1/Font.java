@@ -37,7 +37,7 @@ public class Font extends AppCompatActivity {
             paint.getTextBounds(text, 0, text.length(), bounds);
             canvas.drawText(text, canvas.getWidth() - bounds.width(), 140,
                     paint);
-            invalidate().;
+            invalidate();
         }
     }
 

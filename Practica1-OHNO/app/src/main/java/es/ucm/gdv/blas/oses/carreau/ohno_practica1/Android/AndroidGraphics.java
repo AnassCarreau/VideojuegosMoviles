@@ -12,9 +12,8 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Android.AndroidPixmap;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Graphics;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Pixmap;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Image;
 public class AndroidGraphics implements Graphics {
     AssetManager assets;
     Bitmap frameBuffer;
@@ -30,14 +29,8 @@ public class AndroidGraphics implements Graphics {
         this.paint = new Paint();
     }
 
-    public Pixmap newPixmap(String fileName, PixmapFormat format) {
+    public Image newImage(String fileName, PixmapFormat format) {
         Config config = null;
-        if (format == PixmapFormat.RGB565)
-            config = Config.RGB_565;
-        else if (format == PixmapFormat.ARGB4444)
-            config = Config.ARGB_4444;
-        else
-            config = Config.ARGB_8888;
         Options options = new Options();
         options.inPreferredConfig = config;
         InputStream in = null;
@@ -59,12 +52,7 @@ public class AndroidGraphics implements Graphics {
                 }
             }
         }
-        if (bitmap.getConfig() == Config.RGB_565)
-            format = PixmapFormat.RGB565;
-        else if (bitmap.getConfig() == Config.ARGB_4444)
-            format = PixmapFormat.ARGB4444;
-        else
-            format = PixmapFormat.ARGB8888;
+
         return new AndroidPixmap(bitmap, format);
     }
 

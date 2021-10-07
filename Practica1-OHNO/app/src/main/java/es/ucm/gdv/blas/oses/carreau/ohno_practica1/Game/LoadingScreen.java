@@ -1,10 +1,9 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game;
 
 
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Game;
 //import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Graphics;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Graphics;
-import MainMenuScreen;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
 //import es.ucm.gdv.blas.oses.carreau.ohno_practica1.PixmapFormat;
 public class LoadingScreen extends Screen {

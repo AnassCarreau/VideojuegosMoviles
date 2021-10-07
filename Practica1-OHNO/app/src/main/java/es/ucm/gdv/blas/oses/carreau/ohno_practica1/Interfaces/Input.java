@@ -1,4 +1,8 @@
-package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
+package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces;
+
+import android.view.View.OnTouchListener;
+
+
 
 import java.util.List;
 public interface Input {

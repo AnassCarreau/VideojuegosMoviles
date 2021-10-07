@@ -1,9 +1,10 @@
-package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
+package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces;
+
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Font;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Image;
 
 public interface Graphics {
-    public static enum PixmapFormat {
-        ARGB8888, ARGB4444, RGB565
-    }
+
 
     int width = 0;
     int height = 0;
@@ -11,8 +12,6 @@ public interface Graphics {
     //canvas* canvas;
     Image newImage(string name);
     public Font newFont(string filename, int size, boolean isBold);
-    public Pixmap newPixmap(String fileName, PixmapFormat format);
-
 
     public void drawPixel(int x, int y, int color);
 
@@ -20,7 +19,7 @@ public interface Graphics {
 
     public void drawRect(int x, int y, int width, int height, int color);
 
-    public void drawPixmap(Pixmap pixmap, int x, int y, int srcX, int srcY,
+    public void drawImage(Image pixmap, int x, int y, int srcX, int srcY,
                            int srcWidth, int srcHeight);
 
     public void drawPixmap(Pixmap pixmap, int x, int y);

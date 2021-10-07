@@ -1,12 +1,14 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game;
 import java.util.List;
+
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Assets;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Game;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.InputClasses.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
 
-public class MainMenuScreen extends Screen {
-    public MainMenuScreen(Game game) {
+public class GameScreen extends Screen {
+    public GameScreen(Game game) {
         super(game);
     }
 
@@ -19,10 +21,17 @@ public class MainMenuScreen extends Screen {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
                 if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
-                    game.setScreen(new GameScreen(game));
+                    //CLose
+                    return;
+                } else if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
+                    //history
+                    return;
+                } else if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
+                    //eye
                     return;
                 }
             }
+
         }
     }
 
@@ -36,11 +45,13 @@ public class MainMenuScreen extends Screen {
 
     public void present(float deltaTime) {
         Graphics g = game.getGraphics();
-      //  g.clear(0);
+        //  g.clear(0);
         //ohno texto g.drawText()
         //Jugar texto g.drawText()
         //Descripcion texto g.drawText()
-        g.drawPixmap(Assets.q42, 0, 0);
+        g.drawPixmap(Assets.close, 0, 0);
+        g.drawPixmap(Assets.history, 0, 0);
+        g.drawPixmap(Assets.eye, 0, 0);
 
     }
 }
