@@ -24,7 +24,7 @@ public interface Input {
         public int pointer;
     }
 
-    public boolean isKeyPressed(int keyCode);
+    //public boolean isKeyPressed(int keyCode);
 
     public boolean isTouchDown(int pointer);
 
@@ -32,7 +32,7 @@ public interface Input {
 
     public int getTouchY(int pointer);
 
-    public List<KeyEvent> getKeyEvents();
+    //public List<KeyEvent> getKeyEvents();
 
     public List<TouchEvent> getTouchEvents();
 }

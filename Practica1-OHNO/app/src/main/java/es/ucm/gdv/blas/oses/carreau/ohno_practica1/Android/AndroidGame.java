@@ -8,14 +8,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Game;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Input;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
 
-public abstract class AndroidGame extends Activity implements Game {
-    //   AndroidFastRenderView renderView;
-    //Graphics graphics;
+public abstract class AndroidGame extends Activity implements Engine {
+    AndroidFastRenderView renderView;
+    Graphics graphics;
     Input input;
     Screen screen;
 

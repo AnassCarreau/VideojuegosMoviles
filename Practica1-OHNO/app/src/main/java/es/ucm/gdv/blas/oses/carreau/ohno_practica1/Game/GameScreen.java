@@ -2,20 +2,20 @@ package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game;
 import java.util.List;
 
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Assets;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Game;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.InputClasses.TouchEvent;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Engine;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
 
 public class GameScreen extends Screen {
-    public GameScreen(Game game) {
+    public GameScreen(Engine game) {
         super(game);
     }
 
     public void update(float deltaTime) {
-        Graphics g = game.getGraphics();
-        List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
-        game.getInput().getKeyEvents();
+        Graphics g = engine.getGraphics();
+        List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        //engine.getInput().getKeyEvents();
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
@@ -44,14 +44,14 @@ public class GameScreen extends Screen {
     }
 
     public void present(float deltaTime) {
-        Graphics g = game.getGraphics();
+        Graphics g = engine.getGraphics();
         //  g.clear(0);
         //ohno texto g.drawText()
         //Jugar texto g.drawText()
         //Descripcion texto g.drawText()
-        g.drawPixmap(Assets.close, 0, 0);
-        g.drawPixmap(Assets.history, 0, 0);
-        g.drawPixmap(Assets.eye, 0, 0);
+        g.drawImage(Assets.close, 0, 0);
+        g.drawImage(Assets.history, 0, 0);
+        g.drawImage(Assets.eye, 0, 0);
 
     }
 }

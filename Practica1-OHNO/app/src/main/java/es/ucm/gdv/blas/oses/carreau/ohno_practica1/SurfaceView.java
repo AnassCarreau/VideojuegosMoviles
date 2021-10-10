@@ -1,5 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
-
+/*
 import java.util.Random;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
@@ -69,4 +69,4 @@ public class SurfaceView extends AppCompatActivity {
             }
         }
     }
-}
+}*/

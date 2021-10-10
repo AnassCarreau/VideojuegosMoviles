@@ -1,25 +1,27 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game;
 import java.util.List;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Game;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.InputClasses.TouchEvent;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Assets;
 
 public class MainMenuScreen extends Screen {
-    public MainMenuScreen(Game game) {
-        super(game);
+
+    public MainMenuScreen(Engine engine) {
+        super(engine);
     }
 
     public void update(float deltaTime) {
-        Graphics g = game.getGraphics();
-        List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
-        game.getInput().getKeyEvents();
+        Graphics g = engine.getGraphics();
+        List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        //engine.getInput().getKeyEvents();
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
                 if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
-                    game.setScreen(new GameScreen(game));
+                    engine.setScreen(new GameScreen(engine));
                     return;
                 }
             }
@@ -35,12 +37,12 @@ public class MainMenuScreen extends Screen {
     }
 
     public void present(float deltaTime) {
-        Graphics g = game.getGraphics();
+        Graphics g = engine.getGraphics();
       //  g.clear(0);
         //ohno texto g.drawText()
         //Jugar texto g.drawText()
         //Descripcion texto g.drawText()
-        g.drawPixmap(Assets.q42, 0, 0);
+        g.drawImage(Assets.q42, 0, 0);
 
     }
 }

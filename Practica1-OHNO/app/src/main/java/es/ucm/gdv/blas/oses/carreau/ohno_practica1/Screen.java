@@ -1,12 +1,12 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
 
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Game;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Engine;
 
 public abstract class Screen {
-    protected final Game game;
+    protected final Engine engine;
 
-    public Screen(Game game) {
-        this.game = game;
+    public Screen(Engine engine) {
+        this.engine = engine;
     }
 
     public abstract void update(float deltaTime);

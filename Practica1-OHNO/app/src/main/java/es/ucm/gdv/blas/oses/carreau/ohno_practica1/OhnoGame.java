@@ -9,31 +9,45 @@ import android.widget.Button;
 
 
 //Imports del juego
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Android.AndroidGame;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game.MainMenuScreen;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.FileIO;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
-//import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Android.AndroidGame;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Game.LoadingScreen;
 
 
-public class OhnoGame extends AppCompatActivity implements View.OnClickListener {
-/*
+public class OhnoGame extends AndroidGame {
+
+
+    //Button button;
+    int touchCount;
+    Screen screen;
+
+    public FileIO getFileIO() {
+        return null;
+    }
+
+    public void setScreen(Screen screen) {
+
+    }
+
     public Screen getStartScreen() {
         return new LoadingScreen(this);
     }
-}*/
-    Button button;
-    int touchCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        button = new Button(this);
-        button.setText("Touch me!");
-        button.setOnClickListener(this);
-        setContentView(button);
+        //button = new Button(this);
+        //screen = getStartScreen();
+        //button.setText("Touch me!");
+        //button.setOnClickListener(this);
+        //setContentView(button);
     }
 
     public void onClick(View v) {
         touchCount++;
-        button.setText("Touched me " + touchCount + " time(s)");
+        //button.setText("Touched me " + touchCount + " time(s)");
     }
 
     String mystring;

@@ -1,5 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
-class RenderView extends View {
+/*class RenderView extends View {
     public RenderView(Context context) {
         super(context);
     }
@@ -8,4 +8,4 @@ class RenderView extends View {
         // to be implemented
         invalidate();
     }
-}
+}*/

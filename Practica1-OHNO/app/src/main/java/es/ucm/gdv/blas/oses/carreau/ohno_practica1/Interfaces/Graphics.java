@@ -10,8 +10,8 @@ public interface Graphics {
     int height = 0;
 
     //canvas* canvas;
-    Image newImage(string name);
-    public Font newFont(string filename, int size, boolean isBold);
+    Image newImage(String name);
+    public Font newFont(String filename, int size, boolean isBold);
 
     public void drawPixel(int x, int y, int color);
 
@@ -19,10 +19,10 @@ public interface Graphics {
 
     public void drawRect(int x, int y, int width, int height, int color);
 
-    public void drawImage(Image pixmap, int x, int y, int srcX, int srcY,
+    public void drawImage(Image img, int x, int y, int srcX, int srcY,
                            int srcWidth, int srcHeight);
 
-    public void drawPixmap(Pixmap pixmap, int x, int y);
+    //public void drawPixmap(Pixmap pixmap, int x, int y);
 
     public int getWidth();
 
@@ -35,20 +35,21 @@ public interface Graphics {
     //practica
     public void clear(int color);
 
-    public void translate(int x, int y);
+    public void translate(float x, float y);
 
-    public void scale(int x, int y);
+    public void scale(float x, float y);
 
-    public bool save();
+    public int save();
 
     public void restore();
 
-    void drawImage(Image image, int x);
+    void drawImage(Image image, int x, int y);
 
-    //public void setColor( color);
-    public void fillCircle(int cx, int cy, int r);
+    public void setColor(int color);
 
-    public void drawText(string text, int x, int y);
+    public void fillCircle(float cx, float cy, int r);
+
+    public void drawText(String text, int x, int y);
     /*{
         int len = line.length();
         for (int i = 0; i < len; i++) {
@@ -68,7 +69,4 @@ public interface Graphics {
             }
             x += srcWidth;
         }*/
-    };
-
-
-}
+};

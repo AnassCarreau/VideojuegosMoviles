@@ -2,7 +2,7 @@ package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces;
 
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Screen;
 
-public interface Game {
+public interface Engine {
     public Input getInput();
 
     public FileIO getFileIO();
