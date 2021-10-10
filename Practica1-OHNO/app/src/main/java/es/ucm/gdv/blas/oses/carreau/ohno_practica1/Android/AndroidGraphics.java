@@ -108,7 +108,8 @@ public class AndroidGraphics implements Graphics {
         InputStream in = null;
         Bitmap bitmap = null;
         try {
-            in = assets.open(name);
+            assets.open(name);
+            in=assets.open(name);
             bitmap = BitmapFactory.decodeStream(in);
             if (bitmap == null)
                 throw new RuntimeException("Couldn't load bitmap from asset '"

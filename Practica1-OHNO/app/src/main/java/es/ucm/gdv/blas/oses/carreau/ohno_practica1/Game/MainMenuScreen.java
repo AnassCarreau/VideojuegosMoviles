@@ -45,5 +45,20 @@ public class MainMenuScreen extends Screen {
         g.drawImage(Assets.q42, 0, 0);
 
     }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }
 

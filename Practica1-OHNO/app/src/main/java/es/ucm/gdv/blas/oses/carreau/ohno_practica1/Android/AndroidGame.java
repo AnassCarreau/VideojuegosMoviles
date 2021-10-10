@@ -55,7 +55,7 @@ public abstract class AndroidGame extends Activity implements Engine {
         return screen;
     }
 
-   /* @Override
+     @Override
     public void onResume() {
         super.onResume();
         screen.resume();
@@ -70,5 +70,5 @@ public abstract class AndroidGame extends Activity implements Engine {
         if (isFinishing()) {
             screen.dispose();
         }
-    }*/
+    }
 }

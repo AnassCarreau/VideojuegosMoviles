@@ -12,6 +12,13 @@ public class GameScreen extends Screen {
         super(game);
     }
 
+
+    enum GameState {
+        Ready,
+        Running,
+        Paused,
+        GameOver
+    }
     public void update(float deltaTime) {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
@@ -52,6 +59,21 @@ public class GameScreen extends Screen {
         g.drawImage(Assets.close, 0, 0);
         g.drawImage(Assets.history, 0, 0);
         g.drawImage(Assets.eye, 0, 0);
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
 
     }
 }

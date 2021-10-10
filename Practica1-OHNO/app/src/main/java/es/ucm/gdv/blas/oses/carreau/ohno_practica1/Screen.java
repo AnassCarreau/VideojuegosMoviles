@@ -13,8 +13,8 @@ public abstract class Screen {
 
     public abstract void present(float deltaTime);
 
-   // public abstract void pause();
+    public abstract void pause();
 
-  //  public abstract void resume();
-    //public abstract void dispose();
+    public abstract void resume();
+    public abstract void dispose();
 }
