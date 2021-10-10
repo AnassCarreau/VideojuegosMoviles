@@ -11,17 +11,9 @@ import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Assets;
 public class LoadingScreen extends Screen {
     public LoadingScreen(Engine engine) {
         super(engine);
-        Graphics g = engine.getGraphics();
-        Assets.q42 = g.newImage("q42.png");
-        Assets.lock = g.newImage("lock.png");
-        Assets.history = g.newImage("history.png");
-        Assets.eye = g.newImage("eye.png");
-        Assets.close = g.newImage("close.png");
-        engine.setScreen(new MainMenuScreen(engine));
     }
 
     public void update(float deltaTime) {
-        System.out.println("Eres un folla cabras\n");
         Graphics g = engine.getGraphics();
         Assets.q42 = g.newImage("q42.png");
         Assets.lock = g.newImage("lock.png");
