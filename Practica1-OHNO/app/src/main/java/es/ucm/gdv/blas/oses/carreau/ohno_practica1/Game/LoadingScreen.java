@@ -14,9 +14,8 @@ import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Assets;
 public class LoadingScreen extends Screen {
     public LoadingScreen(Engine engine) {
         super(engine);
-
     }
-
+    @Override
     public void update(float deltaTime) {
         Graphics g = engine.getGraphics();
         Assets.q42 = g.newImage("q42.png");
@@ -26,8 +25,9 @@ public class LoadingScreen extends Screen {
         Assets.close = g.newImage("close.png");
         engine.setScreen(new MainMenuScreen(engine));
     }
-
+    @Override
     public void present(float deltaTime) {
+
     }
 
     @Override

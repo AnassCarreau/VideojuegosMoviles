@@ -48,11 +48,8 @@ public abstract class AndroidGame extends AppCompatActivity implements Engine, R
                 / getWindowManager().getDefaultDisplay().getHeight();
         renderView = new AndroidFastRenderView(this, frameBuffer);
         graphics = new AndroidGraphics( getAssets(), frameBuffer);
-        //input = new AndroidInput(this, renderView, scaleX, scaleY);
+        input = new AndroidInput(this, renderView, scaleX, scaleY);
         screen = getStartScreen();
-
-        //Image im =  graphics.newImage("q42.png");
-        //graphics.drawImage(im,100,200);
         setContentView(renderView);
     }
 
@@ -72,19 +69,29 @@ public abstract class AndroidGame extends AppCompatActivity implements Engine, R
     public void onResume() {
         super.onResume();
         screen.resume();
-        //renderView.resume();
+        renderView.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //renderView.pause();
+        renderView.pause();
         screen.pause();
-        if (isFinishing()) {
+        if (isFinishing())
+        {
             screen.dispose();
         }
     }
 
+    public void setScreen(Screen screen) {
+        if (screen == null)
+            throw new IllegalArgumentException("Screen must not be null");
+        this.screen.pause();
+        this.screen.dispose();
+        screen.resume();
+        screen.update(0);
+        this.screen = screen;
+    }
     //TO ERASE
     Bitmap _sprite;
     int _imageWidth;

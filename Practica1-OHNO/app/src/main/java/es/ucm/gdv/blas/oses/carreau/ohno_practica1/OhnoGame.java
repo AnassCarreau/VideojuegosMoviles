@@ -27,9 +27,6 @@ public class OhnoGame extends AndroidGame {
         return null;
     }
 
-    public void setScreen(Screen screen) {
-
-    }
 
     public Screen getStartScreen() {
         return new LoadingScreen(this);
@@ -39,8 +36,8 @@ public class OhnoGame extends AndroidGame {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        hebra = new Thread(this);
-        hebra.start();
+        //hebra = new Thread(this);
+       // hebra.start();
 
 
         //button = new Button(this);
