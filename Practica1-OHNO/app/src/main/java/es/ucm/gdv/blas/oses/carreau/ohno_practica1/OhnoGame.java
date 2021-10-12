@@ -38,6 +38,11 @@ public class OhnoGame extends AndroidGame {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        hebra = new Thread(this);
+        hebra.start();
+
+
         //button = new Button(this);
         //screen = getStartScreen();
         //button.setText("Touch me!");
@@ -60,6 +65,35 @@ public class OhnoGame extends AndroidGame {
         setMyProperty(someValue);
     }
 
+    @Override
+    public void run() {
+        while(!parar){
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        parar = true;
+        hebra = new Thread(this);
+        hebra.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        parar = false;
+        while (true) {
+            try {
+                hebra.join();
+                return;
+            } catch (InterruptedException e) {
+                // retry
+            }
+        }
+    }
+
 
     /*createWindowAndUIComponent(); Input input = new Input();
     Graphics graphics = new Graphics(); Audio audio = new Audio();
@@ -72,4 +106,10 @@ while( !userQuit() ) {
     }
     cleanupResources();*/
 
+    //TO DO: revisar
+    Thread hebra;
+
+    //Para avisar al compilador que el valor de este atributo
+    //puede ser cambiado en una hebra
+    volatile boolean parar = false;
 }

@@ -1,8 +1,9 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Android;
 import android.graphics.Bitmap;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Image;
+import android.view.View;
 
-public class AndroidImage implements Image {
+public class AndroidImage implements Image{
     Bitmap bitmap;
     //PixmapFormat format;
 

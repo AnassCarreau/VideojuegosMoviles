@@ -19,7 +19,7 @@ public class LoadingScreen extends Screen {
 
     public void update(float deltaTime) {
         Graphics g = engine.getGraphics();
-        Assets.q42 = g.newImage("Practica1-OHNO/app/src/main/res/drawable/q42.png");
+        Assets.q42 = g.newImage("q42.png");
         Assets.lock = g.newImage("lock.png");
         Assets.history = g.newImage("history.png");
         Assets.eye = g.newImage("eye.png");

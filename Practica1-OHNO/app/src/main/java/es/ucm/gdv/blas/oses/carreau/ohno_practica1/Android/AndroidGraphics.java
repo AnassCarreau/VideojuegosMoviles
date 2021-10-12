@@ -2,6 +2,8 @@ package es.ucm.gdv.blas.oses.carreau.ohno_practica1.Android;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -15,6 +17,7 @@ import android.graphics.Rect;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Font;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Image;
+import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Interfaces.Input;
 
 public class AndroidGraphics implements Graphics {
     AssetManager assets;
@@ -24,7 +27,7 @@ public class AndroidGraphics implements Graphics {
     Rect srcRect = new Rect();
     Rect dstRect = new Rect();
 
-    public AndroidGraphics(AssetManager assets, Bitmap frameBuffer) {
+    public AndroidGraphics(AssetManager assets ,Bitmap frameBuffer) {
         this.assets = assets;
         this.frameBuffer = frameBuffer;
         this.canvas = new Canvas(frameBuffer);
@@ -105,11 +108,12 @@ public class AndroidGraphics implements Graphics {
         Config config = null;
         Options options = new Options();
         options.inPreferredConfig = config;
-        InputStream in = null;
         Bitmap bitmap = null;
-        try {
-            assets.open(name);
-            in=assets.open(name);
+        InputStream in = null;
+
+        //Java 1.7
+        try{
+            in = assets.open(name);
             bitmap = BitmapFactory.decodeStream(in);
             if (bitmap == null)
                 throw new RuntimeException("Couldn't load bitmap from asset '"

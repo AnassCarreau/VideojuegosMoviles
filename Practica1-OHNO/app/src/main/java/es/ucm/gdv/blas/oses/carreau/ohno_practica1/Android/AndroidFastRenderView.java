@@ -43,7 +43,12 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
             holder.unlockCanvasAndPost(canvas);
         }
     }
+    @Override
+    public void onDraw(Canvas c){
+        c.drawColor(0xFF0000FF); //RGBA
 
+        invalidate(); //Metodo heredado de view para forzar el repintado
+    }
     public void pause() {
         running = false;
         while (true) {
