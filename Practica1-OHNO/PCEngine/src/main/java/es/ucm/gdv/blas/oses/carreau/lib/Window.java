@@ -1,5 +1,4 @@
-//package es.;
-
+package es.ucm.gdv.blas.oses.carreau.lib;
 import javax.swing.JFrame;
 
 public class Window extends JFrame {

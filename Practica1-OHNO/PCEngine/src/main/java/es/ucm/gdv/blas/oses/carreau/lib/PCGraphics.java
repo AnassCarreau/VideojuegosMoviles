@@ -1,24 +1,18 @@
-package es.ucm.gdv.blasosescarreau.pcengine;
+package es.ucm.gdv.blas.oses.carreau.lib;
 
 //TO DO: SON INTERFACES, cambiarlos cuando esten por la implementacion de la plataforma
+import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 import  es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 import  es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 
 
-
-
-import java.lang.*;
-import java.util.*;
-import java.util.List;
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
-
 public class PCGraphics implements Graphics {
 
-    Window window;
+    es.ucm.gdv.blas.oses.carreau.lib.Window window;
     java.awt.image.BufferStrategy strategy;
 
 
@@ -53,6 +47,17 @@ public class PCGraphics implements Graphics {
     //TO DO: mirar la putisima font :D
     @Override
     public Font newFont(String filename, int size, boolean isBold) {
+        // Cargamos la fuente del fichero .ttf.
+        java.awt.Font baseFont;
+        try (InputStream is = new FileInputStream("Bangers-Regular.ttf")) {
+            baseFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, is);
+            return new PCFont(baseFont, size);
+        }
+        catch (Exception e) {
+            // Ouch. No está.
+            System.err.println("Error cargando la fuente: " + e);
+            return null;
+        }
 
     }
 
@@ -114,7 +119,7 @@ public class PCGraphics implements Graphics {
 
     @Override
     public int save() {
-
+        return 0; //TO DO : IMPLEMENTAR
     }
 
     @Override

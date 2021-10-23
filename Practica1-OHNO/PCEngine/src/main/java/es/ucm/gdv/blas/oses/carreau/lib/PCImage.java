@@ -1,9 +1,9 @@
-package es.ucm.gdv.blasosescarreau.pcengine;
+package es.ucm.gdv.blas.oses.carreau.lib;
 
-public class PCImage implements es.ucm.gdv.blasosescarreau.engine.Image {
+public class PCImage implements es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image {
     java.awt.Image _image;
 
-    public Image(java.awt.Image img){
+    public PCImage(java.awt.Image img){
         _image = img;
     }
 
