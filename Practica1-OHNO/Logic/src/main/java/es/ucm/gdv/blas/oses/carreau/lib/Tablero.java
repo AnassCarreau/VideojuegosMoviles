@@ -57,6 +57,9 @@ public class Tablero {
 
     }
 
+    /**
+     * Metodo que dibuja el tablero actual en la consola
+     */
     public void drawConsole(){
         for(int i = 0; i < _tablero.length; i++){
 
@@ -79,12 +82,14 @@ public class Tablero {
         }
     }
 
-    public void update(){
-        System.out.println("Celda actual, x:" + _posX + " y: " + _posY);
-
-        System.console().readLine();
-    }
-
+    /**
+     * @param x, fila del tablero correspondiente a la casilla que
+     *           queramos comprobar si esta dentro de los limites del tablero
+     * @param y, columna del tablero correspondiente a la casilla que
+     *           queramos comprobar si esta dentro de los limites del tablero
+     *
+     * Metodo que comprueba si la posicion x,y se encuentra en el tablero
+     */
     private boolean posCorrecta(int x, int y){
         return (x >= 0 && x < _tablero.length) && (y >= 0 && y < _tablero.length);
     }
@@ -111,7 +116,6 @@ public class Tablero {
                 auxY += _dirs.get(i).getRight();
             }
         }
-
         return visibles;
     }
 
@@ -122,8 +126,10 @@ public class Tablero {
         }
     }
 
+    /**
+     * Metodo que comprueba si la situacion actual del tablero corresponde a una solucion
+     */
     public boolean tableroResuelto(){
-        System.out.println("Tablero resuelto");
         int i = 0;
         while( i < _azulesFijas.size()){
             Pair p = _azulesFijas.get(i);
@@ -135,9 +141,11 @@ public class Tablero {
 
         return true;
     }
-
+    /**
+     * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
+     * casillas que ven las celdas azules predefinidas utilizando el metodo de compruebaAdyacentes()
+     */
     public boolean cambiaCelda(){
-        System.out.println("Cambia celda");
         if (_tablero[_posX][_posY].isModifiable()){
             //EstadoCelda sig = EstadoCelda.values()[(_tablero[_posX][_posY].getEstado().ordinal() + 1) % EstadoCelda.Default.ordinal()];
             EstadoCelda sig = EstadoCelda.Vacia;
