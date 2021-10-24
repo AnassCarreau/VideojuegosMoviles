@@ -9,7 +9,7 @@ import  es.ucm.gdv.blas.oses.carreau.lib.Celda;
 
 public class Pistas {
     public enum tipoPista{
-        VisionCompleta, SobreVision, PonerAzul, FaltaVision, Encerrada
+        VisionCompleta, SobreVision, PonerAzul, FaltaVision, Encerrada, VaciaIncomunicada, ErrorUsuario
     }
 
     private List<Pair<tipoPista, Pair<Integer, Integer>>> listaPistas;
@@ -41,6 +41,10 @@ public class Pistas {
                 return "La vision de la casilla " + pos.getLeft() + " " + pos.getRight() + " es demasiado alta.";
             case Encerrada:
                 return "La casilla " + pos.getLeft() + " " + pos.getRight() + " esta encerrada, ¿que color tienes que poner?";
+            case VaciaIncomunicada:
+                return "La casilla " + pos.getLeft() + " " + pos.getRight() + " esta vacia y no ve a ninguna azul por lo que es pared";
+            case ErrorUsuario:
+                return "La casilla " + pos.getLeft() + " " + pos.getRight() + " no debería ser de este color";
         }
         return "" ;
     }

@@ -22,6 +22,10 @@ public class main {
         System.out.println("Resolvemos");
         System.out.println(t.damePistaAleatoria());
 
+        t.setPos(0,0);
+        t.drawConsole();
+        System.out.println(t.damePistaAleatoria());
+
         t.setPos(0,2);
         t.cambiaCelda();
         t.drawConsole();

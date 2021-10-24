@@ -23,13 +23,14 @@ public class Tablero {
 
 
         //Inicializacion tablero
+        //Creamos paredes artificiales para facilitar la comprobacion sobre las pistas
         _tablero = new Celda[N][N];
 
         //Inicializar lista fijas azules
         _azulesFijas = new ArrayList<>();
 
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
+        for(int i = 0; i < _tablero.length; i++){
+            for(int j = 0; j < _tablero.length; j++){
                 _tablero[i][j] = new Celda();
             }
         }
@@ -42,6 +43,9 @@ public class Tablero {
         _tablero[0][1].setModificable(false);
         _tablero[1][0].setEstado(EstadoCelda.Rojo);
         _tablero[1][0].setModificable(false);
+        /*
+        _tablero[1][1].setEstado(EstadoCelda.Rojo);
+        _tablero[1][1].setModificable(false);*/
 
         _tablero[1][2].setEstado(EstadoCelda.Azul);
         _tablero[1][2].setModificable(false);
@@ -153,9 +157,9 @@ public class Tablero {
     public void compruebaPistas(){
         for(int i = 0; i < _tablero.length; i++){
             for(int j = 0; j < _tablero.length; j++){
+
                 //¿Encerrada? una celda vacia o azul y que es modificable
-                if((_tablero[i][j].getEstado() == EstadoCelda.Vacia || _tablero[i][j].getEstado() == EstadoCelda.Azul)
-                    && _tablero[i][j].isModifiable()){
+                if( _tablero[i][j].getEstado() == EstadoCelda.Azul && _tablero[i][j].isModifiable()){
                     //Comprobamos si esta encerrada
                     boolean encerrada = true;
                     for(int h = 0; h < _dirs.size() && encerrada; h++){
@@ -168,11 +172,25 @@ public class Tablero {
                     }
                     if(encerrada) pistas.addPista(Pistas.tipoPista.Encerrada, i, j);
                 }
+
                 //si es una celda azul no modificable pueden ser tres pistas o que se pase de vision
                 //o que aun no llegue a la vision o que ya haya llegado y tengas que cerrar
                 else if(_tablero[i][j].getEstado() == EstadoCelda.Azul && !_tablero[i][j].isModifiable()){
                     _tablero[i][j].setCurrentVisibles((compruebaAdyacentes(i, j)));
                     int numVis = _tablero[i][j].getCurrentVisibles();
+
+                    //Comprobamos cual es el numero maximo de casillas que se pueden ver en cada una de
+                    //las posibles direcciones
+                    int [] maxAzulesPosibles = new int [_dirs.size()];
+
+                    for(int k = 0; k < maxAzulesPosibles.length; k++){
+                        maxAzulesPosibles[k] = calculaMaxDir(i,j, _dirs.get(k));
+                    }
+
+                    //Habria que hacer calculos para ver en donde se podria colocar una casilla en concreto
+
+
+
                     if(numVis > _tablero[i][j].getValorDefault()){
                         pistas.addPista(Pistas.tipoPista.SobreVision, i, j);
                     }
@@ -180,6 +198,17 @@ public class Tablero {
                         pistas.addPista(Pistas.tipoPista.FaltaVision, i, j);
                     }
                     else pistas.addPista(Pistas.tipoPista.VisionCompleta, i, j);
+                }
+
+                //Si hay una casilla vacía, cerrada, y no ve a ninguna azul, es roja
+                else if ( _tablero[i][j].getEstado() == EstadoCelda.Vacia && casillaCerrada(i,j)){
+                    pistas.addPista(Pistas.tipoPista.VaciaIncomunicada, i,j);
+                }
+
+                //TO DO: REVISAR, punto 7 de las pistas del enunciado :D
+                if(_tablero[i][j].isModifiable() && _tablero[i][j].getCurrentVisibles() == 0 &&
+                        _tablero[i][j].getEstado() == EstadoCelda.Azul && casillaCerrada(i,j)){
+                    pistas.addPista(Pistas.tipoPista.ErrorUsuario, i,j);
                 }
             }
         }
@@ -228,4 +257,50 @@ public class Tablero {
             return false;
         }
     }
+
+    /*
+    * Metodo que dada una posicion del tablero de una casilla vacia comprueba si esta
+    * debe marcarse como cerrada o no
+    *
+    * Para ello comprueba en todas las direcciones posibles si se encuentra dicha casilla encerrada
+    * sin ninguna conexion con alguna azul
+    *
+    * //TO DO: igual el bucle while no hace falta si se mantiene actualizado cuantas casillas azules ve
+    * cada casilla
+    *
+    * Este método se corresponde con la pista descrita en el punto nº6 de la practica
+    *  */
+
+    private boolean casillaCerrada(int x, int y){
+        for(int i = 0 ; i < _dirs.size(); i++){
+            int auxX  = x + _dirs.get(i).getLeft();
+            int auxY  = y + _dirs.get(i).getRight();
+
+            while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo){
+                if(_tablero[auxX][auxY].getEstado() != _tablero[x][y].getEstado()) return false;
+
+                auxX += _dirs.get(i).getLeft();
+                auxY += _dirs.get(i).getRight();
+            }
+        }
+
+        return true;
+    }
+    /*
+    * Metodo que dada la posicion en el tablero de una casilla azul y una direccion
+    * comprueba cual es el numero maximo de casillas que es posible de cambiar su valor a azul
+    * en dicha direccion sin salirse del tablero
+    * */
+    private int calculaMaxDir(int x, int y, Pair<Integer, Integer> dir){
+        int auxX = x + dir.getLeft(), auxY = y+ dir.getRight(), i = 0;
+
+        while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo){
+            auxX += dir.getLeft();
+            auxY += dir.getRight();
+            i++;
+        }
+
+        return i;
+    }
+
 }
