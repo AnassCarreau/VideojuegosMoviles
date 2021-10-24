@@ -10,6 +10,8 @@ public class Tablero {
     private List<Pair<Integer, Integer>> _dirs;
     private List<Pair<Integer, Integer>> _azulesFijas;
     private int _posX = 0, _posY = 0;
+    private Pistas pistas;
+
     public  Tablero(int N){
 
         //Inicializacion vector direcciones
@@ -31,6 +33,9 @@ public class Tablero {
                 _tablero[i][j] = new Celda();
             }
         }
+
+        //Inicializacion de las pistas
+        pistas = new Pistas();
 
         //TO DO: HACER BIEN
         _tablero[0][1].setEstado(EstadoCelda.Rojo);
@@ -55,6 +60,7 @@ public class Tablero {
         _tablero[3][3].setValorDefault(4);
         _azulesFijas.add(new Pair<Integer, Integer>(3,3));
 
+        compruebaPistas();
     }
 
     /**
@@ -109,7 +115,6 @@ public class Tablero {
         for(int i = 0; i < _dirs.size(); i++){
             int auxX = x + _dirs.get(i).getLeft();
             int auxY = y + _dirs.get(i).getRight();
-
             while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
                 visibles++;
                 auxX += _dirs.get(i).getLeft();
@@ -141,6 +146,45 @@ public class Tablero {
 
         return true;
     }
+
+    public String damePistaAleatoria(){
+        return pistas.getPistaTablero();
+    }
+    public void compruebaPistas(){
+        for(int i = 0; i < _tablero.length; i++){
+            for(int j = 0; j < _tablero.length; j++){
+                //¿Encerrada? una celda vacia o azul y que es modificable
+                if((_tablero[i][j].getEstado() == EstadoCelda.Vacia || _tablero[i][j].getEstado() == EstadoCelda.Azul)
+                    && _tablero[i][j].isModifiable()){
+                    //Comprobamos si esta encerrada
+                    boolean encerrada = true;
+                    for(int h = 0; h < _dirs.size() && encerrada; h++){
+                        int auxX = i + _dirs.get(h).getLeft();
+                        int auxY = j + _dirs.get(h).getRight();
+                        if(posCorrecta(auxX, auxY)){
+                            if(_tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo)
+                                encerrada = false;
+                        }
+                    }
+                    if(encerrada) pistas.addPista(Pistas.tipoPista.Encerrada, i, j);
+                }
+                //si es una celda azul no modificable pueden ser tres pistas o que se pase de vision
+                //o que aun no llegue a la vision o que ya haya llegado y tengas que cerrar
+                else if(_tablero[i][j].getEstado() == EstadoCelda.Azul && !_tablero[i][j].isModifiable()){
+                    _tablero[i][j].setCurrentVisibles((compruebaAdyacentes(i, j)));
+                    int numVis = _tablero[i][j].getCurrentVisibles();
+                    if(numVis > _tablero[i][j].getValorDefault()){
+                        pistas.addPista(Pistas.tipoPista.SobreVision, i, j);
+                    }
+                    else if(numVis < _tablero[i][j].getValorDefault()){
+                        pistas.addPista(Pistas.tipoPista.FaltaVision, i, j);
+                    }
+                    else pistas.addPista(Pistas.tipoPista.VisionCompleta, i, j);
+                }
+            }
+        }
+    }
+
     /**
      * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
      * casillas que ven las celdas azules predefinidas utilizando el metodo de compruebaAdyacentes()
@@ -167,7 +211,6 @@ public class Tablero {
 
             _tablero[_posX][_posY].setEstado(sig);
 
-            //TO DO: HACER COMPROBACIONES PARA ACTUALIZAR PISTAS
 
             for( int i = 0; i < _azulesFijas.size(); i++){
                 Pair p = _azulesFijas.get(i);
@@ -175,6 +218,8 @@ public class Tablero {
                 int y = (int)(p.getRight());
                 _tablero[x][y].setCurrentVisibles((compruebaAdyacentes(x, y)));
             }
+            //TO DO: HACER COMPROBACIONES PARA ACTUALIZAR PISTAS
+            compruebaPistas();
 
             return true;
         }

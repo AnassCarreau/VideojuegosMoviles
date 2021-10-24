@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 import  es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidFont;

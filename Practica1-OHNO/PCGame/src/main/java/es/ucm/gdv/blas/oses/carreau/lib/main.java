@@ -20,15 +20,22 @@ public class main {
         t.drawConsole();
 
         System.out.println("Resolvemos");
+        System.out.println(t.damePistaAleatoria());
 
         t.setPos(0,2);
         t.cambiaCelda();
+        t.drawConsole();
+        System.out.println(t.damePistaAleatoria());
 
         t.setPos(1,3);
         t.cambiaCelda();
+        t.drawConsole();
+        System.out.println(t.damePistaAleatoria());
 
         t.setPos(2,3);
         t.cambiaCelda();
+        t.drawConsole();
+        System.out.println(t.damePistaAleatoria());
 
         t.setPos(3,1);
         t.cambiaCelda();

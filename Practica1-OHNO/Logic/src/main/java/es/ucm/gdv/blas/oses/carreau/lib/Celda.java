@@ -1,5 +1,8 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Celda{
 
     public Celda(){
@@ -7,6 +10,7 @@ public class Celda{
         _modificable = true;
         _valorDefault = 0;
         _vistasAct = 0;
+        ady = new ArrayList<>();
     }
 
     public Celda(EstadoCelda est, boolean mod, int vistasDef, int vistasAct){
@@ -14,6 +18,7 @@ public class Celda{
         _modificable = mod;
         _valorDefault = vistasDef;
         _vistasAct = vistasAct;
+        ady = new ArrayList<>();
     }
 
     public EstadoCelda getEstado(){
@@ -43,10 +48,12 @@ public class Celda{
         _vistasAct = curr;
     }
 
+    public void addCeldaAdy(Celda c){ ady.add(c);}
+
     private EstadoCelda _estadoActual;
     private boolean _modificable;
     private int _valorDefault;
     private int _vistasAct;
-
+    private List<Celda> ady;
 
 }
