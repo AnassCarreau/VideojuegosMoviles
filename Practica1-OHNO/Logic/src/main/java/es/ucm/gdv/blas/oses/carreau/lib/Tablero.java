@@ -10,6 +10,7 @@ public class Tablero {
     private List<Pair<Integer, Integer>> _dirs;
     private List<Pair<Integer, Integer>> _azulesFijas;
     private int _posX = 0, _posY = 0;
+    //LISTA DE PISTAS
     private Pistas pistas;
 
     public  Tablero(int N){
@@ -35,8 +36,6 @@ public class Tablero {
             }
         }
 
-        //Inicializacion de las pistas
-        pistas = new Pistas();
 
         //TO DO: HACER BIEN
         _tablero[0][1].setEstado(EstadoCelda.Rojo);
@@ -64,7 +63,9 @@ public class Tablero {
         _tablero[3][3].setValorDefault(4);
         _azulesFijas.add(new Pair<Integer, Integer>(3,3));
 
-        compruebaPistas();
+
+        //Inicializacion de las pistas
+        pistas = compruebaPistas();
     }
 
     /**
@@ -113,19 +114,24 @@ public class Tablero {
      * Metodo que comprueba el numero de casillas visibles desde
      * la casilla correspondiente a la posicion x, y
      */
-    private int compruebaAdyacentes(int x, int y){
-
+    private Pair<Integer, Boolean> compruebaAdyacentes(int x, int y){
+        boolean encerrada = true;
         int visibles = 0;
+        int auxX = 0;
+        int auxY = 0;
         for(int i = 0; i < _dirs.size(); i++){
-            int auxX = x + _dirs.get(i).getLeft();
-            int auxY = y + _dirs.get(i).getRight();
+            auxX = x + _dirs.get(i).getLeft();
+            auxY = y + _dirs.get(i).getRight();
+
             while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
-                visibles++;
                 auxX += _dirs.get(i).getLeft();
                 auxY += _dirs.get(i).getRight();
+                visibles++;
             }
+            if(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia) encerrada =false;
         }
-        return visibles;
+
+        return new Pair<Integer, Boolean>(visibles, encerrada);
     }
 
     public void setPos(int x, int y){
@@ -154,64 +160,97 @@ public class Tablero {
     public String damePistaAleatoria(){
         return pistas.getPistaTablero();
     }
-    public void compruebaPistas(){
+    public Pistas compruebaPistas(){
+        Pistas nuevasPistas = new Pistas();
         for(int i = 0; i < _tablero.length; i++){
             for(int j = 0; j < _tablero.length; j++){
+                Celda actual = _tablero[i][j];
+                Pair<Integer, Boolean> ady = compruebaAdyacentes(i,j);
 
-                //¿Encerrada? una celda vacia o azul y que es modificable
-                if( _tablero[i][j].getEstado() == EstadoCelda.Azul && _tablero[i][j].isModifiable()){
-                    //Comprobamos si esta encerrada
-                    boolean encerrada = true;
-                    for(int h = 0; h < _dirs.size() && encerrada; h++){
-                        int auxX = i + _dirs.get(h).getLeft();
-                        int auxY = j + _dirs.get(h).getRight();
-                        if(posCorrecta(auxX, auxY)){
-                            if(_tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo)
-                                encerrada = false;
+                if(actual.getEstado() == EstadoCelda.Azul && !actual.isModifiable()){
+
+                    actual.setCurrentVisibles(ady.getLeft());
+                    //PISTA 1
+                    if(actual.getCurrentVisibles() == actual.getValorDefault() && !ady.getRight()){
+                        nuevasPistas.addPista(TipoPista.ValueReached, i,j);
+                        continue;
+                    }
+
+                    else if( !ady.getRight() && actual.getCurrentVisibles() != actual.getValorDefault()){
+                        //PISTA 2-----------------------------------------------------------
+
+                        for(int k = 0 ; k < _dirs.size(); k++){
+                            Pair<Integer, Integer>dir = _dirs.get(k);
+                            int auxX = i + dir.getLeft(), auxY = j+ dir.getRight();
+                            if(posCorrecta(auxX,auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia){
+                                auxX += dir.getLeft();
+                                auxY += dir.getRight();
+                                int azules = 0;
+                                while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
+                                    auxX += dir.getLeft();
+                                    auxY += dir.getRight();
+                                    azules++;
+                                }
+
+                                if(azules + 1 + actual.getCurrentVisibles() > actual.getValorDefault() ){
+                                    nuevasPistas.addPista(TipoPista.WouldExceed, i,j);
+                                }
+                            }
+                        }
+
+                        //PISTA 3-----------------------------------------------------------
+                        int [] maxCeldasRellenables = new int[_dirs.size()];
+                        List<Integer> dirsAux  = new ArrayList<>() ;
+                        for(int k = 0; k <_dirs.size(); k++){
+                            maxCeldasRellenables[k] =  calculaMaxAzulesColocables(i,j,_dirs.get(k));
+                            if(maxCeldasRellenables[k] != 0)dirsAux.add(k);
+                        }
+
+                        //Si solo puedo colocar en dos direcciones
+                        if(dirsAux.size() == 2) {
+                            int k = 0;
+                            while(k < dirsAux.size() && maxCeldasRellenables[dirsAux.get(k)] <= actual.getValorDefault() - actual.getCurrentVisibles()){
+                                k++;
+                            }
+
+                            if(k == dirsAux.size()) nuevasPistas.addPista(TipoPista.OneDirectionRequired, i,j);
                         }
                     }
-                    if(encerrada) pistas.addPista(Pistas.tipoPista.Encerrada, i, j);
-                }
+                    //PISTA 4
+                    else if(ady.getRight() && actual.getCurrentVisibles() > actual.getValorDefault()){
+                        nuevasPistas.addPista(TipoPista.ErrorClosedTooLate, i,j);
+                    }
+                    //PISTA 5
+                    else if(ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()){
+                        nuevasPistas.addPista(TipoPista.ErrorClosedTooEarly, i,j);
+                    }
+                    //PISTA 10
+                    else if(!ady.getRight()){
+                        int maxColocables = 0;
 
-                //si es una celda azul no modificable pueden ser tres pistas o que se pase de vision
-                //o que aun no llegue a la vision o que ya haya llegado y tengas que cerrar
-                else if(_tablero[i][j].getEstado() == EstadoCelda.Azul && !_tablero[i][j].isModifiable()){
-                    _tablero[i][j].setCurrentVisibles((compruebaAdyacentes(i, j)));
-                    int numVis = _tablero[i][j].getCurrentVisibles();
+                        for(int k = 0; k <_dirs.size(); k++){
+                           maxColocables +=  calculaMaxAzulesColocables(i,j,_dirs.get(k));
+                        }
 
-                    //Comprobamos cual es el numero maximo de casillas que se pueden ver en cada una de
-                    //las posibles direcciones
-                    int [] maxAzulesPosibles = new int [_dirs.size()];
-
-                    for(int k = 0; k < maxAzulesPosibles.length; k++){
-                        maxAzulesPosibles[k] = calculaMaxDir(i,j, _dirs.get(k));
+                        if(maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()){
+                            nuevasPistas.addPista(TipoPista.ImposibleVision, i,j);
+                        }
                     }
 
-                    //Habria que hacer calculos para ver en donde se podria colocar una casilla en concreto
 
-
-
-                    if(numVis > _tablero[i][j].getValorDefault()){
-                        pistas.addPista(Pistas.tipoPista.SobreVision, i, j);
-                    }
-                    else if(numVis < _tablero[i][j].getValorDefault()){
-                        pistas.addPista(Pistas.tipoPista.FaltaVision, i, j);
-                    }
-                    else pistas.addPista(Pistas.tipoPista.VisionCompleta, i, j);
+                }
+                //PISTA 6.1
+                else if(actual.getEstado() == EstadoCelda.Azul && actual.isModifiable() && ady.getRight()){
+                    nuevasPistas.addPista(TipoPista.LockedIn, i,j);
+                }
+                //PISTA 6.2
+                else if(actual.getEstado() == EstadoCelda.Vacia && ady.getRight()){
+                    nuevasPistas.addPista(TipoPista.MustBeWall, i,j);
                 }
 
-                //Si hay una casilla vacía, cerrada, y no ve a ninguna azul, es roja
-                else if ( _tablero[i][j].getEstado() == EstadoCelda.Vacia && casillaCerrada(i,j)){
-                    pistas.addPista(Pistas.tipoPista.VaciaIncomunicada, i,j);
-                }
-
-                //TO DO: REVISAR, punto 7 de las pistas del enunciado :D
-                if(_tablero[i][j].isModifiable() && _tablero[i][j].getCurrentVisibles() == 0 &&
-                        _tablero[i][j].getEstado() == EstadoCelda.Azul && casillaCerrada(i,j)){
-                    pistas.addPista(Pistas.tipoPista.ErrorUsuario, i,j);
-                }
             }
         }
+        return nuevasPistas;
     }
 
     /**
@@ -245,10 +284,11 @@ public class Tablero {
                 Pair p = _azulesFijas.get(i);
                 int x = (int)(p.getLeft());
                 int y = (int)(p.getRight());
-                _tablero[x][y].setCurrentVisibles((compruebaAdyacentes(x, y)));
+                _tablero[x][y].setCurrentVisibles((compruebaAdyacentes(x, y).getLeft()));
             }
+
             //TO DO: HACER COMPROBACIONES PARA ACTUALIZAR PISTAS
-            compruebaPistas();
+            pistas = compruebaPistas();
 
             return true;
         }
@@ -298,6 +338,18 @@ public class Tablero {
             auxX += dir.getLeft();
             auxY += dir.getRight();
             i++;
+        }
+
+        return i;
+    }
+
+    private int calculaMaxAzulesColocables(int x, int y, Pair<Integer, Integer> dir){
+        int auxX = x + dir.getLeft(), auxY = y+ dir.getRight(), i = 0;
+
+        while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo){
+            auxX += dir.getLeft();
+            auxY += dir.getRight();
+            if(posCorrecta(auxX, auxY) &&_tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia)i++;
         }
 
         return i;

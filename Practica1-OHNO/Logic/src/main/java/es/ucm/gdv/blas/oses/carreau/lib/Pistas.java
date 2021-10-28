@@ -8,45 +8,48 @@ import java.util.Random;
 import  es.ucm.gdv.blas.oses.carreau.lib.Celda;
 
 public class Pistas {
-    public enum tipoPista{
-        VisionCompleta, SobreVision, PonerAzul, FaltaVision, Encerrada, VaciaIncomunicada, ErrorUsuario
-    }
 
-    private List<Pair<tipoPista, Pair<Integer, Integer>>> listaPistas;
-    private List< Pair <Celda,Pair<Integer, Integer>>> casillas;
+    private List<Pair<TipoPista, Pair<Integer, Integer>>> listaPistas;
 
     public Pistas(){
         listaPistas = new ArrayList<>();
-        casillas = new ArrayList<>();
     }
 
     /**
      * Metodo que añade una pista cuando el jugador ha hecho algo mal y guarda la posicion de la que
      * tiene que dar la pista.
      */
-    public void addPista(tipoPista l, int posX, int posY){
+    public void addPista(TipoPista l, int posX, int posY){
         listaPistas.add(new Pair(l, new Pair(posX, posY)));
     }
 
     public String getPistaTablero() {
-        Pair<tipoPista, Pair<Integer, Integer>> p = getRandomCasilla();
-        tipoPista tP = p.getLeft();
-        Pair<Integer, Integer> pos = p.getRight();
-        switch (tP){
-            case VisionCompleta:
-                return "La vision de la casilla " + pos.getLeft() + " " + pos.getRight() + " esta completa, cierrala!";
-            case FaltaVision:
-                return "La vision de la casilla " + pos.getLeft() + " " + pos.getRight() + " es insuficiente";
-            case SobreVision:
-                return "La vision de la casilla " + pos.getLeft() + " " + pos.getRight() + " es demasiado alta.";
-            case Encerrada:
-                return "La casilla " + pos.getLeft() + " " + pos.getRight() + " esta encerrada, ¿que color tienes que poner?";
-            case VaciaIncomunicada:
-                return "La casilla " + pos.getLeft() + " " + pos.getRight() + " esta vacia y no ve a ninguna azul por lo que es pared";
-            case ErrorUsuario:
-                return "La casilla " + pos.getLeft() + " " + pos.getRight() + " no debería ser de este color";
+
+        //Pair<TipoPista, Pair<Integer, Integer>> p = getRandomCasilla();
+        for (int i = 0; i < listaPistas.size(); i++) {
+            Pair<TipoPista, Pair<Integer, Integer>> p = listaPistas.get(i);
+            TipoPista tP = p.getLeft();
+            Pair<Integer, Integer> pos = p.getRight();
+            switch (tP) {
+                case ValueReached:
+                    return "This number can see all its dots " + pos.getLeft() + " " + pos.getRight(); // 1
+                case WouldExceed:
+                    return "Looking further in one direction would exceed this number " + pos.getLeft() + " " + pos.getRight(); // 2
+                case OneDirectionRequired:
+                    return "One specific dot is included <br>in all solutions imaginable" + pos.getLeft() + " " + pos.getRight(); // 3
+                case ErrorClosedTooLate:
+                    return "This number sees a bit too much " + pos.getLeft() + " " + pos.getRight(); // 4
+                case ErrorClosedTooEarly:
+                    return "This number can't see enough" + pos.getLeft() + " " + pos.getRight(); // 5
+                case MustBeWall:
+                    return "This one should be easy... " + pos.getLeft() + " " + pos.getRight(); //6.1
+                case LockedIn:
+                    return "A blue dot should always see at least one other " + pos.getLeft() + " " + pos.getRight();//6.2
+                case ImposibleVision:
+                    return "Imposible to fill the vision of this tile" + pos.getLeft() + " " + pos.getRight(); // 10
+            }
         }
-        return "" ;
+        return "";
     }
 
 
@@ -65,7 +68,7 @@ public class Pistas {
         return "" ;
     }*/
 
-    private  Pair<tipoPista, Pair<Integer, Integer>> getRandomCasilla()
+    private  Pair<TipoPista, Pair<Integer, Integer>> getRandomCasilla()
     {
         Random r= new Random();
         return listaPistas.get(r.nextInt(listaPistas.size()));
