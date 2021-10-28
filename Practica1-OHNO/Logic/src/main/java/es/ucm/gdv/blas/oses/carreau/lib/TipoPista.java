@@ -14,5 +14,5 @@ public enum TipoPista {
 
     LockedIn,                // 'A blue dot should always see at least one other',[6.2/7] //si es azul (isMod() == true && cerrada && EstadoCelda.Azul)
 
-    ImposibleVision,         // 'No cerrada pero maximas colocables < Def - visibles' [10]
+    ImposibleVision,         // 'Imposible to fill the vision of this tile ' < Def - visibles' [10]
 }

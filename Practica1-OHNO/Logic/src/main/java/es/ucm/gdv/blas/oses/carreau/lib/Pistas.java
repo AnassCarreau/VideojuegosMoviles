@@ -24,32 +24,41 @@ public class Pistas {
     }
 
     public String getPistaTablero() {
-
+        String s = new String();
         //Pair<TipoPista, Pair<Integer, Integer>> p = getRandomCasilla();
         for (int i = 0; i < listaPistas.size(); i++) {
             Pair<TipoPista, Pair<Integer, Integer>> p = listaPistas.get(i);
             TipoPista tP = p.getLeft();
             Pair<Integer, Integer> pos = p.getRight();
+
             switch (tP) {
                 case ValueReached:
-                    return "This number can see all its dots " + pos.getLeft() + " " + pos.getRight(); // 1
+                    s+= "This number can see all its dots " + pos.getLeft() + " " + pos.getRight()+ "\n"; // 1
+                    break;
                 case WouldExceed:
-                    return "Looking further in one direction would exceed this number " + pos.getLeft() + " " + pos.getRight(); // 2
+                    s+= "Looking further in one direction would exceed this number " + pos.getLeft() + " " + pos.getRight()+ "\n"; // 2
+                    break;
                 case OneDirectionRequired:
-                    return "One specific dot is included <br>in all solutions imaginable" + pos.getLeft() + " " + pos.getRight(); // 3
+                    s+= "One specific dot is included in all solutions imaginable " + pos.getLeft() + " " + pos.getRight()+ "\n"; // 3
+                    break;
                 case ErrorClosedTooLate:
-                    return "This number sees a bit too much " + pos.getLeft() + " " + pos.getRight(); // 4
+                    s+= "This number sees a bit too much " + pos.getLeft() + " " + pos.getRight()+ "\n"; // 4
+                    break;
                 case ErrorClosedTooEarly:
-                    return "This number can't see enough" + pos.getLeft() + " " + pos.getRight(); // 5
+                    s+= "This number can't see enough" + pos.getLeft() + " " + pos.getRight()+ "\n"; // 5
+                    break;
                 case MustBeWall:
-                    return "This one should be easy... " + pos.getLeft() + " " + pos.getRight(); //6.1
+                    s+= "This one should be easy... " + pos.getLeft() + " " + pos.getRight()+ "\n"; //6.1
+                    break;
                 case LockedIn:
-                    return "A blue dot should always see at least one other " + pos.getLeft() + " " + pos.getRight();//6.2
+                    s+= "A blue dot should always see at least one other " + pos.getLeft() + " " + pos.getRight()+ "\n";//6.2
+                    break;
                 case ImposibleVision:
-                    return "Imposible to fill the vision of this tile" + pos.getLeft() + " " + pos.getRight(); // 10
+                    s+= "Imposible to fill the vision of this tile " + pos.getLeft() + " " + pos.getRight() + "\n"; // 10
+                    break;
             }
         }
-        return "";
+        return s;
     }
 
 

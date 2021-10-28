@@ -16,7 +16,6 @@ public class main {
     public static void main(String[] args){
         Tablero t = new Tablero(4);
 
-
         t.drawConsole();
 
         System.out.println("Resolvemos");
@@ -43,8 +42,8 @@ public class main {
 
         t.setPos(3,1);
         t.cambiaCelda();
-
         t.drawConsole();
+        System.out.println(t.damePistaAleatoria());
 
         System.out.println("Da correcto el resuelve tablero: " + t.tableroResuelto());
     }

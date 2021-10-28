@@ -128,7 +128,7 @@ public class Tablero {
                 auxY += _dirs.get(i).getRight();
                 visibles++;
             }
-            if(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia) encerrada =false;
+            if(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo) encerrada =false;
         }
 
         return new Pair<Integer, Boolean>(visibles, encerrada);
@@ -178,25 +178,7 @@ public class Tablero {
 
                     else if( !ady.getRight() && actual.getCurrentVisibles() != actual.getValorDefault()){
                         //PISTA 2-----------------------------------------------------------
-
-                        for(int k = 0 ; k < _dirs.size(); k++){
-                            Pair<Integer, Integer>dir = _dirs.get(k);
-                            int auxX = i + dir.getLeft(), auxY = j+ dir.getRight();
-                            if(posCorrecta(auxX,auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia){
-                                auxX += dir.getLeft();
-                                auxY += dir.getRight();
-                                int azules = 0;
-                                while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
-                                    auxX += dir.getLeft();
-                                    auxY += dir.getRight();
-                                    azules++;
-                                }
-
-                                if(azules + 1 + actual.getCurrentVisibles() > actual.getValorDefault() ){
-                                    nuevasPistas.addPista(TipoPista.WouldExceed, i,j);
-                                }
-                            }
-                        }
+                        checkHint2(i,j,nuevasPistas);
 
                         //PISTA 3-----------------------------------------------------------
                         int [] maxCeldasRellenables = new int[_dirs.size()];
@@ -253,6 +235,29 @@ public class Tablero {
         return nuevasPistas;
     }
 
+
+    public boolean checkHint2(int i, int j, Pistas nuevasPistas){
+        for(int k = 0 ; k < _dirs.size(); k++){
+            Pair<Integer, Integer>dir = _dirs.get(k);
+            int auxX = i + dir.getLeft(), auxY = j+ dir.getRight();
+            if(posCorrecta(auxX,auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia){
+                auxX += dir.getLeft();
+                auxY += dir.getRight();
+                int azules = 0;
+                while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
+                    auxX += dir.getLeft();
+                    auxY += dir.getRight();
+                    azules++;
+                }
+
+                if(azules + 1 + _tablero[i][j].getCurrentVisibles() > _tablero[i][j].getValorDefault() ){
+                    nuevasPistas.addPista(TipoPista.WouldExceed, i,j);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     /**
      * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
      * casillas que ven las celdas azules predefinidas utilizando el metodo de compruebaAdyacentes()
