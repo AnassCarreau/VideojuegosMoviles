@@ -14,8 +14,11 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class main {
     public static void main(String[] args){
-        Tablero t = new Tablero(4);
+        Tablero t = new Tablero(6);
 
+        t.drawConsole();
+        System.out.println(t.damePistaAleatoria());
+        /*
         t.drawConsole();
 
         System.out.println("Resolvemos");
@@ -45,6 +48,7 @@ public class main {
         t.drawConsole();
         System.out.println(t.damePistaAleatoria());
 
-        System.out.println("Da correcto el resuelve tablero: " + t.tableroResuelto());
+        System.out.println("Da correcto el resuelve tablero: " + t.tableroResuelto());*/
+
     }
 }

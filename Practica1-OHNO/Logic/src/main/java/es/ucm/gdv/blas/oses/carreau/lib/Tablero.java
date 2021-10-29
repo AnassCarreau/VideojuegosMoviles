@@ -36,15 +36,74 @@ public class Tablero {
             }
         }
 
-
         //TO DO: HACER BIEN
+        if(N == 6) tableroPrueba6x6();
+        else if(N == 4)tableroPrueba4x4();;
+
+        //Inicializacion de las pistas
+        pistas = compruebaPistas();
+    }
+
+    private void tableroPrueba6x6(){
+        _tablero[1][2].setEstado(EstadoCelda.Rojo);
+        _tablero[1][2].setModificable(false);
+        _tablero[2][4].setEstado(EstadoCelda.Rojo);
+        _tablero[2][4].setModificable(false);
+        _tablero[2][5].setEstado(EstadoCelda.Rojo);
+        _tablero[2][5].setModificable(false);
+        _tablero[5][1].setEstado(EstadoCelda.Rojo);
+        _tablero[5][1].setModificable(false);
+
+        _tablero[0][0].setEstado(EstadoCelda.Azul);
+        _tablero[0][0].setModificable(false);
+        _tablero[0][0].setValorDefault(5);
+
+        _tablero[0][5].setEstado(EstadoCelda.Azul);
+        _tablero[0][5].setModificable(false);
+        _tablero[0][5].setValorDefault(1);
+
+        _tablero[1][0].setEstado(EstadoCelda.Azul);
+        _tablero[1][0].setModificable(false);
+        _tablero[1][0].setValorDefault(3);
+
+        _tablero[1][3].setEstado(EstadoCelda.Azul);
+        _tablero[1][3].setModificable(false);
+        _tablero[1][3].setValorDefault(4);
+
+        _tablero[2][3].setEstado(EstadoCelda.Azul);
+        _tablero[2][3].setModificable(false);
+        _tablero[2][3].setValorDefault(5);
+
+        _tablero[3][4].setEstado(EstadoCelda.Azul);
+        _tablero[3][4].setModificable(false);
+        _tablero[3][4].setValorDefault(3);
+
+        _tablero[3][2].setEstado(EstadoCelda.Azul);
+        _tablero[3][2].setModificable(false);
+        _tablero[3][2].setValorDefault(1);
+
+        _tablero[4][0].setEstado(EstadoCelda.Azul);
+        _tablero[4][0].setModificable(false);
+        _tablero[4][0].setValorDefault(2);
+
+        _tablero[4][3].setEstado(EstadoCelda.Azul);
+        _tablero[4][3].setModificable(false);
+        _tablero[4][3].setValorDefault(3);
+
+        _tablero[5][4].setEstado(EstadoCelda.Azul);
+        _tablero[5][4].setModificable(false);
+        _tablero[5][4].setValorDefault(5);
+    }
+    private void tableroPrueba4x4(){
+
+
         _tablero[0][1].setEstado(EstadoCelda.Rojo);
         _tablero[0][1].setModificable(false);
         _tablero[1][0].setEstado(EstadoCelda.Rojo);
         _tablero[1][0].setModificable(false);
-        /*
-        _tablero[1][1].setEstado(EstadoCelda.Rojo);
-        _tablero[1][1].setModificable(false);*/
+
+        //_tablero[1][1].setEstado(EstadoCelda.Rojo);
+        //_tablero[1][1].setModificable(false);
 
         _tablero[1][2].setEstado(EstadoCelda.Azul);
         _tablero[1][2].setModificable(false);
@@ -62,10 +121,6 @@ public class Tablero {
         _tablero[3][3].setModificable(false);
         _tablero[3][3].setValorDefault(4);
         _azulesFijas.add(new Pair<Integer, Integer>(3,3));
-
-
-        //Inicializacion de las pistas
-        pistas = compruebaPistas();
     }
 
     /**
@@ -99,7 +154,7 @@ public class Tablero {
      * @param y, columna del tablero correspondiente a la casilla que
      *           queramos comprobar si esta dentro de los limites del tablero
      *
-     * Metodo que comprueba si la posicion x,y se encuentra en el tablero
+     * Metodo que comprueba si la posicion x,y es una posicion valida del tablero
      */
     private boolean posCorrecta(int x, int y){
         return (x >= 0 && x < _tablero.length) && (y >= 0 && y < _tablero.length);
@@ -173,12 +228,11 @@ public class Tablero {
                     //PISTA 1
                     if(actual.getCurrentVisibles() == actual.getValorDefault() && !ady.getRight()){
                         nuevasPistas.addPista(TipoPista.ValueReached, i,j);
-                        continue;
                     }
 
                     else if( !ady.getRight() && actual.getCurrentVisibles() != actual.getValorDefault()){
                         //PISTA 2-----------------------------------------------------------
-                        checkHint2(i,j,nuevasPistas);
+                        if(checkHint2(i,j,nuevasPistas))continue; //TO DO:REVISAR ¿PUEDE DARSE 2 PISTAS POR CELDA?
 
                         //PISTA 3-----------------------------------------------------------
                         int [] maxCeldasRellenables = new int[_dirs.size()];
@@ -226,7 +280,7 @@ public class Tablero {
                     nuevasPistas.addPista(TipoPista.LockedIn, i,j);
                 }
                 //PISTA 6.2
-                else if(actual.getEstado() == EstadoCelda.Vacia && ady.getRight()){
+                else if(actual.getEstado() == EstadoCelda.Vacia && compruebaVaciaEncerrada(i,j)){
                     nuevasPistas.addPista(TipoPista.MustBeWall, i,j);
                 }
 
@@ -236,7 +290,7 @@ public class Tablero {
     }
 
 
-    public boolean checkHint2(int i, int j, Pistas nuevasPistas){
+    private boolean checkHint2(int i, int j, Pistas nuevasPistas){
         for(int k = 0 ; k < _dirs.size(); k++){
             Pair<Integer, Integer>dir = _dirs.get(k);
             int auxX = i + dir.getLeft(), auxY = j+ dir.getRight();
@@ -331,30 +385,31 @@ public class Tablero {
 
         return true;
     }
-    /*
-    * Metodo que dada la posicion en el tablero de una casilla azul y una direccion
-    * comprueba cual es el numero maximo de casillas que es posible de cambiar su valor a azul
-    * en dicha direccion sin salirse del tablero
-    * */
-    private int calculaMaxDir(int x, int y, Pair<Integer, Integer> dir){
-        int auxX = x + dir.getLeft(), auxY = y+ dir.getRight(), i = 0;
 
-        while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo){
-            auxX += dir.getLeft();
-            auxY += dir.getRight();
-            i++;
+    private boolean compruebaVaciaEncerrada(int x, int y){
+
+        for(int i = 0; i < _dirs.size(); i++){
+            int auxX = x + _dirs.get(i).getLeft();
+            int auxY = y + _dirs.get(i).getRight();
+
+            if(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo) return false;
         }
 
-        return i;
+        return true;
     }
 
     private int calculaMaxAzulesColocables(int x, int y, Pair<Integer, Integer> dir){
         int auxX = x + dir.getLeft(), auxY = y+ dir.getRight(), i = 0;
+        int faltanColocar = _tablero[x][y].getValorDefault();
+        int visibles = _tablero[x][y].getCurrentVisibles();
 
-        while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo){
+        while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo
+                && _tablero[x][y].getValorDefault() > visibles + i){
+            if(_tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia)i++;
+            else visibles++;
             auxX += dir.getLeft();
             auxY += dir.getRight();
-            if(posCorrecta(auxX, auxY) &&_tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia)i++;
+
         }
 
         return i;
