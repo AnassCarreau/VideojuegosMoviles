@@ -1,9 +1,10 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
+import com.sun.org.apache.bcel.internal.generic.LUSHR;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import sun.jvm.hotspot.opto.Block_Array;
+import java.util.Arrays;
 
 public class Tablero {
     private Celda [][] _tablero;
@@ -235,21 +236,26 @@ public class Tablero {
                         if(checkHint2(i,j,nuevasPistas))continue; //TO DO:REVISAR ¿PUEDE DARSE 2 PISTAS POR CELDA?
 
                         //PISTA 3-----------------------------------------------------------
-                        int [] maxCeldasRellenables = new int[_dirs.size()];
-                        List<Integer> dirsAux  = new ArrayList<>() ;
+                        List<Pair<Integer,Integer>> celdaInfo = new ArrayList<>();
+
                         for(int k = 0; k <_dirs.size(); k++){
-                            maxCeldasRellenables[k] =  calculaMaxAzulesColocables(i,j,_dirs.get(k));
-                            if(maxCeldasRellenables[k] != 0)dirsAux.add(k);
+                            celdaInfo.add(calculaMaxColocablesYVisibles(i,j,_dirs.get(k)));
                         }
 
-                        //Si solo puedo colocar en dos direcciones
-                        if(dirsAux.size() == 2) {
-                            int k = 0;
-                            while(k < dirsAux.size() && maxCeldasRellenables[dirsAux.get(k)] <= actual.getValorDefault() - actual.getCurrentVisibles()){
-                                k++;
+
+                        for(int k = 0; k < _dirs.size(); k++) {
+                            int adyInmediatas = calculaAdyInmediatas(i, j, _dirs.get(k));
+                            int maxVisiblesOtrasDir = 0;
+
+                            for (int g = 0; g < _dirs.size(); g++) {
+                                if (_dirs.get(g) != _dirs.get(k))
+                                    maxVisiblesOtrasDir += celdaInfo.get(g).getRight();
                             }
 
-                            if(k == dirsAux.size()) nuevasPistas.addPista(TipoPista.OneDirectionRequired, i,j);
+                            if (adyInmediatas + maxVisiblesOtrasDir < actual.getValorDefault()){
+                                nuevasPistas.addPista(TipoPista.OneDirectionRequired, i, j);
+                                break;
+                            }
                         }
                     }
                     //PISTA 4
@@ -265,7 +271,7 @@ public class Tablero {
                         int maxColocables = 0;
 
                         for(int k = 0; k <_dirs.size(); k++){
-                           maxColocables +=  calculaMaxAzulesColocables(i,j,_dirs.get(k));
+                           maxColocables +=  calculaMaxColocablesYVisibles(i,j,_dirs.get(k)).getLeft();
                         }
 
                         if(maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()){
@@ -398,21 +404,47 @@ public class Tablero {
         return true;
     }
 
-    private int calculaMaxAzulesColocables(int x, int y, Pair<Integer, Integer> dir){
-        int auxX = x + dir.getLeft(), auxY = y+ dir.getRight(), i = 0;
-        int faltanColocar = _tablero[x][y].getValorDefault();
+    private Pair<Integer,Integer> calculaMaxColocablesYVisibles(int x, int y, Pair<Integer, Integer> dir){
+        int auxX = x + dir.getLeft(), auxY = y+ dir.getRight(), colocables = 0,adyInDir = 0;
         int visibles = _tablero[x][y].getCurrentVisibles();
 
+        //Nos saltamos las adyacentes azules directas
+        while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
+            auxX += dir.getLeft();
+            auxY += dir.getRight();
+            adyInDir++;
+        }
+        //caluculamos cuantas podemos colocar
+        int diferenciaVision = _tablero[x][y].getValorDefault() - visibles;
+        int azulesEncontradas = 0;
+
         while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo
-                && _tablero[x][y].getValorDefault() > visibles + i){
-            if(_tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia)i++;
-            else visibles++;
+                && diferenciaVision - azulesEncontradas >=  colocables + 1){
+            if(_tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia)colocables++;
+            else azulesEncontradas++;
             auxX += dir.getLeft();
             auxY += dir.getRight();
 
         }
 
-        return i;
+        if(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul)colocables--;
+
+        int visiblesEnDir = colocables + adyInDir + azulesEncontradas;
+        return new Pair<Integer,Integer>(colocables, visiblesEnDir);
     }
+
+    private int calculaAdyInmediatas(int x, int y, Pair<Integer, Integer> dir){
+        int auxX = x + dir.getLeft(), auxY = y+ dir.getRight(),adyInDir = 0;
+
+        //Nos saltamos las adyacentes azules directas
+        while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
+            auxX += dir.getLeft();
+            auxY += dir.getRight();
+            adyInDir++;
+        }
+
+        return adyInDir;
+    }
+
 
 }
