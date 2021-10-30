@@ -3,14 +3,6 @@ package es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces;
 import java.util.List;
 
 public interface Input {
-    public class KeyEvent {
-        public static final int KEY_DOWN = 0;
-        public static final int KEY_UP = 1;
-        public int type;
-        public int keyCode;
-        public char keyChar;
-    }
-
     public static class TouchEvent {
         public static final int TOUCH_DOWN = 0;
         public static final int TOUCH_UP = 1;

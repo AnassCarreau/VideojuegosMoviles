@@ -8,12 +8,21 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.GameScreen;
 
-public class MainMenuScreen extends Screen {
+public class MainMenuScreen implements Screen {
+
+    private Engine engine;
 
     public MainMenuScreen(Engine engine) {
-        super(engine);
+        this.engine = engine;
+        init();
     }
 
+    @Override
+    public void init() {
+        Graphics g = engine.getGraphics();
+    }
+
+    @Override
     public void update(float deltaTime) {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
@@ -30,37 +39,22 @@ public class MainMenuScreen extends Screen {
         }
     }
 
+    @Override
+    public void render() {
+        Graphics g = engine.getGraphics();
+        //  g.clear(0);
+        //ohno texto g.drawText()
+        //Jugar texto g.drawText()
+        //Descripcion texto g.drawText()
+        g.drawImage(Assets.q42, 100, 100);
+    }
+
     private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
         if(event.x > x && event.x < x + width - 1 &&
                 event.y > y && event.y < y + height - 1)
             return true;
         else
             return false;
-    }
-
-    public void present(float deltaTime) {
-        Graphics g = engine.getGraphics();
-      //  g.clear(0);
-        //ohno texto g.drawText()
-        //Jugar texto g.drawText()
-        //Descripcion texto g.drawText()
-        g.drawImage(Assets.q42, 0, 0);
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }
 

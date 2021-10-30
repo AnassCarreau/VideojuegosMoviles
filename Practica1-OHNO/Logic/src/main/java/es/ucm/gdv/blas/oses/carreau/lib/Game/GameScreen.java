@@ -7,17 +7,19 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
 
-public class GameScreen extends Screen {
-    public GameScreen(Engine game) {
-        super(game);
+public class GameScreen implements Screen {
+    private Engine engine;
+    public GameScreen(Engine eng) {
+        this.engine = eng;
     }
 
-    enum GameState {
-        Ready,
-        Running,
-        Paused,
-        GameOver
+    @Override
+    public void init() {
+        Graphics g = engine.getGraphics();
+        
     }
+
+    @Override
     public void update(float deltaTime) {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
@@ -40,16 +42,8 @@ public class GameScreen extends Screen {
 
         }
     }
-
-    private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
-        if(event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1)
-            return true;
-        else
-            return false;
-    }
-
-    public void present(float deltaTime) {
+    @Override
+    public void render() {
         Graphics g = engine.getGraphics();
         //  g.clear(0);
         //ohno texto g.drawText()
@@ -61,19 +55,14 @@ public class GameScreen extends Screen {
 
     }
 
-    @Override
-    public void pause() {
-
+    private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
+        if(event.x > x && event.x < x + width - 1 &&
+                event.y > y && event.y < y + height - 1)
+            return true;
+        else
+            return false;
     }
 
-    @Override
-    public void resume() {
 
-    }
-
-    @Override
-    public void dispose() {
-
-    }
 }
 

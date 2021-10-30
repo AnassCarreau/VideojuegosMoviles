@@ -13,6 +13,4 @@ public interface Engine {
     public void setScreen(Screen screen);
 
     public Screen getCurrentScreen();
-
-    public Screen getStartScreen();
 }

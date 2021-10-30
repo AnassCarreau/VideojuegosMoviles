@@ -1,24 +1,36 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
-import java.awt.EventQueue;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.util.Scanner;
-
-
 import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-
+import es.ucm.gdv.blas.oses.carreau.lib.Window;
+import es.ucm.gdv.blas.oses.carreau.lib.Game.LoadingScreen;
+import es.ucm.gdv.blas.oses.carreau.lib.PCGame;
 
 public class main {
+
+    private static final int WINDOW_HEIGHT = 800;
+    private static final int WINDOW_WIDTH = 600;
+    private static final boolean FULLSCREEN = false;
+    private static final int NUM_BUFFERS = 4;
+
     public static void main(String[] args){
-        Tablero t = new Tablero(4);
+        //Creacion de la ventana
+        Window ventana = new Window("OhNo!");
+        boolean ventanaCreada = ventana.initWindow(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN, NUM_BUFFERS);
+
+        if(!ventanaCreada) return;
+
+        PCGame pcGame = new PCGame(ventana, WINDOW_WIDTH, WINDOW_HEIGHT);
+        LoadingScreen loadScreen = new LoadingScreen(pcGame);
+        pcGame.setScreen(loadScreen);
+        loadScreen.init();
+
+        pcGame.run();
+
+        /*Tablero t = new Tablero(4);
 /*
         t.drawConsole();
         System.out.println(t.damePistaAleatoria());
-        */
+
 
         t.drawConsole();
 
@@ -50,5 +62,6 @@ public class main {
         System.out.println(t.damePistaAleatoria());
 
         System.out.println("Da correcto el resuelve tablero: " + t.tableroResuelto());
+        */
     }
 }

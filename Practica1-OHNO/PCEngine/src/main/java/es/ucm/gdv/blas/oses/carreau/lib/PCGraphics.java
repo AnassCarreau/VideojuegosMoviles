@@ -12,9 +12,8 @@ import  es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 
 public class PCGraphics implements Graphics {
 
-    es.ucm.gdv.blas.oses.carreau.lib.Window window;
+    Window window;
     java.awt.image.BufferStrategy strategy;
-
 
     //Dimensiones lógicas
     int Width;
@@ -25,8 +24,6 @@ public class PCGraphics implements Graphics {
         this.strategy = window.getBufferStrategy();
         this.Width = Width;
         this.Height = Height;
-
-
     }
 
     @Override
@@ -130,7 +127,12 @@ public class PCGraphics implements Graphics {
 
     @Override
     public void drawImage(Image image, int x, int y) {
+        drawImage((PCImage)image, x, y);
+    }
 
+    private void drawImage(PCImage img, int x, int y){
+        java.awt.Graphics g = strategy.getDrawGraphics();
+        g.drawImage(img._image, x, y, null);
     }
 
     @Override

@@ -8,12 +8,14 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.MainMenuScreen;
 
-public class LoadingScreen extends Screen {
+public class LoadingScreen implements Screen {
+    private Engine engine;
     public LoadingScreen(Engine engine) {
-        super(engine);
+        this.engine = engine;
     }
+
     @Override
-    public void update(float deltaTime) {
+    public void init() {
         Graphics g = engine.getGraphics();
         Assets.q42 = g.newImage("q42.png");
         Assets.lock = g.newImage("lock.png");
@@ -22,23 +24,14 @@ public class LoadingScreen extends Screen {
         Assets.close = g.newImage("close.png");
         engine.setScreen(new MainMenuScreen(engine));
     }
+
     @Override
-    public void present(float deltaTime) {
+    public void update(float deltaTime) {
 
     }
 
     @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
+    public void render() {
 
     }
 }

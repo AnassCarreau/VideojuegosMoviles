@@ -1,21 +1,15 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Engine;
 
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
+public interface Screen {
+    public void init();
 
-//TO DO: mirar donde va esta wea
-public abstract class Screen {
-    protected final Engine engine;
+    public void update(float deltaTime);
 
-    public Screen(Engine engine) {
-        this.engine = engine;
-    }
+    public void render();
 
-    public abstract void update(float deltaTime);
+    //TO DO: REVISAR YA QUE ES SOLO NECESARIO EN ANDROID
+    /*public void pause();
 
-    public abstract void present(float deltaTime);
-
-    public abstract void pause();
-
-    public abstract void resume();
-    public abstract void dispose();
+    public void resume();
+    public void dispose();*/
 }
