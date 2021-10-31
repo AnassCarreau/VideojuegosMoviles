@@ -7,10 +7,10 @@ import es.ucm.gdv.blas.oses.carreau.lib.PCGame;
 
 public class main {
 
-    private static final int WINDOW_HEIGHT = 800;
-    private static final int WINDOW_WIDTH = 600;
+    private static final int WINDOW_HEIGHT = 1080;
+    private static final int WINDOW_WIDTH = 1920;
     private static final boolean FULLSCREEN = false;
-    private static final int NUM_BUFFERS = 4;
+    private static final int NUM_BUFFERS = 2;
 
     public static void main(String[] args){
         //Creacion de la ventana

@@ -18,7 +18,6 @@ public class PCGraphics implements Graphics {
     //Dimensiones lógicas
     int Width;
     int Height;
-
     public PCGraphics(Window window, int Width, int Height) {
         this.window = window;
         this.strategy = window.getBufferStrategy();
@@ -43,14 +42,17 @@ public class PCGraphics implements Graphics {
 
     //TO DO: mirar la putisima font :D
     @Override
-    public Font newFont(String filename, int size, boolean isBold) {
+    public Font newFont(String filename, float size, boolean isBold) {
         // Cargamos la fuente del fichero .ttf.
         java.awt.Font baseFont;
-        try (InputStream is = new FileInputStream("Bangers-Regular.ttf")) {
+        try (InputStream is = new FileInputStream("assets/" + filename)) {
             baseFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, is);
+            if (isBold) baseFont = baseFont.deriveFont(java.awt.Font.BOLD, size);
+            else baseFont = baseFont.deriveFont(size);
+
+
             return new PCFont(baseFont, size);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // Ouch. No está.
             System.err.println("Error cargando la fuente: " + e);
             return null;
@@ -77,11 +79,6 @@ public class PCGraphics implements Graphics {
         g.drawRect(x, y, width, height);
     }
 
-    @Override
-    public void drawImage(Image img, int x, int y, int srcX, int srcY,
-                          int srcWidth, int srcHeight) {
-
-    }
 
     //seria para coger el tamaño del canvas¿?
     @Override
@@ -106,12 +103,12 @@ public class PCGraphics implements Graphics {
     @Override
     public void translate(float x, float y) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.translate((int)x,(int) y);
+        g.translate((int) x, (int) y);
     }
 
     @Override
     public void scale(float x, float y) {
-        window.setSize((int)x,(int)y);
+        window.setSize((int) x, (int) y);
     }
 
     @Override
@@ -127,44 +124,38 @@ public class PCGraphics implements Graphics {
 
     @Override
     public void drawImage(Image image, int x, int y) {
-        drawImage((PCImage)image, x, y);
+        java.awt.Graphics g = strategy.getDrawGraphics();
+        g.drawImage(((PCImage) image)._image, x, y, null);
     }
 
     @Override
-    public void drawImage(Image image, int x, int y, int w, int h) {
-        drawImage((PCImage)image, x, y,w,h);
-
-    }
-
-
-    private void drawImage(PCImage img, int x, int y,int w,int h){
+    public void drawImage(Image img, int x, int y, int w, int h) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.drawImage(img._image, x, y, w,h,null);
+        g.drawImage(((PCImage) img)._image, x, y, w, h, null);
     }
 
-    private void drawImage(PCImage img, int x, int y){
-        java.awt.Graphics g = strategy.getDrawGraphics();
-        g.drawImage(img._image, x, y, null);
-    }
 
     @Override
     public void setColor(int color) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.setColor(new Color(color));
+        g.setColor(Color.GRAY);
     }
 
     @Override
     public void fillCircle(float cx, float cy, int r) {
         int diameter = r * 2;
-        java.awt.Graphics g= strategy.getDrawGraphics();
+        java.awt.Graphics g = strategy.getDrawGraphics();
         //shift x and y by the radius of the circle in order to correctly center it
-        g.fillOval((int)cx - r, (int)cy - r, diameter, diameter);
+        g.fillOval((int) cx - r, (int) cy - r, diameter, diameter);
     }
 
     @Override
-    public void drawText(String text, int x, int y) {
+    public void drawText(String text, Font font, int x, int y) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.drawString(text, x, y);
+        g.setFont(((PCFont) font)._font);
+        int len = g.getFontMetrics().stringWidth(text) / 2;
+
+        g.drawString(text, (int) x - len, y);
     }
 
 }

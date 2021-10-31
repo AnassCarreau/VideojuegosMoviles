@@ -5,10 +5,10 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 
 public class AndroidFont implements Font {
     protected Typeface _font;
-    protected int _size;
+    protected float _size;
     protected String _fontName;
 
-    public AndroidFont(Typeface font, int size, String fontName) {
+    public AndroidFont(Typeface font, float size, String fontName) {
         this._font = font;
         this._size = size;
         this._fontName = fontName;
@@ -20,7 +20,7 @@ public class AndroidFont implements Font {
     }
 
     @Override
-    public int getFontSize() {
+    public float getFontSize() {
         return this._size;
     }
 

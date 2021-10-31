@@ -30,9 +30,9 @@ public class PCGame implements Engine {
             // Pintamos el frame con el BufferStrategy
             do {
                 do {
-                    java.awt.Graphics g = this.window.getBufferStrategy().getDrawGraphics();
+                    java.awt.Graphics g = strategy.getDrawGraphics();
                     try {
-                        this.screen.render();
+                        screen.render();
                         //this.screen.update(60);
                     }
                     finally {

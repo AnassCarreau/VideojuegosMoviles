@@ -22,6 +22,8 @@ public class LoadingScreen implements Screen {
         Assets.history = g.newImage("history.png");
         Assets.eye = g.newImage("eye.png");
         Assets.close = g.newImage("close.png");
+        Assets.josefisans = g.newFont("JosefinSans-Bold.ttf",48,true);
+        Assets.molleregular = g.newFont("Molle-Regular.ttf",72,true);
         engine.setScreen(new MainMenuScreen(engine));
     }
 
@@ -35,18 +37,4 @@ public class LoadingScreen implements Screen {
 
     }
 
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
 }

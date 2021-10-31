@@ -5,8 +5,9 @@ class PCFont implements es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font 
     protected Font _font;
 
 
-    public PCFont(Font font, int size) {
+    public PCFont(Font font, float size) {
         this._font = font;
+
     }
 
     @Override
@@ -15,7 +16,7 @@ class PCFont implements es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font 
     }
 
     @Override
-    public int getFontSize() {
+    public float getFontSize() {
         return _font.getSize();
     }
 
