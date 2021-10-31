@@ -26,11 +26,11 @@ public class MainMenuScreen implements Screen {
     public void update(float deltaTime) {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
-        //engine.getInput().getKeyEvents();
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
+                g.drawText("AQUHHHHHHHHHHHHHHHHHHHHI",100,100);
                 if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
                     engine.setScreen(new GameScreen(engine));
                     return;
@@ -42,11 +42,31 @@ public class MainMenuScreen implements Screen {
     @Override
     public void render() {
         Graphics g = engine.getGraphics();
-        //  g.clear(0);
+       // g.clear(0);
         //ohno texto g.drawText()
         //Jugar texto g.drawText()
         //Descripcion texto g.drawText()
-        g.drawImage(Assets.q42, 100, 100);
+        g.drawImage(Assets.q42, g.getWidth()/2 - g.getWidth()/12, g.getHeight() - g.getHeight()/4,g.getWidth()/6,g.getHeight()/8);
+        g.drawText("OH NO", g.getWidth()/2,g.getHeight()/10);
+        g.drawText("Jugar", g.getWidth()/2, g.getHeight()/2);
+        g.drawText("Un juego copiado a Q42",g.getWidth()/5 * 2, g.getHeight()/3 *2 );
+        g.drawText("Creado por Martin Kool",g.getWidth()/5 * 2, g.getHeight()/7 * 5);
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 
     private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {

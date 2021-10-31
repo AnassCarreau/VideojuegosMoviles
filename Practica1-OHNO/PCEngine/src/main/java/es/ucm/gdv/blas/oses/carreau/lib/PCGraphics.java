@@ -130,6 +130,18 @@ public class PCGraphics implements Graphics {
         drawImage((PCImage)image, x, y);
     }
 
+    @Override
+    public void drawImage(Image image, int x, int y, int w, int h) {
+        drawImage((PCImage)image, x, y,w,h);
+
+    }
+
+
+    private void drawImage(PCImage img, int x, int y,int w,int h){
+        java.awt.Graphics g = strategy.getDrawGraphics();
+        g.drawImage(img._image, x, y, w,h,null);
+    }
+
     private void drawImage(PCImage img, int x, int y){
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.drawImage(img._image, x, y, null);

@@ -55,6 +55,21 @@ public class GameScreen implements Screen {
 
     }
 
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
     private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
         if(event.x > x && event.x < x + width - 1 &&
                 event.y > y && event.y < y + height - 1)

@@ -67,6 +67,8 @@ public class AndroidGraphics implements Graphics {
         canvas.drawBitmap(((AndroidImage)image).bitmap, x, y, null);
     }
 
+
+
     public void drawImage(Image img, int x, int y, int srcX, int srcY, int srcWidth, int srcHeight) {
         srcRect.left = srcX;
         srcRect.top = srcY;
@@ -82,7 +84,7 @@ public class AndroidGraphics implements Graphics {
     }
 
     public void drawText(String text, int x, int y) {
-
+        canvas.drawText(text,x,y,paint);
     }
 
     public void drawPixel(int x, int y, int color) {

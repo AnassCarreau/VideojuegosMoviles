@@ -34,4 +34,19 @@ public class LoadingScreen implements Screen {
     public void render() {
 
     }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }

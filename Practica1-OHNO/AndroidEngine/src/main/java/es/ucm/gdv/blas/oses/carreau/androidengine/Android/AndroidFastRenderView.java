@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.AndroidGame;
+import es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidGame;
 
 public class AndroidFastRenderView extends SurfaceView implements Runnable {
     AndroidGame game;
@@ -36,7 +36,9 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable {
             float deltaTime = (System.nanoTime() - startTime) / 1000000000.0f;
             startTime = System.nanoTime();
             game.getCurrentScreen().update(deltaTime);
-            game.getCurrentScreen().present(deltaTime);
+            //game.getCurrentScreen().present(deltaTime);
+            game.getCurrentScreen().render();
+
             Canvas canvas = holder.lockCanvas();
             canvas.getClipBounds(dstRect);
             canvas.drawBitmap(framebuffer, null, dstRect, null);

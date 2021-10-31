@@ -34,6 +34,7 @@ public interface Graphics {
     public void restore();
 
     public void drawImage(Image image, int x, int y);
+    public void drawImage(Image image, int x, int y,int w,int h);
 
     public void setColor(int color);
 

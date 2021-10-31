@@ -33,6 +33,7 @@ public class PCGame implements Engine {
                     java.awt.Graphics g = this.window.getBufferStrategy().getDrawGraphics();
                     try {
                         this.screen.render();
+                        //this.screen.update(60);
                     }
                     finally {
                         g.dispose();
