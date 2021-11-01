@@ -21,19 +21,31 @@ public class PCGame implements Engine {
         this.pc_input = new PCInput();
         this.pc_graphics = new PCGraphics(window, width, height);
         this.window = window;
+
+        window.addMouseListener(pc_input);
+        window.addMouseMotionListener(pc_input);
     }
 
     public void run(){
         BufferStrategy strategy = this.window.getBufferStrategy();
+        long lastFrameTime = System.nanoTime();
         while(true)
         {
+            //calculo del DeltaTime
+            long currentTime = System.nanoTime();
+            long nanoDeltaTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+
+            double deltaTime = (double) nanoDeltaTime / 1.0e9; //nanosegundos a segundos
+
+            screen.update(deltaTime);
+
             // Pintamos el frame con el BufferStrategy
             do {
                 do {
                     java.awt.Graphics g = strategy.getDrawGraphics();
                     try {
                         screen.render();
-                        //this.screen.update(60);
                     }
                     finally {
                         g.dispose();

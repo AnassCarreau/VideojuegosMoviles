@@ -3,7 +3,7 @@ package es.ucm.gdv.blas.oses.carreau.lib.Engine;
 public interface Screen {
     public void init();
 
-    public void update(float deltaTime);
+    public void update(double deltaTime);
 
     public void render();
 

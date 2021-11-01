@@ -28,7 +28,7 @@ public class LoadingScreen implements Screen {
     }
 
     @Override
-    public void update(float deltaTime) {
+    public void update(double deltaTime) {
 
     }
 

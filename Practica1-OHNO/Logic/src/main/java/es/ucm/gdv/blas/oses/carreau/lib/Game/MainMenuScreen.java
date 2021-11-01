@@ -24,14 +24,16 @@ public class MainMenuScreen implements Screen {
     }
 
     @Override
-    public void update(float deltaTime) {
+    public void update(double deltaTime) {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
+            System.out.println("procesando eventos");
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
-                if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
+                System.out.println("evento TOUCH_UP");
+                if (inBounds(event, g.getWidth()/2, g.getHeight()/2, 200, 100)) {
                     engine.setScreen(new GameScreen(engine));
                     return;
                 }
@@ -45,8 +47,9 @@ public class MainMenuScreen implements Screen {
         g.clear(Color.WHITE.getRGB());
         g.drawImage(Assets.q42, g.getWidth()/2  - Assets.q42.getWidth()/24, g.getHeight()/4 * 3 ,Assets.q42.getWidth()/12,Assets.q42.getHeight()/9);
         g.drawText("Oh NO", Assets.molleregular,g.getWidth()/2,g.getHeight()/6);
-        g.drawText("jugar", Assets.josefisans,g.getWidth()/2, g.getHeight()/2);
-        
+        g.drawText("Jugar", Assets.josefisans,g.getWidth()/2, g.getHeight()/2);
+        g.drawRect(g.getWidth()/2, g.getHeight()/2, 200, 100, Color.BLUE.getRGB());
+
         g.setColor(Color.GRAY.getRGB());
         g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getWidth()/2, g.getHeight()/3 * 2 );
         g.drawText("Creado por Martin Kool",Assets.josefisans,g.getWidth()/2, g.getHeight()/7 * 5);
@@ -56,11 +59,7 @@ public class MainMenuScreen implements Screen {
 
 
     private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
-        if(event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1)
-            return true;
-        else
-            return false;
+        return event.x > x && event.x < x + width && event.y > y && event.y < y + height;
     }
 }
 

@@ -9,13 +9,10 @@ import android.view.View.OnTouchListener;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Pool;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 
-public class AndroidInput implements OnTouchListener, Input {
+public class AndroidInput implements View.OnTouchListener, Input {
    // AccelerometerHandler accelHandler;
     boolean isTouched;
-    int touchX;
-    int touchY;
     //Pool<TouchEvent> touchEventPool;
-    List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
     List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
     float scaleX;
     float scaleY;
@@ -34,54 +31,47 @@ public class AndroidInput implements OnTouchListener, Input {
         this.scaleY = scaleY;
     }
 
-    public boolean isTouchDown(int pointer) {
-        synchronized(this) {
-            if(pointer == 0)
-                return isTouched;
-            else
-                return false;
-        }
-    }
-    public int getTouchX(int pointer) {
-        synchronized(this) {
-            return touchX;
-        }
-    }
-    public int getTouchY(int pointer) {
-        synchronized(this) {
-            return touchY;
-        }
-    }
-
+    @Override
     public List<TouchEvent> getTouchEvents() {
         synchronized(this) {
-            int len = touchEvents.size();
-            for( int i = 0; i < len; i++ )
-                //touchEventPool.free(touchEvents.get(i));
-                touchEvents.clear();
-            touchEvents.addAll(touchEventsBuffer);
-            touchEventsBuffer.clear();
-            return touchEvents;
+            if(touchEventsBuffer.size() > 0){
+                List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
+                /*int len = touchEvents.size();
+                for( int i = 0; i < len; i++ )
+                    //touchEventPool.free(touchEvents.get(i));*/
+                //touchEvents.clear();
+                touchEvents.addAll(touchEventsBuffer);
+                touchEventsBuffer.clear();
+                return touchEvents;
+            }
+            return touchEventsBuffer;
         }
     }
 
     public boolean onTouch(View v, MotionEvent event) {
         synchronized(this) {
-            //TouchEvent touchEvent = touchEventPool.newObject();
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    //touchEvent.type = TouchEvent.TOUCH_DOWN;
-                    isTouched = true;
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    //touchEvent.type = TouchEvent.TOUCH_DRAGGED;
-                    isTouched = true;
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                case MotionEvent.ACTION_UP:
-                    //touchEvent.type = TouchEvent.TOUCH_UP;
-                    isTouched = false;
-                    break;
+            TouchEvent touchEvent = new TouchEvent();
+            for (int i = 0; i < event.getPointerCount(); i++){
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        touchEvent.type = TouchEvent.TOUCH_DOWN;
+                        isTouched = true;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        touchEvent.type = TouchEvent.TOUCH_DRAGGED;
+                        isTouched = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        touchEvent.type = TouchEvent.TOUCH_UP;
+                        isTouched = false;
+                        break;
+                }
+                touchEvent.pointer = event.getPointerId(i);
+                touchEvent.x = (int)event.getX(i);
+                touchEvent.y = (int)event.getY(i);
+                synchronized (this) {
+                    touchEventsBuffer.add(touchEvent);
+                }
             }
             //touchEvent.x = touchX = (int)(event.getX() * scaleX);
             //touchEvent.y = touchY = (int)(event.getY() * scaleY);

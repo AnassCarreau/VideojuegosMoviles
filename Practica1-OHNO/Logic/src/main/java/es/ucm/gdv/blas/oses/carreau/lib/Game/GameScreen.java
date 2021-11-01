@@ -1,4 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
+import java.awt.Color;
 import java.util.List;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
@@ -20,7 +21,7 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void update(float deltaTime) {
+    public void update(double deltaTime) {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         //engine.getInput().getKeyEvents();
@@ -45,6 +46,7 @@ public class GameScreen implements Screen {
     @Override
     public void render() {
         Graphics g = engine.getGraphics();
+        g.clear(Color.WHITE.getRGB());
         //  g.clear(0);
         //ohno texto g.drawText()
         //Jugar texto g.drawText()
