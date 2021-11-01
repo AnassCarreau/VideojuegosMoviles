@@ -29,13 +29,13 @@ public class GameScreen implements Screen {
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
-                if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
+                if (inBounds(event, g.getLogWidth() / 3, g.getLogHeight() - 32, 96, 32)) {
                     //CLose
                     return;
-                } else if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
+                } else if (inBounds(event, g.getLogWidth() / 3, g.getLogHeight() - 32, 96, 32)) {
                     //history
                     return;
-                } else if (inBounds(event, g.getWidth() / 3, g.getHeight() - 32, 96, 32)) {
+                } else if (inBounds(event, g.getLogWidth() / 3, g.getLogHeight() - 32, 96, 32)) {
                     //eye
                     return;
                 }

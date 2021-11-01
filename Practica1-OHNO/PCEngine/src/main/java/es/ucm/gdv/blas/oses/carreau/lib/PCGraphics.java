@@ -5,12 +5,13 @@ import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 import  es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 import  es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 
 
-public class PCGraphics implements Graphics {
+public class PCGraphics extends AbstractGraphics {
 
     Window window;
     java.awt.image.BufferStrategy strategy;
@@ -21,8 +22,8 @@ public class PCGraphics implements Graphics {
     public PCGraphics(Window window, int Width, int Height) {
         this.window = window;
         this.strategy = window.getBufferStrategy();
-        this.Width = Width;
-        this.Height = Height;
+        /*this.Width = Width;
+        this.Height = Height;*/
     }
 
     @Override
@@ -79,28 +80,16 @@ public class PCGraphics implements Graphics {
         g.drawRect(x, y, width, height);
     }
 
-
-    //seria para coger el tamaño del canvas¿?
-    @Override
-    public int getWidth() {
-        return this.Width;
-    }
-
-    @Override
-    public int getHeight() {
-        return this.Height;
-    }
-
     //practica
     @Override
     public void clear(int color) {
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.setColor(new Color(color));
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.fillRect(0, 0, getWindowWidth(), getWindowHeight());
 
     }
 
-    @Override
+    /*@Override
     public void translate(float x, float y) {
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.translate((int) x, (int) y);
@@ -110,6 +99,7 @@ public class PCGraphics implements Graphics {
     public void scale(float x, float y) {
         window.setSize((int) x, (int) y);
     }
+    */
 
     @Override
     public int save() {
@@ -123,13 +113,13 @@ public class PCGraphics implements Graphics {
     }
 
     @Override
-    public void drawImage(Image image, int x, int y) {
+    public void drawRealImage(Image image, int x, int y) {
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.drawImage(((PCImage) image)._image, x, y, null);
     }
 
     @Override
-    public void drawImage(Image img, int x, int y, int w, int h) {
+    public void drawRealImage(Image img, int x, int y, int w, int h) {
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.drawImage(((PCImage) img)._image, x, y, w, h, null);
     }

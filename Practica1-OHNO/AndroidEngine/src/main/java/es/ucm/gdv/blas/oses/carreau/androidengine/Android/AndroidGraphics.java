@@ -14,11 +14,13 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 import  es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidFont;
-public class AndroidGraphics implements Graphics {
+
+public class AndroidGraphics extends AbstractGraphics {
     AssetManager assets;
     Bitmap frameBuffer;
     Canvas canvas;
@@ -40,15 +42,16 @@ public class AndroidGraphics implements Graphics {
     }
 
     ////////////////////METODOS DE TRANSFORMACION//////////////////////////////
-    @Override
-    public void translate(float x, float y) {
+    /*@Override
+    public void translate(int x, int y) {
         this.canvas.translate(x, y);
     }
 
     @Override
-    public void scale(float x, float y) {
-        this.canvas.scale(x, y);
+    public void scale(int w, int h) {
+        this.canvas.scale(w, h);
     }
+     */
 
     @Override
     public int save() {
@@ -81,13 +84,12 @@ public class AndroidGraphics implements Graphics {
     }
 
     @Override
-    public void drawImage(Image image, int x, int y) {
+    public void drawRealImage(Image image, int x, int y) {
         canvas.drawBitmap(((AndroidImage) image).bitmap, x, y, null);
     }
 
     @Override
-    public void drawImage(Image image, int x, int y, int w, int h) {
-
+    public void drawRealImage(Image image, int x, int y, int w, int h) {
         srcRect.left = 0;
         srcRect.top = 0;
         srcRect.right = image.getWidth();
@@ -99,9 +101,6 @@ public class AndroidGraphics implements Graphics {
 
         canvas.drawBitmap(((AndroidImage) image).bitmap, srcRect, dstRect, null);
     }
-
-
-
 
     @Override
     public void drawPixel(int x, int y, int color) {
@@ -158,15 +157,5 @@ public class AndroidGraphics implements Graphics {
 
         AndroidFont font = new AndroidFont(Typeface.createFromAsset(this.assets, filename), size, filename);
         return font;
-    }
-
-    ////////////////////METODOS GETTER//////////////////////////////
-    @Override
-    public int getWidth() {
-        return frameBuffer.getWidth();
-    }
-    @Override
-    public int getHeight() {
-        return frameBuffer.getHeight();
     }
 }

@@ -13,25 +13,29 @@ public interface Graphics {
 
     public void drawRect(int x, int y, int width, int height, int color);
 
+    //getters para las dimensiones logicas, deberian estar en la interfaz¿?
+    public int getLogWidth();
 
+    public int getLogHeight();
 
-    //seria para coger el tamaño del canvas¿?
-    public int getWidth();
+    //getters para las dimensiones fisicas, deberian estar en la interfaz¿?
+    public int getWindowWidth();
 
-    public int getHeight();
+    public int getWindowHeight();
 
     //practica
     public void clear(int color);
 
-    public void translate(float x, float y);
+    public int[] translate(int x, int y, float scale_factor);
 
-    public void scale(float x, float y);
+    public int[] scale(int w, int h, float scale_factor);
 
     public int save();
 
     public void restore();
 
     public void drawImage(Image image, int x, int y);
+
     public void drawImage(Image image, int x, int y,int w,int h);
 
     public void setColor(int color);
