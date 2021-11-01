@@ -7,8 +7,8 @@ import es.ucm.gdv.blas.oses.carreau.lib.PCGame;
 
 public class main {
 
-    private static final int WINDOW_HEIGHT = 600;
-    private static final int WINDOW_WIDTH = 800;
+    private static final int WINDOW_HEIGHT = 1920;
+    private static final int WINDOW_WIDTH = 1080;
     private static final boolean FULLSCREEN = false;
     private static final int NUM_BUFFERS = 2;
 
@@ -19,7 +19,7 @@ public class main {
 
         if(!ventanaCreada) return;
 
-        PCGame pcGame = new PCGame(ventana, WINDOW_WIDTH, WINDOW_HEIGHT);
+        PCGame pcGame = new PCGame(ventana, 400, 600);
         LoadingScreen loadScreen = new LoadingScreen(pcGame);
         pcGame.setScreen(loadScreen);
         loadScreen.init();

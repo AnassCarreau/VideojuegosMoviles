@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 //import es.ucm.gdv.blas.oses.carreau.lib.MouseInput;
 import java.awt.event.MouseMotionListener;
@@ -12,12 +14,15 @@ import java.awt.event.MouseListener;
 
 public class PCInput implements Input, MouseListener, MouseMotionListener{
 
+    protected Engine engine;
+
     private List<TouchEvent> events;
     //private MouseInput mouseInput;
 
-    public PCInput(){
+    public PCInput(Engine engine){
         //this.mouseInput = new MouseInput();
         events = new ArrayList<>();
+        this.engine=engine;
     }
 
     @Override
@@ -46,6 +51,9 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         touchEvent.y = mouseEvent.getY();
         touchEvent.pointer = mouseEvent.getID(); //TO DO: REVISAR SI ES CON GETID O SI ES 0
         //touchEvent.pointer = 0;
+        int[]aux=((AbstractGraphics)engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
+        touchEvent.x=aux[0];
+        touchEvent.y=aux[1];
         synchronized (this){
             events.add(touchEvent);
         }
@@ -60,6 +68,9 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         touchEvent.y = mouseEvent.getY();
         touchEvent.pointer = mouseEvent.getID(); //TO DO: REVISAR SI ES CON GETID O SI ES 0
         //touchEvent.pointer = 0;
+        int[]aux=((AbstractGraphics)engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
+        touchEvent.x=aux[0];
+        touchEvent.y=aux[1];
         synchronized (this){
             events.add(touchEvent);
         }
@@ -74,6 +85,9 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         touchEvent.y = mouseEvent.getY();
         touchEvent.pointer = mouseEvent.getID(); //TO DO: REVISAR SI ES CON GETID O SI ES 0
         //touchEvent.pointer = 0;
+        int[]aux=((AbstractGraphics)engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
+        touchEvent.x=aux[0];
+        touchEvent.y=aux[1];
         synchronized (this){
             events.add(touchEvent);
         }
@@ -96,7 +110,10 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         touchEvent.x = mouseEvent.getX();
         touchEvent.y = mouseEvent.getY();
         touchEvent.pointer = mouseEvent.getID(); //TO DO: REVISAR SI ES CON GETID O SI ES 0
-        //touchEvent.pointer = 0;
+        //touchEvent.pointer = 0
+        int[]aux=((AbstractGraphics)engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
+        touchEvent.x=aux[0];
+        touchEvent.y=aux[1];
         synchronized (this){
             events.add(touchEvent);
         }

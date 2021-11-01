@@ -18,10 +18,10 @@ public class PCGame implements Engine {
     Window window;
 
     public PCGame(Window window, int width, int height){
-        this.pc_input = new PCInput();
+        this.pc_input = new PCInput(this);
         this.pc_graphics = new PCGraphics(window, width, height);
         this.window = window;
-
+        window.addComponentListener(pc_graphics);
         window.addMouseListener(pc_input);
         window.addMouseMotionListener(pc_input);
     }

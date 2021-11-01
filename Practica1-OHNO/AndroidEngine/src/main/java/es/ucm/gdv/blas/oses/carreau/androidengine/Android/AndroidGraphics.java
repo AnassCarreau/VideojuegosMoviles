@@ -70,12 +70,12 @@ public class AndroidGraphics extends AbstractGraphics {
 
     ////////////////////METODOS DE DIBUJADO//////////////////////////////
     @Override
-    public void fillCircle(float cx, float cy, int r) {
+    public void fillRealCircle(float cx, float cy, int r) {
         this.canvas.drawCircle(cx, cy, r, this.paint);
     }
 
     @Override
-    public void drawText(String text, Font font, int x, int y) {
+    public void drawRealText(String text, Font font, int x, int y) {
 
         paint.setTypeface(((AndroidFont) font)._font);
         if (font != null) {
@@ -87,6 +87,8 @@ public class AndroidGraphics extends AbstractGraphics {
     public void drawRealImage(Image image, int x, int y) {
         canvas.drawBitmap(((AndroidImage) image).bitmap, x, y, null);
     }
+
+
 
     @Override
     public void drawRealImage(Image image, int x, int y, int w, int h) {
@@ -102,20 +104,9 @@ public class AndroidGraphics extends AbstractGraphics {
         canvas.drawBitmap(((AndroidImage) image).bitmap, srcRect, dstRect, null);
     }
 
-    @Override
-    public void drawPixel(int x, int y, int color) {
-        paint.setColor(color);
-        canvas.drawPoint(x, y, paint);
-    }
 
     @Override
-    public void drawLine(int x, int y, int x2, int y2, int color) {
-        paint.setColor(color);
-        canvas.drawLine(x, y, x2, y2, paint);
-    }
-
-    @Override
-    public void drawRect(int x, int y, int width, int height, int color) {
+    public void drawRealRect(int x, int y, int width, int height, int color) {
         paint.setColor(color);
         paint.setStyle(Style.FILL);
         canvas.drawRect(x, y, x + width - 1, y + width - 1, paint);

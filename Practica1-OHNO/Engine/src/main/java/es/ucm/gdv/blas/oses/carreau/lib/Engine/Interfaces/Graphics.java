@@ -7,10 +7,6 @@ public interface Graphics {
 
     public Font newFont(String filename, float size, boolean isBold);
 
-    public void drawPixel(int x, int y, int color);
-
-    public void drawLine(int x, int y, int x2, int y2, int color);
-
     public void drawRect(int x, int y, int width, int height, int color);
 
     //getters para las dimensiones logicas, deberian estar en la interfaz¿?

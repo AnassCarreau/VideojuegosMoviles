@@ -6,19 +6,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Pool;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 
 public class AndroidInput implements View.OnTouchListener, Input {
-   // AccelerometerHandler accelHandler;
     boolean isTouched;
     //Pool<TouchEvent> touchEventPool;
     List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-    float scaleX;
-    float scaleY;
+    Engine engine;
 
-    public AndroidInput(Context context, View view, float scaleX, float scaleY) {
-       // accelHandler = new AccelerometerHandler(context);
+    public AndroidInput(Engine engine,  View view) {
+
+        this.engine=engine;
         Pool.PoolObjectFactory<TouchEvent> factory = new Pool.PoolObjectFactory<TouchEvent>() {
             @Override
             public TouchEvent createObject() {
@@ -27,8 +27,7 @@ public class AndroidInput implements View.OnTouchListener, Input {
         };
         //touchEventPool = new Pool<TouchEvent>(factory, 100);
         view.setOnTouchListener(this);
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
+
     }
 
     @Override

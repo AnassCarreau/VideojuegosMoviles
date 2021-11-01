@@ -36,14 +36,13 @@ public abstract class AndroidGame extends AppCompatActivity implements Engine, R
         int frameBufferHeight = isLandscape ? 320 : 480;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
-        float scaleX = (float) frameBufferWidth
+      /*  float scaleX = (float) frameBufferWidth
                 / getWindowManager().getDefaultDisplay().getWidth();
         float scaleY = (float) frameBufferHeight
-                / getWindowManager().getDefaultDisplay().getHeight();
+                / getWindowManager().getDefaultDisplay().getHeight();*/
         renderView = new AndroidFastRenderView(this, frameBuffer);
         graphics = new AndroidGraphics( getAssets(), frameBuffer);
-        input = new AndroidInput(this, renderView, scaleX, scaleY);
-        screen = getStartScreen();
+        input = new AndroidInput(this, renderView);
         setContentView(renderView);
     }
 
@@ -62,7 +61,7 @@ public abstract class AndroidGame extends AppCompatActivity implements Engine, R
      @Override
     public void onResume() {
         super.onResume();
-        screen.resume();
+       // screen.resume();
         renderView.resume();
     }
 
@@ -70,19 +69,19 @@ public abstract class AndroidGame extends AppCompatActivity implements Engine, R
     public void onPause() {
         super.onPause();
         renderView.pause();
-        screen.pause();
+       // screen.pause();
         if (isFinishing())
         {
-            screen.dispose();
+          //  screen.dispose();
         }
     }
 
     public void setScreen(Screen screen) {
         if (screen == null)
             throw new IllegalArgumentException("Screen must not be null");
-        this.screen.pause();
-        this.screen.dispose();
-        screen.resume();
+       // this.screen.pause();
+       // this.screen.dispose();
+       // screen.resume();
         screen.update(0);
         this.screen = screen;
     }

@@ -37,12 +37,24 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     //Método que nos devuelve el factor de escalado a aplicar
-    private float getScaleFactor(){
+    protected float getScaleFactor(){
         float factorWidth = winWidth / logWidth;
         float factorHeight = winHeight / logHeight;
 
         if(factorWidth < factorHeight) return factorWidth;
         else return factorHeight;
+    }
+
+   /** Método que nos devuelve un array de tamaño 4 con la posicion en x, y real, al igual que el tamaño
+     * @param x
+     * @param y
+   */
+   public int[] physicalToLogical(int x, int y)
+    {
+        float factor = getScaleFactor();
+        int newx1=(int)(logWidth/2-((winWidth/factor)/2));
+        int newy1=(int)(logHeight/2-((winHeight/factor)/2));
+        return new int[]{(int)(newx1 + x/ factor), (int)( newy1 + y / factor)};
     }
 
     /**
@@ -65,35 +77,15 @@ public abstract class AbstractGraphics implements Graphics {
         return new int[]{posTranslate[0], posTranslate[1], tamScale[0], tamScale[1]};
     }
 
-    @Override
-    public Image newImage(String name) {
-        return null;
-    }
 
-    @Override
-    public Font newFont(String filename, float size, boolean isBold) {
-        return null;
-    }
-
-    @Override
-    public void drawPixel(int x, int y, int color) {
-
-    }
-
-    @Override
-    public void drawLine(int x, int y, int x2, int y2, int color) {
-
-    }
 
     @Override
     public void drawRect(int x, int y, int width, int height, int color) {
-
+        int[] rectDest = getRealDestRect(x, y, width, height);
+        drawRealRect(rectDest[0], rectDest[1],rectDest[2],rectDest[3], color);
     }
 
-    @Override
-    public void clear(int color) {
 
-    }
 
     @Override
     public int[] translate(int x, int y, float scale_factor) {
@@ -114,15 +106,7 @@ public abstract class AbstractGraphics implements Graphics {
         return new int[]{wDest, hDest};
     }
 
-    @Override
-    public int save() {
-        return 0;
-    }
 
-    @Override
-    public void restore() {
-
-    }
 
     @Override
     public void drawImage(Image image, int x, int y) {
@@ -136,24 +120,31 @@ public abstract class AbstractGraphics implements Graphics {
         drawRealImage(image, rectDest[0], rectDest[1], rectDest[2], rectDest[3]);
     }
 
-    @Override
-    public void setColor(int color) {
 
-    }
 
     @Override
     public void fillCircle(float cx, float cy, int r) {
-
+        int[] rectDest = getRealDestRect((int)cx, (int)cy, 0, 0);
+        fillRealCircle(rectDest[0], rectDest[1],r);
     }
 
     @Override
     public void drawText(String text, Font font, int x, int y) {
 
+        int[] rectDest = getRealDestRect(x, y, 0, 0);
+        drawRealText(text,font, rectDest[0], rectDest[1]);
     }
 
     //Método implementado por cada módulo en PCGraphics y en AndroidGraphics para dibujar la imagen
     //con las coordenadas y tamaño ya habiendo pasado por el factor de escalado
     public abstract void drawRealImage(Image image, int x, int y, int w, int h);
-
     public abstract void drawRealImage(Image image, int x, int y);
+    public abstract void drawRealText(String text, Font font, int x, int y);
+    public abstract void drawRealRect(int x, int y, int w, int h, int color);
+    public abstract void fillRealCircle(float cx, float cy, int r);
+
+
+
+
+
 }

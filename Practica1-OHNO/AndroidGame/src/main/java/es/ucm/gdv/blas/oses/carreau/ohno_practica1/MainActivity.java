@@ -7,13 +7,13 @@ import android.view.View;
 
 //Imports del juego
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
-import es.ucm.gdv.blas.oses.carreau.ohno_practica1.AndroidGame;
+import es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidGame;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.FileIO;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.LoadingScreen;
 
 
 
-public class OhnoGame extends AndroidGame {
+public class MainActivity extends AndroidGame {
     //Button button;
     int touchCount;
     Screen screen;

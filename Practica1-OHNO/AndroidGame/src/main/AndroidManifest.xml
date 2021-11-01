@@ -11,7 +11,7 @@
         android:theme="@style/Theme.OHNOPractica1"
         android:hardwareAccelerated="true"
         >
-        <activity android:name=".OhnoGame"
+        <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
