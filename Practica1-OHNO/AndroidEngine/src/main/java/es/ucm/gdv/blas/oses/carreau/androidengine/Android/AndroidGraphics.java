@@ -16,7 +16,6 @@ import android.graphics.Typeface;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 import  es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidFont;
 
@@ -76,9 +75,9 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawRealText(String text, Font font, int x, int y) {
-
-        paint.setTypeface(((AndroidFont) font)._font);
-        if (font != null) {
+        Typeface aFont = ((AndroidFont) font)._font;
+        if (font != null && aFont != null) {
+            paint.setTypeface(aFont);
             canvas.drawText(text, x, y, paint);
         }
     }
@@ -148,5 +147,9 @@ public class AndroidGraphics extends AbstractGraphics {
 
         AndroidFont font = new AndroidFont(Typeface.createFromAsset(this.assets, filename), size, filename);
         return font;
+    }
+
+    public void setCanvas(Canvas canvas){
+        this.canvas = canvas;
     }
 }

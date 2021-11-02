@@ -4,11 +4,9 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 
 public class AndroidImage implements Image{
     Bitmap bitmap;
-    //PixmapFormat format;
 
     public AndroidImage(Bitmap bitmap) {
         this.bitmap = bitmap;
-        //this.format = format;
     }
     public int getWidth() {
         return bitmap.getWidth();

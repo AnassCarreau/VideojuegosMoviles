@@ -3,7 +3,9 @@ package es.ucm.gdv.blas.oses.carreau.androidengine.Android;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.os.Bundle;
+import android.graphics.Canvas;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -14,23 +16,24 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
-import es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidFastRenderView;
 
-public abstract class AndroidGame extends AppCompatActivity implements Engine, Runnable {
-    AndroidFastRenderView renderView;
-    Graphics graphics;
-    Input input;
+public class AndroidGame  implements Engine, Runnable {
+    SurfaceView renderView;
+    AndroidGraphics graphics;
+    AndroidInput input;
     Screen screen;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    //Para avisar al compilador que el valor de este atributo
+    //puede ser cambiado en una hebra
+    volatile boolean running_ = false;
+    Thread thread_;
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+    public AndroidGame(AppCompatActivity activity) {
+        activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        boolean isLandscape = getResources().getConfiguration().orientation ==
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        boolean isLandscape = activity.getResources().getConfiguration().orientation ==
                 Configuration.ORIENTATION_LANDSCAPE;
         int frameBufferWidth = isLandscape ? 480 : 320;
         int frameBufferHeight = isLandscape ? 320 : 480;
@@ -40,10 +43,10 @@ public abstract class AndroidGame extends AppCompatActivity implements Engine, R
                 / getWindowManager().getDefaultDisplay().getWidth();
         float scaleY = (float) frameBufferHeight
                 / getWindowManager().getDefaultDisplay().getHeight();*/
-        renderView = new AndroidFastRenderView(this, frameBuffer);
-        graphics = new AndroidGraphics( getAssets(), frameBuffer);
+        renderView = new SurfaceView(activity.getApplicationContext());//AndroidFastRenderView(this, frameBuffer);
+        graphics = new AndroidGraphics(activity.getAssets(), frameBuffer);
         input = new AndroidInput(this, renderView);
-        setContentView(renderView);
+        activity.setContentView(renderView);
     }
 
     public Input getInput() {
@@ -58,36 +61,71 @@ public abstract class AndroidGame extends AppCompatActivity implements Engine, R
         return screen;
     }
 
-     @Override
     public void onResume() {
-        super.onResume();
-       // screen.resume();
-        renderView.resume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        renderView.pause();
-       // screen.pause();
-        if (isFinishing())
-        {
-          //  screen.dispose();
+        //Lanzar hebra
+        if (!running_) {
+            running_ = true;
+            thread_ = new Thread(this);
+            thread_.start();
         }
     }
+
+    public void onPause() {
+        //Parar hebra
+        running_ = false;
+        while (true) {
+            try {
+                thread_.join();
+                break;
+            }
+            //Suelta excepcion si despues de hacer el join,
+            // la hebra recibe un mensaje y la reactiva.
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void setScreen(Screen screen) {
         if (screen == null)
             throw new IllegalArgumentException("Screen must not be null");
-       // this.screen.pause();
-       // this.screen.dispose();
-       // screen.resume();
-        screen.update(0);
         this.screen = screen;
     }
-    //TO ERASE
-    Bitmap _sprite;
-    int _imageWidth;
 
+    public SurfaceView getView(){
+        return renderView;
+    }
 
+    @Override
+    public void run() {
+        //Aqui iria el bucle principal
+        long _lastFrameTime = System.nanoTime();
+        //Guarda una superficie donde se puede pintar
+        SurfaceHolder holder = renderView.getHolder();
+
+        while (running_) {
+            //update & render
+            long currentTime = System.nanoTime();
+            long nanoElapsedTime = currentTime - _lastFrameTime;
+            _lastFrameTime = currentTime;
+
+            double deltaTime = (double) nanoElapsedTime / 10E09;
+
+            screen.update(deltaTime);
+
+            //Bloqueamos hasta que conseguimos la superficies
+            while (!holder.getSurface().isValid()) ;
+
+            //Pedimos el canvas para poder pintar
+            Canvas canvas = holder.lockCanvas();
+            //Setteamos el canvas para usarlo al pintar
+            this.graphics.setCanvas(canvas);
+            //Pintamos
+            screen.render();
+
+            //Hacemos el swap de los buffers de pintado
+            holder.unlockCanvasAndPost(canvas);
+        }
+    }
 }

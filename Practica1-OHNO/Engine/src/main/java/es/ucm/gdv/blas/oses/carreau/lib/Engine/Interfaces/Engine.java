@@ -6,8 +6,6 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 public interface Engine {
     public Input getInput();
 
-    public FileIO getFileIO();
-
     public Graphics getGraphics();
 
     public void setScreen(Screen screen);

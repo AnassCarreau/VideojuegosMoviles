@@ -3,10 +3,8 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 import java.awt.image.BufferStrategy;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.FileIO;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
-import es.ucm.gdv.blas.oses.carreau.lib.PCInput;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
 
 public class PCGame implements Engine {
@@ -59,12 +57,6 @@ public class PCGame implements Engine {
     @Override
     public Input getInput() {
         return this.pc_input;
-    }
-
-    //TO DO: mirar que es esta wea xD
-    @Override
-    public FileIO getFileIO() {
-        return null;
     }
 
     @Override
