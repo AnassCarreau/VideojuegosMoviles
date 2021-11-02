@@ -72,7 +72,7 @@ public abstract class AbstractGraphics implements Graphics {
         int[] posTranslate = translate(x, y, scale_factor);
 
         //escalamos el tamaño haciendo uso del scale_factor
-        int[] tamScale = scale(x, y, scale_factor);
+        int[] tamScale = scale(w, h, scale_factor);
 
         return new int[]{posTranslate[0], posTranslate[1], tamScale[0], tamScale[1]};
     }

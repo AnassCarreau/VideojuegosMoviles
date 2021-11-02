@@ -16,6 +16,8 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     Window window;
     java.awt.image.BufferStrategy strategy;
+    //int yBorder = 0;
+
 
     public PCGraphics(Window window, int Width, int Height) {
         this.window = window;
@@ -24,6 +26,10 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
         this.logHeight = Height;
         this.winWidth = window.getWidth();
         this.winHeight = window.getHeight();
+        //yBorder = window.getInsets().top;
+
+        //System.out.println(yBorder);
+
     }
 
     @Override
@@ -67,7 +73,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     public void drawRealRect(int x, int y, int width, int height, int color) {
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.setColor(new Color(color));
-        g.drawRect(x, y, width, height);
+        g.drawRect(x, y /*+ yBorder*/, width, height);
     }
 
     //practica
@@ -97,14 +103,14 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     @Override
     public void drawRealImage(Image image, int x, int y) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.drawImage(((PCImage) image)._image, x, y, null);
+        g.drawImage(((PCImage) image)._image, x, y/* + yBorder*/, null);
     }
 
 
     @Override
     public void drawRealImage(Image img, int x, int y, int w, int h) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.drawImage(((PCImage) img)._image, x, y, w, h, null);
+        g.drawImage(((PCImage) img)._image, x, y /*+ yBorder*/, w, h, null);
     }
 
 
@@ -129,7 +135,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
         int len = g.getFontMetrics().stringWidth(text) / 2;
 
-        g.drawString(text, (int) x - len, y);
+        g.drawString(text, (int) x - len, y /*+ yBorder*/);
     }
 
     @Override

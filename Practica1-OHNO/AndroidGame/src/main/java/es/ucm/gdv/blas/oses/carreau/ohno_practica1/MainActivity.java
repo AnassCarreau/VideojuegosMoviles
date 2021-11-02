@@ -23,17 +23,13 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.game = new AndroidGame(this);
+        this.game = new AndroidGame(this,400,600);
 
         LoadingScreen loadScreen = new LoadingScreen(game);
         game.setScreen(loadScreen);
         loadScreen.init();
 
 
-        //button = new Button(this);
-        //screen = getStartScreen();
-        //button.setText("Touch me!");
-        //button.setOnClickListener(this);
         setContentView(game.getView());
     }
 

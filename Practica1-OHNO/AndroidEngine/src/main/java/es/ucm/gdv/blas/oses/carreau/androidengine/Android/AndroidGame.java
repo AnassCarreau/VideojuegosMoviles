@@ -29,7 +29,7 @@ public class AndroidGame  implements Engine, Runnable {
     volatile boolean running_ = false;
     Thread thread_;
 
-    public AndroidGame(AppCompatActivity activity) {
+    public AndroidGame(AppCompatActivity activity, int logicalWidth, int logicalHeight) {
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -40,14 +40,11 @@ public class AndroidGame  implements Engine, Runnable {
         int frameBufferHeight = isLandscape ? 320 : 480;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
-      /*  float scaleX = (float) frameBufferWidth
-                / getWindowManager().getDefaultDisplay().getWidth();
-        float scaleY = (float) frameBufferHeight
-                / getWindowManager().getDefaultDisplay().getHeight();*/
+
         renderView = new SurfaceView(activity.getApplicationContext());//AndroidFastRenderView(this, frameBuffer);
         Point p=new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(p);
-        graphics = new AndroidGraphics(activity.getAssets(), frameBuffer,400,600,p.x,p.y );
+        graphics = new AndroidGraphics(activity.getAssets(), frameBuffer,logicalWidth,logicalHeight,p.x,p.y );
 
         input = new AndroidInput(this, renderView);
         activity.setContentView(renderView);
