@@ -74,7 +74,12 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     @Override
     public void clear(int color) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.setColor(new Color(color));
+        int red = (int)((color & 0xffffffffL) >> 24);
+        int green = (color & 0x00ff0000)>> 16;
+        int blue = (color & 0x0000ff00)>>8;
+        int alpha = color & 0x000000ff;
+        Color c = new Color(red, green,blue,alpha);
+        g.setColor(c);
         g.fillRect(0, 0, getWindowWidth(), getWindowHeight());
 
     }
@@ -106,7 +111,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     @Override
     public void setColor(int color) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.setColor(Color.GRAY);
+        g.setColor(new Color(color));
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
@@ -44,7 +45,10 @@ public class AndroidGame  implements Engine, Runnable {
         float scaleY = (float) frameBufferHeight
                 / getWindowManager().getDefaultDisplay().getHeight();*/
         renderView = new SurfaceView(activity.getApplicationContext());//AndroidFastRenderView(this, frameBuffer);
-        graphics = new AndroidGraphics(activity.getAssets(), frameBuffer);
+        Point p=new Point();
+        activity.getWindowManager().getDefaultDisplay().getSize(p);
+        graphics = new AndroidGraphics(activity.getAssets(), frameBuffer,400,600,p.x,p.y );
+
         input = new AndroidInput(this, renderView);
         activity.setContentView(renderView);
     }

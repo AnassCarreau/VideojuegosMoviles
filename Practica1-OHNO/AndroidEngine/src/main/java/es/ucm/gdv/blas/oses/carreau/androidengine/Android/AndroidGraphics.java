@@ -17,7 +17,8 @@ import android.graphics.Typeface;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
-import  es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidFont;
+
+
 
 public class AndroidGraphics extends AbstractGraphics {
     AssetManager assets;
@@ -27,18 +28,24 @@ public class AndroidGraphics extends AbstractGraphics {
     Rect srcRect = new Rect();
     Rect dstRect = new Rect();
 
-    public AndroidGraphics(AssetManager assets, Bitmap frameBuffer) {
+    public AndroidGraphics(AssetManager assets, Bitmap frameBuffer,int logWidth, int logHeight,int winWidth,int winHeight ) {
         this.assets = assets;
         this.frameBuffer = frameBuffer;
         this.canvas = new Canvas(frameBuffer);
         this.paint = new Paint();
+        this.logWidth = logWidth;
+        this.logHeight = logHeight;
+        this.winWidth = winWidth;
+        this.winHeight = winHeight;
+
     }
 
     @Override
     public void clear(int color) {
-        canvas.drawRGB((color & 0xff0000) >> 16, (color & 0xff00) >> 8,
-                (color & 0xff));
+        int c=(color & 0xffffff00) >> 8 | (color& 0x000000ff)<<24;
+        canvas.drawColor(c);
     }
+
 
     ////////////////////METODOS DE TRANSFORMACION//////////////////////////////
     /*@Override
@@ -64,22 +71,40 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void setColor(int color) {
-        this.paint.setColor(color);
+        int c=(color & 0xffffff00) >> 8 | (color& 0x000000ff)<<24;
+        this.paint.setColor(c);
     }
 
     ////////////////////METODOS DE DIBUJADO//////////////////////////////
     @Override
     public void fillRealCircle(float cx, float cy, int r) {
         this.canvas.drawCircle(cx, cy, r, this.paint);
+        paint.reset();
+
     }
 
     @Override
     public void drawRealText(String text, Font font, int x, int y) {
         Typeface aFont = ((AndroidFont) font)._font;
+
         if (font != null && aFont != null) {
             paint.setTypeface(aFont);
+            paint.setTextSize(getScaleFactor() * font.getFontSize());
+            paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText(text, x, y, paint);
+            paint.reset();
+
         }
+
+
+/*
+        java.awt.Graphics g = strategy.getDrawGraphics();
+        g.setFont( ((PCFont) font)._font.deriveFont((float) (((PCFont) font)._font).getSize() * getScaleFactor()));
+
+        int len = g.getFontMetrics().stringWidth(text) / 2;
+
+        g.drawString(text, (int) x - len, y);
+  */
     }
 
     @Override
@@ -106,9 +131,11 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawRealRect(int x, int y, int width, int height, int color) {
-        paint.setColor(color);
-        paint.setStyle(Style.FILL);
-        canvas.drawRect(x, y, x + width - 1, y + width - 1, paint);
+        setColor(color);
+        paint.setStyle(Style.STROKE);
+        canvas.drawRect(x, y, x + width , y + width , paint);
+        paint.reset();
+
     }
 
     ////////////////////METODOS DE CREACION//////////////////////////////

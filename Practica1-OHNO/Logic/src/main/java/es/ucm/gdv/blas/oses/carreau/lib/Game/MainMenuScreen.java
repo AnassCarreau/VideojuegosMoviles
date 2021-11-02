@@ -7,7 +7,6 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
-import es.ucm.gdv.blas.oses.carreau.lib.Game.GameScreen;
 
 public class MainMenuScreen implements Screen {
 
@@ -43,15 +42,16 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render() {
-        Graphics g = engine.getGraphics();
-        g.clear(Color.WHITE.getRGB());
+        Graphics g = engine.getGraphics();;
+        g.clear(0XFFFF00FF);
         g.drawImage(Assets.q42, g.getLogWidth()/2  - Assets.q42.getWidth()/24, g.getLogHeight()/4 * 3 ,Assets.q42.getWidth()/12,Assets.q42.getHeight()/9);
+        g.setColor(0x000000FF);
         g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6);
         g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2);
-        g.drawRect(g.getLogWidth()/2, g.getLogHeight()/2, 200, 100, Color.BLUE.getRGB());
-
-        g.setColor(Color.GRAY.getRGB());
+        g.drawRect(g.getLogWidth()/2, g.getLogHeight()/2, 200, 100, 0x0000FFFF);
+       // g.setColor(0xCCCCCCFF);
         g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 );
+       // g.setColor(0xCCCCCCFF);
         g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/7 * 5);
 
     }

@@ -1,7 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces;
 
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
-
 public interface Graphics {
     public Image newImage(String name);
 
