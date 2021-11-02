@@ -31,6 +31,17 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
         //System.out.println(yBorder);
 
     }
+    /*@Override
+   public void translate(float x, float y) {
+       java.awt.Graphics g = strategy.getDrawGraphics();
+       g.translate((int) x, (int) y);
+   }
+
+   @Override
+   public void scale(float x, float y) {
+       window.setSize((int) x, (int) y);
+   }
+   */
 
     @Override
     public Image newImage(String name) {
