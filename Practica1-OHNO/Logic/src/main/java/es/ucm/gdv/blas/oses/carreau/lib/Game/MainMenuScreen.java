@@ -1,6 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
-import java.awt.Color;
 import java.util.List;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
@@ -19,7 +18,10 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void init() {
+
         Graphics g = engine.getGraphics();
+        g.scale(g.getLogWidth(), g.getLogHeight());
+
     }
 
     @Override
@@ -33,7 +35,7 @@ public class MainMenuScreen implements Screen {
             if (event.type == TouchEvent.TOUCH_UP) {
                 System.out.println("evento TOUCH_UP");
                 if (inBounds(event, g.getLogWidth()/2, g.getLogHeight()/2, 200, 100)) {
-                    engine.setScreen(new GameScreen(engine));
+                    engine.setScreen(new GameScreen(engine,4));
                     return;
                 }
             }
@@ -42,7 +44,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render() {
-        Graphics g = engine.getGraphics();;
+        Graphics g = engine.getGraphics();
         g.clear(0XFFFFFFFF);
         g.drawImage(Assets.q42, g.getLogWidth()/2  - Assets.q42.getWidth()/24, g.getLogHeight()/4 * 3 ,Assets.q42.getWidth()/14,Assets.q42.getHeight()/14);
         g.setColor(0x000000FF);

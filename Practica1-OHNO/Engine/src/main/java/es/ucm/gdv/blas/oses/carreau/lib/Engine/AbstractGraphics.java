@@ -26,7 +26,6 @@ public abstract class AbstractGraphics implements Graphics {
     public int getLogHeight(){
         return logHeight;
     }
-    //Estos dos métodos se usan solo en el clear de PCGraphics
     @Override
     public int getWindowWidth(){
         return (int)winWidth;
@@ -37,7 +36,7 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     //Método que nos devuelve el factor de escalado a aplicar
-    protected float getScaleFactor(){
+    public float getScaleFactor(){
         float factorWidth = winWidth / logWidth;
         float factorHeight = winHeight / logHeight;
 
@@ -65,14 +64,14 @@ public abstract class AbstractGraphics implements Graphics {
      * @param h
      * @return int[4]
      */
-    private int[] getRealDestRect(int x, int y, int w, int h){
+    protected int[] getRealDestRect(int x, int y, int w, int h){
         float scale_factor = getScaleFactor();
 
         //trasladamos las coordenadas haciendo uso del scale_factor
-        int[] posTranslate = translate(x, y, scale_factor);
+        int[] posTranslate = translateBorder(x, y, scale_factor);
 
         //escalamos el tamaño haciendo uso del scale_factor
-        int[] tamScale = scale(w, h, scale_factor);
+        int[] tamScale = scaleBorder(w, h, scale_factor);
 
         return new int[]{posTranslate[0], posTranslate[1], tamScale[0], tamScale[1]};
     }
@@ -86,9 +85,7 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
 
-
-    @Override
-    public int[] translate(int x, int y, float scale_factor) {
+    public int[] translateBorder(int x, int y, float scale_factor) {
         int newX1 = (int)(winWidth/2 - ((logWidth * scale_factor) / 2));
         int newY1 = (int)(winHeight/2 - ((logHeight * scale_factor) / 2));
 
@@ -98,15 +95,12 @@ public abstract class AbstractGraphics implements Graphics {
         return new int[]{xDest, yDest};
     }
 
-    @Override
-    public int[] scale(int w, int h, float scale_factor) {
+    public int[] scaleBorder(int w, int h, float scale_factor) {
         int wDest = (int)(w * scale_factor);
         int hDest = (int)(h * scale_factor);
 
         return new int[]{wDest, hDest};
     }
-
-
 
     @Override
     public void drawImage(Image image, int x, int y) {
@@ -124,8 +118,9 @@ public abstract class AbstractGraphics implements Graphics {
 
     @Override
     public void fillCircle(float cx, float cy, int r) {
-        int[] rectDest = getRealDestRect((int)cx, (int)cy, 0, 0);
-        fillRealCircle(rectDest[0], rectDest[1],r);
+        float scaleFactor = getScaleFactor();
+        int[] pos = translateBorder((int)cx, (int)cy, scaleFactor);
+        fillRealCircle(pos[0], pos[1],(int)(r * scaleFactor));
     }
 
     @Override
@@ -142,6 +137,9 @@ public abstract class AbstractGraphics implements Graphics {
     public abstract void drawRealText(String text, Font font, int x, int y);
     public abstract void drawRealRect(int x, int y, int w, int h, int color);
     public abstract void fillRealCircle(float cx, float cy, int r);
+    public abstract void translate(float x, float y);
+    public abstract void scale(float x, float y);
+
 
 
 

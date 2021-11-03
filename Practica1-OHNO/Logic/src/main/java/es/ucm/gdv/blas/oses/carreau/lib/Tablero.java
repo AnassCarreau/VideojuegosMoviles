@@ -446,5 +446,9 @@ public class Tablero {
         return adyInDir;
     }
 
+    public Celda getCelda(int x, int y){
+        return _tablero[x][y];
+    }
+
 
 }
