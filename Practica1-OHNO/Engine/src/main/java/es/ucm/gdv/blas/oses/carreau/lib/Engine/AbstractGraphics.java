@@ -124,17 +124,17 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     @Override
-    public void drawText(String text, Font font, int x, int y) {
+    public void drawText(String text, Font font, int x, int y,float tam) {
 
         int[] rectDest = getRealDestRect(x, y, 0, 0);
-        drawRealText(text,font, rectDest[0], rectDest[1]);
+        drawRealText(text,font, rectDest[0], rectDest[1],tam);
     }
 
     //Método implementado por cada módulo en PCGraphics y en AndroidGraphics para dibujar la imagen
     //con las coordenadas y tamaño ya habiendo pasado por el factor de escalado
     public abstract void drawRealImage(Image image, int x, int y, int w, int h);
     public abstract void drawRealImage(Image image, int x, int y);
-    public abstract void drawRealText(String text, Font font, int x, int y);
+    public abstract void drawRealText(String text, Font font, int x, int y,float tam);
     public abstract void drawRealRect(int x, int y, int w, int h, int color);
     public abstract void fillRealCircle(float cx, float cy, int r);
     public abstract void translate(float x, float y);

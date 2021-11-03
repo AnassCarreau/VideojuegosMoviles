@@ -48,16 +48,16 @@ public class AndroidGraphics extends AbstractGraphics {
 
 
     ////////////////////METODOS DE TRANSFORMACION//////////////////////////////
-    /*@Override
-    public void translate(int x, int y) {
+    @Override
+    public void translate(float x, float y) {
         this.canvas.translate(x, y);
     }
 
     @Override
-    public void scale(int w, int h) {
+    public void scale(float w, float h) {
         this.canvas.scale(w, h);
     }
-     */
+
 
     @Override
     public int save() {
@@ -84,12 +84,12 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void drawRealText(String text, Font font, int x, int y) {
+    public void drawRealText(String text, Font font, int x, int y,float tam) {
         Typeface aFont = ((AndroidFont) font)._font;
 
         if (font != null && aFont != null) {
             paint.setTypeface(aFont);
-            paint.setTextSize(getScaleFactor() * font.getFontSize());
+            paint.setTextSize(getScaleFactor() * tam);
             paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText(text, x, y, paint);
             paint.reset();

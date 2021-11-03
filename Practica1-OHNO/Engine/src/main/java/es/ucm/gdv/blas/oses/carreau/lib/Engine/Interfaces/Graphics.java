@@ -36,5 +36,5 @@ public interface Graphics {
 
     public void fillCircle(float cx, float cy, int r);
 
-    public void drawText(String text,Font font, int x, int y);
+    public void drawText(String text,Font font, int x, int y,float tam);
 };

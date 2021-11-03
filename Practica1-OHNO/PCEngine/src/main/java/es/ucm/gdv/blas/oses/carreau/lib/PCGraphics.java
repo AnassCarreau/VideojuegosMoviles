@@ -142,12 +142,11 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     }
 
     @Override
-    public void drawRealText(String text, Font font, int x, int y) {
+    public void drawRealText(String text, Font font, int x, int y ,float tam) {
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.setColor(currentColor);
-        g.setFont( ((PCFont) font)._font.deriveFont((float) (((PCFont) font)._font).getSize() * getScaleFactor()));
+        g.setFont( ((PCFont) font)._font.deriveFont(tam * getScaleFactor()));
         int len = g.getFontMetrics().stringWidth(text) / 2;
-
         g.drawString(text, (int) x - len, y /*+ yBorder*/);
     }
 
