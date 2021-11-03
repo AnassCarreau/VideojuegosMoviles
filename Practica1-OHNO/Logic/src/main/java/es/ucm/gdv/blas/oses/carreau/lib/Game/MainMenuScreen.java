@@ -52,7 +52,7 @@ public class MainMenuScreen implements Screen {
         g.setColor(0xCCCCCCFF);
         g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 );
         g.setColor(0xCCCCCCFF);
-        g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/7 * 5);
+        g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/9 * 7   );
 
     }
 

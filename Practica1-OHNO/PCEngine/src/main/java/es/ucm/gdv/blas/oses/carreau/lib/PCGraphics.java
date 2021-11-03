@@ -128,7 +128,12 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     @Override
     public void setColor(int color) {
         java.awt.Graphics g = strategy.getDrawGraphics();
-        g.setColor(new Color(color));
+        int red = (int)((color & 0xffffffffL) >> 24);
+        int green = (color & 0x00ff0000)>> 16;
+        int blue = (color & 0x0000ff00)>>8;
+        int alpha = color & 0x000000ff;
+        Color c = new Color(red, green,blue,alpha);
+        g.setColor(c);
     }
 
     @Override
@@ -136,6 +141,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
         int diameter = r * 2;
         java.awt.Graphics g = strategy.getDrawGraphics();
         //shift x and y by the radius of the circle in order to correctly center it
+        g.setColor(Color.blue);
         g.fillOval((int) cx - r, (int) cy - r, diameter, diameter);
     }
 
@@ -143,7 +149,6 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     public void drawRealText(String text, Font font, int x, int y) {
         java.awt.Graphics g = strategy.getDrawGraphics();
         g.setFont( ((PCFont) font)._font.deriveFont((float) (((PCFont) font)._font).getSize() * getScaleFactor()));
-
         int len = g.getFontMetrics().stringWidth(text) / 2;
 
         g.drawString(text, (int) x - len, y /*+ yBorder*/);
