@@ -33,11 +33,11 @@ public class MainMenuScreen implements Screen {
         g.setColor(0x000000FF);
         g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,Assets.molleregular.getFontSize());
         g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2,Assets.josefisans.getFontSize());
-        g.drawRect(g.getLogWidth()/2, g.getLogHeight()/2, 200, 100, 0x0000FFFF);
+        g.drawRect(g.getLogWidth()/2 - 200/2, g.getLogHeight()/2 - 100/2, 200, 100, 0x0000FFFF);
         g.setColor(0xCCCCCCFF);
-        g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 ,Assets.josefisans.getFontSize());
+        g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 ,(int)(Assets.josefisans.getFontSize()/1.5));
         g.setColor(0xCCCCCCFF);
-        g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/9 * 7,Assets.josefisans.getFontSize()   );
+        g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/9 * 7,(int)(Assets.josefisans.getFontSize()/1.5));
 
     }
 
@@ -51,7 +51,8 @@ public class MainMenuScreen implements Screen {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
                 System.out.println("evento TOUCH_UP");
-                if (inBounds(event, g.getLogWidth()/2, g.getLogHeight()/2, 200, 100)) {
+
+                if (inBounds(event, g.getLogWidth()/2 - 200/2, g.getLogHeight()/2-100/2, 200, 100)) {
                     engine.setScreen(new ChooseLevelScreen(engine));
                     return;
                 }

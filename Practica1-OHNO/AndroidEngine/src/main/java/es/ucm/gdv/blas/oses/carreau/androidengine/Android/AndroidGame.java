@@ -112,7 +112,7 @@ public class AndroidGame  implements Engine, Runnable {
             _lastFrameTime = currentTime;
 
             double deltaTime = (double) nanoElapsedTime / 10E09;
-
+            screen.handleEvents();
             screen.update(deltaTime);
 
             //Bloqueamos hasta que conseguimos la superficies

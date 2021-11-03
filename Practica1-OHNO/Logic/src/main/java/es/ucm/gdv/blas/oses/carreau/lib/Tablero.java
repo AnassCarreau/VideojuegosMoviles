@@ -201,16 +201,18 @@ public class Tablero {
      * Metodo que comprueba si la situacion actual del tablero corresponde a una solucion
      */
     public boolean tableroResuelto(){
-        int i = 0;
+
+        //if(!pistas.isEmpty())
+        /*int i = 0;
         while( i < _azulesFijas.size()){
             Pair p = _azulesFijas.get(i);
             Celda c = _tablero[(int)(p.getLeft())][(int)(p.getRight())];
 
             if(c.getValorDefault() != c.getCurrentVisibles()) return false;
             i++;
-        }
+        }*/
 
-        return true;
+        return pistas.isEmpty();
     }
 
     public String damePistaAleatoria(){
@@ -283,7 +285,7 @@ public class Tablero {
 
                 }
                 //PISTA 6.1
-                else if(actual.getEstado() == EstadoCelda.Azul && actual.isModifiable() && ady.getRight()){
+                else if(actual.getEstado() == EstadoCelda.Azul && actual.isModifiable() && ady.getRight() && ady.getLeft() == 0){
                     nuevasPistas.addPista(TipoPista.LockedIn, i,j);
                 }
                 //PISTA 6.2
@@ -323,7 +325,7 @@ public class Tablero {
      * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
      * casillas que ven las celdas azules predefinidas utilizando el metodo de compruebaAdyacentes()
      */
-    public boolean cambiaCelda(){
+    public boolean cambiaCelda(int _posX, int _posY){
         if (_tablero[_posX][_posY].isModifiable()){
             //EstadoCelda sig = EstadoCelda.values()[(_tablero[_posX][_posY].getEstado().ordinal() + 1) % EstadoCelda.Default.ordinal()];
             EstadoCelda sig = EstadoCelda.Vacia;

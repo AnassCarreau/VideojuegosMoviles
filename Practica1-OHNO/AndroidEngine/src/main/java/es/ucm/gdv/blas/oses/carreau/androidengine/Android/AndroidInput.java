@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Pool;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
@@ -15,10 +16,12 @@ public class AndroidInput implements View.OnTouchListener, Input {
     //Pool<TouchEvent> touchEventPool;
     List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
     Engine engine;
+    AbstractGraphics graphics;
 
     public AndroidInput(Engine engine,  View view) {
 
         this.engine=engine;
+        this.graphics = (AbstractGraphics) (engine.getGraphics());
         Pool.PoolObjectFactory<TouchEvent> factory = new Pool.PoolObjectFactory<TouchEvent>() {
             @Override
             public TouchEvent createObject() {
@@ -66,8 +69,9 @@ public class AndroidInput implements View.OnTouchListener, Input {
                         break;
                 }
                 touchEvent.pointer = event.getPointerId(i);
-                touchEvent.x = (int)event.getX(i);
-                touchEvent.y = (int)event.getY(i);
+                int[] pos = graphics.physicalToLogical((int)event.getX(i), (int)event.getY(i));
+                touchEvent.x = pos[0];
+                touchEvent.y = pos[1];
                 synchronized (this) {
                     touchEventsBuffer.add(touchEvent);
                 }

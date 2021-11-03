@@ -23,9 +23,15 @@ public class Pistas {
         listaPistas.add(new Pair(l, new Pair(posX, posY)));
     }
 
+    public boolean isEmpty(){
+        return listaPistas.isEmpty();
+    }
+
     public String getPistaTablero() {
         String s = new String();
         Pair<TipoPista, Pair<Integer, Integer>> p = getRandomCasilla();
+
+        if(p == null) return s;
 
         TipoPista tP = p.getLeft();
         Pair<Integer, Integer> pos = p.getRight();
@@ -79,7 +85,8 @@ public class Pistas {
     private  Pair<TipoPista, Pair<Integer, Integer>> getRandomCasilla()
     {
         Random r= new Random();
-        return listaPistas.get(r.nextInt(listaPistas.size()));
+        if(listaPistas.size() > 0) return listaPistas.get(r.nextInt(listaPistas.size()));
+        else return null;
     }
 
 

@@ -46,7 +46,7 @@ public class ChooseLevelScreen implements Screen {
         //Eleccion
         g.setColor(0x000000FF);
         g.drawText("Oh NO", Assets.molleregular, g.getLogWidth() / 2, g.getLogHeight() / 6,Assets.molleregular.getFontSize());
-        g.drawText("Elija el tamaño a jugar ", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 2 - (int) Assets.josefisans.getFontSize() * 2,Assets.josefisans.getFontSize());
+        g.drawText("Elija el tamaño a jugar ", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 2 - (int) Assets.josefisans.getFontSize() * 2,(int)(Assets.josefisans.getFontSize() /1.5));
 
         int radio = (g.getLogWidth() / 5) / 2;
         for (int i = 0; i < celdas.size(); i++) {

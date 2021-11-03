@@ -26,6 +26,8 @@ public class GameScreen implements Screen {
     //Pila con los últimos movimientos para así poder deshacer
     Stack<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
 
+    private boolean solved = false;
+
     public GameScreen(Engine eng, int tableroSize) {
         this.engine = eng;
         this.board = new Tablero(tableroSize);
@@ -41,26 +43,29 @@ public class GameScreen implements Screen {
 
     @Override
     public void update(double deltaTime) {
-
+        if(board.tableroResuelto()) solved = true;
     }
 
     @Override
     public void render() {
         Graphics g = engine.getGraphics();
-        g.clear(Color.WHITE.getRGB());
+        g.clear(0xFFFFFFFF);
 
+        g.setColor(0x000000FF);
         //Juego empezado
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
-        if(pista == null){
-            g.setColor(0x000000FF);
+        if(!solved && pista == null){
             g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (int) Assets.josefisans.getFontSize() * 2,Assets.josefisans.getFontSize());
         }
-        else{
+        else if(!solved){
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
-            g.setColor(0x000000FF);
             for(int i = 0; i < pista.length; i++){
                 g.drawText(pista[i] ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4 - ((int) Assets.josefisans.getFontSize() * 2) + ((int)Assets.josefisans.getFontSize() / 2 * i),Assets.josefisans.getFontSize()/2);
             }
+        }
+        else{
+            //Si llegamos aqui, significa que hemos resuelto el tablero
+            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (int) Assets.josefisans.getFontSize() * 2,Assets.josefisans.getFontSize());
         }
 
         int circleSize = g.getLogWidth() / boardDimensions;
@@ -144,20 +149,7 @@ public class GameScreen implements Screen {
                             pista = null;
                             //guardado del ultimo movimiento en una pila
                             ultimosMovs.push(new Pair(c.getEstado(), new Pair(k, j)));
-                            switch (c.getEstado()) {
-                                case Azul: {
-                                    c.setEstado(EstadoCelda.Rojo);
-                                    break;
-                                }
-                                case Rojo: {
-                                    c.setEstado(EstadoCelda.Vacia);
-                                    break;
-                                }
-                                case Vacia: {
-                                    c.setEstado(EstadoCelda.Azul);
-                                    break;
-                                }
-                            }
+                            board.cambiaCelda( k, j);
                             return;
                         }
                         else if(!c.isModifiable() && inBounds(event, x - circleSize / 2, y - circleSize / 2, circleSize, circleSize)){
@@ -172,11 +164,8 @@ public class GameScreen implements Screen {
 
 
     private boolean inBounds(Input.TouchEvent event, int x, int y, int width, int height) {
-        if (event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1)
-            return true;
-        else
-            return false;
+        return event.x > x && event.x < x + width && event.y > y && event.y < y + height;
+
     }
 
 }
