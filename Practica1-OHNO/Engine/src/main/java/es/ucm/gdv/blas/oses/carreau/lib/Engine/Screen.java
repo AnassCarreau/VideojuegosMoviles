@@ -7,10 +7,5 @@ public interface Screen {
 
     public void render();
 
-    //TO DO: REVISAR YA QUE ES SOLO NECESARIO EN ANDROID
-    //public void pause();
-
-    //public void resume();
-    //public void dispose();
-
+    public void handleEvents();
 }

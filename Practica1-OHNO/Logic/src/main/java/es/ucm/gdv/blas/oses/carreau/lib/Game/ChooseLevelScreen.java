@@ -23,7 +23,6 @@ public class ChooseLevelScreen implements Screen {
 
     @Override
     public void init() {
-
         celdas=new ArrayList<>();
         Graphics g = engine.getGraphics();
         int radio = (g.getLogWidth() / 5) / 2;
@@ -37,24 +36,6 @@ public class ChooseLevelScreen implements Screen {
     @Override
     public void update(double deltaTime) {
 
-        Graphics g = engine.getGraphics();
-        List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
-        int len = touchEvents.size();
-        for (int i = 0; i < len; i++) {
-            System.out.println("procesando eventos");
-            Input.TouchEvent event = touchEvents.get(i);
-            if (event.type == Input.TouchEvent.TOUCH_UP) {
-                System.out.println("evento TOUCH_UP");
-                int radio = (g.getLogWidth() / 5) / 2;
-
-                for (int j = 0; j < celdas.size(); j++) {
-                    if (inBounds(event,  celdas.get(j).getLeft() - radio, celdas.get(j).getRight() - radio, radio*2, radio*2))
-                    {
-                        engine.setScreen(new GameScreen(engine, j + 4));
-                    }
-                }
-            }
-        }
     }
 
 
@@ -77,6 +58,28 @@ public class ChooseLevelScreen implements Screen {
             g.drawText(Integer.toString(i + 4), Assets.josefisans,celdas.get(i).getLeft(), celdas.get(i).getRight()+ radio / 2,Assets.josefisans.getFontSize());
         }
         g.drawImage(Assets.close, g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth(), Assets.close.getHeight());
+    }
+
+    @Override
+    public void handleEvents() {
+        Graphics g = engine.getGraphics();
+        List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        int len = touchEvents.size();
+        for (int i = 0; i < len; i++) {
+            System.out.println("procesando eventos");
+            Input.TouchEvent event = touchEvents.get(i);
+            if (event.type == Input.TouchEvent.TOUCH_UP) {
+                System.out.println("evento TOUCH_UP");
+                int radio = (g.getLogWidth() / 5) / 2;
+
+                for (int j = 0; j < celdas.size(); j++) {
+                    if (inBounds(event,  celdas.get(j).getLeft() - radio, celdas.get(j).getRight() - radio, radio*2, radio*2))
+                    {
+                        engine.setScreen(new GameScreen(engine, j + 4));
+                    }
+                }
+            }
+        }
     }
 
 

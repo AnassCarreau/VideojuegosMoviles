@@ -216,6 +216,7 @@ public class Tablero {
     public String damePistaAleatoria(){
         return pistas.getPistaTablero();
     }
+
     public Pistas compruebaPistas(){
         Pistas nuevasPistas = new Pistas();
         for(int i = 0; i < _tablero.length; i++){
@@ -289,17 +290,17 @@ public class Tablero {
                 else if(actual.getEstado() == EstadoCelda.Vacia && compruebaVaciaEncerrada(i,j)){
                     nuevasPistas.addPista(TipoPista.MustBeWall, i,j);
                 }
-
             }
         }
         return nuevasPistas;
     }
 
-
+    //i es el numero de fila es decir la posicion en Y
+    //j es eñ numero de la columna es decir la posicion en X
     private boolean checkHint2(int i, int j, Pistas nuevasPistas){
         for(int k = 0 ; k < _dirs.size(); k++){
             Pair<Integer, Integer>dir = _dirs.get(k);
-            int auxX = i + dir.getLeft(), auxY = j+ dir.getRight();
+            int auxX = i + dir.getLeft(), auxY = j + dir.getRight();
             if(posCorrecta(auxX,auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia){
                 auxX += dir.getLeft();
                 auxY += dir.getRight();
@@ -375,23 +376,6 @@ public class Tablero {
     *
     * Este método se corresponde con la pista descrita en el punto nº6 de la practica
     *  */
-
-    private boolean casillaCerrada(int x, int y){
-        for(int i = 0 ; i < _dirs.size(); i++){
-            int auxX  = x + _dirs.get(i).getLeft();
-            int auxY  = y + _dirs.get(i).getRight();
-
-            while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() != EstadoCelda.Rojo){
-                if(_tablero[auxX][auxY].getEstado() != _tablero[x][y].getEstado()) return false;
-
-                auxX += _dirs.get(i).getLeft();
-                auxY += _dirs.get(i).getRight();
-            }
-        }
-
-        return true;
-    }
-
     private boolean compruebaVaciaEncerrada(int x, int y){
 
         for(int i = 0; i < _dirs.size(); i++){

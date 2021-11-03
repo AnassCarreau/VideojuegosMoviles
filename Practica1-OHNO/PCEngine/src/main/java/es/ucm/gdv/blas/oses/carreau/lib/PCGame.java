@@ -36,6 +36,7 @@ public class PCGame implements Engine {
 
             double deltaTime = (double) nanoDeltaTime / 1.0e9; //nanosegundos a segundos
 
+            screen.handleEvents();
             screen.update(deltaTime);
 
             // Pintamos el frame con el BufferStrategy

@@ -13,33 +13,16 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(Engine engine) {
         this.engine = engine;
-        init();
     }
 
     @Override
     public void init() {
 
-        Graphics g = engine.getGraphics();
-        g.scale(g.getLogWidth(), g.getLogHeight());
-
     }
 
     @Override
     public void update(double deltaTime) {
-        Graphics g = engine.getGraphics();
-        List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
-        int len = touchEvents.size();
-        for (int i = 0; i < len; i++) {
-            System.out.println("procesando eventos");
-            TouchEvent event = touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_UP) {
-                System.out.println("evento TOUCH_UP");
-                if (inBounds(event, g.getLogWidth()/2, g.getLogHeight()/2, 200, 100)) {
-                    engine.setScreen(new ChooseLevelScreen(engine));
-                    return;
-                }
-            }
-        }
+
     }
 
     @Override
@@ -58,6 +41,23 @@ public class MainMenuScreen implements Screen {
 
     }
 
+    @Override
+    public void handleEvents() {
+        Graphics g = engine.getGraphics();
+        List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        int len = touchEvents.size();
+        for (int i = 0; i < len; i++) {
+            System.out.println("procesando eventos");
+            TouchEvent event = touchEvents.get(i);
+            if (event.type == TouchEvent.TOUCH_UP) {
+                System.out.println("evento TOUCH_UP");
+                if (inBounds(event, g.getLogWidth()/2, g.getLogHeight()/2, 200, 100)) {
+                    engine.setScreen(new ChooseLevelScreen(engine));
+                    return;
+                }
+            }
+        }
+    }
 
 
     private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {

@@ -1,6 +1,8 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
+
 import java.awt.Color;
 import java.util.List;
+import java.util.Stack;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Celda;
@@ -10,6 +12,7 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.EstadoCelda;
+import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 
 public class GameScreen implements Screen {
@@ -17,69 +20,28 @@ public class GameScreen implements Screen {
     private Tablero board;
     private int boardDimensions;
 
-    String pista;
+    //array que será de dos posiciones para que asi la pista se escriba en dos lineas
+    String[] pista;
+
+    //Pila con los últimos movimientos para así poder deshacer
+    Stack<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
+
     public GameScreen(Engine eng, int tableroSize) {
         this.engine = eng;
         this.board = new Tablero(tableroSize);
         this.boardDimensions = tableroSize;
+        pista = null;
+        ultimosMovs = new Stack<>();
     }
 
     @Override
     public void init() {
-        Graphics g = engine.getGraphics();
         pista=null;
     }
 
     @Override
     public void update(double deltaTime) {
-        Graphics g = engine.getGraphics();
-        List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
-        //engine.getInput().getKeyEvents();
-        int len = touchEvents.size();
-        for (int i = 0; i < len; i++) {
-            TouchEvent event = touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_UP) {
-                if (inBounds(event, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2)) {
-                    engine.setScreen(new MainMenuScreen(engine));
-                    return;
-                } else if (inBounds(event, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2)) {
-                    //history
-                    return;
-                } else if (inBounds(event, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2)) {
-                    //eye
-                    pista = board.damePistaAleatoria();
-                    return;
-                }
-                int circleSize = g.getLogWidth() / boardDimensions;
-                int initialX = (int) (g.getLogWidth() / 2 - circleSize * ((float) boardDimensions / 2));
-                for (int j = 0; j < boardDimensions; j++) {
-                    for (int k = 0; k < boardDimensions; k++) {
-                        Celda c = board.getCelda(j, k);
-                        int x = initialX + circleSize / 2 + j * circleSize;
-                        int y = (g.getLogHeight() / 6) + circleSize / 2 + (k * circleSize);
-                        if (c.isModifiable() && inBounds(event, x - circleSize / 2, y - circleSize / 2, circleSize, circleSize)) {
 
-                            switch (c.getEstado()) {
-                                case Azul: {
-                                    c.setEstado(EstadoCelda.Rojo);
-                                    break;
-                                }
-                                case Rojo: {
-                                    c.setEstado(EstadoCelda.Vacia);
-                                    break;
-                                }
-                                case Vacia: {
-                                    c.setEstado(EstadoCelda.Azul);
-                                    break;
-                                }
-                            }
-                            return;
-                        }
-                    }
-                }
-
-            }
-        }
     }
 
     @Override
@@ -88,16 +50,25 @@ public class GameScreen implements Screen {
         g.clear(Color.WHITE.getRGB());
 
         //Juego empezado
-
-        g.setColor(0x000000FF);
-        g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (int) Assets.josefisans.getFontSize() * 2,Assets.josefisans.getFontSize());
+        //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
+        if(pista == null){
+            g.setColor(0x000000FF);
+            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (int) Assets.josefisans.getFontSize() * 2,Assets.josefisans.getFontSize());
+        }
+        else{
+            //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
+            g.setColor(0x000000FF);
+            for(int i = 0; i < pista.length; i++){
+                g.drawText(pista[i] ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4 - ((int) Assets.josefisans.getFontSize() * 2) + ((int)Assets.josefisans.getFontSize() / 2 * i),Assets.josefisans.getFontSize()/2);
+            }
+        }
 
         int circleSize = g.getLogWidth() / boardDimensions;
 
         int initialX = (int) (g.getLogWidth() / 2 - circleSize * ((float) boardDimensions / 2));
         for (int i = 0; i < boardDimensions; i++) {
             for (int j = 0; j < boardDimensions; j++) {
-                Celda c = board.getCelda(i, j);
+                Celda c = board.getCelda(j, i);
                 boolean hasNumber = false;
                 switch (c.getEstado()) {
                     case Azul: {
@@ -131,14 +102,72 @@ public class GameScreen implements Screen {
         g.drawImage(Assets.close, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2);
         g.drawImage(Assets.history, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2);
         g.drawImage(Assets.eye, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2);
+    }
 
-        if(pista!=null)
-        {
-            g.setColor(0x000000FF);
-            g.drawText( pista ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4,Assets.josefisans.getFontSize()/3);
-            g.drawText( pista ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4,Assets.josefisans.getFontSize()/3);
+    @Override
+    public void handleEvents() {
+        Graphics g = engine.getGraphics();
+        List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        //engine.getInput().getKeyEvents();
+        int len = touchEvents.size();
+        for (int i = 0; i < len; i++) {
+            TouchEvent event = touchEvents.get(i);
+            if (event.type == TouchEvent.TOUCH_UP) {
+                if (inBounds(event, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2)) {
+                    engine.setScreen(new ChooseLevelScreen(engine));
+                    return;
+                } else if (inBounds(event, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2)) {
+                    if(!ultimosMovs.empty()){
+                        Pair<EstadoCelda, Pair<Integer, Integer>> pairAux = ultimosMovs.peek();
+                        Celda auxCelda = board.getCelda(pairAux.getRight().getLeft(), pairAux.getRight().getRight());
+                        auxCelda.setEstado(pairAux.getLeft());
+                        ultimosMovs.pop();
+                    }
+                    else{
+                        pista = new String[]{"Nothing to undo."};
+                    }
+                    return;
+                } else if (inBounds(event, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2)) {
+                    //eye
+                    pista = board.damePistaAleatoria().split("#");
+                    return;
+                }
+                int circleSize = g.getLogWidth() / boardDimensions;
+                int initialX = (int) (g.getLogWidth() / 2 - circleSize * ((float) boardDimensions / 2));
+                for (int j = 0; j < boardDimensions; j++) {
+                    for (int k = 0; k < boardDimensions; k++) {
+                        Celda c = board.getCelda(k, j);
+                        int x = initialX + circleSize / 2 + j * circleSize;
+                        int y = (g.getLogHeight() / 6) + circleSize / 2 + (k * circleSize);
+                        if (c.isModifiable() && inBounds(event, x - circleSize / 2, y - circleSize / 2, circleSize, circleSize)) {
+                            //ponemos la pista a null si se ha pulsado ya en algun circulo del tablero
+                            pista = null;
+                            //guardado del ultimo movimiento en una pila
+                            ultimosMovs.push(new Pair(c.getEstado(), new Pair(k, j)));
+                            switch (c.getEstado()) {
+                                case Azul: {
+                                    c.setEstado(EstadoCelda.Rojo);
+                                    break;
+                                }
+                                case Rojo: {
+                                    c.setEstado(EstadoCelda.Vacia);
+                                    break;
+                                }
+                                case Vacia: {
+                                    c.setEstado(EstadoCelda.Azul);
+                                    break;
+                                }
+                            }
+                            return;
+                        }
+                        else if(!c.isModifiable() && inBounds(event, x - circleSize / 2, y - circleSize / 2, circleSize, circleSize)){
+                            pista = new String[]{"This cell cannot be modified"};
+                        }
+                    }
+                }
+
+            }
         }
-
     }
 
 

@@ -27,34 +27,33 @@ public class Pistas {
         String s = new String();
         Pair<TipoPista, Pair<Integer, Integer>> p = getRandomCasilla();
 
-
         TipoPista tP = p.getLeft();
         Pair<Integer, Integer> pos = p.getRight();
 
         switch (tP) {
             case ValueReached:
-                s += "This number can see all its dots " + pos.getLeft() + " " + pos.getRight() + "\n"; // 1
+                s += "This number can see all #its dots " + pos.getLeft() + " " + pos.getRight() + "\n"; // 1
                 break;
             case WouldExceed:
-                s += "Looking further in one direction would exceed this number " + pos.getLeft() + " " + pos.getRight() + "\n"; // 2
+                s += "Looking further in one direction #would exceed this number " + pos.getLeft() + " " + pos.getRight() + "\n"; // 2
                 break;
             case OneDirectionRequired:
-                s += "One specific dot is included in all solutions imaginable " + pos.getLeft() + " " + pos.getRight() + "\n"; // 3
+                s += "One specific dot is included #in all solutions imaginable " + pos.getLeft() + " " + pos.getRight() + "\n"; // 3
                 break;
             case ErrorClosedTooLate:
-                s += "This number sees a bit too much " + pos.getLeft() + " " + pos.getRight() + "\n"; // 4
+                s += "This number sees #a bit too much " + pos.getLeft() + " " + pos.getRight() + "\n"; // 4
                 break;
             case ErrorClosedTooEarly:
-                s += "This number can't see enough" + pos.getLeft() + " " + pos.getRight() + "\n"; // 5
+                s += "This number can't see #enough" + pos.getLeft() + " " + pos.getRight() + "\n"; // 5
                 break;
             case MustBeWall:
-                s += "This one should be easy... " + pos.getLeft() + " " + pos.getRight() + "\n"; //6.1
+                s += "This one should #be easy... " + pos.getLeft() + " " + pos.getRight() + "\n"; //6.1
                 break;
             case LockedIn:
-                s += "A blue dot should always see at least one other " + pos.getLeft() + " " + pos.getRight() + "\n";//6.2
+                s += "A blue dot should always #see at least one other " + pos.getLeft() + " " + pos.getRight() + "\n";//6.2
                 break;
             case ImposibleVision:
-                s += "Imposible to fill the vision of this tile " + pos.getLeft() + " " + pos.getRight() + "\n"; // 10
+                s += "Imposible to fill the vision #of this tile " + pos.getLeft() + " " + pos.getRight() + "\n"; // 10
                 break;
         }
 
