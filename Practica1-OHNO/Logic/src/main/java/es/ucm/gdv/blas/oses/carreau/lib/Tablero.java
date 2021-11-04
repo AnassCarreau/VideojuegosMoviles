@@ -5,6 +5,7 @@ import com.sun.org.apache.bcel.internal.generic.LUSHR;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Tablero {
     private Celda [][] _tablero;
@@ -23,7 +24,6 @@ public class Tablero {
         _dirs.add(new Pair<Integer, Integer>(-1,0));
         _dirs.add(new Pair<Integer, Integer>(0,-1));
 
-
         //Inicializacion tablero
         //Creamos paredes artificiales para facilitar la comprobacion sobre las pistas
         _tablero = new Celda[N][N];
@@ -37,12 +37,99 @@ public class Tablero {
             }
         }
 
+        //generamos un tablero aleatorio con una unica solucion
+
+
         //TO DO: HACER BIEN
         if(N == 6) tableroPrueba6x6();
-        else if(N == 4)tableroPrueba4x4();;
+        else if(N == 4)tableroPrueba4x4();
+        else generaTablero(N);
 
         //Inicializacion de las pistas
         pistas = compruebaPistas();
+    }
+
+    private void generaTablero(int N){
+        Celda [][] _tableroAux = new Celda[N][N];
+
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                _tableroAux[i][j] = new Celda();
+            }
+        }
+
+        Random random = new Random();
+
+        boolean [][] tableroBool = new boolean[N][N];
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                tableroBool[i][j] = false;
+            }
+        }
+        int numCeldasRellenas = 0;
+        while(numCeldasRellenas < N * N) {
+            int x = random.nextInt(N);
+            int y = random.nextInt(N);
+            while (tableroBool[x][y]) {
+                x = random.nextInt(N);
+                y = random.nextInt(N);
+            }
+            Celda celda = getCelda(x, y);
+
+            int numberDefault = random.nextInt(N) + 1;
+
+            celda.setEstado(EstadoCelda.Azul);
+            celda.setModificable(false);
+            celda.setValorDefault(numberDefault);
+            tableroBool[x][y] = true;
+            numCeldasRellenas++;
+
+            int dirRand = random.nextInt(4);
+            int i = 0;
+            while (i < 4 && celda.getCurrentVisibles() != celda.getValorDefault()) {
+                int auxX = x + _dirs.get((dirRand + i) % 4).getLeft();
+                int auxY = y + _dirs.get((dirRand + i) % 4).getRight();
+                while (posCorrecta(auxX, auxY) && (_tableroAux[auxX][auxY].getEstado() == EstadoCelda.Vacia
+                        || _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Azul)) {
+                    auxX += _dirs.get((dirRand + i) % 4).getLeft();
+                    auxY += _dirs.get((dirRand + i) % 4).getRight();
+
+                    if (posCorrecta(auxX, auxY) && _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Vacia) {
+                        _tableroAux[auxX][auxY].setEstado(EstadoCelda.Azul);
+                        tableroBool[auxX][auxY] = true;
+                        numCeldasRellenas++;
+                    }
+
+                    if (celda.getCurrentVisibles() + 1 <= celda.getValorDefault()) {
+                        celda.setCurrentVisibles(celda.getCurrentVisibles() + 1);
+                        continue;
+                    } else {
+                        break;
+                    }
+                }
+                i++;
+            }
+            for (int k = 0; k < _dirs.size(); k++){
+                int auxX = x + _dirs.get(k).getLeft();
+                int auxY = y + _dirs.get(k).getRight();
+                while (posCorrecta(auxX, auxY) && _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Azul) {
+                    auxX += _dirs.get(k).getLeft();
+                    auxY += _dirs.get(k).getRight();
+                }
+                if(posCorrecta(auxX, auxY) && _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Vacia) {
+                    _tableroAux[auxX][auxY].setEstado(EstadoCelda.Rojo);
+                    tableroBool[auxX][auxY] = true;
+                    numCeldasRellenas++;
+                }
+            }
+            //System.out.println(numCeldasRellenas);
+        }
+
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                _tablero[i][j] = _tableroAux[i][j];
+            }
+        }
     }
 
     private void tableroPrueba6x6(){
