@@ -19,15 +19,15 @@ public abstract class AbstractGraphics implements Graphics {
 
     //Métodos getter para las dimensiones lógicas y físicas
     @Override
-    public int getLogWidth(){
+    public final int getLogWidth(){
         return logWidth;
     }
     @Override
-    public int getLogHeight(){
+    public final int getLogHeight(){
         return logHeight;
     }
     @Override
-    public int getWindowWidth(){
+    public final int getWindowWidth(){
         return (int)winWidth;
     }
     @Override
@@ -76,7 +76,7 @@ public abstract class AbstractGraphics implements Graphics {
         return new int[]{posTranslate[0], posTranslate[1], tamScale[0], tamScale[1]};
     }
 
-    public int[] translateBorder(int x, int y, float scale_factor) {
+    protected int[] translateBorder(int x, int y, float scale_factor) {
         int newX1 = (int)(winWidth/2 - ((logWidth * scale_factor) / 2));
         int newY1 = (int)(winHeight/2 - ((logHeight * scale_factor) / 2));
 
@@ -86,35 +86,20 @@ public abstract class AbstractGraphics implements Graphics {
         return new int[]{xDest, yDest};
     }
 
-    public int[] scaleBorder(int w, int h, float scale_factor) {
+    protected int[] scaleBorder(int w, int h, float scale_factor) {
         int wDest = (int)(w * scale_factor);
         int hDest = (int)(h * scale_factor);
 
         return new int[]{wDest, hDest};
     }
 
-    @Override
-    public void prepareFrame(){
+    public final void prepareFrame(){
         float scaleFactor = getScaleFactor();
-
         int[] traslateBorder = translateBorder(0,0,scaleFactor);
-        int[] scaleBorder = scaleBorder((int)logWidth, (int)logHeight, scaleFactor);
 
         translate(traslateBorder[0],traslateBorder[1]);
         scale(scaleFactor, scaleFactor);
 
     }
-
-
-
-    //Método implementado por cada módulo en PCGraphics y en AndroidGraphics para dibujar la imagen
-    //con las coordenadas y tamaño ya habiendo pasado por el factor de escalado
-    //public abstract void translate(int x, int y);
-    //public abstract void scale(int x, int y);
-
-
-
-
-
 
 }
