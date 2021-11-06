@@ -49,12 +49,12 @@ public class AndroidGraphics extends AbstractGraphics {
 
     ////////////////////METODOS DE TRANSFORMACION//////////////////////////////
     @Override
-    public void translate(float x, float y) {
+    public void translate(int x, int y) {
         this.canvas.translate(x, y);
     }
 
     @Override
-    public void scale(float w, float h) {
+    public void scale(int w, int h) {
         this.canvas.scale(w, h);
     }
 
@@ -77,14 +77,14 @@ public class AndroidGraphics extends AbstractGraphics {
 
     ////////////////////METODOS DE DIBUJADO//////////////////////////////
     @Override
-    public void fillRealCircle(float cx, float cy, int r) {
+    public void fillCircle(float cx, float cy, int r) {
         this.canvas.drawCircle(cx, cy, r, this.paint);
         paint.reset();
 
     }
 
     @Override
-    public void drawRealText(String text, Font font, int x, int y,float tam) {
+    public void drawText(String text, Font font, int x, int y,float tam) {
         Typeface aFont = ((AndroidFont) font)._font;
 
         if (font != null && aFont != null) {
@@ -108,14 +108,14 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void drawRealImage(Image image, int x, int y) {
+    public void drawImage(Image image, int x, int y) {
         canvas.drawBitmap(((AndroidImage) image).bitmap, x, y, null);
     }
 
 
 
     @Override
-    public void drawRealImage(Image image, int x, int y, int w, int h) {
+    public void drawImage(Image image, int x, int y, int w, int h) {
         srcRect.left = 0;
         srcRect.top = 0;
         srcRect.right = image.getWidth();
@@ -130,7 +130,7 @@ public class AndroidGraphics extends AbstractGraphics {
 
 
     @Override
-    public void drawRealRect(int x, int y, int width, int height, int color) {
+    public void drawRect(int x, int y, int width, int height, int color) {
         setColor(color);
         paint.setStyle(Style.STROKE);
         canvas.drawRect(x, y, x + width , y + width , paint);

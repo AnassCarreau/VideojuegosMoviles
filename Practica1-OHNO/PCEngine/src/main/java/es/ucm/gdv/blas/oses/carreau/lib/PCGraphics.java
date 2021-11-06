@@ -1,7 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
-//TO DO: SON INTERFACES, cambiarlos cuando esten por la implementacion de la plataforma
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.FileInputStream;
@@ -18,6 +18,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     java.awt.image.BufferStrategy strategy;
     //int yBorder = 0;
     Color currentColor = Color.WHITE;
+    java.awt.Graphics g;
 
 
     public PCGraphics(Window window, int Width, int Height) {
@@ -28,19 +29,18 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
         this.winWidth = window.getWidth();
         this.winHeight = window.getHeight();
         //yBorder = window.getInsets().top;
-
         //System.out.println(yBorder);
 
     }
     @Override
-   public void translate(float x, float y) {
-       java.awt.Graphics g = strategy.getDrawGraphics();
-       g.translate((int) x, (int) y);
-   }
+   public void translate(int x, int y) {
+        g.translate(x, y);
+    }
 
    @Override
-   public void scale(float x, float y) {
-       window.setSize((int) x, (int) y);
+   public void scale(int x, int y) {
+       Graphics2D g2D = (Graphics2D)g;
+       g2D.scale(x,y);
    }
 
 
@@ -79,11 +79,12 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     }
 
-
+    void updateContext(){
+        g = strategy.getDrawGraphics();
+    }
 
     @Override
-    public void drawRealRect(int x, int y, int width, int height, int color) {
-        java.awt.Graphics g = strategy.getDrawGraphics();
+    public void drawRect(int x, int y, int width, int height, int color) {
         g.setColor(new Color(color));
         g.drawRect(x, y /*+ yBorder*/, width, height);
     }
@@ -91,10 +92,8 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     //practica
     @Override
     public void clear(int color) {
-        java.awt.Graphics g = strategy.getDrawGraphics();
         setColor(color);
-        g.setColor(currentColor);
-        g.fillRect(0, 0, getWindowWidth(), getWindowHeight());
+        g.fillRect(0, 0, getLogWidth(), getLogHeight());
 
     }
     @Override
@@ -104,47 +103,40 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     @Override
     public void restore() {
-        java.awt.Graphics g = strategy.getDrawGraphics();
         g.dispose();
     }
 
     @Override
-    public void drawRealImage(Image image, int x, int y) {
-        java.awt.Graphics g = strategy.getDrawGraphics();
+    public void drawImage(Image image, int x, int y) {
         g.drawImage(((PCImage) image)._image, x, y/* + yBorder*/, null);
     }
 
 
     @Override
-    public void drawRealImage(Image img, int x, int y, int w, int h) {
-        java.awt.Graphics g = strategy.getDrawGraphics();
+    public void drawImage(Image img, int x, int y, int w, int h) {
         g.drawImage(((PCImage) img)._image, x, y /*+ yBorder*/, w, h, null);
     }
 
 
     @Override
     public void setColor(int color) {
-        java.awt.Graphics g = strategy.getDrawGraphics();
         int red = (int)((color & 0xffffffffL) >> 24);
         int green = (color & 0x00ff0000)>> 16;
         int blue = (color & 0x0000ff00)>>8;
         int alpha = color & 0x000000ff;
         currentColor =  new Color(red, green,blue,alpha);
+        g.setColor(currentColor);
     }
 
     @Override
-    public void fillRealCircle(float cx, float cy, int r) {
+    public void fillCircle(float cx, float cy, int r) {
         int diameter = r * 2;
-        java.awt.Graphics g = strategy.getDrawGraphics();
         //shift x and y by the radius of the circle in order to correctly center it
-        g.setColor(currentColor);
         g.fillOval((int) cx - r, (int) cy - r, diameter, diameter);
     }
 
     @Override
-    public void drawRealText(String text, Font font, int x, int y ,float tam) {
-        java.awt.Graphics g = strategy.getDrawGraphics();
-        g.setColor(currentColor);
+    public void drawText(String text, Font font, int x, int y ,float tam) {
         g.setFont( ((PCFont) font)._font.deriveFont(tam * getScaleFactor()));
         int len = g.getFontMetrics().stringWidth(text) / 2;
         g.drawString(text, (int) x - len, y /*+ yBorder*/);
@@ -154,12 +146,6 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     public void componentResized(ComponentEvent componentEvent) {
         winWidth = window.getWidth();
         winHeight = window.getHeight();
-        //float scaleFactor = getScaleFactor();
-
-        //int [] logicalOrigin = translateBorder(0,0, scaleFactor);
-        //translate( logicalOrigin[0], logicalOrigin[1]);
-        //scale(winWidth,winHeight);
-
     }
 
     @Override

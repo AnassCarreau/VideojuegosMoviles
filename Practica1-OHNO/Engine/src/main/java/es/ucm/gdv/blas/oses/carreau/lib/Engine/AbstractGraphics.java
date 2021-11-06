@@ -76,15 +76,6 @@ public abstract class AbstractGraphics implements Graphics {
         return new int[]{posTranslate[0], posTranslate[1], tamScale[0], tamScale[1]};
     }
 
-
-
-    @Override
-    public void drawRect(int x, int y, int width, int height, int color) {
-        int[] rectDest = getRealDestRect(x, y, width, height);
-        drawRealRect(rectDest[0], rectDest[1],rectDest[2],rectDest[3], color);
-    }
-
-
     public int[] translateBorder(int x, int y, float scale_factor) {
         int newX1 = (int)(winWidth/2 - ((logWidth * scale_factor) / 2));
         int newY1 = (int)(winHeight/2 - ((logHeight * scale_factor) / 2));
@@ -103,42 +94,23 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     @Override
-    public void drawImage(Image image, int x, int y) {
-        int[] rectDest = getRealDestRect(x, y, 0, 0);
-        drawRealImage(image, rectDest[0], rectDest[1]);
-    }
-
-    @Override
-    public void drawImage(Image image, int x, int y, int w, int h) {
-        int[] rectDest = getRealDestRect(x, y, w, h);
-        drawRealImage(image, rectDest[0], rectDest[1], rectDest[2], rectDest[3]);
-    }
-
-
-
-    @Override
-    public void fillCircle(float cx, float cy, int r) {
+    public void prepareFrame(){
         float scaleFactor = getScaleFactor();
-        int[] pos = translateBorder((int)cx, (int)cy, scaleFactor);
-        fillRealCircle(pos[0], pos[1],(int)(r * scaleFactor));
+
+        int[] traslateBorder = translateBorder(0,0,scaleFactor);
+        int[] scaleBorder = scaleBorder((int)logWidth, (int)logHeight, scaleFactor);
+
+        translate(traslateBorder[0],traslateBorder[1]);
+        scale((int)scaleFactor, (int)scaleFactor);
+
     }
 
-    @Override
-    public void drawText(String text, Font font, int x, int y,float tam) {
 
-        int[] rectDest = getRealDestRect(x, y, 0, 0);
-        drawRealText(text,font, rectDest[0], rectDest[1],tam);
-    }
 
     //Método implementado por cada módulo en PCGraphics y en AndroidGraphics para dibujar la imagen
     //con las coordenadas y tamaño ya habiendo pasado por el factor de escalado
-    public abstract void drawRealImage(Image image, int x, int y, int w, int h);
-    public abstract void drawRealImage(Image image, int x, int y);
-    public abstract void drawRealText(String text, Font font, int x, int y,float tam);
-    public abstract void drawRealRect(int x, int y, int w, int h, int color);
-    public abstract void fillRealCircle(float cx, float cy, int r);
-    public abstract void translate(float x, float y);
-    public abstract void scale(float x, float y);
+    //public abstract void translate(int x, int y);
+    //public abstract void scale(int x, int y);
 
 
 

@@ -12,6 +12,7 @@ public class Window extends JFrame {
         //No confundir con el tam logico que tenemos que ajustar
         setSize(width,height);
 
+        setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Configuracion en pantalla completa

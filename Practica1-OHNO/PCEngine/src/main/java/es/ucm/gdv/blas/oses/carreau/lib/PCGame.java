@@ -42,12 +42,13 @@ public class PCGame implements Engine {
             // Pintamos el frame con el BufferStrategy
             do {
                 do {
-                    java.awt.Graphics g = strategy.getDrawGraphics();
+                    pc_graphics.updateContext();
+                    pc_graphics.prepareFrame();
                     try {
                         screen.render();
                     }
                     finally {
-                        g.dispose();
+                        pc_graphics.restore();
                     }
                 } while(strategy.contentsRestored());
                 strategy.show();

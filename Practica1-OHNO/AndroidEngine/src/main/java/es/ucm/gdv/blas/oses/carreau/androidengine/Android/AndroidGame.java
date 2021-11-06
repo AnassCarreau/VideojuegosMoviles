@@ -122,6 +122,8 @@ public class AndroidGame  implements Engine, Runnable {
             Canvas canvas = holder.lockCanvas();
             //Setteamos el canvas para usarlo al pintar
             this.graphics.setCanvas(canvas);
+            //Nos preparamos para pintar (transladar y escalar)
+            this.graphics.prepareFrame();
             //Pintamos
             screen.render();
 
