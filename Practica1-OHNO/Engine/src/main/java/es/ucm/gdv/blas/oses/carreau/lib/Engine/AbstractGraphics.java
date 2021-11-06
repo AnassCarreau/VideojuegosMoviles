@@ -101,7 +101,7 @@ public abstract class AbstractGraphics implements Graphics {
         int[] scaleBorder = scaleBorder((int)logWidth, (int)logHeight, scaleFactor);
 
         translate(traslateBorder[0],traslateBorder[1]);
-        scale((int)scaleFactor, (int)scaleFactor);
+        scale(scaleFactor, scaleFactor);
 
     }
 

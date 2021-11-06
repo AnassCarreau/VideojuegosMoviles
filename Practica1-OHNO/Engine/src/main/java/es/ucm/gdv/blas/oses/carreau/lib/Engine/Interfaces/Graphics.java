@@ -20,9 +20,9 @@ public interface Graphics {
     //practica
     public void clear(int color);
 
-    public void translate(int x, int y);
+    public void translate(float x, float y);
 
-    public void scale(int w, int h);
+    public void scale(float w, float h);
 
     public int save();
 

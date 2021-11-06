@@ -33,12 +33,12 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     }
     @Override
-   public void translate(int x, int y) {
-        g.translate(x, y);
+   public void translate(float x, float y) {
+        g.translate((int)x, (int)y);
     }
 
    @Override
-   public void scale(int x, int y) {
+   public void scale(float x, float y) {
        Graphics2D g2D = (Graphics2D)g;
        g2D.scale(x,y);
    }
