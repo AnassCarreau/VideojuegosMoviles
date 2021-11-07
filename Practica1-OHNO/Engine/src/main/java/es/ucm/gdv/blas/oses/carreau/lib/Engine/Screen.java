@@ -8,4 +8,6 @@ public interface Screen {
     public void render();
 
     public void handleEvents();
+
+    public int getScreenID();
 }

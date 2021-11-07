@@ -11,8 +11,11 @@ import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
@@ -27,16 +30,21 @@ public class AndroidGraphics extends AbstractGraphics {
     Paint paint;
     Rect srcRect = new Rect();
     Rect dstRect = new Rect();
+    float dpi;
 
-    public AndroidGraphics(AssetManager assets, Bitmap frameBuffer,int logWidth, int logHeight,int winWidth,int winHeight ) {
-        this.assets = assets;
+    public AndroidGraphics(AppCompatActivity activity, Bitmap frameBuffer, int logWidth, int logHeight ) {
+        this.assets = activity.getAssets();
         this.frameBuffer = frameBuffer;
         this.canvas = new Canvas(frameBuffer);
         this.paint = new Paint();
         this.logWidth = logWidth;
         this.logHeight = logHeight;
-        this.winWidth = winWidth;
-        this.winHeight = winHeight;
+
+        Point p = new Point();
+        activity.getWindowManager().getDefaultDisplay().getSize(p);
+        this.winWidth = p.x;
+        this.winHeight = p.y;
+        this.dpi = activity.getBaseContext().getResources().getDisplayMetrics().density;
 
     }
 
@@ -79,7 +87,6 @@ public class AndroidGraphics extends AbstractGraphics {
     @Override
     public void fillCircle(float cx, float cy, int r) {
         this.canvas.drawCircle(cx, cy, r, this.paint);
-        paint.reset();
 
     }
 
@@ -89,22 +96,13 @@ public class AndroidGraphics extends AbstractGraphics {
 
         if (font != null && aFont != null) {
             paint.setTypeface(aFont);
-            paint.setTextSize(getScaleFactor() * tam);
+            paint.setTextSize((getScaleFactor() * tam) / dpi);
             paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText(text, x, y, paint);
             paint.reset();
 
         }
 
-
-/*
-        java.awt.Graphics g = strategy.getDrawGraphics();
-        g.setFont( ((PCFont) font)._font.deriveFont((float) (((PCFont) font)._font).getSize() * getScaleFactor()));
-
-        int len = g.getFontMetrics().stringWidth(text) / 2;
-
-        g.drawString(text, (int) x - len, y);
-  */
     }
 
     @Override

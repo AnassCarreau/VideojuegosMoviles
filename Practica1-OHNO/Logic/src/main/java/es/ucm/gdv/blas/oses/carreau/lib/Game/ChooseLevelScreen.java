@@ -42,11 +42,11 @@ public class ChooseLevelScreen implements Screen {
     @Override
     public void render() {
         Graphics g = engine.getGraphics();
-        g.clear(0XFFFFFFFF);
+
         //Eleccion
         g.setColor(0x000000FF);
-        g.drawText("Oh NO", Assets.molleregular, g.getLogWidth() / 2, g.getLogHeight() / 6,Assets.molleregular.getFontSize());
-        g.drawText("Elija el tamaño a jugar ", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 2 - (int) Assets.josefisans.getFontSize() * 2,(int)(Assets.josefisans.getFontSize() /1.5));
+        g.drawText("Oh NO", Assets.molleregular, g.getLogWidth() / 2, g.getLogHeight() / 6,60);
+        g.drawText("Elija el tamaño a jugar ", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 2 - 50 * 2,30);
 
         int radio = (g.getLogWidth() / 5) / 2;
         for (int i = 0; i < celdas.size(); i++) {
@@ -55,7 +55,7 @@ public class ChooseLevelScreen implements Screen {
 
             g.fillCircle(celdas.get(i).getLeft(), celdas.get(i).getRight(), radio);
             g.setColor(0xFFFFFFFF);
-            g.drawText(Integer.toString(i + 4), Assets.josefisans,celdas.get(i).getLeft(), celdas.get(i).getRight()+ radio / 2,Assets.josefisans.getFontSize());
+            g.drawText(Integer.toString(i + 4), Assets.josefisans,celdas.get(i).getLeft(), celdas.get(i).getRight()+ radio / 2,50);
         }
         g.drawImage(Assets.close, g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth(), Assets.close.getHeight());
     }
@@ -80,6 +80,11 @@ public class ChooseLevelScreen implements Screen {
                 }
             }
         }
+    }
+
+    @Override
+    public int getScreenID() {
+        return 2;
     }
 
 

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
@@ -30,21 +31,20 @@ public class AndroidGame  implements Engine, Runnable {
     Thread thread_;
 
     public AndroidGame(AppCompatActivity activity, int logicalWidth, int logicalHeight) {
-        activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         boolean isLandscape = activity.getResources().getConfiguration().orientation ==
                 Configuration.ORIENTATION_LANDSCAPE;
-        int frameBufferWidth = isLandscape ? 480 : 320;
-        int frameBufferHeight = isLandscape ? 320 : 480;
+        int frameBufferWidth = isLandscape ? logicalHeight : logicalWidth;
+        int frameBufferHeight = isLandscape ? logicalWidth : logicalHeight;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
 
-        renderView = new SurfaceView(activity.getApplicationContext());//AndroidFastRenderView(this, frameBuffer);
-        Point p=new Point();
-        activity.getWindowManager().getDefaultDisplay().getSize(p);
-        graphics = new AndroidGraphics(activity.getAssets(), frameBuffer,logicalWidth,logicalHeight,p.x,p.y );
+        renderView = new SurfaceView(activity.getApplicationContext());
+
+        graphics = new AndroidGraphics(activity, frameBuffer,logicalWidth,logicalHeight);
 
         input = new AndroidInput(this, renderView);
         activity.setContentView(renderView);
@@ -122,6 +122,8 @@ public class AndroidGame  implements Engine, Runnable {
             Canvas canvas = holder.lockCanvas();
             //Setteamos el canvas para usarlo al pintar
             this.graphics.setCanvas(canvas);
+            //Clear pantalla
+            this.graphics.clear(0xFFFFFFFF);
             //Nos preparamos para pintar (transladar y escalar)
             this.graphics.prepareFrame();
             //Pintamos

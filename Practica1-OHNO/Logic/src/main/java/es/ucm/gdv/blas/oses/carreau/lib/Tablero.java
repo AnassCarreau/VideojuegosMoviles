@@ -523,5 +523,8 @@ public class Tablero {
         return _tablero[x][y];
     }
 
+    public int getDimensions(){
+        return _tablero.length;
+    }
 
 }

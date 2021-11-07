@@ -28,16 +28,14 @@ public class MainMenuScreen implements Screen {
     @Override
     public void render() {
         Graphics g = engine.getGraphics();
-        g.clear(0XFFFFFFFF);
-        g.drawImage(Assets.q42, g.getLogWidth()/2  - Assets.q42.getWidth()/24, g.getLogHeight()/4 * 3 ,Assets.q42.getWidth()/14,Assets.q42.getHeight()/14);
         g.setColor(0x000000FF);
-        g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,Assets.molleregular.getFontSize());
-        g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2,Assets.josefisans.getFontSize());
+        g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,65);
+        g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2,50);
         g.drawRect(g.getLogWidth()/2 - 200/2, g.getLogHeight()/2 - 100/2, 200, 100, 0x0000FFFF);
         g.setColor(0xCCCCCCFF);
-        g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 ,(int)(Assets.josefisans.getFontSize()/1.5));
-        g.setColor(0xCCCCCCFF);
-        g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/9 * 7,(int)(Assets.josefisans.getFontSize()/1.5));
+        g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 ,35);
+        g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 + 35 + 10,35);
+        g.drawImage(Assets.q42, g.getLogWidth()/2  - Assets.q42.getWidth()/24, g.getLogHeight()/4 * 3 + 10 ,Assets.q42.getWidth()/14,Assets.q42.getHeight()/14);
 
     }
 
@@ -58,6 +56,11 @@ public class MainMenuScreen implements Screen {
                 }
             }
         }
+    }
+
+    @Override
+    public int getScreenID() {
+        return 1;
     }
 
 

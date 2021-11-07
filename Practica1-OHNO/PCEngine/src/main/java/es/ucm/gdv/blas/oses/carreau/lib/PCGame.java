@@ -43,6 +43,7 @@ public class PCGame implements Engine {
             do {
                 do {
                     pc_graphics.updateContext();
+                    pc_graphics.clear(0xFFFFFFFF);
                     pc_graphics.prepareFrame();
                     try {
                         screen.render();

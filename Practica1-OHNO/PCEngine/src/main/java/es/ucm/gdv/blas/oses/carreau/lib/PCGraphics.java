@@ -93,7 +93,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     @Override
     public void clear(int color) {
         setColor(color);
-        g.fillRect(0, 0, getLogWidth(), getLogHeight());
+        g.fillRect(0, 0, getWindowWidth(), getWindowHeight());
 
     }
     @Override

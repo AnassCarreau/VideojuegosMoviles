@@ -49,23 +49,22 @@ public class GameScreen implements Screen {
     @Override
     public void render() {
         Graphics g = engine.getGraphics();
-        g.clear(0xFFFFFFFF);
 
         g.setColor(0x000000FF);
         //Juego empezado
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
         if(!solved && pista == null){
-            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (int) Assets.josefisans.getFontSize() * 2,Assets.josefisans.getFontSize());
+            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 50 * 2,50);
         }
         else if(!solved){
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
             for(int i = 0; i < pista.length; i++){
-                g.drawText(pista[i] ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4 - ((int) Assets.josefisans.getFontSize() * 2) + ((int)Assets.josefisans.getFontSize() / 2 * i),Assets.josefisans.getFontSize()/2);
+                g.drawText(pista[i] ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4 - (50 * 2) + (25 * i),25);
             }
         }
         else{
             //Si llegamos aqui, significa que hemos resuelto el tablero
-            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (int) Assets.josefisans.getFontSize() * 2,Assets.josefisans.getFontSize());
+            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60 * 2,60);
         }
 
         int circleSize = g.getLogWidth() / boardDimensions;
@@ -99,7 +98,7 @@ public class GameScreen implements Screen {
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
                 if (hasNumber && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
-                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4,Assets.josefisans.getFontSize());
+                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4,50);
                 }
             }
         }
@@ -162,10 +161,19 @@ public class GameScreen implements Screen {
         }
     }
 
+    @Override
+    public int getScreenID() {
+        return 3;
+    }
+
 
     private boolean inBounds(Input.TouchEvent event, int x, int y, int width, int height) {
         return event.x > x && event.x < x + width && event.y > y && event.y < y + height;
 
+    }
+
+    public Tablero getTablero(){
+        return board;
     }
 
 }
