@@ -73,7 +73,9 @@ public class ChooseLevelScreen implements Screen {
                 int radio = (g.getLogWidth() / 5) / 2;
 
                 for (int j = 0; j < celdas.size(); j++) {
-                    if (inBounds(event,  celdas.get(j).getLeft() - radio, celdas.get(j).getRight() - radio, radio*2, radio*2))
+                    int x=celdas.get(j).getLeft();
+                    int y=celdas.get(j).getRight();
+                    if (inBoundsCircle(event,x, y, radio))
                     {
                         engine.setScreen(new GameScreen(engine, j + 4));
                     }
@@ -94,5 +96,14 @@ public class ChooseLevelScreen implements Screen {
             return true;
         else
             return false;
+    }
+
+
+    private boolean inBoundsCircle(Input.TouchEvent event, int cx, int cy, int radius) {
+
+        int rx = event.x - cx;
+        int ry = event.y - cy;
+        float dis= (float)Math.sqrt(Math.pow(ry,2) +  Math.pow(rx,2));
+        return dis <= radius;
     }
 }

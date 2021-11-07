@@ -54,7 +54,7 @@ public class GameScreen implements Screen {
         //Juego empezado
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
         if(!solved && pista == null){
-            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 50 * 2,50);
+            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7 ,50);
         }
         else if(!solved){
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
@@ -98,7 +98,7 @@ public class GameScreen implements Screen {
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
                 if (hasNumber && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
-                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4,50);
+                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4,circleSize/2);
                 }
             }
         }
@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
                         Celda c = board.getCelda(k, j);
                         int x = initialX + circleSize / 2 + j * circleSize;
                         int y = (g.getLogHeight() / 6) + circleSize / 2 + (k * circleSize);
-                        if (c.isModifiable() && inBounds(event, x - circleSize / 2, y - circleSize / 2, circleSize, circleSize)) {
+                        if (c.isModifiable() && inBoundsCircle(event, x, y , circleSize/2)) {
                             //ponemos la pista a null si se ha pulsado ya en algun circulo del tablero
                             pista = null;
                             //guardado del ultimo movimiento en una pila
@@ -151,7 +151,7 @@ public class GameScreen implements Screen {
                             board.cambiaCelda( k, j);
                             return;
                         }
-                        else if(!c.isModifiable() && inBounds(event, x - circleSize / 2, y - circleSize / 2, circleSize, circleSize)){
+                        else if(!c.isModifiable() && inBoundsCircle(event, x, y , circleSize/2)){
                             pista = new String[]{"This cell cannot be modified"};
                         }
                     }
@@ -170,6 +170,15 @@ public class GameScreen implements Screen {
     private boolean inBounds(Input.TouchEvent event, int x, int y, int width, int height) {
         return event.x > x && event.x < x + width && event.y > y && event.y < y + height;
 
+    }
+
+
+    private boolean inBoundsCircle(TouchEvent event, int cx, int cy, int radius) {
+
+        int rx = event.x - cx;
+        int ry = event.y - cy;
+        float dis= (float)Math.sqrt(Math.pow(ry,2) +  Math.pow(rx,2));
+        return dis <= radius;
     }
 
     public Tablero getTablero(){

@@ -1,5 +1,6 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Game.MainMenuScreen;
 import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 import es.ucm.gdv.blas.oses.carreau.lib.Window;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.LoadingScreen;
@@ -23,6 +24,7 @@ public class main {
         LoadingScreen loadScreen = new LoadingScreen(pcGame);
         pcGame.setScreen(loadScreen);
         loadScreen.init();
+        pcGame.setScreen(new MainMenuScreen(pcGame));
 
         pcGame.run();
 

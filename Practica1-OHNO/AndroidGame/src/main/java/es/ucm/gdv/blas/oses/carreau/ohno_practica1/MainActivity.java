@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 3:
                 {
-                    int dimensions = savedInstanceState.getInt("dimensions");
+                    int dimensions = savedInstanceState.getInt("dimensiones");
                     newScreen = new GameScreen(this.game, dimensions);
                     break;
                 }
