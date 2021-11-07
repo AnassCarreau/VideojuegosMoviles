@@ -55,7 +55,7 @@ public class ChooseLevelScreen implements Screen {
 
             g.fillCircle(celdas.get(i).getLeft(), celdas.get(i).getRight(), radio);
             g.setColor(0xFFFFFFFF);
-            g.drawText(Integer.toString(i + 4), Assets.josefisans,celdas.get(i).getLeft(), celdas.get(i).getRight()+ radio / 2,50);
+            g.drawText(Integer.toString(i + 4), Assets.josefisans,celdas.get(i).getLeft(), celdas.get(i).getRight() + radio*2 / 4,radio*4/3);
         }
         g.drawImage(Assets.close, g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth(), Assets.close.getHeight());
     }
@@ -77,7 +77,7 @@ public class ChooseLevelScreen implements Screen {
                     int y=celdas.get(j).getRight();
                     if (inBoundsCircle(event,x, y, radio))
                     {
-                        engine.setScreen(new GameScreen(engine, j + 4));
+                        engine.setScreen(new GameScreen(engine, j + 4, true));
                     }
                 }
             }

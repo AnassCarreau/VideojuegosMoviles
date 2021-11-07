@@ -115,8 +115,8 @@ public class AndroidGame  implements Engine, Runnable {
             screen.handleEvents();
             screen.update(deltaTime);
 
-            //Bloqueamos hasta que conseguimos la superficies
-            while (!holder.getSurface().isValid()) ;
+            //Bloqueamos hasta que conseguimos la superficie
+            while (!holder.getSurface().isValid());
 
             //Pedimos el canvas para poder pintar
             Canvas canvas = holder.lockCanvas();

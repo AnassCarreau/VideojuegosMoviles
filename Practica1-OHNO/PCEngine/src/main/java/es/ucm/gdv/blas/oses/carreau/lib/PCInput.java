@@ -17,10 +17,8 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
     protected Engine engine;
 
     private List<TouchEvent> events;
-    //private MouseInput mouseInput;
 
     public PCInput(Engine engine){
-        //this.mouseInput = new MouseInput();
         events = new ArrayList<>();
         this.engine=engine;
     }

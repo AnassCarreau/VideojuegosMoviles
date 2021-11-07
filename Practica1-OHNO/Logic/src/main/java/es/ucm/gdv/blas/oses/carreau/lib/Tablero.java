@@ -1,21 +1,18 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
-import com.sun.org.apache.bcel.internal.generic.LUSHR;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Tablero {
     private Celda [][] _tablero;
     private List<Pair<Integer, Integer>> _dirs;
-    private List<Pair<Integer, Integer>> _azulesFijas;
+    private List<Pair<Integer, Integer>> _celdasFijas;
     private int _posX = 0, _posY = 0;
     //LISTA DE PISTAS
-    private Pistas pistas;
+    private Pistas pistas = null;
 
-    public  Tablero(int N){
+    public  Tablero(int N, boolean randomBoard){
 
         //Inicializacion vector direcciones
         _dirs =  new ArrayList<>();
@@ -25,11 +22,10 @@ public class Tablero {
         _dirs.add(new Pair<Integer, Integer>(0,-1));
 
         //Inicializacion tablero
-        //Creamos paredes artificiales para facilitar la comprobacion sobre las pistas
         _tablero = new Celda[N][N];
 
-        //Inicializar lista fijas azules
-        _azulesFijas = new ArrayList<>();
+        //Inicializar lista fijas
+        _celdasFijas = new ArrayList<>();
 
         for(int i = 0; i < _tablero.length; i++){
             for(int j = 0; j < _tablero.length; j++){
@@ -41,12 +37,14 @@ public class Tablero {
 
 
         //TO DO: HACER BIEN
-        if(N == 6) tableroPrueba6x6();
-        else if(N == 4)tableroPrueba4x4();
-        else generaTablero(N);
+        if(randomBoard){
+            if(N == 6) tableroPrueba6x6();
+            else if(N == 4)tableroPrueba4x4();
+            else generaTablero(N);
 
         //Inicializacion de las pistas
-        pistas = compruebaPistas();
+            pistas = compruebaPistas();
+        }
     }
 
     private void generaTablero(int N){
@@ -135,60 +133,93 @@ public class Tablero {
     private void tableroPrueba6x6(){
         _tablero[1][2].setEstado(EstadoCelda.Rojo);
         _tablero[1][2].setModificable(false);
+        _celdasFijas.add(new Pair<Integer, Integer>(1,2));
+
+
         _tablero[2][4].setEstado(EstadoCelda.Rojo);
         _tablero[2][4].setModificable(false);
+        _celdasFijas.add(new Pair<Integer, Integer>(2,4));
+
         _tablero[2][5].setEstado(EstadoCelda.Rojo);
         _tablero[2][5].setModificable(false);
+        _celdasFijas.add(new Pair<Integer, Integer>(2,5));
+
         _tablero[5][1].setEstado(EstadoCelda.Rojo);
         _tablero[5][1].setModificable(false);
+        _celdasFijas.add(new Pair<Integer, Integer>(5,1));
+
 
         _tablero[0][0].setEstado(EstadoCelda.Azul);
         _tablero[0][0].setModificable(false);
         _tablero[0][0].setValorDefault(5);
+        _celdasFijas.add(new Pair<Integer, Integer>(0,0));
+
 
         _tablero[0][5].setEstado(EstadoCelda.Azul);
         _tablero[0][5].setModificable(false);
         _tablero[0][5].setValorDefault(1);
+        _celdasFijas.add(new Pair<Integer, Integer>(0,5));
+
 
         _tablero[1][0].setEstado(EstadoCelda.Azul);
         _tablero[1][0].setModificable(false);
         _tablero[1][0].setValorDefault(3);
+        _celdasFijas.add(new Pair<Integer, Integer>(1,0));
+
 
         _tablero[1][3].setEstado(EstadoCelda.Azul);
         _tablero[1][3].setModificable(false);
         _tablero[1][3].setValorDefault(4);
+        _celdasFijas.add(new Pair<Integer, Integer>(1,3));
+
 
         _tablero[2][3].setEstado(EstadoCelda.Azul);
         _tablero[2][3].setModificable(false);
         _tablero[2][3].setValorDefault(5);
+        _celdasFijas.add(new Pair<Integer, Integer>(2,3));
+
 
         _tablero[3][4].setEstado(EstadoCelda.Azul);
         _tablero[3][4].setModificable(false);
         _tablero[3][4].setValorDefault(3);
+        _celdasFijas.add(new Pair<Integer, Integer>(3,4));
+
 
         _tablero[3][2].setEstado(EstadoCelda.Azul);
         _tablero[3][2].setModificable(false);
         _tablero[3][2].setValorDefault(1);
+        _celdasFijas.add(new Pair<Integer, Integer>(3,2));
+
 
         _tablero[4][0].setEstado(EstadoCelda.Azul);
         _tablero[4][0].setModificable(false);
         _tablero[4][0].setValorDefault(2);
+        _celdasFijas.add(new Pair<Integer, Integer>(4,0));
+
 
         _tablero[4][3].setEstado(EstadoCelda.Azul);
         _tablero[4][3].setModificable(false);
         _tablero[4][3].setValorDefault(3);
+        _celdasFijas.add(new Pair<Integer, Integer>(4,3));
+
 
         _tablero[5][4].setEstado(EstadoCelda.Azul);
         _tablero[5][4].setModificable(false);
         _tablero[5][4].setValorDefault(5);
+        _celdasFijas.add(new Pair<Integer, Integer>(5,4));
+
     }
     private void tableroPrueba4x4(){
 
 
         _tablero[0][1].setEstado(EstadoCelda.Rojo);
         _tablero[0][1].setModificable(false);
+        _celdasFijas.add(new Pair<Integer, Integer>(0,1));
+
         _tablero[1][0].setEstado(EstadoCelda.Rojo);
         _tablero[1][0].setModificable(false);
+        _celdasFijas.add(new Pair<Integer, Integer>(1,0));
+
 
         //_tablero[1][1].setEstado(EstadoCelda.Rojo);
         //_tablero[1][1].setModificable(false);
@@ -196,19 +227,19 @@ public class Tablero {
         _tablero[1][2].setEstado(EstadoCelda.Azul);
         _tablero[1][2].setModificable(false);
         _tablero[1][2].setValorDefault(2);
-        _azulesFijas.add(new Pair<Integer, Integer>(1,2));
+        _celdasFijas.add(new Pair<Integer, Integer>(1,2));
         _tablero[2][1].setEstado(EstadoCelda.Azul);
         _tablero[2][1].setModificable(false);
         _tablero[2][1].setValorDefault(1);
-        _azulesFijas.add(new Pair<Integer, Integer>(2,1));
+        _celdasFijas.add(new Pair<Integer, Integer>(2,1));
         _tablero[3][2].setEstado(EstadoCelda.Azul);
         _tablero[3][2].setModificable(false);
         _tablero[3][2].setValorDefault(2);
-        _azulesFijas.add(new Pair<Integer, Integer>(3,2));
+        _celdasFijas.add(new Pair<Integer, Integer>(3,2));
         _tablero[3][3].setEstado(EstadoCelda.Azul);
         _tablero[3][3].setModificable(false);
         _tablero[3][3].setValorDefault(4);
-        _azulesFijas.add(new Pair<Integer, Integer>(3,3));
+        _celdasFijas.add(new Pair<Integer, Integer>(3,3));
     }
 
     /**
@@ -277,13 +308,6 @@ public class Tablero {
         return new Pair<Integer, Boolean>(visibles, encerrada);
     }
 
-    public void setPos(int x, int y){
-        if(posCorrecta(x,y)){
-            _posX = x;
-            _posY = y;
-        }
-    }
-
     /**
      * Metodo que comprueba si la situacion actual del tablero corresponde a una solucion
      */
@@ -298,8 +322,8 @@ public class Tablero {
             if(c.getValorDefault() != c.getCurrentVisibles()) return false;
             i++;
         }*/
-
-        return pistas.isEmpty();
+        if(pistas != null) return pistas.isEmpty();
+        else return false;
     }
 
     public String damePistaAleatoria(){
@@ -435,8 +459,8 @@ public class Tablero {
             _tablero[_posX][_posY].setEstado(sig);
 
 
-            for( int i = 0; i < _azulesFijas.size(); i++){
-                Pair p = _azulesFijas.get(i);
+            for(int i = 0; i < _celdasFijas.size(); i++){
+                Pair p = _celdasFijas.get(i);
                 int x = (int)(p.getLeft());
                 int y = (int)(p.getRight());
                 _tablero[x][y].setCurrentVisibles((compruebaAdyacentes(x, y).getLeft()));
@@ -447,10 +471,8 @@ public class Tablero {
 
             return true;
         }
-        else{
-            //TO DO: PONER QUE ERES UN PEAZO GILIPOLLAS :D
-            return false;
-        }
+        else return false;
+
     }
 
     /*
@@ -526,5 +548,10 @@ public class Tablero {
     public int getDimensions(){
         return _tablero.length;
     }
+
+    public void addToListaNoModificables(int x, int y){
+        _celdasFijas.add(new Pair<Integer, Integer>(x,y));
+    }
+
 
 }

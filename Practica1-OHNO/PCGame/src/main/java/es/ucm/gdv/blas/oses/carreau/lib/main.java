@@ -28,42 +28,5 @@ public class main {
 
         pcGame.run();
 
-        /*Tablero t = new Tablero(4);
-/*
-        t.drawConsole();
-        System.out.println(t.damePistaAleatoria());
-
-
-        t.drawConsole();
-
-        System.out.println("Resolvemos");
-        System.out.println(t.damePistaAleatoria());
-
-        t.setPos(0,0);
-        t.drawConsole();
-        System.out.println(t.damePistaAleatoria());
-
-        t.setPos(0,2);
-        t.cambiaCelda();
-        t.drawConsole();
-        System.out.println(t.damePistaAleatoria());
-
-        t.setPos(1,3);
-        t.cambiaCelda();
-        t.drawConsole();
-        System.out.println(t.damePistaAleatoria());
-
-        t.setPos(2,3);
-        t.cambiaCelda();
-        t.drawConsole();
-        System.out.println(t.damePistaAleatoria());
-
-        t.setPos(3,1);
-        t.cambiaCelda();
-        t.drawConsole();
-        System.out.println(t.damePistaAleatoria());
-
-        System.out.println("Da correcto el resuelve tablero: " + t.tableroResuelto());
-        */
     }
 }

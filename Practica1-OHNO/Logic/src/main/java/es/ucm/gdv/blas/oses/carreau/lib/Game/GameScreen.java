@@ -28,9 +28,9 @@ public class GameScreen implements Screen {
 
     private boolean solved = false;
 
-    public GameScreen(Engine eng, int tableroSize) {
+    public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
         this.engine = eng;
-        this.board = new Tablero(tableroSize);
+        this.board = new Tablero(tableroSize, randomBoard);
         this.boardDimensions = tableroSize;
         pista = null;
         ultimosMovs = new Stack<>();
@@ -98,7 +98,7 @@ public class GameScreen implements Screen {
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
                 if (hasNumber && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
-                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4,circleSize/2);
+                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize/4 ,2*circleSize/3);
                 }
             }
         }
