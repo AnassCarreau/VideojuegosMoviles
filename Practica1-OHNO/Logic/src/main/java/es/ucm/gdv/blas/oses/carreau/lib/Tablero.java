@@ -47,6 +47,24 @@ public class Tablero {
         }
     }
 
+    private Celda [][] generaTablerov2(int N){
+        Celda [][] _tableroAux = new Celda[N][N];
+        //Se inicializa el tablero con celdas vacias
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                _tableroAux[i][j] = new Celda();
+            }
+        }
+
+        Random random = new Random();
+        int numCeldasAzules = random.nextInt(N) + 1;
+        int numCeldasRojas = random.nextInt(N);
+        int x = random.nextInt(N);
+        int y = random.nextInt(N);
+
+        return _tableroAux;
+    }
+
     private void generaTablero(int N){
         Celda [][] _tableroAux = new Celda[N][N];
 
