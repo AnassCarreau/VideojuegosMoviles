@@ -1,8 +1,10 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
 import java.awt.Color;
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Stack;
+import java.util.Deque;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Celda;
@@ -24,7 +26,7 @@ public class GameScreen implements Screen {
     String[] pista;
 
     //Pila con los últimos movimientos para así poder deshacer
-    Stack<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
+    Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
 
     private boolean solved = false;
 
@@ -33,7 +35,7 @@ public class GameScreen implements Screen {
         this.board = new Tablero(tableroSize, randomBoard);
         this.boardDimensions = tableroSize;
         pista = null;
-        ultimosMovs = new Stack<>();
+        ultimosMovs = new ArrayDeque<>();
     }
 
     @Override
@@ -121,11 +123,11 @@ public class GameScreen implements Screen {
                     engine.setScreen(new ChooseLevelScreen(engine));
                     return;
                 } else if (inBounds(event, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2)) {
-                    if(!ultimosMovs.empty()){
-                        Pair<EstadoCelda, Pair<Integer, Integer>> pairAux = ultimosMovs.peek();
+                    if(ultimosMovs.size() != 0){
+                        Pair<EstadoCelda, Pair<Integer, Integer>> pairAux = ultimosMovs.getLast();
                         Celda auxCelda = board.getCelda(pairAux.getRight().getLeft(), pairAux.getRight().getRight());
                         auxCelda.setEstado(pairAux.getLeft());
-                        ultimosMovs.pop();
+                        ultimosMovs.removeLast();
                     }
                     else{
                         pista = new String[]{"Nothing to undo."};
@@ -147,7 +149,10 @@ public class GameScreen implements Screen {
                             //ponemos la pista a null si se ha pulsado ya en algun circulo del tablero
                             pista = null;
                             //guardado del ultimo movimiento en una pila
-                            ultimosMovs.push(new Pair(c.getEstado(), new Pair(k, j)));
+                            if(ultimosMovs.size() + 1 > 50){
+                                ultimosMovs.remove();
+                            }
+                            ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(k, j)));
                             board.cambiaCelda( k, j);
                             return;
                         }
@@ -169,12 +174,10 @@ public class GameScreen implements Screen {
 
     private boolean inBounds(Input.TouchEvent event, int x, int y, int width, int height) {
         return event.x > x && event.x < x + width && event.y > y && event.y < y + height;
-
     }
 
 
     private boolean inBoundsCircle(TouchEvent event, int cx, int cy, int radius) {
-
         int rx = event.x - cx;
         int ry = event.y - cy;
         float dis= (float)Math.sqrt(Math.pow(ry,2) +  Math.pow(rx,2));
@@ -183,6 +186,10 @@ public class GameScreen implements Screen {
 
     public Tablero getTablero(){
         return board;
+    }
+
+    public Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> getUltimosMovs(){
+        return ultimosMovs;
     }
 
 }
