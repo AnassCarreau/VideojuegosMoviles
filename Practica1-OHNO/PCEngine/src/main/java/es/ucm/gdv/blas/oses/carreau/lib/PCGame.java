@@ -2,6 +2,7 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 
 import java.awt.image.BufferStrategy;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Audio;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
@@ -11,17 +12,19 @@ public class PCGame implements Engine {
     //Variables
     private PCInput pc_input;
     private PCGraphics pc_graphics;
+    private  PCAudio pc_audio;
     //Pantalla actual del juego
     Screen screen;
     Window window;
-
     public PCGame(Window window, int width, int height){
         this.pc_input = new PCInput(this);
         this.pc_graphics = new PCGraphics(window, width, height);
+        this.pc_audio= new PCAudio();
         this.window = window;
         window.addComponentListener(pc_graphics);
         window.addMouseListener(pc_input);
         window.addMouseMotionListener(pc_input);
+
     }
 
     public void run(){
@@ -60,6 +63,11 @@ public class PCGame implements Engine {
     @Override
     public Input getInput() {
         return this.pc_input;
+    }
+
+    @Override
+    public Audio getAudio() {
+        return this.pc_audio;
     }
 
     @Override

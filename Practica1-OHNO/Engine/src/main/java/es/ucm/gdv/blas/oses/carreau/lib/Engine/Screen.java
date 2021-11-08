@@ -1,5 +1,9 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Engine;
 
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+
 public interface Screen {
     public void init();
 
@@ -7,7 +11,7 @@ public interface Screen {
 
     public void render();
 
-    public void handleEvents();
+    public void handleEvents() ;
 
     public int getScreenID();
 }

@@ -24,6 +24,7 @@ public class AndroidGame  implements Engine, Runnable {
     AndroidGraphics graphics;
     AndroidInput input;
     Screen screen;
+    AndroidAudio audio;
 
     //Para avisar al compilador que el valor de este atributo
     //puede ser cambiado en una hebra
@@ -45,7 +46,7 @@ public class AndroidGame  implements Engine, Runnable {
         renderView = new SurfaceView(activity.getApplicationContext());
 
         graphics = new AndroidGraphics(activity, frameBuffer,logicalWidth,logicalHeight);
-
+        audio = new AndroidAudio(activity);
         input = new AndroidInput(this, renderView);
         activity.setContentView(renderView);
     }
@@ -54,9 +55,9 @@ public class AndroidGame  implements Engine, Runnable {
         return input;
     }
 
-    public Graphics getGraphics() {
-        return graphics;
+    public Graphics getGraphics() { return graphics;
     }
+    public AndroidAudio getAudio() { return audio; }
 
     public Screen getCurrentScreen() {
         return screen;

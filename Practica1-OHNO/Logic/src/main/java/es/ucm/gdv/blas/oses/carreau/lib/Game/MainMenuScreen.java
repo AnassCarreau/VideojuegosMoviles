@@ -1,6 +1,10 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.sound.sampled.LineUnavailableException;
+
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
@@ -40,7 +44,7 @@ public class MainMenuScreen implements Screen {
     }
 
     @Override
-    public void handleEvents() {
+    public void handleEvents()  {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         int len = touchEvents.size();
@@ -49,7 +53,7 @@ public class MainMenuScreen implements Screen {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
                 System.out.println("evento TOUCH_UP");
-
+                Assets.click.play(1);
                 if (inBounds(event, g.getLogWidth()/2 - 200/2, g.getLogHeight()/2-100/2, 200, 100)) {
                     engine.setScreen(new ChooseLevelScreen(engine));
                     return;
