@@ -25,13 +25,14 @@ public class GameScreen implements Screen {
 
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
-
+    Pair<Integer, Integer> pos;
     //Pila con los últimos movimientos para así poder deshacer
     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
 
-    private boolean botonPista=false;
-    private boolean cerrado=false;
+    private boolean botonPista = false;
+    private boolean cerrado = false;
     private boolean solved = false;
+
 
     public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
         this.engine = eng;
@@ -48,7 +49,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void update(double deltaTime) {
-        if(board.tableroResuelto()) solved = true;
+        if (board.tableroResuelto()) solved = true;
     }
 
     @Override
@@ -58,23 +59,24 @@ public class GameScreen implements Screen {
         g.setColor(0x000000FF);
         //Juego empezado
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
-        if(!solved && pista == null || !botonPista){
-            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7 ,50);
-        }
-        else if(!solved && botonPista){
+        if (!solved && pista == null ) {
+            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7, 50);
+        } else if (!solved && botonPista) {
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
-            for(int i = 0; i < pista.length; i++){
-                g.drawText(pista[i] ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4 - (50 * 2) + (25 * i),25);
+            for (int i = 0; i < pista.length; i++) {
+                g.drawText(pista[i], Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (50 * 2) + (25 * i), 25);
             }
-        }
-        else {
+        } else if(solved) {
             //Si llegamos aqui, significa que hemos resuelto el tablero
-            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 -60,60);
+            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60, 60);
         }
 
         int circleSize = g.getLogWidth() / boardDimensions;
 
+
         int initialX = (int) (g.getLogWidth() / 2 - circleSize * ((float) boardDimensions / 2));
+
+
         for (int i = 0; i < boardDimensions; i++) {
             for (int j = 0; j < boardDimensions; j++) {
                 Celda c = board.getCelda(j, i);
@@ -103,28 +105,19 @@ public class GameScreen implements Screen {
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
                 if (hasNumber && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
-                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize/4 ,2*circleSize/3);
-                }
-                else if(!c.isModifiable() && cerrado)
-                {
-                    g.drawImage(Assets.lock, x-Assets.lock.getWidth()/4,y-Assets.lock.getHeight()/4,Assets.lock.getWidth()/2,Assets.lock.getHeight()/2);
+                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4, 2 * circleSize / 3);
+                } else if (!c.isModifiable() && cerrado) {
+                    g.drawImage(Assets.lock, x - Assets.lock.getWidth() / 4, y - Assets.lock.getHeight() / 4, Assets.lock.getWidth() / 2, Assets.lock.getHeight() / 2);
 
                 }
             }
         }
 
-        if(botonPista) {
-
-            int l = pista[pista.length - 1].length();
-            int i = Character.getNumericValue(pista[pista.length - 1].charAt(l - 4));
-            int j = Character.getNumericValue(pista[pista.length - 1].charAt(l - 2));
-
-            if(i>=0 &&  i<boardDimensions && j >=0 && j<boardDimensions) {
-                int x = initialX + circleSize / 2 + i * circleSize;
-                int y = (g.getLogHeight() / 6) + circleSize / 2 + (j * circleSize);
-                g.setColor(0x000000FF);
-                g.drawCircle(x, y, circleSize / 2);
-            }
+        if (botonPista) {
+            int x = initialX + circleSize / 2 + pos.getRight() * circleSize;
+            int y = (g.getLogHeight() / 6) + circleSize / 2 + (pos.getLeft() * circleSize);
+            g.setColor(0x000000FF);
+            g.drawCircle(x, y, (circleSize) / 2);
         }
 
         g.drawImage(Assets.close, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2);
@@ -159,8 +152,10 @@ public class GameScreen implements Screen {
                     return;
                 } else if (inBounds(event, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2)) {
                     //eye
-                    botonPista=true;
-                    pista = board.damePistaAleatoria().split("#");
+                    botonPista = true;
+                    Pair<String, Pair<Integer, Integer>> p = board.damePistaAleatoria();
+                    pista = p.getLeft().split("#");
+                    pos = p.getRight();
                     return;
                 }
                 int circleSize = g.getLogWidth() / boardDimensions;

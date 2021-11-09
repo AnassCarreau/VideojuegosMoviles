@@ -93,7 +93,9 @@ public class AndroidGraphics extends AbstractGraphics {
     @Override
     public void drawCircle(float cx, float cy, int r) {
         paint.setStyle(Style.STROKE);
+        paint.setStrokeWidth(2);
         this.canvas.drawCircle(cx, cy, r, this.paint);
+        paint.setStyle(Style.FILL);
 
     }
 
