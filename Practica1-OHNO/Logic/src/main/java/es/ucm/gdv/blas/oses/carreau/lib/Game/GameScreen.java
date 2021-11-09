@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
         }
         else{
             //Si llegamos aqui, significa que hemos resuelto el tablero
-            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60 * 2,60);
+            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 -60,60);
         }
 
         int circleSize = g.getLogWidth() / boardDimensions;
@@ -101,6 +101,11 @@ public class GameScreen implements Screen {
                 if (hasNumber && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
                     g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize/4 ,2*circleSize/3);
+                }
+                else if(!c.isModifiable())
+                {
+                    g.drawImage(Assets.lock, x-Assets.lock.getWidth()/2,y-Assets.lock.getHeight()/2,Assets.lock.getWidth(),Assets.lock.getHeight());
+
                 }
             }
         }
