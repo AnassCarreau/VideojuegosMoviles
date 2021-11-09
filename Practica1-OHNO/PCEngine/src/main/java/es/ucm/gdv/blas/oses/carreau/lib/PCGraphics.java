@@ -131,8 +131,16 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     @Override
     public void fillCircle(float cx, float cy, int r) {
         int diameter = r * 2;
+
         //shift x and y by the radius of the circle in order to correctly center it
         g.fillOval((int) cx - r, (int) cy - r, diameter, diameter);
+    }
+
+    @Override
+    public void drawCircle(float cx, float cy, int r) {
+        int diameter = r * 2;
+        //shift x and y by the radius of the circle in order to correctly center it
+        g.drawOval((int) cx - r, (int) cy - r, diameter, diameter);
     }
 
     @Override

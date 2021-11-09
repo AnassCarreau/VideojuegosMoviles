@@ -28,27 +28,27 @@ public class Tablero {
 
         //Inicializar lista fijas
         _celdasFijas = new ArrayList<>();
-/*
+
         for(int i = 0; i < _tablero.length; i++){
             for(int j = 0; j < _tablero.length; j++){
                 _tablero[i][j] = new Celda();
             }
-        }*/
+        }
 
         //generamos un tablero aleatorio con una unica solucion
-        while(!generaTablerov2(N));
+       // while(!generaTablerov2(N));
 
 
-        /*
+
         //TO DO: HACER BIEN
         if(randomBoard){
             if(N == 6) tableroPrueba6x6();
-            else if(N == 4)tableroPrueba4x4();
-            else generaTablero(N);
+           // else if(N == 4)tableroPrueba4x4();
+         //   else generaTablero(N);
 
         //Inicializacion de las pistas
-            pistas = compruebaPistas();
-        }*/
+            pistas = compruebaPistasTablero();
+        }
     }
 
     private boolean generaTablerov2(int N){
@@ -108,9 +108,10 @@ public class Tablero {
         }
 
         //Inicializamos las pistas
-        pistas = compruebaPistas();
+        pistas = compruebaPistasTablero();
 
         while(!pistas.isEmpty()){
+            Pistas auxPista=new Pistas();
             //Cogemos la primera de la lista
             StructPista pista = pistas.getFirstPista();
 
@@ -133,12 +134,14 @@ public class Tablero {
 
                     if(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Vacia){
                         _tablero[newX][newY].setEstado(EstadoCelda.Rojo);
+                        auxPista = compruebaPistas(newX,newY);
                     }
                     break;
                 }
                 case ValueReached:{
                     //cerrar celda
                     encierraCelda(auxX,auxY);
+                    auxPista = compruebaPistas(auxX,auxY);
                     break;
                 }
                 case OneDirectionRequired:{
@@ -155,12 +158,14 @@ public class Tablero {
                     //porque es la que debemos poner en esa direccion
                     if(posCorrecta(newX, newY)) {
                         _tablero[newX][newY].setEstado(EstadoCelda.Azul);
+                        auxPista = compruebaPistas(newX,newY);
                         break;
                     }
                     break;
                 }
                 case MustBeWall:
                     _tablero[auxX][auxY].setEstado(EstadoCelda.Rojo);
+                    auxPista = compruebaPistas(auxX,auxY);
                     break;
                 //TODOS LOS CASOS A PARTIR DE AQUI SON CASOS DE ERROR, POR LO QUE SI SALE ALGUNO DE ESTOS DESCARTAMOS TABLEROS
                 case ImposibleVision:
@@ -177,8 +182,12 @@ public class Tablero {
                     return false;
             }
 
-            //Volvemos a actualizar las pistas
-            pistas = compruebaPistas();
+            while (!auxPista.isEmpty()) {
+                StructPista pi = auxPista.getFirstPista();
+                pistas.addPista(pi);
+                auxPista.getListaPistas().remove(0);
+            }
+
         }
 
         //Si hay alguna celda vacia el tablero no nos vale
@@ -203,7 +212,7 @@ public class Tablero {
         _tablero = _tableroAux;
 
         //Ponemos las pistas del estado inicial
-        pistas = compruebaPistas();
+        pistas = compruebaPistasTablero();
 
         //Devolvemos true si conseguimos crear el tablero
         return true;
@@ -363,142 +372,182 @@ public class Tablero {
         else return false;
     }
 
+
+    public  StructPista getPistaInCoordenada(int i ,int j) {
+        Celda actual = _tablero[i][j];
+        Pair<Integer, Boolean> ady = compruebaAdyacentes(i, j);
+        StructPista pista = null;
+        StructPista pistaAct= _tablero[i][j].getPista();
+        if (actual.getEstado() == EstadoCelda.Azul && !actual.isModifiable()) {
+
+            actual.setCurrentVisibles(ady.getLeft());
+            //PISTA 1
+            if (actual.getCurrentVisibles() == actual.getValorDefault() && !ady.getRight()) {
+                pista = new StructPista(TipoPista.ValueReached, new Pair(i, j), new Pair(0, 0));
+            } else if (!ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()) {
+                //PISTA 10-----------------------------------------------------------
+                int maxColocables = 0;
+
+                for (int k = 0; k < _dirs.size(); k++) {
+                    maxColocables += calculaMaxColocablesYVisibles(i, j, _dirs.get(k)).getLeft();
+                }
+
+                if (maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()) {
+                    pista = new StructPista(TipoPista.ImposibleVision, new Pair(i, j), new Pair(0, 0));
+                    return  pista;
+                }
+                //PISTA 2-----------------------------------------------------------
+                for(int k = 0 ; k < _dirs.size(); k++) {
+                    Pair<Integer, Integer> dir = _dirs.get(k);
+                    int auxX = i + dir.getLeft(), auxY = j + dir.getRight();
+
+                    //Nos saltamos los azules adyacentes
+                    while (posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul) {
+                        auxX += dir.getLeft();
+                        auxY += dir.getRight();
+                    }
+
+                    if (posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia) {
+                        auxX += dir.getLeft();
+                        auxY += dir.getRight();
+                        int azules = 0;
+                        while (posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul) {
+                            auxX += dir.getLeft();
+                            auxY += dir.getRight();
+                            azules++;
+                        }
+
+                        if (azules + 1 + _tablero[i][j].getCurrentVisibles() > _tablero[i][j].getValorDefault()) {
+                            pista = new StructPista(TipoPista.WouldExceed, new Pair(i, j), dir);
+                            return pista;
+                        }
+                    }
+                }
+
+
+                //PISTA 3-----------------------------------------------------------
+                List<Pair<Integer, Integer>> celdaInfo = new ArrayList<>();
+
+                for (int k = 0; k < _dirs.size(); k++) {
+                    celdaInfo.add(calculaMaxColocablesYVisibles(i, j, _dirs.get(k)));
+                }
+
+
+                for (int k = 0; k < _dirs.size(); k++) {
+                    int adyInmediatas = calculaAdyInmediatas(i, j, _dirs.get(k));
+                    int maxVisiblesOtrasDir = 0;
+
+                    for (int g = 0; g < _dirs.size(); g++) {
+                        if (_dirs.get(g) != _dirs.get(k))
+                            maxVisiblesOtrasDir += celdaInfo.get(g).getRight();
+                    }
+
+                    if (adyInmediatas + maxVisiblesOtrasDir < actual.getValorDefault()) {
+                         pista = new StructPista(TipoPista.OneDirectionRequired, new Pair(i, j), _dirs.get(k));
+                        break;
+                    }
+                }
+            }
+            //PISTA 4
+            else if (/*ady.getRight() &&*/ actual.getCurrentVisibles() > actual.getValorDefault()) {
+                pista = new StructPista(TipoPista.ErrorClosedTooLate, new Pair(i, j), new Pair(0, 0));
+            }
+            //PISTA 5
+            else if (/*ady.getRight() &&*/ actual.getCurrentVisibles() < actual.getValorDefault()) {
+                pista = new StructPista(TipoPista.ErrorClosedTooEarly, new Pair(i, j), new Pair(0, 0));
+            }
+
+        }
+        //PISTA 6.1
+        else if (actual.getEstado() == EstadoCelda.Azul && actual.isModifiable() && ady.getRight() && ady.getLeft() == 0) {
+            pista = new StructPista(TipoPista.LockedIn, new Pair(i, j), new Pair(0, 0));
+        }
+        //PISTA 6.2
+        else if (actual.getEstado() == EstadoCelda.Vacia && compruebaVaciaEncerrada(i, j)) {
+            pista = new StructPista(TipoPista.MustBeWall, new Pair(i, j), new Pair(0, 0));
+        }
+
+        if(pista!=null  && pistaAct != null  || pista==null && pistaAct!=null  )
+        {
+
+            _tablero[pistaAct.getPosPista().getLeft()][pistaAct.getPosPista().getRight()].setCurrentPista(pista);
+            pistas.getListaPistas().remove(pistaAct);
+
+        }
+        return pista;
+    }
+
     public String damePistaAleatoria(){
         return pistas.getPistaTablero();
     }
 
-    public Pistas compruebaPistas(){
+    public Pistas compruebaPistas(int x,int y) {
         Pistas nuevasPistas = new Pistas();
 
-        for(int i = 0; i < _tablero.length; i++){
-            for(int j = 0; j < _tablero.length; j++){
-                Celda actual = _tablero[i][j];
-                Pair<Integer, Boolean> ady = compruebaAdyacentes(i,j);
-                if(actual.getEstado() == EstadoCelda.Azul && !actual.isModifiable()){
 
-                    actual.setCurrentVisibles(ady.getLeft());
-                    //PISTA 1
-                    if(actual.getCurrentVisibles() == actual.getValorDefault() && !ady.getRight()){
-                        StructPista pista = new StructPista(TipoPista.ValueReached, new Pair(i, j), new Pair(0,0));
-                        nuevasPistas.addPista(pista);
-                    }
+        for (int i = 0; i < _tablero.length; i++) {
 
-                    else if( !ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()){
-                        //PISTA 10-----------------------------------------------------------
-                        int maxColocables = 0;
-
-                        for(int k = 0; k <_dirs.size(); k++){
-                            maxColocables +=  calculaMaxColocablesYVisibles(i,j,_dirs.get(k)).getLeft();
-                        }
-
-                        if(maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()){
-                            StructPista pista = new StructPista(TipoPista.ImposibleVision, new Pair(i, j), new Pair(0,0));
-                            nuevasPistas.addPista(pista);
-                            continue;
-                        }
-                        //PISTA 2-----------------------------------------------------------
-                        if(checkHint2(i,j,nuevasPistas))continue; //TO DO:REVISAR ¿PUEDE DARSE 2 PISTAS POR CELDA?
-
-                        //PISTA 3-----------------------------------------------------------
-                        List<Pair<Integer,Integer>> celdaInfo = new ArrayList<>();
-
-                        for(int k = 0; k <_dirs.size(); k++){
-                            celdaInfo.add(calculaMaxColocablesYVisibles(i,j,_dirs.get(k)));
-                        }
-
-
-                        for(int k = 0; k < _dirs.size(); k++) {
-                            int adyInmediatas = calculaAdyInmediatas(i, j, _dirs.get(k));
-                            int maxVisiblesOtrasDir = 0;
-
-                            for (int g = 0; g < _dirs.size(); g++) {
-                                if (_dirs.get(g) != _dirs.get(k))
-                                    maxVisiblesOtrasDir += celdaInfo.get(g).getRight();
-                            }
-
-                            if (adyInmediatas + maxVisiblesOtrasDir < actual.getValorDefault()){
-                                StructPista pista = new StructPista(TipoPista.OneDirectionRequired, new Pair(i, j), _dirs.get(k));
-                                nuevasPistas.addPista(pista);
-                                break;
-                            }
-                        }
-                    }
-                    //PISTA 4
-                    else if(/*ady.getRight() &&*/ actual.getCurrentVisibles() > actual.getValorDefault()){
-                        StructPista pista = new StructPista(TipoPista.ErrorClosedTooLate, new Pair(i, j), new Pair(0, 0));
-                        nuevasPistas.addPista(pista);
-                    }
-                    //PISTA 5
-                    else if(/*ady.getRight() &&*/ actual.getCurrentVisibles() < actual.getValorDefault()){
-                        StructPista pista = new StructPista(TipoPista.ErrorClosedTooEarly, new Pair(i, j), new Pair(0, 0));
-                        nuevasPistas.addPista(pista);
-                    }
-
-                }
-                //PISTA 6.1
-                else if(actual.getEstado() == EstadoCelda.Azul && actual.isModifiable() && ady.getRight() && ady.getLeft() == 0){
-                    StructPista pista = new StructPista(TipoPista.LockedIn, new Pair(i, j), new Pair(0, 0));
-                    nuevasPistas.addPista(pista);
-                }
-                //PISTA 6.2
-                else if(actual.getEstado() == EstadoCelda.Vacia && compruebaVaciaEncerrada(i,j)){
-                    StructPista pista = new StructPista(TipoPista.MustBeWall, new Pair(i, j), new Pair(0, 0));
-                    nuevasPistas.addPista(pista);
+            StructPista p = getPistaInCoordenada(i, y);
+            if (p != null) {
+                nuevasPistas.addPista(p);
+                _tablero[i][y].setCurrentPista(p);
+            }
+        }
+        for (int j = 0; j < _tablero.length; j++) {
+            if (y != j) {
+                StructPista p = getPistaInCoordenada(x, j);
+                if (p != null) {
+                    nuevasPistas.addPista(p);
+                    _tablero[x][j].setCurrentPista(p);
                 }
             }
         }
+
+        return nuevasPistas;
+    }
+
+
+
+    public Pistas compruebaPistasTablero() {
+        Pistas nuevasPistas = new Pistas();
+
+        for (int i = 0; i < _tablero.length; i++) {
+            for (int j = 0; j < _tablero.length; j++) {
+                StructPista p= getPistaInCoordenada(i, j);
+                if(p!=null) {
+                    nuevasPistas.addPista(p);
+                    _tablero[i][j].setCurrentPista(p);
+                }
+            }
+        }
+
         return nuevasPistas;
     }
 
     //i es el numero de fila es decir la posicion en Y
     //j es eñ numero de la columna es decir la posicion en X
-    private boolean checkHint2(int i, int j, Pistas nuevasPistas){
-        for(int k = 0 ; k < _dirs.size(); k++){
-            Pair<Integer, Integer>dir = _dirs.get(k);
-            int auxX = i + dir.getLeft(), auxY = j + dir.getRight();
+   /* private boolean checkHint2(int i, int j, Pistas nuevasPistas){
 
-            //Nos saltamos los azules adyacentes
-            while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado()==EstadoCelda.Azul){
-                auxX += dir.getLeft();
-                auxY += dir.getRight();
-            }
-
-            if(posCorrecta(auxX,auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia){
-                auxX += dir.getLeft();
-                auxY += dir.getRight();
-                int azules = 0;
-                while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul){
-                    auxX += dir.getLeft();
-                    auxY += dir.getRight();
-                    azules++;
-                }
-
-                if(azules + 1 + _tablero[i][j].getCurrentVisibles() > _tablero[i][j].getValorDefault() ){
-                    StructPista pista = new StructPista(TipoPista.WouldExceed, new Pair(i, j), dir);
-                    nuevasPistas.addPista(pista);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    }*/
     /**
      * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
      * casillas que ven las celdas azules predefinidas utilizando el metodo de compruebaAdyacentes()
      */
     public boolean cambiaCelda(int _posX, int _posY){
-        if (_tablero[_posX][_posY].isModifiable()){
+        if (_tablero[_posX][_posY].isModifiable()) {
             //EstadoCelda sig = EstadoCelda.values()[(_tablero[_posX][_posY].getEstado().ordinal() + 1) % EstadoCelda.Default.ordinal()];
             EstadoCelda sig = EstadoCelda.Vacia;
 
-            switch (_tablero[_posX][_posY].getEstado()){
-                case Azul:{
+            switch (_tablero[_posX][_posY].getEstado()) {
+                case Azul: {
                     sig = EstadoCelda.Rojo;
-                    break; }
-                case Rojo:{
+                    break;
+                }
+                case Rojo: {
                     sig = EstadoCelda.Vacia;
-                    break;}
-                case Vacia:{
+                    break;
+                }
+                case Vacia: {
                     sig = EstadoCelda.Azul;
                     break;
                 }
@@ -509,16 +558,20 @@ public class Tablero {
             _tablero[_posX][_posY].setEstado(sig);
 
 
-            for(int i = 0; i < _celdasFijas.size(); i++){
+            for (int i = 0; i < _celdasFijas.size(); i++) {
                 Pair p = _celdasFijas.get(i);
-                int x = (int)(p.getLeft());
-                int y = (int)(p.getRight());
+                int x = (int) (p.getLeft());
+                int y = (int) (p.getRight());
                 _tablero[x][y].setCurrentVisibles((compruebaAdyacentes(x, y).getLeft()));
             }
 
-            //TO DO: HACER COMPROBACIONES PARA ACTUALIZAR PISTAS
-            pistas = compruebaPistas();
 
+            Pistas aux = compruebaPistas(_posX, _posY);
+            while (!aux.isEmpty()) {
+                StructPista pi = aux.getFirstPista();
+                pistas.addPista(pi);
+                aux.getListaPistas().remove(0);
+            }
             return true;
         }
         else return false;

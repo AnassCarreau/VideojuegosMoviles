@@ -50,8 +50,8 @@ public class ChooseLevelScreen implements Screen {
 
         int radio = (g.getLogWidth() / 5) / 2;
         for (int i = 0; i < celdas.size(); i++) {
-            if (i % 2 == 0) g.setColor(0xFF0000FF);
-            else g.setColor(0x0000FFFF);
+            if (i % 2 == 0) g.setColor(0xFF3D53FF);
+            else g.setColor(0x00BFFFFF);
 
             g.fillCircle(celdas.get(i).getLeft(), celdas.get(i).getRight(), radio);
             g.setColor(0xFFFFFFFF);

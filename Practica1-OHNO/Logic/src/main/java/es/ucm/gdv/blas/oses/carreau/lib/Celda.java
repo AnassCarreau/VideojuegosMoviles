@@ -49,11 +49,19 @@ public class Celda{
     }
 
     public void addCeldaAdy(Celda c){ ady.add(c);}
+    public StructPista getPista(){
+        return pista;
+    }
+    public void setCurrentPista(StructPista curr){
+        pista = curr;
+    }
+
 
     private EstadoCelda _estadoActual;
     private boolean _modificable;
     private int _valorDefault;
     private int _vistasAct;
     private List<Celda> ady;
+    private StructPista pista=null;
 
 }

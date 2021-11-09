@@ -2,6 +2,7 @@ package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
 import java.awt.Color;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 import java.util.Deque;
@@ -28,6 +29,8 @@ public class GameScreen implements Screen {
     //Pila con los últimos movimientos para así poder deshacer
     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
 
+    private boolean botonPista=false;
+    private boolean cerrado=false;
     private boolean solved = false;
 
     public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
@@ -55,16 +58,16 @@ public class GameScreen implements Screen {
         g.setColor(0x000000FF);
         //Juego empezado
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
-        if(!solved && pista == null){
+        if(!solved && pista == null || !botonPista){
             g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7 ,50);
         }
-        else if(!solved){
+        else if(!solved && botonPista){
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
             for(int i = 0; i < pista.length; i++){
                 g.drawText(pista[i] ,Assets.josefisans,g.getLogWidth() / 2, g.getLogHeight() / 4 - (50 * 2) + (25 * i),25);
             }
         }
-        else{
+        else {
             //Si llegamos aqui, significa que hemos resuelto el tablero
             g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 -60,60);
         }
@@ -78,12 +81,12 @@ public class GameScreen implements Screen {
                 boolean hasNumber = false;
                 switch (c.getEstado()) {
                     case Azul: {
-                        g.setColor(0x0000FFFF);
+                        g.setColor(0x00BFFFFF);
                         hasNumber = true;
                         break;
                     }
                     case Rojo: {
-                        g.setColor(0xFF0000FF);
+                        g.setColor(0xFF3D53FF);
                         break;
                     }
                     case Vacia: {
@@ -102,11 +105,25 @@ public class GameScreen implements Screen {
                     g.setColor(0xFFFFFFFF);
                     g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize/4 ,2*circleSize/3);
                 }
-                else if(!c.isModifiable())
+                else if(!c.isModifiable() && cerrado)
                 {
-                    g.drawImage(Assets.lock, x-Assets.lock.getWidth()/2,y-Assets.lock.getHeight()/2,Assets.lock.getWidth(),Assets.lock.getHeight());
+                    g.drawImage(Assets.lock, x-Assets.lock.getWidth()/4,y-Assets.lock.getHeight()/4,Assets.lock.getWidth()/2,Assets.lock.getHeight()/2);
 
                 }
+            }
+        }
+
+        if(botonPista) {
+
+            int l = pista[pista.length - 1].length();
+            int i = Character.getNumericValue(pista[pista.length - 1].charAt(l - 4));
+            int j = Character.getNumericValue(pista[pista.length - 1].charAt(l - 2));
+
+            if(i>=0 &&  i<boardDimensions && j >=0 && j<boardDimensions) {
+                int x = initialX + circleSize / 2 + i * circleSize;
+                int y = (g.getLogHeight() / 6) + circleSize / 2 + (j * circleSize);
+                g.setColor(0x000000FF);
+                g.drawCircle(x, y, circleSize / 2);
             }
         }
 
@@ -124,6 +141,8 @@ public class GameScreen implements Screen {
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
+                botonPista=false;
+                cerrado=false;
                 if (inBounds(event, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2)) {
                     engine.setScreen(new ChooseLevelScreen(engine));
                     return;
@@ -140,6 +159,7 @@ public class GameScreen implements Screen {
                     return;
                 } else if (inBounds(event, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2)) {
                     //eye
+                    botonPista=true;
                     pista = board.damePistaAleatoria().split("#");
                     return;
                 }
@@ -162,6 +182,7 @@ public class GameScreen implements Screen {
                             return;
                         }
                         else if(!c.isModifiable() && inBoundsCircle(event, x, y , circleSize/2)){
+                            cerrado=true;
                             pista = new String[]{"This cell cannot be modified"};
                         }
                     }

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     //Actualizamos las pistas que deberia de tener el tablero
-                    t.compruebaPistas();
+                    t.compruebaPistasTablero();
 
                     //Cogemos la cola doble de movimientos
                     int sizeMov = savedInstanceState.getInt("MovementsSize:");

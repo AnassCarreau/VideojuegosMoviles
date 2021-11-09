@@ -91,6 +91,13 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     @Override
+    public void drawCircle(float cx, float cy, int r) {
+        paint.setStyle(Style.STROKE);
+        this.canvas.drawCircle(cx, cy, r, this.paint);
+
+    }
+
+    @Override
     public void drawText(String text, Font font, int x, int y,float tam) {
         Typeface aFont = ((AndroidFont) font)._font;
 

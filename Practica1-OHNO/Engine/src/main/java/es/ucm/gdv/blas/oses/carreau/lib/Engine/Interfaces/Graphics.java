@@ -35,6 +35,7 @@ public interface Graphics {
     public void setColor(int color);
 
     public void fillCircle(float cx, float cy, int r);
+    public void drawCircle(float cx, float cy, int r);
 
     public void drawText(String text,Font font, int x, int y,float tam);
 };

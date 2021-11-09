@@ -79,4 +79,5 @@ public class Pistas {
         if(listaPistas.isEmpty()) return null;
         else return listaPistas.get(0);
     }
+    public  List<StructPista>  getListaPistas() {return listaPistas;}
 }

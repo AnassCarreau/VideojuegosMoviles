@@ -35,6 +35,7 @@ public abstract class AbstractGraphics implements Graphics {
         return (int)winHeight;
     }
 
+
     //Método que nos devuelve el factor de escalado a aplicar
     public float getScaleFactor(){
         float factorWidth = winWidth / logWidth;
