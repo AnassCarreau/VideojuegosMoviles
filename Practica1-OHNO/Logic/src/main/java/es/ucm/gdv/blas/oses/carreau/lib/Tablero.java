@@ -56,11 +56,7 @@ public class Tablero {
         System.out.println("Creando nuevo tablero");
 
         //Creamos tablero vacio
-        for(int i = 0; i < _tablero.length; i++){
-            for(int j = 0; j < _tablero.length; j++){
-                _tablero[i][j] = new Celda();
-            }
-        }
+        _tablero = getTableroVacio(N);
 
         //Inicializamos lista de celdas fijas
         _celdasFijas = new ArrayList<>();
@@ -92,7 +88,6 @@ public class Tablero {
             c.setModificable(false);
             c.setValorDefault(random.nextInt(N)+ 1); //Valor entre las que ve (1 a N)
             _celdasFijas.add(new Pair<Integer, Integer>(x,y));
-
         }
 
         //Colocamos aleatoriamente  numCeldasRojas rojas
@@ -117,49 +112,27 @@ public class Tablero {
 
         while(!pistas.isEmpty()){
             //Cogemos la primera de la lista
-            Pair<TipoPista, Pair<Integer, Integer>> pista = pistas.getFirstPista();
+            StructPista pista = pistas.getFirstPista();
 
             //Coordenadas correspondientes a la celda
-            int auxX = pista.getRight().getLeft();
-            int auxY = pista.getRight().getRight();
+            int auxX = pista.getPosPista().getLeft();
+            int auxY = pista.getPosPista().getRight();
 
             //cogemos que tipo de pista es
-            switch(pista.getLeft()){
+            switch(pista.getTipoPista()){
                 case WouldExceed:{
                     //mirar en que direccion te pasas y poner una roja
-                    for(int k = 0 ; k < _dirs.size(); k++){
-                        Pair<Integer, Integer> dir = _dirs.get(k);
-                        int newX = auxX + dir.getLeft(), newY = auxY + dir.getRight();
+                    Pair<Integer, Integer> dir = pista.getDirPista();
+                    int newX = auxX + dir.getLeft(), newY = auxY + dir.getRight();
 
-                        //Nos saltamos los azules adyacentes
-                        while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado()==EstadoCelda.Azul){
-                            newX += dir.getLeft();
-                            newY += dir.getRight();
-                        }
+                    //Nos saltamos los azules adyacentes
+                    while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado()==EstadoCelda.Azul){
+                        newX += dir.getLeft();
+                        newY += dir.getRight();
+                    }
 
-                        //Si la siguiente en esa direccion es vacia
-                        if(posCorrecta(newX,newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Vacia){
-                            int emptyX = newX;
-                            int emptyY = newY;
-                            newX += dir.getLeft();
-                            newY += dir.getRight();
-
-                            int azules = 0;
-                            //Comprobamos cuantos azules hay al otro lado de la casilla vacia que vamos a rellenar
-                            while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Azul){
-                                newX += dir.getLeft();
-                                newY += dir.getRight();
-                                azules++;
-                            }
-
-                            //Si el numero de las casillas que estamos viendo, mas el de la casilla que vamos a poner azul
-                            //mas las casillas azules que hay al otro lado supera el numero que deberíamos ver, es que la casilla vacia
-                            //debería ser roja
-                            if(azules + 1 + _tablero[auxX][auxY].getCurrentVisibles() > _tablero[auxX][auxY].getValorDefault() ){
-                                _tablero[emptyX][emptyY].setEstado(EstadoCelda.Rojo);
-                                break;
-                            }
-                        }
+                    if(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Vacia){
+                        _tablero[newX][newY].setEstado(EstadoCelda.Rojo);
                     }
                     break;
                 }
@@ -169,40 +142,20 @@ public class Tablero {
                     break;
                 }
                 case OneDirectionRequired:{
-                    List<Pair<Integer,Integer>> celdaInfo = new ArrayList<>();
+                    //Cogemos la direccion de la pista y asi no tenemos que recorrer todas las dirs
+                    Pair<Integer, Integer> dir = pista.getDirPista();
 
-                    for(int k = 0; k <_dirs.size(); k++){
-                        celdaInfo.add(calculaMaxColocablesYVisibles(auxX,auxY,_dirs.get(k)));
+                    int newX = auxX + dir.getLeft();
+                    int newY = auxY + dir.getRight();
+                    while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Azul){
+                        newX += dir.getLeft();
+                        newY += dir.getRight();
                     }
-
-                    //Checkear que direccion es y poner azul
-                    //Esto seguro que se puede optimizar, pero primero que funque
-                    for(int k = 0; k < _dirs.size(); k++) {
-                        Pair<Integer, Integer> dir = _dirs.get(k);
-                        int adyInmediatas = calculaAdyInmediatas(auxX, auxY, dir);
-                        int maxVisiblesOtrasDir = 0;
-
-                        for (int g = 0; g < _dirs.size(); g++) {
-                            if (_dirs.get(g) != dir)
-                                maxVisiblesOtrasDir += celdaInfo.get(g).getRight();
-                        }
-
-                        if (adyInmediatas + maxVisiblesOtrasDir < _tablero[auxX][auxY].getValorDefault()){
-                            int newX = auxX + dir.getLeft();
-                            int newY = auxY + dir.getRight();
-
-                            //Nos saltamos las ady inmediatas
-                            while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Azul){
-                                newX += dir.getLeft();
-                                newY += dir.getRight();
-                            }
-                            //Por seguridad, pero si no nos hemos salido es que esa celda vacia es azul
-                            //porque es la que debemos poner en esa direccion
-                            if(posCorrecta(newX, newY)) {
-                                _tablero[newX][newY].setEstado(EstadoCelda.Azul);
-                                break;
-                            }
-                        }
+                    //Por seguridad, pero si no nos hemos salido es que esa celda vacia es azul
+                    //porque es la que debemos poner en esa direccion
+                    if(posCorrecta(newX, newY)) {
+                        _tablero[newX][newY].setEstado(EstadoCelda.Azul);
+                        break;
                     }
                     break;
                 }
@@ -237,16 +190,7 @@ public class Tablero {
 
 
         //SI HEMOS LLEGADO HASTA AQUI HABEMUS TABLERO
-        Celda [][] _tableroAux = new Celda[N][N];
-
-        //TO DO: ESTO ES FEO DE COJONES PERO AHORA NO SE ME OCURRE OTRA MEJOR FORMA DE HACERLO
-        //REVISAR PLZ
-
-        for(int i = 0; i <N;i++){
-            for(int j = 0; j < N; j++){
-                _tableroAux[i][j] = new Celda();
-            }
-        }
+        Celda [][] _tableroAux = getTableroVacio(N);
 
         for(int i = 0; i < _celdasFijas.size();i++){
             Pair<Integer, Integer> index = _celdasFijas.get(i);
@@ -280,87 +224,14 @@ public class Tablero {
         }
     }
 
-    private void generaTablero(int N){
-        Celda [][] _tableroAux = new Celda[N][N];
-
-        for(int i = 0; i < N; i++){
+    private Celda[][] getTableroVacio(int N){
+        Celda[][] tablero = new Celda[N][N];
+        for(int i = 0; i <N;i++){
             for(int j = 0; j < N; j++){
-                _tableroAux[i][j] = new Celda();
+                tablero[i][j] = new Celda();
             }
         }
-
-        Random random = new Random();
-
-        boolean [][] tableroBool = new boolean[N][N];
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                tableroBool[i][j] = false;
-            }
-        }
-        int numCeldasRellenas = 0;
-        while(numCeldasRellenas < N * N) {
-            int x = random.nextInt(N);
-            int y = random.nextInt(N);
-            while (tableroBool[x][y]) {
-                x = random.nextInt(N);
-                y = random.nextInt(N);
-            }
-            Celda celda = getCelda(x, y);
-
-            int numberDefault = random.nextInt(N) + 1;
-
-            celda.setEstado(EstadoCelda.Azul);
-            celda.setModificable(false);
-            celda.setValorDefault(numberDefault);
-            tableroBool[x][y] = true;
-            numCeldasRellenas++;
-
-            int dirRand = random.nextInt(4);
-            int i = 0;
-            while (i < 4 && celda.getCurrentVisibles() != celda.getValorDefault()) {
-                int auxX = x + _dirs.get((dirRand + i) % 4).getLeft();
-                int auxY = y + _dirs.get((dirRand + i) % 4).getRight();
-                while (posCorrecta(auxX, auxY) && (_tableroAux[auxX][auxY].getEstado() == EstadoCelda.Vacia
-                        || _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Azul)) {
-                    auxX += _dirs.get((dirRand + i) % 4).getLeft();
-                    auxY += _dirs.get((dirRand + i) % 4).getRight();
-
-                    if (posCorrecta(auxX, auxY) && _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Vacia) {
-                        _tableroAux[auxX][auxY].setEstado(EstadoCelda.Azul);
-                        tableroBool[auxX][auxY] = true;
-                        numCeldasRellenas++;
-                    }
-
-                    if (celda.getCurrentVisibles() + 1 <= celda.getValorDefault()) {
-                        celda.setCurrentVisibles(celda.getCurrentVisibles() + 1);
-                        continue;
-                    } else {
-                        break;
-                    }
-                }
-                i++;
-            }
-            for (int k = 0; k < _dirs.size(); k++){
-                int auxX = x + _dirs.get(k).getLeft();
-                int auxY = y + _dirs.get(k).getRight();
-                while (posCorrecta(auxX, auxY) && _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Azul) {
-                    auxX += _dirs.get(k).getLeft();
-                    auxY += _dirs.get(k).getRight();
-                }
-                if(posCorrecta(auxX, auxY) && _tableroAux[auxX][auxY].getEstado() == EstadoCelda.Vacia) {
-                    _tableroAux[auxX][auxY].setEstado(EstadoCelda.Rojo);
-                    tableroBool[auxX][auxY] = true;
-                    numCeldasRellenas++;
-                }
-            }
-            //System.out.println(numCeldasRellenas);
-        }
-
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                _tablero[i][j] = _tableroAux[i][j];
-            }
-        }
+        return tablero;
     }
 
     private void tableroPrueba6x6(){
@@ -442,63 +313,6 @@ public class Tablero {
         _celdasFijas.add(new Pair<Integer, Integer>(5,4));
 
     }
-    private void tableroPrueba4x4(){
-
-
-        _tablero[0][1].setEstado(EstadoCelda.Rojo);
-        _tablero[0][1].setModificable(false);
-        _celdasFijas.add(new Pair<Integer, Integer>(0,1));
-
-        _tablero[1][0].setEstado(EstadoCelda.Rojo);
-        _tablero[1][0].setModificable(false);
-        _celdasFijas.add(new Pair<Integer, Integer>(1,0));
-
-
-        //_tablero[1][1].setEstado(EstadoCelda.Rojo);
-        //_tablero[1][1].setModificable(false);
-
-        _tablero[1][2].setEstado(EstadoCelda.Azul);
-        _tablero[1][2].setModificable(false);
-        _tablero[1][2].setValorDefault(2);
-        _celdasFijas.add(new Pair<Integer, Integer>(1,2));
-        _tablero[2][1].setEstado(EstadoCelda.Azul);
-        _tablero[2][1].setModificable(false);
-        _tablero[2][1].setValorDefault(1);
-        _celdasFijas.add(new Pair<Integer, Integer>(2,1));
-        _tablero[3][2].setEstado(EstadoCelda.Azul);
-        _tablero[3][2].setModificable(false);
-        _tablero[3][2].setValorDefault(2);
-        _celdasFijas.add(new Pair<Integer, Integer>(3,2));
-        _tablero[3][3].setEstado(EstadoCelda.Azul);
-        _tablero[3][3].setModificable(false);
-        _tablero[3][3].setValorDefault(4);
-        _celdasFijas.add(new Pair<Integer, Integer>(3,3));
-    }
-
-    /**
-     * Metodo que dibuja el tablero actual en la consola
-     */
-    public void drawConsole(){
-        for(int i = 0; i < _tablero.length; i++){
-
-            for(int j = 0; j < _tablero.length; j++){
-
-                System.out.print("| ");
-                if(_tablero[i][j].getEstado().equals(EstadoCelda.Vacia)){
-                    System.out.print("  ");
-                }
-                else if(_tablero[i][j].getEstado().equals(EstadoCelda.Rojo)){
-                    System.out.print("R ");
-                }
-                else{
-                    if(_tablero[i][j].isModifiable()) System.out.print("A ");
-
-                    else System.out.print(_tablero[i][j].getValorDefault()+ " ");
-                }
-            }
-            System.out.println("|");
-        }
-    }
 
     /**
      * @param x, fila del tablero correspondiente a la casilla que
@@ -545,16 +359,6 @@ public class Tablero {
      * Metodo que comprueba si la situacion actual del tablero corresponde a una solucion
      */
     public boolean tableroResuelto(){
-
-        //if(!pistas.isEmpty())
-        /*int i = 0;
-        while( i < _azulesFijas.size()){
-            Pair p = _azulesFijas.get(i);
-            Celda c = _tablero[(int)(p.getLeft())][(int)(p.getRight())];
-
-            if(c.getValorDefault() != c.getCurrentVisibles()) return false;
-            i++;
-        }*/
         if(pistas != null) return pistas.isEmpty();
         else return false;
     }
@@ -565,17 +369,18 @@ public class Tablero {
 
     public Pistas compruebaPistas(){
         Pistas nuevasPistas = new Pistas();
+
         for(int i = 0; i < _tablero.length; i++){
             for(int j = 0; j < _tablero.length; j++){
                 Celda actual = _tablero[i][j];
                 Pair<Integer, Boolean> ady = compruebaAdyacentes(i,j);
-
                 if(actual.getEstado() == EstadoCelda.Azul && !actual.isModifiable()){
 
                     actual.setCurrentVisibles(ady.getLeft());
                     //PISTA 1
                     if(actual.getCurrentVisibles() == actual.getValorDefault() && !ady.getRight()){
-                        nuevasPistas.addPista(TipoPista.ValueReached, i,j);
+                        StructPista pista = new StructPista(TipoPista.ValueReached, new Pair(i, j), new Pair(0,0));
+                        nuevasPistas.addPista(pista);
                     }
 
                     else if( !ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()){
@@ -587,7 +392,8 @@ public class Tablero {
                         }
 
                         if(maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()){
-                            nuevasPistas.addPista(TipoPista.ImposibleVision, i,j);
+                            StructPista pista = new StructPista(TipoPista.ImposibleVision, new Pair(i, j), new Pair(0,0));
+                            nuevasPistas.addPista(pista);
                             continue;
                         }
                         //PISTA 2-----------------------------------------------------------
@@ -611,28 +417,33 @@ public class Tablero {
                             }
 
                             if (adyInmediatas + maxVisiblesOtrasDir < actual.getValorDefault()){
-                                nuevasPistas.addPista(TipoPista.OneDirectionRequired, i, j);
+                                StructPista pista = new StructPista(TipoPista.OneDirectionRequired, new Pair(i, j), _dirs.get(k));
+                                nuevasPistas.addPista(pista);
                                 break;
                             }
                         }
                     }
                     //PISTA 4
                     else if(/*ady.getRight() &&*/ actual.getCurrentVisibles() > actual.getValorDefault()){
-                        nuevasPistas.addPista(TipoPista.ErrorClosedTooLate, i,j);
+                        StructPista pista = new StructPista(TipoPista.ErrorClosedTooLate, new Pair(i, j), new Pair(0, 0));
+                        nuevasPistas.addPista(pista);
                     }
                     //PISTA 5
                     else if(/*ady.getRight() &&*/ actual.getCurrentVisibles() < actual.getValorDefault()){
-                        nuevasPistas.addPista(TipoPista.ErrorClosedTooEarly, i,j);
+                        StructPista pista = new StructPista(TipoPista.ErrorClosedTooEarly, new Pair(i, j), new Pair(0, 0));
+                        nuevasPistas.addPista(pista);
                     }
 
                 }
                 //PISTA 6.1
                 else if(actual.getEstado() == EstadoCelda.Azul && actual.isModifiable() && ady.getRight() && ady.getLeft() == 0){
-                    nuevasPistas.addPista(TipoPista.LockedIn, i,j);
+                    StructPista pista = new StructPista(TipoPista.LockedIn, new Pair(i, j), new Pair(0, 0));
+                    nuevasPistas.addPista(pista);
                 }
                 //PISTA 6.2
                 else if(actual.getEstado() == EstadoCelda.Vacia && compruebaVaciaEncerrada(i,j)){
-                    nuevasPistas.addPista(TipoPista.MustBeWall, i,j);
+                    StructPista pista = new StructPista(TipoPista.MustBeWall, new Pair(i, j), new Pair(0, 0));
+                    nuevasPistas.addPista(pista);
                 }
             }
         }
@@ -663,7 +474,8 @@ public class Tablero {
                 }
 
                 if(azules + 1 + _tablero[i][j].getCurrentVisibles() > _tablero[i][j].getValorDefault() ){
-                    nuevasPistas.addPista(TipoPista.WouldExceed, i,j);
+                    StructPista pista = new StructPista(TipoPista.WouldExceed, new Pair(i, j), dir);
+                    nuevasPistas.addPista(pista);
                     return true;
                 }
             }

@@ -9,7 +9,9 @@ import  es.ucm.gdv.blas.oses.carreau.lib.Celda;
 
 public class Pistas {
 
-    private List<Pair<TipoPista, Pair<Integer, Integer>>> listaPistas;
+    //Lista de pista cuya clase StructPista contiene el tipo de pista, su posicion y direccion si
+    //aplica
+    private List<StructPista> listaPistas;
 
     public Pistas(){
         listaPistas = new ArrayList<>();
@@ -19,8 +21,8 @@ public class Pistas {
      * Metodo que añade una pista cuando el jugador ha hecho algo mal y guarda la posicion de la que
      * tiene que dar la pista.
      */
-    public void addPista(TipoPista l, int posX, int posY){
-        listaPistas.add(new Pair(l, new Pair(posX, posY)));
+    public void addPista(StructPista pista){
+        listaPistas.add(pista);
     }
 
     public boolean isEmpty(){
@@ -29,12 +31,12 @@ public class Pistas {
 
     public String getPistaTablero() {
         String s = new String();
-        Pair<TipoPista, Pair<Integer, Integer>> p = getRandomCasilla();
+        StructPista p = getRandomCasilla();
 
         if(p == null) return s;
 
-        TipoPista tP = p.getLeft();
-        Pair<Integer, Integer> pos = p.getRight();
+        TipoPista tP = p.getTipoPista();
+        Pair<Integer, Integer> pos = p.getPosPista();
 
         switch (tP) {
             case ValueReached:
@@ -66,35 +68,15 @@ public class Pistas {
         return s;
     }
 
-
-    /*public  String getPistaTableroInAdecuado() {
-        Pair<Celda, Pair<Integer, Integer>> p = getRandomCasilla();
-        Celda c = p.getLeft();
-        Pair<Integer, Integer> pos = p.getRight();
-        if (c.getValorDefault() > c.getCurrentVisibles()) {
-            return "Celda " + pos.getLeft() +" "+ pos.getRight() + "Sobrevision";
-        }
-        else if (c.getCurrentVisibles() < c.getValorDefault() /*&& cerrada*) {
-            return "Celda " + pos.getLeft() +" "+ pos.getRight() + "infravision y cerrada";
-
-        }
-       
-        return "" ;
-    }*/
-
-    private  Pair<TipoPista, Pair<Integer, Integer>> getRandomCasilla()
+    private StructPista getRandomCasilla()
     {
         Random r= new Random();
         if(listaPistas.size() > 0) return listaPistas.get(r.nextInt(listaPistas.size()));
         else return null;
     }
 
-    public Pair<TipoPista, Pair<Integer, Integer>> getFirstPista(){
+    public StructPista getFirstPista(){
         if(listaPistas.isEmpty()) return null;
         else return listaPistas.get(0);
-    }
-
-    public void removeFirstPista() {
-        this.listaPistas.remove(0);
     }
 }
