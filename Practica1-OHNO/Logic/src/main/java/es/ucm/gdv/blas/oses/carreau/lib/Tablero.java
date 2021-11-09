@@ -1,5 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
+import com.sun.org.apache.xerces.internal.parsers.IntegratedParserConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,16 +28,18 @@ public class Tablero {
 
         //Inicializar lista fijas
         _celdasFijas = new ArrayList<>();
-
+/*
         for(int i = 0; i < _tablero.length; i++){
             for(int j = 0; j < _tablero.length; j++){
                 _tablero[i][j] = new Celda();
             }
-        }
+        }*/
 
         //generamos un tablero aleatorio con una unica solucion
+        while(!generaTablerov2(N));
 
 
+        /*
         //TO DO: HACER BIEN
         if(randomBoard){
             if(N == 6) tableroPrueba6x6();
@@ -44,25 +48,236 @@ public class Tablero {
 
         //Inicializacion de las pistas
             pistas = compruebaPistas();
-        }
+        }*/
     }
 
-    private Celda [][] generaTablerov2(int N){
+    private boolean generaTablerov2(int N){
+
+        System.out.println("Creando nuevo tablero");
+
+        //Creamos tablero vacio
+        for(int i = 0; i < _tablero.length; i++){
+            for(int j = 0; j < _tablero.length; j++){
+                _tablero[i][j] = new Celda();
+            }
+        }
+
+        //Inicializamos lista de celdas fijas
+        _celdasFijas = new ArrayList<>();
+
+        //Inicializamos generador de aleatorios
+        Random random = new Random();
+
+        //Calculamos con aleatorios cuantas celdas fijas vamos a poner
+        //TO DO: gracias a estos numeros funciona en 4x4, pero habría que
+        //ajustarlo para el resto de tableros supongo
+        int numCeldasAzules = random.nextInt(N) + 1;
+        int numCeldasRojas = random.nextInt(N);
+
+        //Colocamos aleatoriamente numCeldas azules
+        for(int i = 0 ; i < numCeldasAzules; i++) {
+
+            int x = random.nextInt(N);
+            int y = random.nextInt(N);
+
+            //Buscamos casilla que esté vacia (por si da la casualidad de que con los randoms alguna coincide)
+            while (_tablero[x][y].getEstado() != EstadoCelda.Vacia) {
+                x = random.nextInt(N);
+                y = random.nextInt(N);
+            }
+
+            Celda c =  _tablero[x][y];
+
+            c.setEstado(EstadoCelda.Azul);
+            c.setModificable(false);
+            c.setValorDefault(random.nextInt(N)+ 1); //Valor entre las que ve (1 a N)
+            _celdasFijas.add(new Pair<Integer, Integer>(x,y));
+
+        }
+
+        //Colocamos aleatoriamente  numCeldasRojas rojas
+        for(int i = 0 ; i <numCeldasRojas; i++){
+            int x = random.nextInt(N);
+            int y = random.nextInt(N);
+
+            //Buscamos casilla que esté vacia (por si da la casualidad de que con los randoms alguna coincide)
+            while (_tablero[x][y].getEstado() != EstadoCelda.Vacia) {
+                x = random.nextInt(N);
+                y = random.nextInt(N);
+            }
+            Celda c =  _tablero[x][y];
+
+            c.setEstado(EstadoCelda.Rojo);
+            c.setModificable(false);
+            _celdasFijas.add(new Pair<Integer, Integer>(x,y));
+        }
+
+        //Inicializamos las pistas
+        pistas = compruebaPistas();
+
+        while(!pistas.isEmpty()){
+            //Cogemos la primera de la lista
+            Pair<TipoPista, Pair<Integer, Integer>> pista = pistas.getFirstPista();
+
+            //Coordenadas correspondientes a la celda
+            int auxX = pista.getRight().getLeft();
+            int auxY = pista.getRight().getRight();
+
+            //cogemos que tipo de pista es
+            switch(pista.getLeft()){
+                case WouldExceed:{
+                    //mirar en que direccion te pasas y poner una roja
+                    for(int k = 0 ; k < _dirs.size(); k++){
+                        Pair<Integer, Integer> dir = _dirs.get(k);
+                        int newX = auxX + dir.getLeft(), newY = auxY + dir.getRight();
+
+                        //Nos saltamos los azules adyacentes
+                        while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado()==EstadoCelda.Azul){
+                            newX += dir.getLeft();
+                            newY += dir.getRight();
+                        }
+
+                        //Si la siguiente en esa direccion es vacia
+                        if(posCorrecta(newX,newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Vacia){
+                            int emptyX = newX;
+                            int emptyY = newY;
+                            newX += dir.getLeft();
+                            newY += dir.getRight();
+
+                            int azules = 0;
+                            //Comprobamos cuantos azules hay al otro lado de la casilla vacia que vamos a rellenar
+                            while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Azul){
+                                newX += dir.getLeft();
+                                newY += dir.getRight();
+                                azules++;
+                            }
+
+                            //Si el numero de las casillas que estamos viendo, mas el de la casilla que vamos a poner azul
+                            //mas las casillas azules que hay al otro lado supera el numero que deberíamos ver, es que la casilla vacia
+                            //debería ser roja
+                            if(azules + 1 + _tablero[auxX][auxY].getCurrentVisibles() > _tablero[auxX][auxY].getValorDefault() ){
+                                _tablero[emptyX][emptyY].setEstado(EstadoCelda.Rojo);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case ValueReached:{
+                    //cerrar celda
+                    encierraCelda(auxX,auxY);
+                    break;
+                }
+                case OneDirectionRequired:{
+                    List<Pair<Integer,Integer>> celdaInfo = new ArrayList<>();
+
+                    for(int k = 0; k <_dirs.size(); k++){
+                        celdaInfo.add(calculaMaxColocablesYVisibles(auxX,auxY,_dirs.get(k)));
+                    }
+
+                    //Checkear que direccion es y poner azul
+                    //Esto seguro que se puede optimizar, pero primero que funque
+                    for(int k = 0; k < _dirs.size(); k++) {
+                        Pair<Integer, Integer> dir = _dirs.get(k);
+                        int adyInmediatas = calculaAdyInmediatas(auxX, auxY, dir);
+                        int maxVisiblesOtrasDir = 0;
+
+                        for (int g = 0; g < _dirs.size(); g++) {
+                            if (_dirs.get(g) != dir)
+                                maxVisiblesOtrasDir += celdaInfo.get(g).getRight();
+                        }
+
+                        if (adyInmediatas + maxVisiblesOtrasDir < _tablero[auxX][auxY].getValorDefault()){
+                            int newX = auxX + dir.getLeft();
+                            int newY = auxY + dir.getRight();
+
+                            //Nos saltamos las ady inmediatas
+                            while(posCorrecta(newX, newY) && _tablero[newX][newY].getEstado() == EstadoCelda.Azul){
+                                newX += dir.getLeft();
+                                newY += dir.getRight();
+                            }
+                            //Por seguridad, pero si no nos hemos salido es que esa celda vacia es azul
+                            //porque es la que debemos poner en esa direccion
+                            if(posCorrecta(newX, newY)) {
+                                _tablero[newX][newY].setEstado(EstadoCelda.Azul);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case MustBeWall:
+                    _tablero[auxX][auxY].setEstado(EstadoCelda.Rojo);
+                    break;
+                //TODOS LOS CASOS A PARTIR DE AQUI SON CASOS DE ERROR, POR LO QUE SI SALE ALGUNO DE ESTOS DESCARTAMOS TABLEROS
+                case ImposibleVision:
+                    System.out.println("Imposible to fill the vision of this tile " + auxX + " " + auxY + "\n");
+                    return false;
+                case ErrorClosedTooLate:
+                    System.out.println("This number sees a bit too much "  + auxX + " " + auxY +  "\n");
+                    return false;
+                case ErrorClosedTooEarly:
+                    System.out.println("This number can't see enough "  + auxX + " " + auxY +  "\n");
+                    return false;
+                case LockedIn:
+                    System.out.println("A blue dot should always #see at least one other " + auxX + " " + auxY + "\n");
+                    return false;
+            }
+
+            //Volvemos a actualizar las pistas
+            pistas = compruebaPistas();
+        }
+
+        //Si hay alguna celda vacia el tablero no nos vale
+        for (int i = 0; i < N; i++){
+            for(int j = 0 ; j < N; j++){
+                if(_tablero[i][j].getEstado() == EstadoCelda.Vacia) return false;
+            }
+        }
+
+
+        //SI HEMOS LLEGADO HASTA AQUI HABEMUS TABLERO
         Celda [][] _tableroAux = new Celda[N][N];
-        //Se inicializa el tablero con celdas vacias
-        for(int i = 0; i < N; i++){
+
+        //TO DO: ESTO ES FEO DE COJONES PERO AHORA NO SE ME OCURRE OTRA MEJOR FORMA DE HACERLO
+        //REVISAR PLZ
+
+        for(int i = 0; i <N;i++){
             for(int j = 0; j < N; j++){
                 _tableroAux[i][j] = new Celda();
             }
         }
 
-        Random random = new Random();
-        int numCeldasAzules = random.nextInt(N) + 1;
-        int numCeldasRojas = random.nextInt(N);
-        int x = random.nextInt(N);
-        int y = random.nextInt(N);
+        for(int i = 0; i < _celdasFijas.size();i++){
+            Pair<Integer, Integer> index = _celdasFijas.get(i);
+            Celda c = _tablero[index.getLeft()][index.getRight()];
 
-        return _tableroAux;
+            _tableroAux[index.getLeft()][index.getRight()] = c;
+        }
+
+        //Tablero vacio con solo las default
+        _tablero = _tableroAux;
+
+        //Ponemos las pistas del estado inicial
+        pistas = compruebaPistas();
+
+        //Devolvemos true si conseguimos crear el tablero
+        return true;
+    }
+
+    private void encierraCelda(int x, int y){
+        for(int i = 0; i < _dirs.size(); i++){
+            Pair<Integer, Integer> dir = _dirs.get(i);
+            int auxX = x + dir.getLeft();
+            int auxY = y + dir.getRight();
+
+            while(posCorrecta(auxX,auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Azul ){
+                auxX += dir.getLeft();
+                auxY += dir.getRight();
+            }
+
+            if(posCorrecta(auxX, auxY))_tablero[auxX][auxY].setEstado(EstadoCelda.Rojo);
+        }
     }
 
     private void generaTablero(int N){
@@ -363,7 +578,18 @@ public class Tablero {
                         nuevasPistas.addPista(TipoPista.ValueReached, i,j);
                     }
 
-                    else if( !ady.getRight() && actual.getCurrentVisibles() != actual.getValorDefault()){
+                    else if( !ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()){
+                        //PISTA 10-----------------------------------------------------------
+                        int maxColocables = 0;
+
+                        for(int k = 0; k <_dirs.size(); k++){
+                            maxColocables +=  calculaMaxColocablesYVisibles(i,j,_dirs.get(k)).getLeft();
+                        }
+
+                        if(maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()){
+                            nuevasPistas.addPista(TipoPista.ImposibleVision, i,j);
+                            continue;
+                        }
                         //PISTA 2-----------------------------------------------------------
                         if(checkHint2(i,j,nuevasPistas))continue; //TO DO:REVISAR ¿PUEDE DARSE 2 PISTAS POR CELDA?
 
@@ -391,26 +617,13 @@ public class Tablero {
                         }
                     }
                     //PISTA 4
-                    else if(ady.getRight() && actual.getCurrentVisibles() > actual.getValorDefault()){
+                    else if(/*ady.getRight() &&*/ actual.getCurrentVisibles() > actual.getValorDefault()){
                         nuevasPistas.addPista(TipoPista.ErrorClosedTooLate, i,j);
                     }
                     //PISTA 5
-                    else if(ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()){
+                    else if(/*ady.getRight() &&*/ actual.getCurrentVisibles() < actual.getValorDefault()){
                         nuevasPistas.addPista(TipoPista.ErrorClosedTooEarly, i,j);
                     }
-                    //PISTA 10
-                    else if(!ady.getRight()){
-                        int maxColocables = 0;
-
-                        for(int k = 0; k <_dirs.size(); k++){
-                           maxColocables +=  calculaMaxColocablesYVisibles(i,j,_dirs.get(k)).getLeft();
-                        }
-
-                        if(maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()){
-                            nuevasPistas.addPista(TipoPista.ImposibleVision, i,j);
-                        }
-                    }
-
 
                 }
                 //PISTA 6.1
@@ -432,6 +645,13 @@ public class Tablero {
         for(int k = 0 ; k < _dirs.size(); k++){
             Pair<Integer, Integer>dir = _dirs.get(k);
             int auxX = i + dir.getLeft(), auxY = j + dir.getRight();
+
+            //Nos saltamos los azules adyacentes
+            while(posCorrecta(auxX, auxY) && _tablero[auxX][auxY].getEstado()==EstadoCelda.Azul){
+                auxX += dir.getLeft();
+                auxY += dir.getRight();
+            }
+
             if(posCorrecta(auxX,auxY) && _tablero[auxX][auxY].getEstado() == EstadoCelda.Vacia){
                 auxX += dir.getLeft();
                 auxY += dir.getRight();

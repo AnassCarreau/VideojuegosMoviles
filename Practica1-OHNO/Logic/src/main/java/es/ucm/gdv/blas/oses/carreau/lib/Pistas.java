@@ -89,5 +89,12 @@ public class Pistas {
         else return null;
     }
 
+    public Pair<TipoPista, Pair<Integer, Integer>> getFirstPista(){
+        if(listaPistas.isEmpty()) return null;
+        else return listaPistas.get(0);
+    }
 
+    public void removeFirstPista() {
+        this.listaPistas.remove(0);
+    }
 }
