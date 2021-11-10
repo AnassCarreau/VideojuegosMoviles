@@ -43,10 +43,8 @@ public class Tablero {
         //generamos un tablero aleatorio con una unica solucion
 
 
-        for (int i = 0; i < 10; i++) {
             while (!generaTablerov2(N)) ;
-            System.out.println("Tablero Bueno");
-        }
+
 
         //TO DO: HACER BIEN
       /*  if (randomBoard) {
@@ -77,8 +75,8 @@ public class Tablero {
         //Calculamos con aleatorios cuantas celdas fijas vamos a poner
         //TO DO: gracias a estos numeros funciona en 4x4, pero habría que
         //ajustarlo para el resto de tableros supongo
-        int numCeldasAzules = random.nextInt(N*2) + 1;
-        int numCeldasRojas = random.nextInt(N);
+        int numCeldasAzules = random.nextInt((N * 2 + N/2  ) + 1;
+        int numCeldasRojas = random.nextInt( (N * N)/2  - numCeldasAzules);
 
         //Colocamos aleatoriamente numCeldas azules
         for (int i = 0; i < numCeldasAzules; i++) {

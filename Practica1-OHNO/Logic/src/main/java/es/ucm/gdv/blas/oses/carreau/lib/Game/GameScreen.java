@@ -140,7 +140,7 @@ public class GameScreen implements Screen {
                 } else if (inBounds(event, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2)) {
                     if(ultimosMovs.size() != 0){
                         Pair<EstadoCelda, Pair<Integer, Integer>> pairAux = ultimosMovs.getLast();
-                        Celda auxCelda = board.getCelda(pairAux.getRight().getLeft(), pairAux.getRight().getRight());
+                        Celda auxCelda = board.getCelda(pairAux.getRight().getRight(), pairAux.getRight().getLeft());
                         auxCelda.setEstado(pairAux.getLeft());
                         ultimosMovs.removeLast();
                     }
