@@ -29,14 +29,14 @@ public class Pistas {
         return listaPistas.isEmpty();
     }
 
-    public   Pair<String, Pair<Integer, Integer> > getPistaTablero() {
+    public Pair<String, Vector > getPistaTablero() {
         String s = new String();
         StructPista p = getRandomCasilla();
 
         if(p == null) return null;
 
         TipoPista tP = p.getTipoPista();
-        Pair<Integer, Integer> pos = p.getPosPista();
+        Vector pos = p.getPosPista();
 
         switch (tP) {
             case ValueReached:

@@ -1,10 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
-import java.awt.Color;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 import java.util.Deque;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
@@ -17,6 +14,7 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.EstadoCelda;
 import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
+import es.ucm.gdv.blas.oses.carreau.lib.Vector;
 
 public class GameScreen implements Screen {
     private Engine engine;
@@ -25,7 +23,7 @@ public class GameScreen implements Screen {
 
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
-    Pair<Integer, Integer> pos;
+    Vector pos;
     //Pila con los últimos movimientos para así poder deshacer
     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
 
@@ -114,8 +112,8 @@ public class GameScreen implements Screen {
         }
 
         if (botonPista) {
-            int x = initialX + circleSize / 2 + pos.getRight() * circleSize;
-            int y = (g.getLogHeight() / 6) + circleSize / 2 + (pos.getLeft() * circleSize);
+            int x = initialX + circleSize / 2 + pos.x * circleSize;
+            int y = (g.getLogHeight() / 6) + circleSize / 2 + (pos.y * circleSize);
             g.setColor(0x000000FF);
             g.drawCircle(x, y, (circleSize) / 2);
         }
@@ -153,7 +151,7 @@ public class GameScreen implements Screen {
                 } else if (inBounds(event, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2)) {
                     //eye
                     botonPista = true;
-                    Pair<String, Pair<Integer, Integer>> p = board.damePistaAleatoria();
+                    Pair<String, Vector> p = board.damePistaAleatoria();
                     pista = p.getLeft().split("#");
                     pos = p.getRight();
                     return;

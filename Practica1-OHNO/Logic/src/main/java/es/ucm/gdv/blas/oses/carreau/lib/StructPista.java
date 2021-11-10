@@ -2,10 +2,10 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 
 public class StructPista {
     private TipoPista tipoPista;
-    private Pair<Integer, Integer> posPista;
-    private Pair<Integer, Integer> dirPista;
+    private Vector posPista;
+    private Vector dirPista;
 
-    public StructPista(TipoPista tp, Pair<Integer, Integer> pos, Pair<Integer, Integer> dir){
+    public StructPista(TipoPista tp, Vector pos, Vector dir){
         this.tipoPista = tp;
         this.posPista = pos;
         this.dirPista = dir;
@@ -15,11 +15,11 @@ public class StructPista {
         return tipoPista;
     }
 
-    public Pair<Integer, Integer> getPosPista(){
+    public Vector getPosPista(){
         return posPista;
     }
 
-    public Pair<Integer, Integer> getDirPista(){
+    public Vector getDirPista(){
         return dirPista;
     }
 }
