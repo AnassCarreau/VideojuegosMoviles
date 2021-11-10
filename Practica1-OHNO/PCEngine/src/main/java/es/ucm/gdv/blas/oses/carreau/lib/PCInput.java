@@ -42,7 +42,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        System.out.println("he clickado papa?");
+       // System.out.println("he clickado papa?");
         TouchEvent touchEvent = new TouchEvent();
         touchEvent.type = TouchEvent.TOUCH_DOWN;
         touchEvent.x = mouseEvent.getX();
@@ -59,7 +59,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        System.out.println("he presionado papa?");
+     //   System.out.println("he presionado papa?");
         TouchEvent touchEvent = new TouchEvent();
         touchEvent.type = TouchEvent.TOUCH_DOWN;
         touchEvent.x = mouseEvent.getX();
@@ -76,7 +76,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        System.out.println("he soltado papa?");
+     //   System.out.println("he soltado papa?");
         TouchEvent touchEvent = new TouchEvent();
         touchEvent.type = TouchEvent.TOUCH_UP;
         touchEvent.x = mouseEvent.getX();

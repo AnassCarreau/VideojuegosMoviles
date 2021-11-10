@@ -95,8 +95,8 @@ public class GameScreen implements Screen {
                     }
                 }
 
-                int x = initialX + circleSize / 2 + i * circleSize;
-                int y = (g.getLogHeight() / 6) + circleSize / 2 + (j * circleSize);
+                int x = initialX + circleSize / 2 + j * circleSize;
+                int y = (g.getLogHeight() / 6) + circleSize / 2 + (i * circleSize);
 
                 g.fillCircle(x, y, circleSize / 2);
 
@@ -161,8 +161,8 @@ public class GameScreen implements Screen {
                 for (int j = 0; j < boardDimensions; j++) {
                     for (int k = 0; k < boardDimensions; k++) {
                         Celda c = board.getCelda(k, j);
-                        int x = initialX + circleSize / 2 + j * circleSize;
-                        int y = (g.getLogHeight() / 6) + circleSize / 2 + (k * circleSize);
+                        int x = initialX + circleSize / 2 + k * circleSize;
+                        int y = (g.getLogHeight() / 6) + circleSize / 2 + (j * circleSize);
                         if (c.isModifiable() && inBoundsCircle(event, x, y , circleSize/2)) {
                             //ponemos la pista a null si se ha pulsado ya en algun circulo del tablero
                             pista = null;
@@ -170,7 +170,7 @@ public class GameScreen implements Screen {
                             if(ultimosMovs.size() + 1 > 50){
                                 ultimosMovs.remove();
                             }
-                            ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(k, j)));
+                            ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
                             board.cambiaCelda( k, j);
                             return;
                         }
