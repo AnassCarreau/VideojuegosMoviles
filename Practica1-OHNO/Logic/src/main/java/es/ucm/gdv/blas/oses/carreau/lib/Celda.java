@@ -55,6 +55,12 @@ public class Celda{
     public void setCurrentPista(StructPista curr){
         pista = curr;
     }
+    public void resetCelda(){
+        _estadoActual = EstadoCelda.Vacia;
+        _modificable = true;
+        _valorDefault = 0;
+        _vistasAct = 0;
+    }
 
 
     private EstadoCelda _estadoActual;

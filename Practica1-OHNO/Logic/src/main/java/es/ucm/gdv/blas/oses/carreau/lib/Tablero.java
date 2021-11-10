@@ -7,6 +7,7 @@ import org.graalvm.compiler.nodes.calc.IntegerTestNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 public class Tablero {
     private Celda[][] _tablero;
@@ -91,10 +92,13 @@ public class Tablero {
         //Inicializamos lista de celdas fijas
         _celdasFijas = new ArrayList<>();
 
+        Stack<Vector> _casillasCambiadas = new Stack<>();
+
         //Inicializamos generador de aleatorios
         Random random = new Random();
 
         int numCasillasMod = 0;
+        /*
         int numRojasFijas = random.nextInt(N)+1;
 
         int currRojas = 0;
@@ -115,11 +119,12 @@ public class Tablero {
             c.setModificable(false);
             //c.setValorDefault(random.nextInt(N) + 1); //Valor entre las que ve (1 a N)
             _celdasFijas.add(new Vector(x, y));
+            _casillasCambiadas.add(new Vector(x,y));
             numCasillasMod++;
 
             currRojas++;
 
-        }
+        }*/
 
         while (numCasillasMod < N * N) {
 
@@ -133,14 +138,27 @@ public class Tablero {
                 y = random.nextInt(N);
             }
 
-            System.out.println("Nueva casilla azul no modificable");
+
             Celda c = _tablero[y][x];
 
-            c.setEstado(EstadoCelda.Azul);
+            int oneIfRed = random.nextInt(2) +1;
+
+            if (oneIfRed == 1){
+                System.out.println("Nueva casilla roja no modificable");
+                c.setEstado(EstadoCelda.Rojo);
+            }
+            else{
+                System.out.println("Nueva casilla azul no modificable");
+                c.setEstado(EstadoCelda.Azul);
+                c.setValorDefault(random.nextInt(N) + 1); //Valor entre las que ve (1 a N)
+            }
+
             c.setModificable(false);
-            c.setValorDefault(random.nextInt(N) + 1); //Valor entre las que ve (1 a N)
             _celdasFijas.add(new Vector(x, y));
+            _casillasCambiadas.add(new Vector(x,y));
             numCasillasMod++;
+            int lastFixed = numCasillasMod;
+
 
 
             System.out.println("---");
@@ -174,6 +192,7 @@ public class Tablero {
                         if (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Vacia) {
                             _tablero[newY][newX].setEstado(EstadoCelda.Rojo);
                             auxPista = compruebaPistas(newX, newY);
+                            _casillasCambiadas.add(new Vector(newX,newY));
                             numCasillasMod++;
                         }
                         break;
@@ -183,9 +202,11 @@ public class Tablero {
                         List<Vector> lis = encierraCelda(auxX, auxY);
 
                         for (int i = 0; i < lis.size(); i++) {
-                            numCasillasMod++;
+
                             x = lis.get(i).x;
                             y = lis.get(i).y;
+                            numCasillasMod++;
+                            _casillasCambiadas.add(new Vector(x,y));
                             Pistas p = compruebaPistas(x, y);
                             while (!p.getListaPistas().isEmpty()) {
 
@@ -196,7 +217,6 @@ public class Tablero {
                                 auxPista.getListaPistas().add(p.getFirstPista());
                                 //}
                                 p.getListaPistas().remove(0);
-
 
                             }
 
@@ -219,6 +239,7 @@ public class Tablero {
                             _tablero[newY][newX].setEstado(EstadoCelda.Azul);
                             auxPista = compruebaPistas(newX, newY);
                             numCasillasMod++;
+                            _casillasCambiadas.add(new Vector(newX,newY));
 
                         } else {
                             auxPista = compruebaPistas(auxX, auxY);
@@ -230,19 +251,25 @@ public class Tablero {
 
                         _tablero[auxY][auxX].setEstado(EstadoCelda.Rojo);
                         numCasillasMod++;
-
+                        _casillasCambiadas.add(new Vector(auxX,auxY));
                         auxPista = compruebaPistas(auxX, auxY);
 
                         break;
-                    //TODOS LOS CASOS A PARTIR DE AQUI SON CASOS DE ERROR, POR LO QUE SI SALE ALGUNO DE ESTOS DESCARTAMOS TABLEROS
+
                     case ImposibleVision:
-                        return false;
                     case ErrorClosedTooLate:
-                        return false;
                     case ErrorClosedTooEarly:
-                        return false;
                     case LockedIn:
-                        return false;
+                        System.out.println("ERROR, VOLVEMOS ATRAS, estamos en: " + numCasillasMod + " y volvemos a:" + lastFixed);
+                        //Deshacemos hasta la inclusion de la ultima fija
+                        while(_casillasCambiadas.size() >= lastFixed){
+                           Vector v = _casillasCambiadas.pop();
+                           _tablero[v.y][v.x].resetCelda();
+                        }
+
+                        _celdasFijas.remove(_celdasFijas.size() - 1);
+                        numCasillasMod = lastFixed;
+                        break;
                 }
 
                 //Sacamos la pista actual
@@ -257,6 +284,7 @@ public class Tablero {
 
             System.out.println("NumMod: " + numCasillasMod );
         }
+
         //Si hay alguna celda vacia el tablero no nos vale
         if(numCasillasMod != N * N){
             return false;
@@ -396,10 +424,10 @@ public class Tablero {
                 int maxColocables = 0;
 
                 for (int k = 0; k < _dirs.size(); k++) {
-                    maxColocables += calculaMaxColocablesYVisibles(x, y, _dirs.get(k)).getLeft();
+                    maxColocables += calculaMaxPosiblesVisibles(x, y, _dirs.get(k));
                 }
 
-                if (maxColocables < actual.getValorDefault() - actual.getCurrentVisibles()) {
+                if (maxColocables < actual.getValorDefault()) {
                     pista = new StructPista(TipoPista.ImposibleVision, new Vector(x, y), new Vector(0, 0));
                     quitaPista(pista, pistaAct);
                     return pista;
@@ -666,6 +694,19 @@ public class Tablero {
 
         int visiblesEnDir = colocables + adyInDir + azulesEncontradas;
         return new Pair<Integer, Integer>(colocables, visiblesEnDir);
+    }
+
+    //Calcula cual es el maximo de casillas potencialmente azules en una direccion
+    //para cuando nos salimos de los limites del tablero o cuando nos encontramos con una celda roja
+    private int calculaMaxPosiblesVisibles(int x, int y, Vector dir){
+        int i = 0;
+        int auxX = x + dir.x, auxY = y + dir.y;
+        while(posCorrecta(auxX, auxY) && _tablero[auxY][auxX].getEstado() != EstadoCelda.Rojo){
+            i++;
+            auxX += dir.x;
+            auxY += dir.y;
+        }
+        return i;
     }
 
     private int calculaAdyInmediatas(int x, int y, Vector dir) {
