@@ -99,7 +99,7 @@ public class Tablero {
 
         int currRojas = 0;
         while(currRojas < numRojasFijas) {
-            //Tratamos de colocar una nueva azul
+            //Tratamos de colocar una nueva roja
             int x = random.nextInt(N);
             int y = random.nextInt(N);
 
@@ -257,13 +257,16 @@ public class Tablero {
 
             System.out.println("NumMod: " + numCasillasMod );
         }
-
         //Si hay alguna celda vacia el tablero no nos vale
-        for (int i = 0; i < N; i++) {
+        if(numCasillasMod != N * N){
+            return false;
+        }
+
+        /*for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (_tablero[i][j].getEstado() == EstadoCelda.Vacia) return false;
             }
-        }
+        }*/
 
 
         //SI HEMOS LLEGADO HASTA AQUI HABEMUS TABLERO
@@ -496,13 +499,6 @@ public class Tablero {
     }
 
     public Pair<String, Vector> damePistaAleatoria() {
-        System.out.println(pistas.getListaPistas().size());
-        for (int i = 0; i < pistas.getListaPistas().size(); i++) {
-            System.out.println(pistas.getListaPistas().get(i).getTipoPista());
-            System.out.println(pistas.getListaPistas().get(i).getPosPista().x);
-            System.out.println(pistas.getListaPistas().get(i).getPosPista().y);
-
-        }
         return pistas.getPistaTablero();
     }
 
@@ -519,8 +515,6 @@ public class Tablero {
             _tablero[y][x].setCurrentPista(p);
         }
         for (int i = 0; i < _tablero.length; i++) {
-
-
             if (i != x) {
                 if (_tablero[y][x].getPista() != null) {
                     pistas.getListaPistas().remove(_tablero[y][x].getPista());
@@ -529,12 +523,10 @@ public class Tablero {
                 if (p != null) {
                     nuevasPistas.addPista(p);
                     _tablero[y][i].setCurrentPista(p);
-
                 }
             }
         }
         for (int j = 0; j < _tablero.length; j++) {
-
             if (j != y) {
                 if (_tablero[y][x].getPista() != null) {
                     pistas.getListaPistas().remove(_tablero[y][x].getPista());
@@ -545,7 +537,6 @@ public class Tablero {
                     _tablero[j][x].setCurrentPista(p);
                 }
             }
-
         }
 
         return nuevasPistas;
