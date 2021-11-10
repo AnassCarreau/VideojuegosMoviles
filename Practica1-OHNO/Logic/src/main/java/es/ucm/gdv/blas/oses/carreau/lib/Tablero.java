@@ -77,7 +77,7 @@ public class Tablero {
         //Calculamos con aleatorios cuantas celdas fijas vamos a poner
         //TO DO: gracias a estos numeros funciona en 4x4, pero habría que
         //ajustarlo para el resto de tableros supongo
-        int numCeldasAzules = random.nextInt(N) + 1;
+        int numCeldasAzules = random.nextInt(N*2) + 1;
         int numCeldasRojas = random.nextInt(N);
 
         //Colocamos aleatoriamente numCeldas azules
@@ -126,7 +126,7 @@ public class Tablero {
         }
 
         while (!pistas.isEmpty()) {
-            System.out.println("BuclePistas");
+            //System.out.println("BuclePistas");
             Pistas auxPista = new Pistas();
             //Cogemos la primera de la lista
             StructPista pista = pistas.getFirstPista();
@@ -138,7 +138,7 @@ public class Tablero {
             //cogemos que tipo de pista es
             switch (pista.getTipoPista()) {
                 case WouldExceed: {
-                    System.out.println("PISTA_WOULDESCEED");
+                    //System.out.println("PISTA_WOULDESCEED");
                     //mirar en que direccion te pasas y poner una roja
                     Vector dir = pista.getDirPista();
                     int newX = auxX + dir.x, newY = auxY + dir.y;
@@ -147,7 +147,7 @@ public class Tablero {
                     while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
                         newX += dir.x;
                         newY += dir.y;
-                        System.out.println(1);
+                        //System.out.println(1);
                     }
 
                     if (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Vacia) {
@@ -158,7 +158,7 @@ public class Tablero {
                 }
                 case ValueReached: {
                     //cerrar celda
-                    System.out.println("PISTA_VALUEREACHED");
+                    //System.out.println("PISTA_VALUEREACHED");
 
                     List<Vector> lis = encierraCelda(auxX, auxY);
 
@@ -168,11 +168,17 @@ public class Tablero {
                         Pistas p = compruebaPistas(x, y);
                         while (!p.getListaPistas().isEmpty()) {
 
-                            if (!auxPista.getListaPistas().contains(p.getFirstPista())) {
-                                auxPista.getListaPistas().add(p.getFirstPista());
+                            if(auxPista.getListaPistas().remove(p.getFirstPista())){
+                                System.out.println("Borrando pista repetida");
                             }
+                            //if (!auxPista.getListaPistas().contains(p.getFirstPista())) {
+                                auxPista.getListaPistas().add(p.getFirstPista());
+                            //}
                             p.getListaPistas().remove(0);
-                            System.out.println(2);
+                            //System.out.println(2);
+                            //System.out.println(" X: " + auxX + ", Y: " + auxY);
+
+
 
                         }
 
@@ -180,7 +186,7 @@ public class Tablero {
                     break;
                 }
                 case OneDirectionRequired: {
-                    System.out.println("PISTA_OneDirectionRequired");
+                    //System.out.println("PISTA_OneDirectionRequired");
 
                     //Cogemos la direccion de la pista y asi no tenemos que recorrer todas las dirs
                     Vector dir = pista.getDirPista();
@@ -190,24 +196,33 @@ public class Tablero {
                     while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
                         newX += dir.x;
                         newY += dir.y;
-                        System.out.println("pRINT DE TU MADRE");
-                        System.out.println(" NEWX: " + newX + ", NEWY: " + newY);
+                        //System.out.println("pRINT DE TU MADRE");
+                        //System.out.println(" NEWX: " + newX + ", NEWY: " + newY);
                         // System.out.println("dIRX "+ dir.getLeft());
                         // System.out.println( "dIRY " +dir.getRight());
                         // System.out.println("---");
-
-
-                        System.out.println(3);
+                        //System.out.println(3);
                     }
                     //Por seguridad, pero si no nos hemos salido es que esa celda vacia es azul
                     //porque es la que debemos poner en esa direccion
                     if (posCorrecta(newX, newY)) {
-                        System.out.println("vamos a llamar al compruebaPista webon");
+                        //System.out.println("vamos a llamar al compruebaPista webon");
                         _tablero[newY][newX].setEstado(EstadoCelda.Azul);
                         auxPista = compruebaPistas(newX, newY);
+                        /*
+                        System.out.println(" X: " + auxX + ", Y: " + auxY);
+                        System.out.println(" DIR X: " + dir.x + ", Y: " + dir.y);
+*/
                     }
                     else{
+                        /*
                         System.out.println("EMMM PROGRAMA DE MIERDA");
+                        System.out.println(" X: " + auxX + ", Y: " + auxY);
+                        System.out.println(" DIR X: " + dir.x + ", Y: " + dir.y);
+                        */
+                        auxPista = compruebaPistas(auxX, auxY);
+
+
                     }
                     break;
                 }
@@ -216,6 +231,14 @@ public class Tablero {
 
                     _tablero[auxY][auxX].setEstado(EstadoCelda.Rojo);
                     auxPista = compruebaPistas(auxX, auxY);
+                    /*
+                    System.out.println("Pista antes del comprueba pista: " + _tablero[auxY][auxX].getPista());
+
+                    System.out.println("Tamanio del auxPista: " + auxPista.getListaPistas().size());
+                    System.out.println("Pista despues del comprueba pista: " + _tablero[auxY][auxX].getPista());
+                    System.out.println(" X: " + auxX + ", Y: " + auxY);
+                    */
+
                     break;
                 //TODOS LOS CASOS A PARTIR DE AQUI SON CASOS DE ERROR, POR LO QUE SI SALE ALGUNO DE ESTOS DESCARTAMOS TABLEROS
                 case ImposibleVision:
@@ -232,11 +255,16 @@ public class Tablero {
                     return false;
             }
 
+            //Sacamos la pista actual
+            pistas.getListaPistas().remove(pista);
+
             while (!auxPista.isEmpty()) {
                 StructPista pi = auxPista.getFirstPista();
                 pistas.addPista(pi);
                 auxPista.getListaPistas().remove(0);
             }
+
+            //System.out.println("tamanio de la lista de pistas final: " + pistas.getListaPistas().size());
 
         }
 
@@ -267,6 +295,7 @@ public class Tablero {
         //Devolvemos true si conseguimos crear el tablero
         return true;
     }
+
 
     private List<Vector> encierraCelda(int x, int y){
         List<Vector>l=new ArrayList<>();
@@ -577,8 +606,11 @@ public class Tablero {
     public Pistas compruebaPistas(int x,int y) {
         Pistas nuevasPistas = new Pistas();
 
-
+        if(_tablero[y][x].getPista() != null){
+            pistas.getListaPistas().remove(_tablero[y][x].getPista());
+        }
         StructPista p = getPistaInCoordenada(x, y);
+
         if (p != null) {
             nuevasPistas.addPista(p);
             _tablero[y][x].setCurrentPista(p);
@@ -587,6 +619,9 @@ public class Tablero {
 
 
             if (i != x) {
+                if(_tablero[y][x].getPista() != null){
+                    pistas.getListaPistas().remove(_tablero[y][x].getPista());
+                }
                 p = getPistaInCoordenada(i, y);
                 if (p != null) {
                     nuevasPistas.addPista(p);
@@ -598,6 +633,9 @@ public class Tablero {
         for (int j = 0; j < _tablero.length; j++) {
 
             if (j != y) {
+                if(_tablero[y][x].getPista() != null){
+                    pistas.getListaPistas().remove(_tablero[y][x].getPista());
+                }
                 p = getPistaInCoordenada(x, j);
                 if (p != null) {
                     nuevasPistas.addPista(p);
