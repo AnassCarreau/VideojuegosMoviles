@@ -79,6 +79,7 @@ public class Tablero {
     }
 
     private boolean generaTablero(int N) {
+        int intentos = 0;
 
         System.out.println("Creando nuevo tablero");
 
@@ -96,7 +97,7 @@ public class Tablero {
 
         int numCasillasMod = 0;
 
-        while (numCasillasMod < N * N) {
+        while (numCasillasMod < N * N && intentos < N*N) {
 
             //Tratamos de colocar una nueva azul
             int x = random.nextInt(N);
@@ -234,11 +235,23 @@ public class Tablero {
                         while(_celdasNoVacias.size() > lastFixed){
                             Vector cell = _celdasNoVacias.pop();
                             _tablero[cell.y][cell.x].resetCelda();
+
                         }
 
                         //Quitamos la ultima celda fija que hemos puesto
                         _celdasFijas.remove(_celdasFijas.size()-1);
+
+                        /*
+                        while( _celdasFijas.size() > 0 && _celdasFijas.get(_celdasFijas.size() -1) == _celdasNoVacias.get(_celdasNoVacias.size()-1)){
+                            _celdasFijas.remove(_celdasFijas.size()-1);
+                            Vector cell = _celdasNoVacias.pop();
+                            _tablero[cell.y][cell.x].resetCelda();
+                        }*/
+
                         numCasillasMod = _celdasNoVacias.size();
+
+                        //Comprobamos que esten bien los valores de adyacentes del tablero
+                        actualizaVisiblesTablero();
 
                         error =  true;
                 }
@@ -256,17 +269,12 @@ public class Tablero {
             }
 
             System.out.println("NumMod: " + numCasillasMod );
+            intentos++;
         }
         //Si hay alguna celda vacia el tablero no nos vale
-        if(numCasillasMod != N * N){
+        if(intentos >= N*N){
             return false;
         }
-
-        /*for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (_tablero[i][j].getEstado() == EstadoCelda.Vacia) return false;
-            }
-        }*/
 
 
         //SI HEMOS LLEGADO HASTA AQUI HABEMUS TABLERO
@@ -527,8 +535,8 @@ public class Tablero {
         }
         for (int i = 0; i < _tablero.length; i++) {
             if (i != x) {
-                if (_tablero[y][x].getPista() != null) {
-                    pistas.getListaPistas().remove(_tablero[y][x].getPista());
+                if (_tablero[y][i].getPista() != null) {
+                    pistas.getListaPistas().remove(_tablero[y][i].getPista());
                 }
                 p = getPistaInCoordenada(i, y);
                 if (p != null) {
@@ -540,7 +548,7 @@ public class Tablero {
         for (int j = 0; j < _tablero.length; j++) {
             if (j != y) {
                 if (_tablero[y][x].getPista() != null) {
-                    pistas.getListaPistas().remove(_tablero[y][x].getPista());
+                    pistas.getListaPistas().remove(_tablero[j][x].getPista());
                 }
                 p = getPistaInCoordenada(x, j);
                 if (p != null) {
@@ -715,6 +723,21 @@ public class Tablero {
 
     public void addToListaNoModificables(int x, int y) {
         _celdasFijas.add(new Vector(x, y));
+    }
+
+    //TODO igual se puede hacer solo con la lista de celdas fijas
+    private void actualizaVisiblesTablero(){
+        for(int  i = 0; i < _tablero.length; i++){
+            for(int j = 0; j< _tablero.length;j++){
+                if(_tablero[i][j].getEstado() == EstadoCelda.Azul) {
+                    int visibles = 0;
+                    for (int k = 0; k < _dirs.size(); k++) {
+                        visibles += calculaAdyInmediatas(j, i, _dirs.get(k));
+                    }
+                    _tablero[i][j].setCurrentVisibles(visibles);
+                }
+            }
+        }
     }
 
 
