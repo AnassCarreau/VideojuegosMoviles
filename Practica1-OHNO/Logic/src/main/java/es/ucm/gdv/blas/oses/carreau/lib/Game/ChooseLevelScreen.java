@@ -57,7 +57,7 @@ public class ChooseLevelScreen implements Screen {
             g.setColor(0xFFFFFFFF);
             g.drawText(Integer.toString(i + 4), Assets.josefisans,celdas.get(i).getLeft(), celdas.get(i).getRight() + radio*2 / 4,radio*4/3);
         }
-        g.drawImage(Assets.close, g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth(), Assets.close.getHeight());
+        g.drawImage(Assets.close, g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight()*2, Assets.close.getWidth(), Assets.close.getHeight());
     }
 
     @Override
@@ -66,10 +66,15 @@ public class ChooseLevelScreen implements Screen {
         List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
-            System.out.println("procesando eventos");
             Input.TouchEvent event = touchEvents.get(i);
             if (event.type == Input.TouchEvent.TOUCH_UP) {
-                System.out.println("evento TOUCH_UP");
+
+
+                if(inBounds(event,g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight()*2, Assets.close.getWidth(), Assets.close.getHeight() ))
+                {
+                    engine.setScreen(new MainMenuScreen(engine));
+
+                }
                 int radio = (g.getLogWidth() / 5) / 2;
 
                 for (int j = 0; j < celdas.size(); j++) {

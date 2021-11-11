@@ -21,6 +21,7 @@ public class GameScreen implements Screen {
     private Tablero board;
     private int boardDimensions;
 
+
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
     Vector pos;
@@ -30,6 +31,7 @@ public class GameScreen implements Screen {
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
+    boolean fade=true;
 
 
     public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
@@ -98,8 +100,14 @@ public class GameScreen implements Screen {
                 int x = initialX + circleSize / 2 + j * circleSize;
                 int y = (g.getLogHeight() / 6) + circleSize / 2 + (i * circleSize);
 
-                g.fillCircle(x, y, circleSize / 2);
-
+                if(pos!=null &&  pos.x==x && pos.y ==y)
+                {
+                    fade=!fade;
+                    g.fillCircle(x, y, circleSize / 2 + 5 *  (fade ? -1 : 1) );
+                }
+                else {
+                    g.fillCircle(x, y, circleSize / 2);
+                }
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
                 if (hasNumber && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
@@ -132,25 +140,24 @@ public class GameScreen implements Screen {
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
-                botonPista=false;
-                cerrado=false;
+                botonPista = false;
+                cerrado = false;
                 if (inBounds(event, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2)) {
                     engine.setScreen(new ChooseLevelScreen(engine));
                     return;
                 } else if (inBounds(event, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2)) {
-                    if(ultimosMovs.size() != 0){
+                    if (ultimosMovs.size() != 0) {
                         Pair<EstadoCelda, Pair<Integer, Integer>> pairAux = ultimosMovs.getLast();
-                        Celda auxCelda = board.getCelda(pairAux.getRight().getRight(), pairAux.getRight().getLeft());
-                        auxCelda.setEstado(pairAux.getLeft());
+                        board.cambiaCeldaInversa(pairAux.getRight().getRight(), pairAux.getRight().getLeft());
                         ultimosMovs.removeLast();
-                    }
-                    else{
+                    } else {
                         pista = new String[]{"Nothing to undo."};
                     }
                     return;
                 } else if (inBounds(event, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2)) {
                     //eye
                     botonPista = true;
+                    System.out.println("---");
                     Pair<String, Vector> p = board.damePistaAleatoria();
                     pista = p.getLeft().split("#");
                     pos = p.getRight();
@@ -163,19 +170,18 @@ public class GameScreen implements Screen {
                         Celda c = board.getCelda(k, j);
                         int x = initialX + circleSize / 2 + k * circleSize;
                         int y = (g.getLogHeight() / 6) + circleSize / 2 + (j * circleSize);
-                        if (c.isModifiable() && inBoundsCircle(event, x, y , circleSize/2)) {
-                            //ponemos la pista a null si se ha pulsado ya en algun circulo del tablero
-                            pista = null;
+                        if (c.isModifiable() && inBoundsCircle(event, x, y, circleSize / 2)) {
+
                             //guardado del ultimo movimiento en una pila
-                            if(ultimosMovs.size() + 1 > 50){
+                            if (ultimosMovs.size() + 1 > 50) {
                                 ultimosMovs.remove();
                             }
                             ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
-                            board.cambiaCelda( k, j);
+                            board.cambiaCelda(k, j);
                             return;
-                        }
-                        else if(!c.isModifiable() && inBoundsCircle(event, x, y , circleSize/2)){
-                            cerrado=true;
+                        } else if (!c.isModifiable() && inBoundsCircle(event, x, y, circleSize / 2)) {
+                            cerrado = true;
+                            pos=new Vector(x,y);
                             pista = new String[]{"This cell cannot be modified"};
                         }
                     }

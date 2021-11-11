@@ -33,7 +33,7 @@ public class MainMenuScreen implements Screen {
     public void render() {
         Graphics g = engine.getGraphics();
         g.setColor(0x000000FF);
-        g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,65);
+        g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,60);
         g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2,50);
        // g.drawRect(g.getLogWidth()/2 - 200/2, g.getLogHeight()/2 - 100/2, 200, 100, 0x0000FFFF);
         g.setColor(0xCCCCCCFF);
