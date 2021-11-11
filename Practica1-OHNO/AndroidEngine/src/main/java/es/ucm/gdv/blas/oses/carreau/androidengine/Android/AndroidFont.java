@@ -15,16 +15,6 @@ public class AndroidFont implements Font {
     }
 
     @Override
-    public String getFontName() {
-        return this._fontName;
-    }
-
-    @Override
-    public float getFontSize() {
-        return this._size;
-    }
-
-    @Override
     public boolean isBold() {
         return _font.isBold();
     }

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import  es.ucm.gdv.blas.oses.carreau.lib.Celda;
-
 public class Pistas {
 
     //Lista de pista cuya clase StructPista contiene el tipo de pista, su posicion y direccion si

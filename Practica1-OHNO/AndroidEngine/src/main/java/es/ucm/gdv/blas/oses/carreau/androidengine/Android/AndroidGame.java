@@ -4,11 +4,8 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.graphics.Point;
-import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 
 public class AndroidGame  implements Engine, Runnable {
     SurfaceView renderView;
@@ -32,7 +29,6 @@ public class AndroidGame  implements Engine, Runnable {
     Thread thread_;
 
     public AndroidGame(AppCompatActivity activity, int logicalWidth, int logicalHeight) {
-        //activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -64,7 +60,6 @@ public class AndroidGame  implements Engine, Runnable {
     }
 
     public void onResume() {
-        //Lanzar hebra
         if (!running_) {
             running_ = true;
             thread_ = new Thread(this);
@@ -73,7 +68,6 @@ public class AndroidGame  implements Engine, Runnable {
     }
 
     public void onPause() {
-        //Parar hebra
         running_ = false;
         while (true) {
             try {
@@ -101,13 +95,11 @@ public class AndroidGame  implements Engine, Runnable {
 
     @Override
     public void run() {
-        //Aqui iria el bucle principal
         long _lastFrameTime = System.nanoTime();
         //Guarda una superficie donde se puede pintar
         SurfaceHolder holder = renderView.getHolder();
 
         while (running_) {
-            //update & render
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - _lastFrameTime;
             _lastFrameTime = currentTime;

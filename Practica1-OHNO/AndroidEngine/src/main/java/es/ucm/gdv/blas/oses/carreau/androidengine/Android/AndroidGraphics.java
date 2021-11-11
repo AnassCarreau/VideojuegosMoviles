@@ -109,17 +109,8 @@ public class AndroidGraphics extends AbstractGraphics {
             paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText(text, x, y, paint);
             paint.reset();
-
         }
-
     }
-
-    @Override
-    public void drawImage(Image image, int x, int y) {
-        canvas.drawBitmap(((AndroidImage) image).bitmap, x, y, null);
-    }
-
-
 
     @Override
     public void drawImage(Image image, int x, int y, int w, int h) {
@@ -142,7 +133,6 @@ public class AndroidGraphics extends AbstractGraphics {
         paint.setStyle(Style.STROKE);
         canvas.drawRect(x, y, x + width , y + width , paint);
         paint.reset();
-
     }
 
     ////////////////////METODOS DE CREACION//////////////////////////////
@@ -154,7 +144,6 @@ public class AndroidGraphics extends AbstractGraphics {
         Bitmap bitmap = null;
         InputStream in = null;
 
-        //Java 1.7
         try {
             in = assets.open(name);
             bitmap = BitmapFactory.decodeStream(in);
@@ -178,7 +167,6 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public Font newFont(String filename, float size, boolean isBold) {
-
         AndroidFont font = new AndroidFont(Typeface.createFromAsset(this.assets, filename), size, filename);
         return font;
     }

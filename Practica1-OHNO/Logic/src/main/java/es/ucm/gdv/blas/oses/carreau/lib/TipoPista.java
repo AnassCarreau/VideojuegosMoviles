@@ -2,8 +2,6 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 
 public enum TipoPista {
 
-    //NumberCanBeEntered,       //'NumberCanBeEntered', //Este tiene pinta de ser para la construccion del tablero
-
     ValueReached,            //'This number can see all its dots ', // [1] No cerrada y visibles == DefVisibles
     WouldExceed,             //'Looking further in one direction would exceed this number' , [2]
     OneDirectionRequired,    //'One specific dot is included <br>in all solutions imaginable ', // [3] todas las casillasCambiables[dir] <= CasillasDef - CasillasVisibles

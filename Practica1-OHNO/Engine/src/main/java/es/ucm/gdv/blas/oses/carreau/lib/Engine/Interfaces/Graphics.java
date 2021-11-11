@@ -24,11 +24,7 @@ public interface Graphics {
 
     public void scale(float w, float h);
 
-    public int save();
-
     public void restore();
-
-    public void drawImage(Image image, int x, int y);
 
     public void drawImage(Image image, int x, int y,int w,int h);
 

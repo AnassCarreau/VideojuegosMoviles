@@ -1,14 +1,11 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.sound.sampled.LineUnavailableException;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 
 public class MainMenuScreen implements Screen {
@@ -17,11 +14,6 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(Engine engine) {
         this.engine = engine;
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override
@@ -35,7 +27,6 @@ public class MainMenuScreen implements Screen {
         g.setColor(0x000000FF);
         g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,60);
         g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2,50);
-       // g.drawRect(g.getLogWidth()/2 - 200/2, g.getLogHeight()/2 - 100/2, 200, 100, 0x0000FFFF);
         g.setColor(0xCCCCCCFF);
         g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 ,35);
         g.setColor(0xCCCCCCFF);
@@ -50,11 +41,8 @@ public class MainMenuScreen implements Screen {
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
-            System.out.println("procesando eventos");
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
-                System.out.println("evento TOUCH_UP");
-             //   Assets.click.play(1);
                 if (inBounds(event, g.getLogWidth()/2 - 200/2, g.getLogHeight()/2-100/2, 200, 100)) {
                     engine.setScreen(new ChooseLevelScreen(engine));
                     return;

@@ -6,7 +6,7 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Audio;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 
 public class PCGame implements Engine {
     //Variables
@@ -16,6 +16,7 @@ public class PCGame implements Engine {
     //Pantalla actual del juego
     Screen screen;
     Window window;
+    
     public PCGame(Window window, int width, int height){
         this.pc_input = new PCInput(this);
         this.pc_graphics = new PCGraphics(window, width, height);
@@ -24,7 +25,6 @@ public class PCGame implements Engine {
         window.addComponentListener(pc_graphics);
         window.addMouseListener(pc_input);
         window.addMouseMotionListener(pc_input);
-
     }
 
     public void run(){

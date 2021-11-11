@@ -2,8 +2,6 @@ package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
 
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.View;
 
 
 //Imports del juego
@@ -11,10 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Deque;
-import java.util.Stack;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Celda;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 import es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidGame;
 import es.ucm.gdv.blas.oses.carreau.lib.EstadoCelda;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.ChooseLevelScreen;

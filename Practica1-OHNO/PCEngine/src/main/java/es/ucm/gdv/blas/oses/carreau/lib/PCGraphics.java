@@ -16,10 +16,8 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     Window window;
     java.awt.image.BufferStrategy strategy;
-    //int yBorder = 0;
     Color currentColor = Color.WHITE;
     java.awt.Graphics g;
-
 
     public PCGraphics(Window window, int Width, int Height) {
         this.window = window;
@@ -28,20 +26,18 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
         this.logHeight = Height;
         this.winWidth = window.getWidth();
         this.winHeight = window.getHeight();
-        //yBorder = window.getInsets().top;
-        //System.out.println(yBorder);
-
     }
+
     @Override
-   public void translate(float x, float y) {
-        g.translate((int)x, (int)y);
+    public void translate(float x, float y) {
+        g.translate((int) x, (int) y);
     }
 
-   @Override
-   public void scale(float x, float y) {
-       Graphics2D g2D = (Graphics2D)g;
-       g2D.scale(x,y);
-   }
+    @Override
+    public void scale(float x, float y) {
+        Graphics2D g2D = (Graphics2D) g;
+        g2D.scale(x, y);
+    }
 
 
     @Override
@@ -59,7 +55,6 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
         return image;
     }
 
-    //TO DO: mirar la putisima font :D
     @Override
     public Font newFont(String filename, float size, boolean isBold) {
         // Cargamos la fuente del fichero .ttf.
@@ -69,17 +64,15 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
             if (isBold) baseFont = baseFont.deriveFont(java.awt.Font.BOLD, size);
             else baseFont = baseFont.deriveFont(size);
 
-
             return new PCFont(baseFont, size);
         } catch (Exception e) {
-            // Ouch. No está.
             System.err.println("Error cargando la fuente: " + e);
             return null;
         }
 
     }
 
-    void updateContext(){
+    void updateContext() {
         g = strategy.getDrawGraphics();
     }
 
@@ -89,16 +82,11 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
         g.drawRect(x, y /*+ yBorder*/, width, height);
     }
 
-    //practica
     @Override
     public void clear(int color) {
         setColor(color);
         g.fillRect(0, 0, getWindowWidth(), getWindowHeight());
 
-    }
-    @Override
-    public int save() {
-        return 0; //TO DO : IMPLEMENTAR
     }
 
     @Override
@@ -107,24 +95,17 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     }
 
     @Override
-    public void drawImage(Image image, int x, int y) {
-        g.drawImage(((PCImage) image)._image, x, y/* + yBorder*/, null);
-    }
-
-
-    @Override
     public void drawImage(Image img, int x, int y, int w, int h) {
-        g.drawImage(((PCImage) img)._image, x, y /*+ yBorder*/, w, h, null);
+        g.drawImage(((PCImage) img)._image, x, y, w, h, null);
     }
-
 
     @Override
     public void setColor(int color) {
-        int red = (int)((color & 0xffffffffL) >> 24);
-        int green = (color & 0x00ff0000)>> 16;
-        int blue = (color & 0x0000ff00)>>8;
+        int red = (int) ((color & 0xffffffffL) >> 24);
+        int green = (color & 0x00ff0000) >> 16;
+        int blue = (color & 0x0000ff00) >> 8;
         int alpha = color & 0x000000ff;
-        currentColor =  new Color(red, green,blue,alpha);
+        currentColor = new Color(red, green, blue, alpha);
         g.setColor(currentColor);
     }
 
@@ -132,22 +113,21 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     public void fillCircle(float cx, float cy, int r) {
         int diameter = r * 2;
 
-        //shift x and y by the radius of the circle in order to correctly center it
         g.fillOval((int) cx - r, (int) cy - r, diameter, diameter);
     }
 
     @Override
     public void drawCircle(float cx, float cy, int r) {
         int diameter = r * 2;
-        //shift x and y by the radius of the circle in order to correctly center it
+
         g.drawOval((int) cx - r, (int) cy - r, diameter, diameter);
     }
 
     @Override
-    public void drawText(String text, Font font, int x, int y ,float tam) {
-        g.setFont( ((PCFont) font)._font.deriveFont(tam));
+    public void drawText(String text, Font font, int x, int y, float tam) {
+        g.setFont(((PCFont) font)._font.deriveFont(tam));
         int len = g.getFontMetrics().stringWidth(text) / 2;
-        g.drawString(text, (int) x - len, y /*+ yBorder*/);
+        g.drawString(text, (int) x - len, y);
     }
 
     @Override
@@ -158,8 +138,10 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     @Override
     public void componentMoved(ComponentEvent componentEvent) {}
+
     @Override
     public void componentShown(ComponentEvent componentEvent) {}
+
     @Override
     public void componentHidden(ComponentEvent componentEvent) {}
 }

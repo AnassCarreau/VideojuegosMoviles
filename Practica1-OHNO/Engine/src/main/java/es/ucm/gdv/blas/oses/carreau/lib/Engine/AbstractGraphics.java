@@ -37,7 +37,7 @@ public abstract class AbstractGraphics implements Graphics {
 
 
     //Método que nos devuelve el factor de escalado a aplicar
-    public float getScaleFactor(){
+    protected float getScaleFactor(){
         float factorWidth = winWidth / logWidth;
         float factorHeight = winHeight / logHeight;
 
@@ -57,26 +57,6 @@ public abstract class AbstractGraphics implements Graphics {
         return new int[]{(int)(newx1 + x/ factor), (int)( newy1 + y / factor)};
     }
 
-    /**
-     * Método que nos devuelve un array de tamaño 4 con la posicion en x, y real, al igual que el tamaño
-     * @param x
-     * @param y
-     * @param w
-     * @param h
-     * @return int[4]
-     */
-    protected int[] getRealDestRect(int x, int y, int w, int h){
-        float scale_factor = getScaleFactor();
-
-        //trasladamos las coordenadas haciendo uso del scale_factor
-        int[] posTranslate = translateBorder(x, y, scale_factor);
-
-        //escalamos el tamaño haciendo uso del scale_factor
-        int[] tamScale = scaleBorder(w, h, scale_factor);
-
-        return new int[]{posTranslate[0], posTranslate[1], tamScale[0], tamScale[1]};
-    }
-
     protected int[] translateBorder(int x, int y, float scale_factor) {
         int newX1 = (int)(winWidth/2 - ((logWidth * scale_factor) / 2));
         int newY1 = (int)(winHeight/2 - ((logHeight * scale_factor) / 2));
@@ -85,13 +65,6 @@ public abstract class AbstractGraphics implements Graphics {
         int yDest = (int)(newY1 + (y * scale_factor));
 
         return new int[]{xDest, yDest};
-    }
-
-    protected int[] scaleBorder(int w, int h, float scale_factor) {
-        int wDest = (int)(w * scale_factor);
-        int hDest = (int)(h * scale_factor);
-
-        return new int[]{wDest, hDest};
     }
 
     public final void prepareFrame(){

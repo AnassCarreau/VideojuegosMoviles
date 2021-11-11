@@ -13,10 +13,7 @@ public class Tablero {
     //LISTA DE PISTAS
     private Pistas pistas = null;
 
-
-
     public Tablero(int N, boolean randomBoard) {
-
         //Inicializacion vector direcciones
         _dirs = new ArrayList<>();
 
@@ -38,40 +35,79 @@ public class Tablero {
         }
 
         //generamos un tablero aleatorio con una unica solucion
-
         if (randomBoard) {
-            while (!generaTablero(N)) {
-                drawConsole();
-            }
+            while (!generaTablero(N)) {}
         }
-
-
     }
-    public void drawConsole(){
-        for(int i = 0; i < _tablero.length; i++){
 
-            for(int j = 0; j < _tablero.length; j++){
+    private Vector addNuevaCeldaFija(int N, Random random){
+        //Tratamos de colocar una nueva celda fija
+        int x = random.nextInt(N);
+        int y = random.nextInt(N);
 
-                System.out.print("| ");
-                if(_tablero[i][j].getEstado().equals(EstadoCelda.Vacia)){
-                    System.out.print("  ");
-                }
-                else if(_tablero[i][j].getEstado().equals(EstadoCelda.Rojo)){
-                    System.out.print("R ");
-                }
-                else{
-                    if(_tablero[i][j].isModifiable()) System.out.print("A ");
-
-                    else System.out.print(_tablero[i][j].getValorDefault()+ " ");
-                }
-            }
-            System.out.println("|");
+        //Buscamos casilla que esté vacia (por si da la casualidad de que con los randoms alguna coincide)
+        while (_tablero[y][x].getEstado() != EstadoCelda.Vacia) {
+            x = random.nextInt(N);
+            y = random.nextInt(N);
         }
+
+        Celda c = _tablero[y][x];
+
+        int redIfOne = random.nextInt(N) + 1;
+
+        if(redIfOne == 1){
+            c.setEstado(EstadoCelda.Rojo);
+        }
+        else {
+            c.setEstado(EstadoCelda.Azul);
+            c.setValorDefault(random.nextInt(N) + 1); //Valor entre las que ve (1 a N)
+        }
+
+        c.setModificable(false);
+        Vector v= new Vector(x, y);
+        return  v;
+    }
+
+    private Vector recibidaWouldExceed(StructPista pista, int auxX, int auxY){
+        //mirar en que direccion te pasas y poner una roja
+        Vector dir = pista.getDirPista();
+        int newX = auxX + dir.x, newY = auxY + dir.y;
+
+        //Nos saltamos los azules adyacentes
+        while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
+            newX += dir.x;
+            newY += dir.y;
+        }
+
+        if (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Vacia) {
+            _tablero[newY][newX].setEstado(EstadoCelda.Rojo);
+            return new Vector(newX, newY);
+        }
+
+        return null;
+    }
+
+    private Vector recibidaOneDirectionRequired(StructPista pista, int auxX, int auxY){
+        Vector dir = pista.getDirPista();
+
+        int newX = auxX + dir.x;
+        int newY = auxY + dir.y;
+        while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
+            newX += dir.x;
+            newY += dir.y;
+        }
+        //Por seguridad, pero si no nos hemos salido es que esa celda vacia es azul
+        //porque es la que debemos poner en esa direccion
+        if (posCorrecta(newX, newY)) {
+            _tablero[newY][newX].setEstado(EstadoCelda.Azul);
+            return new Vector(newX, newY);
+        }
+
+        return null;
     }
 
     private boolean generaTablero(int N) {
         int intentos = 0;
-
 
         //Creamos tablero vacio
         _tablero = getTableroVacio(N);
@@ -89,40 +125,14 @@ public class Tablero {
 
         while (numCasillasMod < N * N && intentos < N*N) {
 
-            //Tratamos de colocar una nueva azul
-            int x = random.nextInt(N);
-            int y = random.nextInt(N);
-
-            //Buscamos casilla que esté vacia (por si da la casualidad de que con los randoms alguna coincide)
-            while (_tablero[y][x].getEstado() != EstadoCelda.Vacia) {
-                x = random.nextInt(N);
-                y = random.nextInt(N);
-            }
-
-            Celda c = _tablero[y][x];
-
-            int redIfOne = random.nextInt(N) + 1;
-
-            if(redIfOne == 1){
-                c.setEstado(EstadoCelda.Rojo);
-            }
-            else {
-                c.setEstado(EstadoCelda.Azul);
-                c.setValorDefault(random.nextInt(N) + 1); //Valor entre las que ve (1 a N)
-            }
-
-            c.setModificable(false);
-            Vector v= new Vector(x, y);
+            Vector v = addNuevaCeldaFija(N, random);
             _celdasNoVacias.add(v);
             _celdasFijas.add(v);
             int lastFixed = numCasillasMod;
             numCasillasMod++;
 
-
-
             //Inicializamos las pistas
             compruebaPistasTablero();
-
 
             boolean error = false;
             while (!pistas.isEmpty() && !error) {
@@ -137,20 +147,10 @@ public class Tablero {
                 //cogemos que tipo de pista es
                 switch (pista.getTipoPista()) {
                     case WouldExceed: {
-                        //mirar en que direccion te pasas y poner una roja
-                        Vector dir = pista.getDirPista();
-                        int newX = auxX + dir.x, newY = auxY + dir.y;
-
-                        //Nos saltamos los azules adyacentes
-                        while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
-                            newX += dir.x;
-                            newY += dir.y;
-                        }
-
-                        if (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Vacia) {
-                            _tablero[newY][newX].setEstado(EstadoCelda.Rojo);
-                            _celdasNoVacias.add(new Vector(newX, newY));
-                            auxPista = compruebaPistas(newX, newY);
+                        Vector vector = recibidaWouldExceed(pista, auxX, auxY);
+                        if(vector != null){
+                            _celdasNoVacias.add(vector);
+                            auxPista = compruebaPistas(vector.x, vector.y);
                             numCasillasMod++;
                         }
                         break;
@@ -162,56 +162,37 @@ public class Tablero {
                         for (int i = 0; i < lis.size(); i++) {
                             numCasillasMod++;
                             _celdasNoVacias.add(lis.get(i));
-                            x = lis.get(i).x;
-                            y = lis.get(i).y;
+                            int x = lis.get(i).x;
+                            int y = lis.get(i).y;
                             Pistas p = compruebaPistas(x, y);
                             while (!p.getListaPistas().isEmpty()) {
-
-                                if (auxPista.getListaPistas().remove(p.getFirstPista())) {
-                                }
-                                //if (!auxPista.getListaPistas().contains(p.getFirstPista())) {
+                                auxPista.getListaPistas().remove(p.getFirstPista());
                                 auxPista.getListaPistas().add(p.getFirstPista());
-                                //}
                                 p.getListaPistas().remove(0);
-
-
                             }
-
                         }
                         break;
                     }
                     case OneDirectionRequired: {
                         //Cogemos la direccion de la pista y asi no tenemos que recorrer todas las dirs
-                        Vector dir = pista.getDirPista();
-
-                        int newX = auxX + dir.x;
-                        int newY = auxY + dir.y;
-                        while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
-                            newX += dir.x;
-                            newY += dir.y;
-                        }
-                        //Por seguridad, pero si no nos hemos salido es que esa celda vacia es azul
-                        //porque es la que debemos poner en esa direccion
-                        if (posCorrecta(newX, newY)) {
-                            _celdasNoVacias.add(new Vector(newX, newY));
-                            _tablero[newY][newX].setEstado(EstadoCelda.Azul);
-                            auxPista = compruebaPistas(newX, newY);
+                        Vector vector = recibidaOneDirectionRequired(pista, auxX, auxY);
+                        if(vector != null){
+                            _celdasNoVacias.add(vector);
+                            auxPista = compruebaPistas(vector.x, vector.y);
                             numCasillasMod++;
-
-                        } else {
-                            auxPista = compruebaPistas(auxX, auxY);
                         }
+                         /*else {
+                            auxPista = compruebaPistas(auxX, auxY);
+                        }*/
                         break;
                     }
                     case MustBeWall:
-
                         _tablero[auxY][auxX].setEstado(EstadoCelda.Rojo);
                         numCasillasMod++;
                         _celdasNoVacias.add(new Vector(auxX, auxY));
                         auxPista = compruebaPistas(auxX, auxY);
-
                         break;
-                    //TODOS LOS CASOS A PARTIR DE AQUI SON CASOS DE ERROR, POR LO QUE SI SALE ALGUNO DE ESTOS DESCARTAMOS TABLEROS
+                    //TODOS LOS CASOS A PARTIR DE AQUI SON CASOS DE ERROR, POR LO QUE SI SALE ALGUNO DE ESTOS RETROCEDEMOS
                     case ImposibleVision:
                     case ErrorClosedTooLate:
                     case ErrorClosedTooEarly:
@@ -219,18 +200,9 @@ public class Tablero {
                         while(_celdasNoVacias.size() > lastFixed){
                             Vector cell = _celdasNoVacias.pop();
                             _tablero[cell.y][cell.x].resetCelda();
-
                         }
-
                         //Quitamos la ultima celda fija que hemos puesto
                         _celdasFijas.remove(_celdasFijas.size()-1);
-
-                        /*
-                        while( _celdasFijas.size() > 0 && _celdasFijas.get(_celdasFijas.size() -1) == _celdasNoVacias.get(_celdasNoVacias.size()-1)){
-                            _celdasFijas.remove(_celdasFijas.size()-1);
-                            Vector cell = _celdasNoVacias.pop();
-                            _tablero[cell.y][cell.x].resetCelda();
-                        }*/
 
                         numCasillasMod = _celdasNoVacias.size();
 
@@ -238,6 +210,7 @@ public class Tablero {
                         actualizaVisiblesTablero();
 
                         error =  true;
+                        break;
                 }
 
                 if(error) continue;
@@ -251,14 +224,13 @@ public class Tablero {
                     auxPista.getListaPistas().remove(0);
                 }
             }
-
             intentos++;
         }
-        //Si hay alguna celda vacia el tablero no nos vale
+
+        //Si nos pasamos de los intentos returneamos false
         if(intentos >= N*N){
             return false;
         }
-
 
         //SI HEMOS LLEGADO HASTA AQUI HABEMUS TABLERO
         Celda[][] _tableroAux = getTableroVacio(N);
@@ -266,7 +238,6 @@ public class Tablero {
         for (int i = 0; i < _celdasFijas.size(); i++) {
             Vector index = _celdasFijas.get(i);
             Celda c = _tablero[index.y][index.x];
-
             _tableroAux[index.y][index.x] = c;
         }
 
@@ -362,7 +333,6 @@ public class Tablero {
     }
 
     public void quitaPista(StructPista pista, StructPista pistaAct) {
-
         if (pistaAct != null) {
             _tablero[pistaAct.getPosPista().y][pistaAct.getPosPista().x].setCurrentPista(pista);
             pistas.getListaPistas().remove(pistaAct);
@@ -501,13 +471,6 @@ public class Tablero {
     }
 
     public Pair<String, Vector> damePistaAleatoria() {
-        System.out.println(pistas.getListaPistas().size());
-        System.out.println("||");
-        for (int i = 0; i < pistas.getListaPistas().size(); i++) {
-            System.out.println(pistas.getListaPistas().get(i).getTipoPista());
-            System.out.println(pistas.getListaPistas().get(i).getPosPista().x);
-            System.out.println(pistas.getListaPistas().get(i).getPosPista().y);
-        }
         return pistas.getPistaTablero();
     }
 
@@ -566,12 +529,6 @@ public class Tablero {
         }
 
     }
-
-    //i es el numero de fila es decir la posicion en Y
-    //j es eñ numero de la columna es decir la posicion en X
-   /* private boolean checkHint2(int i, int j, Pistas nuevasPistas){
-
-    }*/
 
     /**
      * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
@@ -641,9 +598,7 @@ public class Tablero {
 
     }
 
-
-
-    /*
+    /**
      * Metodo que dada una posicion del tablero de una casilla vacia comprueba si esta
      * debe marcarse como cerrada o no
      *
@@ -688,7 +643,6 @@ public class Tablero {
             else azulesEncontradas++;
             auxX += dir.x;
             auxY += dir.y;
-
         }
 
         if (posCorrecta(auxY, auxX) && _tablero[auxY][auxX].getEstado() == EstadoCelda.Azul)
@@ -750,6 +704,5 @@ public class Tablero {
             }
         }
     }
-
 
 }

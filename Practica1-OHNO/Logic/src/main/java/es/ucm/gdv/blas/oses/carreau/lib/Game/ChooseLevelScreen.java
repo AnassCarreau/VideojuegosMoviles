@@ -1,6 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 
 public class ChooseLevelScreen implements Screen {
@@ -18,11 +17,6 @@ public class ChooseLevelScreen implements Screen {
 
     public ChooseLevelScreen(Engine eng) {
         this.engine = eng;
-        init();
-    }
-
-    @Override
-    public void init() {
         celdas=new ArrayList<>();
         Graphics g = engine.getGraphics();
         int radio = (g.getLogWidth() / 5) / 2;
@@ -96,19 +90,14 @@ public class ChooseLevelScreen implements Screen {
 
 
     private boolean inBounds(Input.TouchEvent event, int x, int y, int width, int height) {
-        if (event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1)
-            return true;
-        else
-            return false;
+        return event.x > x && event.x < x + width && event.y > y && event.y < y + height;
     }
 
 
     private boolean inBoundsCircle(Input.TouchEvent event, int cx, int cy, int radius) {
-
         int rx = event.x - cx;
         int ry = event.y - cy;
-        float dis= (float)Math.sqrt(Math.pow(ry,2) +  Math.pow(rx,2));
-        return dis <= radius;
+
+        return (float)Math.sqrt(Math.pow(ry,2) +  Math.pow(rx,2)) <= radius;
     }
 }

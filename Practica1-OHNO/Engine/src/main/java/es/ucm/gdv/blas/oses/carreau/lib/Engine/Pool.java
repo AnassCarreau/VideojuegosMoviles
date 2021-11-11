@@ -30,15 +30,3 @@ public class Pool<T> {
             freeObjects.add(object);
     }
 }
-
-    /*PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
-        @Override
-        public TouchEvent createObject() {
-            return new TouchEvent();
-        }
-    };
-
-    Pool<TouchEvent> touchEventPool = new Pool<TouchEvent>(factory, 50);
-    TouchEvent touchEvent = touchEventPool.newObject();
-//... do something here ...
-    touchEventPool.free(touchEvent);*/

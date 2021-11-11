@@ -22,11 +22,9 @@ public class main {
 
         PCGame pcGame = new PCGame(ventana, 400, 600);
         LoadingScreen loadScreen = new LoadingScreen(pcGame);
-        pcGame.setScreen(loadScreen);
-        loadScreen.init();
+        //pcGame.setScreen(loadScreen);
         pcGame.setScreen(new MainMenuScreen(pcGame));
 
         pcGame.run();
-
     }
 }

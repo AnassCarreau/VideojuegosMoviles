@@ -37,7 +37,6 @@ public class Window extends JFrame {
             }
             catch(Exception e) {
                 System.out.println(e.getMessage());
-
             }
         } // while pidiendo la creación de la buffeStrategy
         if (intentos == 0) {

@@ -4,17 +4,14 @@ package es.ucm.gdv.blas.oses.carreau.lib.Game;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 //import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Screen;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 
 public class LoadingScreen implements Screen {
     private Engine engine;
+
     public LoadingScreen(Engine engine) {
         this.engine = engine;
-    }
-
-    @Override
-    public void init() {
         Graphics g = engine.getGraphics();
         Assets.q42 = g.newImage("q42.png");
         Assets.lock = g.newImage("lock.png");
@@ -25,7 +22,7 @@ public class LoadingScreen implements Screen {
         Assets.molleregular = g.newFont("Molle-Regular.ttf",1,true);
         //TO DO
         Assets.click = engine.getAudio().newSound("1.wav");
-       // Assets.temazo = engine.getAudio().newMusic("temazo.waw");
+        // Assets.temazo = engine.getAudio().newMusic("temazo.waw");
     }
 
     @Override
