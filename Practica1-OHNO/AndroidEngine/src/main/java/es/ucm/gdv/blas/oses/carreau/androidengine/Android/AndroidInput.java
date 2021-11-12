@@ -7,7 +7,6 @@ import android.view.View;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Pool;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 
 public class AndroidInput implements View.OnTouchListener, Input {

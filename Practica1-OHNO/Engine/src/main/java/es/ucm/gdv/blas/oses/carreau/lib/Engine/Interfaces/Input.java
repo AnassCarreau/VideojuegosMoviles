@@ -3,6 +3,12 @@ package es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces;
 import java.util.List;
 
 public interface Input {
+    /**
+     * Clase estatica que representa un evento de toque en nuestros juegos
+     * Contiene informacion sobre el tipo de evento, type
+     * Las coordenadas en el espacio fisico en donde ha ocurrido una pulsacion, x & y
+     * Identificador del puntero que ha realizado dicho toque, pointer
+     */
     public static class TouchEvent {
         public static final int TOUCH_DOWN = 0;
         public static final int TOUCH_UP = 1;
@@ -11,5 +17,11 @@ public interface Input {
         public int x, y;
         public int pointer;
     }
+
+    /**
+     * Metodo que devuelve la lista de eventos sin procesar
+     * @return Lista de eventos del tipo TouchEvent que se han ido almacenando
+     * desde la ultima vez que cogimos la lista
+     */
     public List<TouchEvent> getTouchEvents();
 }
