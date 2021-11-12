@@ -104,7 +104,7 @@ public class AndroidGame  implements Engine, Runnable {
             long nanoElapsedTime = currentTime - _lastFrameTime;
             _lastFrameTime = currentTime;
 
-            double deltaTime = (double) nanoElapsedTime / 10E09;
+            double deltaTime = (double) nanoElapsedTime / 1.0e9;
             screen.handleEvents();
             screen.update(deltaTime);
 

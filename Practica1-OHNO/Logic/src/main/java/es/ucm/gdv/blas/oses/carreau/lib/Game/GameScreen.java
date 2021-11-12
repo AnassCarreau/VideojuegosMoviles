@@ -1,9 +1,12 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Deque;
 
+import es.ucm.gdv.blas.oses.carreau.lib.Animacion;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Celda;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
@@ -25,16 +28,20 @@ public class GameScreen implements Screen {
     private boolean fadeOut;
     private boolean vibrate;
 
+
+    private  int vibracion=16;
+
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
     Vector pos;
     //Pila con los últimos movimientos para así poder deshacer
     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
+    HashMap<Celda,Animacion> animaTime;
+    List<Celda>quitaAnima;
 
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
-    boolean fade=true;
 
     public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
         this.engine = eng;
@@ -42,11 +49,39 @@ public class GameScreen implements Screen {
         this.boardDimensions = tableroSize;
         pista = null;
         ultimosMovs = new ArrayDeque<>();
+        
+        animaTime=new HashMap<>();
+        quitaAnima=new ArrayList<>() ;
     }
 
     @Override
     public void update(double deltaTime) {
         if (board.tableroResuelto()) solved = true;
+
+        if(!animaTime.isEmpty()) {
+            for (Celda key : animaTime.keySet()) {
+                double time = animaTime.get(key).actTime;
+                double res = time - deltaTime;
+                if (res > 0) {
+                    Double ot = animaTime.get(key).lstTime;
+                    boolean fade = animaTime.get(key).fade;
+                    if (Math.abs(res - ot) >= 0.1) {
+                        ot = res;
+                        fade = !fade;
+                    }
+                    animaTime.put(key, new Animacion(res, ot, fade));
+                } else {
+
+                    quitaAnima.add(key);
+
+                }
+            }
+
+            for (Celda c : quitaAnima){
+                animaTime.remove(c);
+            }
+            quitaAnima.clear();
+        }
     }
 
     @Override
@@ -156,10 +191,10 @@ public class GameScreen implements Screen {
                 int x = initialX + circleSize / 2 + j * circleSize;
                 int y = (g.getLogHeight() / 6) + circleSize / 2 + (i * circleSize);
 
-                if(pos!=null &&  pos.x==x && pos.y ==y)
-                {
-                    fade=!fade;
-                    g.fillCircle(x, y, circleSize / 2 + 5 *  (fade ? -1 : 1) );
+                if(animaTime.containsKey(c)) {
+
+
+                    g.fillCircle(x, y, circleSize / 2 + 1 * (animaTime.get(c).fade ? -1 : 1));
                 }
                 else {
                     g.fillCircle(x, y, circleSize / 2);
@@ -200,7 +235,7 @@ public class GameScreen implements Screen {
      * @param g
      * @return boolean
      */
-    private boolean checkCirclePressed(TouchEvent event, Graphics g){
+    private boolean checkCirclePressed(TouchEvent event, Graphics g) {
         int circleSize = g.getLogWidth() / boardDimensions;
         int initialX = (int) (g.getLogWidth() / 2 - circleSize * ((float) boardDimensions / 2));
 
@@ -209,19 +244,22 @@ public class GameScreen implements Screen {
                 Celda c = board.getCelda(k, j);
                 int x = initialX + circleSize / 2 + k * circleSize;
                 int y = (g.getLogHeight() / 6) + circleSize / 2 + (j * circleSize);
-                if (c.isModifiable() && inBoundsCircle(event, x, y, circleSize / 2)) {
-                    //guardado del ultimo movimiento en una pila
-                    if (ultimosMovs.size() + 1 > 50) {
-                        ultimosMovs.remove();
+                if (inBoundsCircle(event, x, y, circleSize / 2)) {
+                    if (c.isModifiable()) {
+                        //guardado del ultimo movimiento en una pila
+                        if (ultimosMovs.size() + 1 > 50) {
+                            ultimosMovs.remove();
+                        }
+                        ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
+                        board.cambiaCelda(k, j);
+                        return true;
+                    } else if (!c.isModifiable()) {
+                        if (c.getEstado() == EstadoCelda.Rojo) cerrado = true;
+
+                        animaTime.put(c,new Animacion(1.00,0.00,true));
+                        pista = new String[]{"This cell cannot be modified"};
+                        return true;
                     }
-                    ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
-                    board.cambiaCelda(k, j);
-                    return true;
-                } else if (!c.isModifiable() && inBoundsCircle(event, x, y, circleSize / 2)) {
-                    cerrado = true;
-                    pos=new Vector(x,y);
-                    pista = new String[]{"This cell cannot be modified"};
-                    return true;
                 }
             }
         }
@@ -234,7 +272,7 @@ public class GameScreen implements Screen {
      * @param g
      * @return boolean
      */
-    private boolean checkUIButtons(TouchEvent event, Graphics g){
+    private boolean checkUIButtons(TouchEvent event, Graphics g) {
         if (inBounds(event, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2)) {
             engine.setScreen(new ChooseLevelScreen(engine));
             return true;

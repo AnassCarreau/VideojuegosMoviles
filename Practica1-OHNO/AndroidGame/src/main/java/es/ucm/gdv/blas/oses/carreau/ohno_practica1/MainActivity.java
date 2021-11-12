@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         //Carga de recursos
         LoadingScreen loadScreen = new LoadingScreen(game);
         game.setScreen(loadScreen);
-        loadScreen.init();
+        //loadScreen.init();
 
         //si hemos cargado un estado desde el savedInstance
         if(newScreen != null){

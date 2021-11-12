@@ -67,7 +67,6 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
 
-    @Override
     public int save() {
         return this.canvas.save();
     }
