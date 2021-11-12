@@ -1,10 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Game.MainMenuScreen;
-import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
-import es.ucm.gdv.blas.oses.carreau.lib.Window;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.LoadingScreen;
-import es.ucm.gdv.blas.oses.carreau.lib.PCGame;
 
 public class main {
 
@@ -16,15 +13,17 @@ public class main {
     public static void main(String[] args){
         //Creacion de la ventana
         Window ventana = new Window("OhNo!");
-        boolean ventanaCreada = ventana.initWindow(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN, NUM_BUFFERS);
 
-        if(!ventanaCreada) return;
+        //Si no conseguimos crear la ventana terminamos
+        if(!ventana.initWindow(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN, NUM_BUFFERS)) return;
 
+        //Creamos el engine
         PCGame pcGame = new PCGame(ventana, 400, 600);
+        //Pantalla de carga de recursos
         LoadingScreen loadScreen = new LoadingScreen(pcGame);
-        //pcGame.setScreen(loadScreen);
+        //Cargamos pantalla de menu principal
         pcGame.setScreen(new MainMenuScreen(pcGame));
-
+        //Comenzamos juego
         pcGame.run();
     }
 }

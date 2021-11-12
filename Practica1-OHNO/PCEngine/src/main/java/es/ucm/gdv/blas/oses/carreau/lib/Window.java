@@ -3,10 +3,22 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame {
 
+    /**
+     * Constructor de una ventana usando SWING
+     * @param windowName
+     */
     public Window(String windowName){
         super(windowName);
     }
 
+    /**
+     * Metodo para configurar la ventan
+     * @param width, int, ancho, en pixeles, de la ventana
+     * @param height, int, alto, en pixeles, de la ventana
+     * @param fullscreen, boolean, si queremos la ventana en pantalla completa o no
+     * @param numBuffers, numero de buffers que vamos a crear
+     * @return
+     */
     public boolean initWindow(int width, int height, boolean fullscreen, int numBuffers){
         //Setteamos el tamano de la ventana
         //No confundir con el tam logico que tenemos que ajustar

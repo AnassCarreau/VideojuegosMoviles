@@ -10,17 +10,30 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 
 public class AndroidInput implements View.OnTouchListener, Input {
+   //TODO para que es este booleano??
     boolean isTouched;
-    List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-    Engine engine;
-    AbstractGraphics graphics;
 
+    private List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
+    private Engine engine;
+    private AbstractGraphics graphics;
+
+    /**
+     * Contructora del motor de gestion de entrada para
+     * la implementacion de Android
+     * @param engine, Motor de juego
+     * @param view, renderView
+     */
     public AndroidInput(Engine engine,  View view) {
         this.engine=engine;
         this.graphics = (AbstractGraphics) (engine.getGraphics());
         view.setOnTouchListener(this);
     }
 
+    /**
+     * Metodo que devuelve la lista de eventos sin procesar
+     * @return Lista de eventos del tipo TouchEvent que se han ido almacenando
+     * desde la ultima vez que cogimos la lista
+     */
     @Override
     public List<TouchEvent> getTouchEvents() {
         synchronized(this) {
@@ -34,6 +47,15 @@ public class AndroidInput implements View.OnTouchListener, Input {
         }
     }
 
+    /**
+     * Metodo heredado de Viewer.OnTouchListener.
+     * Cuando recibimos un toque se llama a este metodo y por
+     * tanto añadimos un nuevo evento a nuestra lista
+     * @param v, renderView, de quien estamos escuchando eventos
+     * @param event, MotionEvent, evento de haber tocado la pantalla
+     * @return
+     */
+    //TODO REVISAR EL SYNCHRONIZED PORQUE IGUAL SOLO HACE FALTA AL AÑADIR EL EVENTO
     public boolean onTouch(View v, MotionEvent event) {
         synchronized(this) {
             TouchEvent touchEvent = new TouchEvent();

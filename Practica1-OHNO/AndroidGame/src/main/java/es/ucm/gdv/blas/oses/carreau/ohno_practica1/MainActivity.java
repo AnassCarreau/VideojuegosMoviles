@@ -1,10 +1,6 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
 
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-
-//Imports del juego
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Creacion del motor
         this.game = new AndroidGame(this, 400, 600);
+
         Screen newScreen = null;
+
+        //Comprobamos si tenemos que cargar porque hemos recibido un estado que queremos volver a cargar
         if (savedInstanceState != null) {
 
             int screenId = savedInstanceState.getInt("Screen");
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                     Tablero t =((GameScreen)newScreen).getTablero();
                     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs = ((GameScreen) newScreen).getUltimosMovs();
 
-                    //TO DO: REVISAR CREACION DEL TABLERO
                     for(int i = 0; i < dimensions; i++){
                         for(int j = 0; j < dimensions; j++){
                             int state = savedInstanceState.getInt("CellState:" + j + "," + i);
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                             else if(state == EstadoCelda.Vacia.ordinal()){
                                 c.setEstado(EstadoCelda.Vacia);
                             }
+
                             c.setModificable(savedInstanceState.getBoolean("CellMod:"+ j + "," + i));
 
                             if(!c.isModifiable())t.addToListaNoModificables(j,i);
@@ -109,16 +109,12 @@ public class MainActivity extends AppCompatActivity {
         //Carga de recursos
         LoadingScreen loadScreen = new LoadingScreen(game);
         game.setScreen(loadScreen);
-        //loadScreen.init();
 
         //si hemos cargado un estado desde el savedInstance
-        if(newScreen != null){
-            game.setScreen(newScreen);
-        }
+        if(newScreen != null)game.setScreen(newScreen);
         // en caso contrario, main menu
-        else{
-            game.setScreen(new MainMenuScreen(this.game));
-        }
+        else game.setScreen(new MainMenuScreen(this.game));
+
 
         setContentView(game.getView());
     }
@@ -152,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
         game.onPause();
     }
 
+    /**
+     * Metodo para salvar el estado del tablero cuando giramos la pantalla
+     * @param outState, el Bundle con los datos guardados hasta el momento
+     * @return, Bundle, el bundle actualizado con los datos del tablero en el
+     */
     private Bundle saveBoardState(Bundle outState){
 
         GameScreen  gameScreen = (GameScreen) game.getCurrentScreen();
@@ -182,6 +183,11 @@ public class MainActivity extends AppCompatActivity {
         return outState;
     }
 
+    /**
+     * Metodo para guardar en el bundle el estado de la doble cola con los movimientos a deshacer
+     * @param outState, bundle con el estado que queremos salvar
+     * @return Bundle, el bundle actualizado
+     */
     private Bundle saveMovementsStack(Bundle outState){
         GameScreen  gameScreen = (GameScreen) game.getCurrentScreen();
         Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs = gameScreen.getUltimosMovs();

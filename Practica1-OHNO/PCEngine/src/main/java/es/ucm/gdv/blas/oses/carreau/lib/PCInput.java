@@ -17,13 +17,23 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
 
     private List<TouchEvent> events;
 
+    /**
+     * Contructora del motor de gestion de entrada para
+     * la implementacion de PC
+     * @param engine, Motor de juego
+     */
     public PCInput(Engine engine){
         events = new ArrayList<>();
         this.engine=engine;
     }
 
+    /**
+     * Metodo que devuelve la lista de eventos sin procesar
+     * @return Lista de eventos del tipo TouchEvent que se han ido almacenando
+     * desde la ultima vez que cogimos la lista
+     */
     @Override
-    public List<TouchEvent> getTouchEvents() {
+    public final List<TouchEvent> getTouchEvents() {
         synchronized(this) {
             if(events.size() > 0){
                 List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
@@ -35,6 +45,12 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         }
     }
 
+    /**
+     * Metodo heredado de la clase abstracta MouseListener
+     * Se invoca cuando hay un click de raton. Cuando esto ocurre añadimos
+     * un evento a nuestra lista de eventos
+     * @param mouseEvent, MouseEvent, evento de raton
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         TouchEvent touchEvent = new TouchEvent();
@@ -50,6 +66,12 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         }
     }
 
+    /**
+     * Metodo heredado de la clase abstracta MouseListener
+     * Se invoca cuando hay pulsacion de raton. Cuando esto ocurre añadimos
+     * un evento a nuestra lista de eventos
+     * @param mouseEvent, MouseEvent, evento de raton
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         TouchEvent touchEvent = new TouchEvent();
@@ -66,6 +88,13 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         }
     }
 
+    /**
+     * Metodo heredado de la clase abstracta MouseListener
+     * Se invoca cuando se levanta la pulsacion de una tecla de raton.
+     * Cuando esto ocurre añadimos el evento correspondiente (TOUCH_UP)
+     * a nuestra lista de eventos
+     * @param mouseEvent, MouseEvent, evento de raton
+     */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         TouchEvent touchEvent = new TouchEvent();
@@ -82,12 +111,29 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         }
     }
 
+    /**
+     * Metodo heredado de MouseListener
+     * No necesaria  su implementacion
+     * @param mouseEvent
+     */
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {}
 
+    /**
+     * Metodo heredado de MouseListener
+     * No necesaria  su implementacion
+     * @param mouseEvent
+     */
     @Override
     public void mouseExited(MouseEvent mouseEvent) {}
 
+    /**
+     * Metodo heredado de MouseMotionListener
+     * Se invoca cuando se mueve el raton mientras mantienes clicado.
+     * Cuando esto ocurre añadimos el evento correspondiente (TOUCH_DRAGGED)
+     * a nuestra lista de eventos
+     * @param mouseEvent
+     */
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
         TouchEvent touchEvent = new TouchEvent();
@@ -104,6 +150,11 @@ public class PCInput implements Input, MouseListener, MouseMotionListener{
         }
     }
 
+    /**
+     * Metodo heredado de MouseMotionListener
+     * No es necesaria su implementacion
+     * @param mouseEvent
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {}
 }

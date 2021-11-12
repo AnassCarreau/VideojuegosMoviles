@@ -28,6 +28,12 @@ public class AndroidGame  implements Engine, Runnable {
     volatile boolean running_ = false;
     Thread thread_;
 
+    /**
+     * Constructora del engine especifico de Android
+     * @param activity, actividad de android
+     * @param logicalWidth, int, ancho logico del juego
+     * @param logicalHeight, int, alto logico del juego
+     */
     public AndroidGame(AppCompatActivity activity, int logicalWidth, int logicalHeight) {
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -36,29 +42,57 @@ public class AndroidGame  implements Engine, Runnable {
                 Configuration.ORIENTATION_LANDSCAPE;
         int frameBufferWidth = isLandscape ? logicalHeight : logicalWidth;
         int frameBufferHeight = isLandscape ? logicalWidth : logicalHeight;
+
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
 
         renderView = new SurfaceView(activity.getApplicationContext());
-
         graphics = new AndroidGraphics(activity, frameBuffer,logicalWidth,logicalHeight);
         audio = new AndroidAudio(activity);
         input = new AndroidInput(this, renderView);
+
         activity.setContentView(renderView);
     }
 
+    /**
+     * Metodo que devuelve el motor que se encarga de gestionar la
+     * entrada del juego
+     * @return el motor de AndroidInput
+     */
     public Input getInput() {
         return input;
     }
 
-    public Graphics getGraphics() { return graphics;
-    }
+    /**
+     * Metodo que devuelve el motor que se encarga del pintado
+     * del juego
+     * @return el motor grafico de PC
+     */
+    public Graphics getGraphics() { return graphics; }
+
+    /**
+     * Metodo que devuelve el motor que se encarga de gestionar
+     * el audio de juego
+     * @return el motor de AndroidAudio
+     */
     public AndroidAudio getAudio() { return audio; }
 
+
+    /**
+     * Metodo para obtener cual es la pantalla/nivel/estado de juego
+     * actual
+     * @return Screen, pantalla actual
+     */
     public Screen getCurrentScreen() {
         return screen;
     }
 
+    /**
+     * Metodo al que llamaremos cuando desde el Main activity pasemos
+     * al estado onResume.
+     * Este estado es al que se le llama siempre cuando por ejemplo hay
+     * un giro de pantalla, por lo que es en el que creamos la hebra
+     */
     public void onResume() {
         if (!running_) {
             running_ = true;
@@ -67,6 +101,11 @@ public class AndroidGame  implements Engine, Runnable {
         }
     }
 
+    /**
+     * Metodo al que llamaremos cuando la aplicacion pase al estado de pausa desde
+     * la actividad
+     * Pausamos el juego y hacemos que la hebra termine
+     */
     public void onPause() {
         running_ = false;
         while (true) {
@@ -82,17 +121,33 @@ public class AndroidGame  implements Engine, Runnable {
         }
     }
 
-
+    /**
+     * Metodo para actualizar cual es la pantalla del juego actual
+     * en la que nos encontramos
+     * @param screen, pantalla/nivel/estado al que vamos a cambiar
+     */
     public void setScreen(Screen screen) {
         if (screen == null)
             throw new IllegalArgumentException("Screen must not be null");
         this.screen = screen;
     }
 
+    /**
+     * Metodo que devuelve la surfaceView
+     * @return SurfaceView
+     */
+
     public SurfaceView getView(){
         return renderView;
     }
 
+    /**
+     * Metodo heredado de la clase Runnable
+     * Contiene el bucle principal del juego.
+     * En cada iteracion se calcula el deltaTime, se actualiza
+     * el estado de la Screen llamando a sus metodos update y handleEvents
+     * y despues se pinta el estado de dicha pantalla de juego
+     */
     @Override
     public void run() {
         long _lastFrameTime = System.nanoTime();

@@ -17,7 +17,7 @@ class PCFont implements es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font 
      * @return boolean, true si la fuente esta en negrita, false si no
      */
     @Override
-    public boolean isBold() {
+    public final boolean isBold() {
         return _font.isBold();
     }
 }

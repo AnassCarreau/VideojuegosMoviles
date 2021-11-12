@@ -19,11 +19,17 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     Color currentColor = Color.WHITE;
     java.awt.Graphics g;
 
-    public PCGraphics(Window window, int Width, int Height) {
+    /**
+     * Constructora del motor grafico para la implementacion especifica de PC
+     * @param window, ventana sobre la que vamos a pintar
+     * @param logWidth, int, ancho logico por defecto de nuestro juego
+     * @param logHeight, int, alto lógico por defecto de nuestro juego
+     */
+    public PCGraphics(Window window, int logWidth, int logHeight) {
         this.window = window;
         this.strategy = window.getBufferStrategy();
-        this.logWidth = Width;
-        this.logHeight = Height;
+        this.logWidth = logWidth;
+        this.logHeight = logHeight;
         this.winWidth = window.getWidth();
         this.winHeight = window.getHeight();
     }
@@ -34,7 +40,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param y, int, coordenada en y que representa el nuevo origen de dibujado
      */
     @Override
-    public void translate(float x, float y) {
+    public final void translate(float x, float y) {
         g.translate((int) x, (int) y);
     }
 
@@ -44,7 +50,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param y, factor de escalado a lo alto
      */
     @Override
-    public void scale(float x, float y) {
+    public final void scale(float x, float y) {
         Graphics2D g2D = (Graphics2D) g;
         g2D.scale(x, y);
     }
@@ -53,7 +59,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * Metodo para reestablecer los valores por defecto del contexto grafico
      */
     @Override
-    public void restore() {
+    public final void restore() {
         g.dispose();
     }
 
@@ -65,7 +71,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * implementacion especifica
      */
     @Override
-    public Image newImage(String name) {
+    public final Image newImage(String name) {
         name = "assets/" + name;
         PCImage image = null;
 
@@ -87,7 +93,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @return el nuevo objeto fuente creado, en su implementacione especifica
      */
     @Override
-    public Font newFont(String filename, float size, boolean isBold) {
+    public final Font newFont(String filename, float size, boolean isBold) {
         // Cargamos la fuente del fichero .ttf.
         java.awt.Font baseFont;
         try (InputStream is = new FileInputStream("assets/" + filename)) {
@@ -108,7 +114,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param color, int, color en hexadecimal con el que quieres limpiar la ventana
      */
     @Override
-    public void clear(int color) {
+    public final void clear(int color) {
         setColor(color);
         g.fillRect(0, 0, getWindowWidth(), getWindowHeight());
 
@@ -123,7 +129,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param h, int, alto, en dimensiones logicas, que queremos que tenga nuestra imagen
      */
     @Override
-    public void drawImage(Image img, int x, int y, int w, int h) {
+    public final void drawImage(Image img, int x, int y, int w, int h) {
         g.drawImage(((PCImage) img)._image, x, y, w, h, null);
     }
 
@@ -133,7 +139,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param color, int, color, en hexadecimal, que queremos utilizar
      */
     @Override
-    public void setColor(int color) {
+    public final void setColor(int color) {
         int red = (int) ((color & 0xffffffffL) >> 24);
         int green = (color & 0x00ff0000) >> 16;
         int blue = (color & 0x0000ff00) >> 8;
@@ -149,7 +155,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param r, int, radio, en dimensiones logicas, que tiene el circulo
      */
     @Override
-    public void fillCircle(float cx, float cy, int r) {
+    public final void fillCircle(float cx, float cy, int r) {
         int diameter = r * 2;
 
         g.fillOval((int) cx - r, (int) cy - r, diameter, diameter);
@@ -162,7 +168,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param r, int, radio, en dimensiones logicas, que tiene el circulo
      */
     @Override
-    public void drawCircle(float cx, float cy, int r) {
+    public final void drawCircle(float cx, float cy, int r) {
         int diameter = r * 2;
 
         g.drawOval((int) cx - r, (int) cy - r, diameter, diameter);
@@ -179,7 +185,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param tam, float, tamaño que queremos emplear al pintar la fuente
      */
     @Override
-    public void drawText(String text, Font font, int x, int y, float tam) {
+    public final void drawText(String text, Font font, int x, int y, float tam) {
         g.setFont(((PCFont) font)._font.deriveFont(tam));
         int len = g.getFontMetrics().stringWidth(text) / 2;
         g.drawString(text, (int) x - len, y);
@@ -196,7 +202,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param color, int, color en hexadecimal de la linea con la que se pinta el rectangulo
      */
     @Override
-    public void drawRect(int x, int y, int width, int height, int color) {
+    public final void drawRect(int x, int y, int width, int height, int color) {
         g.setColor(new Color(color));
         g.drawRect(x, y /*+ yBorder*/, width, height);
     }
@@ -208,7 +214,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * @param componentEvent
      */
     @Override
-    public void componentResized(ComponentEvent componentEvent) {
+    public final void componentResized(ComponentEvent componentEvent) {
         winWidth = window.getWidth();
         winHeight = window.getHeight();
     }
@@ -217,7 +223,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
      * Metodo que llamamos para tener un nuevo contexto grafico
      * en cada iteracion del bucle
      */
-    void updateContext() {
+    public final void updateContext() {
         g = strategy.getDrawGraphics();
     }
 
