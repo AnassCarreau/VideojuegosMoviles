@@ -2,13 +2,13 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 public class Animacion {
     public double  actTime;
     public double  lstTime;
-    public boolean fade;
+    public boolean vibrate;
 
     public Animacion(double actTime,
              double lstTime,
-             boolean fade){
+             boolean vibrate){
         this.actTime = actTime;
         this.lstTime= lstTime;
-        this.fade= fade;
+        this.vibrate= vibrate;
     }
 }

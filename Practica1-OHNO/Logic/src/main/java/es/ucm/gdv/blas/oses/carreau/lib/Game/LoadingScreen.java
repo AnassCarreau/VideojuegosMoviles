@@ -20,9 +20,8 @@ public class LoadingScreen implements Screen {
         Assets.close = g.newImage("close.png");
         Assets.josefisans = g.newFont("JosefinSans-Bold.ttf",1,true);
         Assets.molleregular = g.newFont("Molle-Regular.ttf",1,true);
-        //TO DO
         Assets.click = engine.getAudio().newSound("1.wav");
-        // Assets.temazo = engine.getAudio().newMusic("temazo.waw");
+        Assets.ganar = engine.getAudio().newSound("Ganaste.wav");
     }
 
     @Override

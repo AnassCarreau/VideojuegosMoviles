@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Audio;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Sound;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Music;
 
 public class AndroidAudio implements Audio {
     AssetManager assets;
@@ -17,9 +16,7 @@ public class AndroidAudio implements Audio {
     public AndroidAudio(Activity activity) {
         activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         this.assets = activity.getAssets();
-        //TO DO
-        //Los parametros me los he inventado
-        this.soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
+        this.soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC,0);
     }
 
     @Override

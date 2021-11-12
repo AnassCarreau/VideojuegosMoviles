@@ -15,6 +15,7 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 import es.ucm.gdv.blas.oses.carreau.lib.EstadoCelda;
+import es.ucm.gdv.blas.oses.carreau.lib.Fade;
 import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 import es.ucm.gdv.blas.oses.carreau.lib.Vector;
@@ -24,12 +25,7 @@ public class GameScreen implements Screen {
     private Tablero board;
     private int boardDimensions;
 
-    private boolean fadeIn;
-    private boolean fadeOut;
-    private boolean vibrate;
 
-
-    private  int vibracion=16;
 
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
@@ -39,9 +35,17 @@ public class GameScreen implements Screen {
     HashMap<Celda,Animacion> animaTime;
     List<Celda>quitaAnima;
 
+    HashMap<Celda, Fade> fadeTime;
+    List<Celda>quitafade;
+
+
+
+
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
+    private  boolean sonGanar=false;
+    private  double timetoExit=3;
 
     public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
         this.engine = eng;
@@ -49,27 +53,39 @@ public class GameScreen implements Screen {
         this.boardDimensions = tableroSize;
         pista = null;
         ultimosMovs = new ArrayDeque<>();
-        
+
         animaTime=new HashMap<>();
         quitaAnima=new ArrayList<>() ;
+        fadeTime=new HashMap<>();
+        quitafade=new ArrayList<>() ;
     }
 
     @Override
     public void update(double deltaTime) {
-        if (board.tableroResuelto()) solved = true;
+        if (board.tableroResuelto() && !solved ) {
+            solved = true;
+        }
 
-        if(!animaTime.isEmpty()) {
+        if (solved) {
+            timetoExit -= deltaTime;
+            if (timetoExit <= 0) {
+                engine.setScreen(new ChooseLevelScreen(engine));
+            }
+        }
+
+
+        if (!animaTime.isEmpty()) {
             for (Celda key : animaTime.keySet()) {
                 double time = animaTime.get(key).actTime;
                 double res = time - deltaTime;
                 if (res > 0) {
                     Double ot = animaTime.get(key).lstTime;
-                    boolean fade = animaTime.get(key).fade;
+                    boolean vibrate = animaTime.get(key).vibrate;
                     if (Math.abs(res - ot) >= 0.1) {
                         ot = res;
-                        fade = !fade;
+                        vibrate = !vibrate;
                     }
-                    animaTime.put(key, new Animacion(res, ot, fade));
+                    animaTime.put(key, new Animacion(res, ot, vibrate));
                 } else {
 
                     quitaAnima.add(key);
@@ -77,11 +93,40 @@ public class GameScreen implements Screen {
                 }
             }
 
-            for (Celda c : quitaAnima){
+            for (Celda c : quitaAnima) {
                 animaTime.remove(c);
             }
             quitaAnima.clear();
         }
+
+
+        if (!fadeTime.isEmpty()) {
+            for (Celda key : fadeTime.keySet()) {
+
+                Fade f = fadeTime.get(key);
+
+                int colAct = f.colorA +   (int)(deltaTime * (f.dir ? -400:1000  ));
+                System.out.println(colAct);
+
+                if ( !f.dir ?  colAct < f.colorB : colAct> f.colorB) {
+                    System.out.println("Cambio");
+                    fadeTime.put(key, new Fade(colAct,f.colorB,f.dir));
+                } else {
+
+                    quitafade.add(key);
+
+                    System.out.println("Termino");
+
+                }
+            }
+
+            for (Celda c : quitafade) {
+                fadeTime.remove(c);
+            }
+            quitafade.clear();
+        }
+
+
     }
 
     @Override
@@ -108,10 +153,9 @@ public class GameScreen implements Screen {
             if (event.type == TouchEvent.TOUCH_UP) {
                 botonPista = false;
                 cerrado = false;
+                if (checkUIButtons(event, g)) return; //¿?continue
 
-                if(checkUIButtons(event, g)) return; //¿?continue
-
-                if(checkCirclePressed(event, g)) return; //¿?continue
+                if (checkCirclePressed(event, g)) return; //¿?continue
             }
         }
     }
@@ -145,17 +189,31 @@ public class GameScreen implements Screen {
      * o si se ha ganado
      * @param g
      */
-    private void drawUIText(Graphics g){
+    private void drawUIText(Graphics g) {
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
-        if (!solved && pista == null ) {
+        if (!solved && pista == null) {
             g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7, 50);
-        } else if (!solved && botonPista) {
+        } else if (!solved) {
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
             for (int i = 0; i < pista.length; i++) {
-                g.drawText(pista[i], Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - (50 * 2) + (25 * i), 25);
+                g.drawText(pista[i], Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 100 + (25 * i), 25);
             }
-        } else if(solved) {
+        } else if (solved) {
+
             //Si llegamos aqui, significa que hemos resuelto el tablero
+            if (!sonGanar) {
+                Assets.ganar.play(1);
+
+                for (int i = 0; i < boardDimensions; i++) {
+                    for (int j = 0; j < boardDimensions; j++) {
+                        Celda c = board.getCelda(j, i);
+
+                        fadeTime.put(c, new Fade(255,0,true));
+
+                    }
+                }
+                sonGanar = true;
+            }
             g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60, 60);
         }
     }
@@ -164,44 +222,57 @@ public class GameScreen implements Screen {
      * Método que dibuja el estado actual del tablero
      * @param g
      */
-    private void drawBoard(Graphics g){
+    private void drawBoard(Graphics g) {
         int circleSize = g.getLogWidth() / boardDimensions;
         int initialX = (int) (g.getLogWidth() / 2 - circleSize * ((float) boardDimensions / 2));
 
         for (int i = 0; i < boardDimensions; i++) {
             for (int j = 0; j < boardDimensions; j++) {
                 Celda c = board.getCelda(j, i);
-                boolean hasNumber = false;
+
+                int color=0;
+
                 switch (c.getEstado()) {
                     case Azul: {
-                        g.setColor(0x00BFFFFF);
-                        hasNumber = true;
+                        color=0x00BFFFFF;
+
                         break;
                     }
                     case Rojo: {
-                        g.setColor(0xFF3D53FF);
+                        color= 0xFF3D53FF;
+
                         break;
                     }
                     case Vacia: {
-                        g.setColor(0xD3D3D3FF);
+                        color=0xD3D3D3FF;
                         break;
                     }
                 }
+
+
+                if (fadeTime.containsKey(c)) {
+
+                    int val = color;
+                    String hex = Integer.toHexString(val);
+                    hex= hex.substring(0,hex.length()-2);
+                    int parsedResult = (int) Long.parseLong(hex + Integer.toHexString(fadeTime.get(c).colorA), 16);
+                    color= parsedResult;
+                }
+                g.setColor(color);
+
 
                 int x = initialX + circleSize / 2 + j * circleSize;
                 int y = (g.getLogHeight() / 6) + circleSize / 2 + (i * circleSize);
 
-                if(animaTime.containsKey(c)) {
+                if (animaTime.containsKey(c)) {
 
-
-                    g.fillCircle(x, y, circleSize / 2 + 1 * (animaTime.get(c).fade ? -1 : 1));
-                }
-                else {
+                    g.fillCircle(x, y, circleSize / 2 + 1 * (animaTime.get(c).vibrate ? -1 : 1));
+                } else {
                     g.fillCircle(x, y, circleSize / 2);
                 }
 
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
-                if (hasNumber && !c.isModifiable()) {
+                if (c.getValorDefault() != 0 && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
                     g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4, 2 * circleSize / 3);
                 } else if (!c.isModifiable() && cerrado) {
@@ -245,6 +316,8 @@ public class GameScreen implements Screen {
                 int x = initialX + circleSize / 2 + k * circleSize;
                 int y = (g.getLogHeight() / 6) + circleSize / 2 + (j * circleSize);
                 if (inBoundsCircle(event, x, y, circleSize / 2)) {
+                    Assets.click.play(1);
+                    pista = null;
                     if (c.isModifiable()) {
                         //guardado del ultimo movimiento en una pila
                         if (ultimosMovs.size() + 1 > 50) {
@@ -252,11 +325,12 @@ public class GameScreen implements Screen {
                         }
                         ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
                         board.cambiaCelda(k, j);
+                        fadeTime.put(c, new Fade(125,255,false));
                         return true;
                     } else if (!c.isModifiable()) {
                         if (c.getEstado() == EstadoCelda.Rojo) cerrado = true;
 
-                        animaTime.put(c,new Animacion(1.00,0.00,true));
+                        animaTime.put(c,new Animacion(0.80,0.00,true));
                         pista = new String[]{"This cell cannot be modified"};
                         return true;
                     }

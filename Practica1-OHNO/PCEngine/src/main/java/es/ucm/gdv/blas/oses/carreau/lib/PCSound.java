@@ -20,7 +20,7 @@ public class PCSound implements Sound {
     @Override
     public void play(float volume)  {
 
-        ((FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(20f*  (float)Math.log10(volume));
+       ((FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(20f*  (float)Math.log10(volume));
         clip.setFramePosition(0);
         clip.start();
     }
@@ -29,7 +29,6 @@ public class PCSound implements Sound {
     public void dispose() {
         clip.stop();
         clip.flush();
-        //No se si el close hace falta o cierra todoel archivo
         clip.close();
     }
 }

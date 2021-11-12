@@ -2,7 +2,6 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Music;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Sound;
 
 public class Assets {
@@ -15,6 +14,6 @@ public class Assets {
     public static Font  molleregular;
     //TO DO:
     public static Sound click;
-    public static Music temazo;
+    public static Sound ganar;
 
 }

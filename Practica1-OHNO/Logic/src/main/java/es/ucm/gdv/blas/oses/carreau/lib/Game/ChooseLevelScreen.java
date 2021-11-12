@@ -63,7 +63,6 @@ public class ChooseLevelScreen implements Screen {
             Input.TouchEvent event = touchEvents.get(i);
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
-
                 if(inBounds(event,g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight()*2, Assets.close.getWidth(), Assets.close.getHeight() ))
                 {
                     engine.setScreen(new MainMenuScreen(engine));
@@ -76,6 +75,7 @@ public class ChooseLevelScreen implements Screen {
                     int y=celdas.get(j).getRight();
                     if (inBoundsCircle(event,x, y, radio))
                     {
+                        Assets.click.play(1);
                         engine.setScreen(new GameScreen(engine, j + 4, true));
                     }
                 }
