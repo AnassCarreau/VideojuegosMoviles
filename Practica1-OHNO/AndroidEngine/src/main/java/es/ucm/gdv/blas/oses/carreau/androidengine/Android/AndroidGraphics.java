@@ -6,6 +6,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
@@ -102,8 +103,11 @@ public class AndroidGraphics extends AbstractGraphics {
      */
     @Override
     public void setColor(int color) {
-        int c = (color & 0xffffff00) >> 8 | (color & 0x000000ff) << 24;
-        this.paint.setColor(c);
+        int red = (int) ((color & 0xffffffffL) >> 24);
+        int green = (color & 0x00ff0000) >> 16;
+        int blue = (color & 0x0000ff00) >> 8;
+        int alpha = color & 0x000000ff;
+        this.paint.setColor(Color.argb(alpha,red,green,blue));
     }
 
     /**

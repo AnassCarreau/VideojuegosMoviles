@@ -6,11 +6,12 @@ import java.util.Random;
 import java.util.Stack;
 
 public class Tablero {
-    private Celda[][] _tablero;
     private final List<Vector> _dirs;
+    private Celda[][] _tablero;
     private List<Vector> _celdasFijas;
     //LISTA DE PISTAS
     private Pistas pistas = null;
+    private int numCeldasNoVacias = 0;
 
     public Tablero(int N, boolean randomBoard) {
         //Inicializacion vector direcciones
@@ -243,6 +244,7 @@ public class Tablero {
         compruebaPistasTablero();
 
         //Devolvemos true si conseguimos crear el tablero
+        numCeldasNoVacias = _celdasFijas.size();
         return true;
     }
 
@@ -539,10 +541,12 @@ public class Tablero {
                     break;
                 }
                 case Rojo: {
+                    numCeldasNoVacias--;
                     sig = EstadoCelda.Vacia;
                     break;
                 }
                 case Vacia: {
+                    numCeldasNoVacias++;
                     sig = EstadoCelda.Azul;
                     break;
                 }
@@ -565,6 +569,7 @@ public class Tablero {
 
             switch (_tablero[_posY][_posX].getEstado()) {
                 case Azul: {
+                    numCeldasNoVacias--;
                     sig = EstadoCelda.Vacia;
                     break;
                 }
@@ -573,6 +578,7 @@ public class Tablero {
                     break;
                 }
                 case Vacia: {
+                    numCeldasNoVacias++;
                     sig = EstadoCelda.Rojo;
                     break;
                 }
@@ -695,4 +701,7 @@ public class Tablero {
         }
     }
 
+    public int porcentajeCeldas() {
+        return (int)((float)(numCeldasNoVacias - _celdasFijas.size()) / (float)( _tablero.length * _tablero.length - _celdasFijas.size()) * 100);
+    }
 }
