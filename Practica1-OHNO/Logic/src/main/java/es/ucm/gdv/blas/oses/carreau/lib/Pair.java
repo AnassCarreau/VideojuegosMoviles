@@ -1,6 +1,6 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
-public class Pair<L,R> {
+public class Pair<L, R> {
 
     private final L left;
     private final R right;
@@ -10,11 +10,18 @@ public class Pair<L,R> {
         this.right = right;
     }
 
-    public L getLeft() { return left; }
-    public R getRight() { return right; }
+    public L getLeft() {
+        return left;
+    }
+
+    public R getRight() {
+        return right;
+    }
 
     @Override
-    public int hashCode() { return left.hashCode() ^ right.hashCode(); }
+    public int hashCode() {
+        return left.hashCode() ^ right.hashCode();
+    }
 
     @Override
     public boolean equals(Object o) {

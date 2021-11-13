@@ -1,6 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.ohno_practica1;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,10 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Comprobamos si tenemos que cargar porque hemos recibido un estado que queremos volver a cargar
         if (savedInstanceState != null) {
-
             int screenId = savedInstanceState.getInt("Screen");
-
-            switch (screenId){
+            switch (screenId) {
                 case 0:
                     break;
                 case 1:
@@ -46,33 +45,30 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     newScreen = new ChooseLevelScreen(this.game);
                     break;
-                case 3:
-                {
+                case 3: {
                     int dimensions = savedInstanceState.getInt("dimensiones");
                     newScreen = new GameScreen(this.game, dimensions, false);
 
-                    Tablero t =((GameScreen)newScreen).getTablero();
+                    Tablero t = ((GameScreen) newScreen).getTablero();
                     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs = ((GameScreen) newScreen).getUltimosMovs();
 
-                    for(int i = 0; i < dimensions; i++){
-                        for(int j = 0; j < dimensions; j++){
+                    for (int i = 0; i < dimensions; i++) {
+                        for (int j = 0; j < dimensions; j++) {
                             int state = savedInstanceState.getInt("CellState:" + j + "," + i);
-                            Celda c = t.getCelda(j,i);
-                            if(state == EstadoCelda.Azul.ordinal()) {
+                            Celda c = t.getCelda(j, i);
+                            if (state == EstadoCelda.Azul.ordinal()) {
                                 c.setEstado(EstadoCelda.Azul);
                                 c.setValorDefault(savedInstanceState.getInt("CellDef:" + j + "," + i));
                                 c.setCurrentVisibles(savedInstanceState.getInt("CellAct:" + j + "," + i));
-                            }
-                            else if (state == EstadoCelda.Rojo.ordinal()){
+                            } else if (state == EstadoCelda.Rojo.ordinal()) {
                                 c.setEstado(EstadoCelda.Rojo);
-                            }
-                            else if(state == EstadoCelda.Vacia.ordinal()){
+                            } else if (state == EstadoCelda.Vacia.ordinal()) {
                                 c.setEstado(EstadoCelda.Vacia);
                             }
 
-                            c.setModificable(savedInstanceState.getBoolean("CellMod:"+ j + "," + i));
+                            c.setModificable(savedInstanceState.getBoolean("CellMod:" + j + "," + i));
 
-                            if(!c.isModifiable())t.addToListaNoModificables(j,i);
+                            if (!c.isModifiable()) t.addToListaNoModificables(j, i);
                         }
                     }
                     //Actualizamos las pistas que deberia de tener el tablero
@@ -80,19 +76,17 @@ public class MainActivity extends AppCompatActivity {
 
                     //Cogemos la cola doble de movimientos
                     int sizeMov = savedInstanceState.getInt("MovementsSize:");
-                    for(int i = 0; i < sizeMov; i++){
+                    for (int i = 0; i < sizeMov; i++) {
                         int movCeldaState = savedInstanceState.getInt("StateMov:" + i);
                         int movX = savedInstanceState.getInt("MovX:" + i);
                         int movY = savedInstanceState.getInt("MovY:" + i);
 
                         EstadoCelda celdaState = null;
-                        if(movCeldaState == EstadoCelda.Azul.ordinal()) {
+                        if (movCeldaState == EstadoCelda.Azul.ordinal()) {
                             celdaState = EstadoCelda.Azul;
-                        }
-                        else if (movCeldaState == EstadoCelda.Rojo.ordinal()){
+                        } else if (movCeldaState == EstadoCelda.Rojo.ordinal()) {
                             celdaState = EstadoCelda.Rojo;
-                        }
-                        else if(movCeldaState == EstadoCelda.Vacia.ordinal()){
+                        } else if (movCeldaState == EstadoCelda.Vacia.ordinal()) {
                             celdaState = EstadoCelda.Vacia;
                         }
 
@@ -111,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         game.setScreen(loadScreen);
 
         //si hemos cargado un estado desde el savedInstance
-        if(newScreen != null)game.setScreen(newScreen);
-        // en caso contrario, main menu
+        if (newScreen != null) game.setScreen(newScreen);
+            // en caso contrario, main menu
         else game.setScreen(new MainMenuScreen(this.game));
 
 
@@ -126,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("Screen", screenID);
 
         //Si es la pantalla del juego
-        if(screenID == 3){
+        if (screenID == 3) {
             //Serializamos tablero
             outState = saveBoardState(outState);
             //TO DO:Serializar stack de deshacer
@@ -150,32 +144,33 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Metodo para salvar el estado del tablero cuando giramos la pantalla
+     *
      * @param outState, el Bundle con los datos guardados hasta el momento
      * @return, Bundle, el bundle actualizado con los datos del tablero en el
      */
-    private Bundle saveBoardState(Bundle outState){
+    private Bundle saveBoardState(Bundle outState) {
 
-        GameScreen  gameScreen = (GameScreen) game.getCurrentScreen();
+        GameScreen gameScreen = (GameScreen) game.getCurrentScreen();
         Tablero t = gameScreen.getTablero();
 
-        outState.putInt("dimensiones",t.getDimensions());
+        outState.putInt("dimensiones", t.getDimensions());
 
-        for(int i = 0; i < t.getDimensions(); i++){
-            for(int j = 0; j < t.getDimensions(); j++){
-                Celda c = t.getCelda(j,i);
+        for (int i = 0; i < t.getDimensions(); i++) {
+            for (int j = 0; j < t.getDimensions(); j++) {
+                Celda c = t.getCelda(j, i);
                 EstadoCelda state = c.getEstado();
-                boolean mod =  c.isModifiable();
+                boolean mod = c.isModifiable();
                 outState.putInt("CellState:" + j + "," + i, state.ordinal());
-                outState.putBoolean("CellMod:"+ j + "," + i,mod);
+                outState.putBoolean("CellMod:" + j + "," + i, mod);
 
                 /*if(state == EstadoCelda.Azul){
                     outState.putInt("CellDef:" + j + "," + i, c.getValorDefault());
                     outState.putInt("CellAct:"+ j + "," + i, c.getCurrentVisibles());
                 }*/
 
-                if(state == EstadoCelda.Azul && !mod){
+                if (state == EstadoCelda.Azul && !mod) {
                     outState.putInt("CellDef:" + j + "," + i, c.getValorDefault());
-                    outState.putInt("CellAct:"+ j + "," + i, c.getCurrentVisibles());
+                    outState.putInt("CellAct:" + j + "," + i, c.getCurrentVisibles());
                 }
 
             }
@@ -185,17 +180,18 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Metodo para guardar en el bundle el estado de la doble cola con los movimientos a deshacer
+     *
      * @param outState, bundle con el estado que queremos salvar
      * @return Bundle, el bundle actualizado
      */
-    private Bundle saveMovementsStack(Bundle outState){
-        GameScreen  gameScreen = (GameScreen) game.getCurrentScreen();
+    private Bundle saveMovementsStack(Bundle outState) {
+        GameScreen gameScreen = (GameScreen) game.getCurrentScreen();
         Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs = gameScreen.getUltimosMovs();
 
         outState.putInt("MovementsSize:", ultimosMovs.size());
 
         int i = 0;
-        while(ultimosMovs.size() != 0) {
+        while (ultimosMovs.size() != 0) {
             outState.putInt("StateMov:" + i, ultimosMovs.getFirst().getLeft().ordinal());
             outState.putInt("MovX:" + i, ultimosMovs.getFirst().getRight().getLeft());
             outState.putInt("MovY:" + i, ultimosMovs.getFirst().getRight().getRight());

@@ -1,29 +1,34 @@
 package es.ucm.gdv.blas.oses.carreau.androidengine.Android;
 
 import java.io.IOException;
+
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
+
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Audio;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Sound;
 
 public class AndroidAudio implements Audio {
     AssetManager assets;
     SoundPool soundPool;
+
     /**
      * Constructora de AndroidAudio
+     *
      * @param activity, Activity, actividad
      */
     public AndroidAudio(Activity activity) {
         activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         this.assets = activity.getAssets();
-        this.soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC,0);
+        this.soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
     }
 
     /**
      * Metodo que carga un nuevo sonido
+     *
      * @param filename, String, nombre del fichero
      */
     @Override

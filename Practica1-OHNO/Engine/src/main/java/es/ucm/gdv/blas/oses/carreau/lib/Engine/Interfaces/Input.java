@@ -20,6 +20,7 @@ public interface Input {
 
     /**
      * Metodo que devuelve la lista de eventos sin procesar
+     *
      * @return Lista de eventos del tipo TouchEvent que se han ido almacenando
      * desde la ultima vez que cogimos la lista
      */

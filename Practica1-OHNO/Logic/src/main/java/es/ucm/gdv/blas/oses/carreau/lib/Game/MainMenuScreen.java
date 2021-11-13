@@ -17,31 +17,32 @@ public class MainMenuScreen implements Screen {
     }
 
     @Override
-    public void update(double deltaTime) { }
+    public void update(double deltaTime) {
+    }
 
     @Override
     public void render() {
         Graphics g = engine.getGraphics();
         g.setColor(0x000000FF);
-        g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,60);
-        g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2,50);
+        g.drawText("Oh NO", Assets.molleregular, g.getLogWidth() / 2, g.getLogHeight() / 6, 60);
+        g.drawText("Jugar", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 2, 50);
         g.setColor(0xCCCCCCFF);
-        g.drawText("Un juego copiado a Q42",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 ,35);
+        g.drawText("Un juego copiado a Q42", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 3 * 2, 35);
         g.setColor(0xCCCCCCFF);
-        g.drawText("Creado por Martin Kool",Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/3 * 2 + 35 + 10,35);
-        g.drawImage(Assets.q42, g.getLogWidth()/2  - Assets.q42.getWidth()/24, g.getLogHeight()/4 * 3 + 10 ,Assets.q42.getWidth()/14,Assets.q42.getHeight()/14);
+        g.drawText("Creado por Martin Kool", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 3 * 2 + 35 + 10, 35);
+        g.drawImage(Assets.q42, g.getLogWidth() / 2 - Assets.q42.getWidth() / 24, g.getLogHeight() / 4 * 3 + 10, Assets.q42.getWidth() / 14, Assets.q42.getHeight() / 14);
 
     }
 
     @Override
-    public void handleEvents()  {
+    public void handleEvents() {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_UP) {
-                if (inBounds(event, g.getLogWidth()/2 - 200/2, g.getLogHeight()/2-100/2, 200, 100)) {
+                if (inBounds(event, g.getLogWidth() / 2 - 200 / 2, g.getLogHeight() / 2 - 100 / 2, 200, 100)) {
                     Assets.click.play(1);
                     engine.setScreen(new ChooseLevelScreen(engine));
                     return;

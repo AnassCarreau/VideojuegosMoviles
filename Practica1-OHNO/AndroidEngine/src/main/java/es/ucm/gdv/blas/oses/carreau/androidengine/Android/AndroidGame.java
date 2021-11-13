@@ -16,7 +16,7 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 
-public class AndroidGame  implements Engine, Runnable {
+public class AndroidGame implements Engine, Runnable {
     SurfaceView renderView;
     AndroidGraphics graphics;
     AndroidInput input;
@@ -30,8 +30,9 @@ public class AndroidGame  implements Engine, Runnable {
 
     /**
      * Constructora del engine especifico de Android
-     * @param activity, actividad de android
-     * @param logicalWidth, int, ancho logico del juego
+     *
+     * @param activity,      actividad de android
+     * @param logicalWidth,  int, ancho logico del juego
      * @param logicalHeight, int, alto logico del juego
      */
     public AndroidGame(AppCompatActivity activity, int logicalWidth, int logicalHeight) {
@@ -47,7 +48,7 @@ public class AndroidGame  implements Engine, Runnable {
                 frameBufferHeight, Config.RGB_565);
 
         renderView = new SurfaceView(activity.getApplicationContext());
-        graphics = new AndroidGraphics(activity, frameBuffer,logicalWidth,logicalHeight);
+        graphics = new AndroidGraphics(activity, frameBuffer, logicalWidth, logicalHeight);
         audio = new AndroidAudio(activity);
         input = new AndroidInput(this, renderView);
 
@@ -57,6 +58,7 @@ public class AndroidGame  implements Engine, Runnable {
     /**
      * Metodo que devuelve el motor que se encarga de gestionar la
      * entrada del juego
+     *
      * @return el motor de AndroidInput
      */
     @Override
@@ -67,23 +69,30 @@ public class AndroidGame  implements Engine, Runnable {
     /**
      * Metodo que devuelve el motor que se encarga del pintado
      * del juego
+     *
      * @return el motor grafico de PC
      */
     @Override
-    public Graphics getGraphics() { return graphics; }
+    public Graphics getGraphics() {
+        return graphics;
+    }
 
     /**
      * Metodo que devuelve el motor que se encarga de gestionar
      * el audio de juego
+     *
      * @return el motor de AndroidAudio
      */
     @Override
-    public AndroidAudio getAudio() { return audio; }
+    public AndroidAudio getAudio() {
+        return audio;
+    }
 
 
     /**
      * Metodo para obtener cual es la pantalla/nivel/estado de juego
      * actual
+     *
      * @return Screen, pantalla actual
      */
     @Override
@@ -95,6 +104,7 @@ public class AndroidGame  implements Engine, Runnable {
     /**
      * Metodo para actualizar cual es la pantalla del juego actual
      * en la que nos encontramos
+     *
      * @param screen, pantalla/nivel/estado al que vamos a cambiar
      */
     @Override
@@ -103,7 +113,6 @@ public class AndroidGame  implements Engine, Runnable {
             throw new IllegalArgumentException("Screen must not be null");
         this.screen = screen;
     }
-
 
 
     /**
@@ -129,7 +138,7 @@ public class AndroidGame  implements Engine, Runnable {
             screen.update(deltaTime);
 
             //Bloqueamos hasta que conseguimos la superficie
-            while (!holder.getSurface().isValid());
+            while (!holder.getSurface().isValid()) ;
 
             //Pedimos el canvas para poder pintar
             Canvas canvas = holder.lockCanvas();
@@ -149,11 +158,13 @@ public class AndroidGame  implements Engine, Runnable {
 
     /**
      * Metodo que devuelve la surfaceView
+     *
      * @return SurfaceView
      */
-    public SurfaceView getView(){
+    public SurfaceView getView() {
         return renderView;
     }
+
     /**
      * Metodo al que llamaremos cuando desde el Main activity pasemos
      * al estado onResume.
