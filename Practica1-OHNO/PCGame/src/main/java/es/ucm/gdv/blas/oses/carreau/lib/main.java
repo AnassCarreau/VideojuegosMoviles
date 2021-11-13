@@ -1,7 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Game.MainMenuScreen;
-import es.ucm.gdv.blas.oses.carreau.lib.Game.LoadingScreen;
+import es.ucm.gdv.blas.oses.carreau.lib.Game.ResourceCharger;
 
 public class main {
 
@@ -20,9 +20,9 @@ public class main {
         //Creamos el engine
         PCGame pcGame = new PCGame(ventana, 400, 600);
         //Pantalla de carga de recursos
-        LoadingScreen loadScreen = new LoadingScreen(pcGame);
+        ResourceCharger loadScreen = new ResourceCharger(pcGame);
         //Cargamos pantalla de menu principal
-        pcGame.setScreen(new MainMenuScreen(pcGame));
+        pcGame.setScreen(new MainMenuScreen());
         //Comenzamos juego
         pcGame.run();
     }

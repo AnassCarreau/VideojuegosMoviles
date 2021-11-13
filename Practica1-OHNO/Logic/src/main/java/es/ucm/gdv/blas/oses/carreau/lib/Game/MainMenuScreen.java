@@ -10,10 +10,8 @@ import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 
 public class MainMenuScreen implements Screen {
 
-    private Engine engine;
 
-    public MainMenuScreen(Engine engine) {
-        this.engine = engine;
+    public MainMenuScreen() {
     }
 
     @Override
@@ -22,8 +20,7 @@ public class MainMenuScreen implements Screen {
     }
 
     @Override
-    public void render() {
-        Graphics g = engine.getGraphics();
+    public void render(Graphics g) {
         g.setColor(0x000000FF);
         g.drawText("Oh NO", Assets.molleregular,g.getLogWidth()/2,g.getLogHeight()/6,60);
         g.drawText("Jugar", Assets.josefisans,g.getLogWidth()/2, g.getLogHeight()/2,50);
@@ -36,7 +33,7 @@ public class MainMenuScreen implements Screen {
     }
 
     @Override
-    public void handleEvents()  {
+    public void handleEvents(Engine engine)  {
         Graphics g = engine.getGraphics();
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         int len = touchEvents.size();
@@ -45,7 +42,7 @@ public class MainMenuScreen implements Screen {
             if (event.type == TouchEvent.TOUCH_UP) {
                 if (inBounds(event, g.getLogWidth()/2 - 200/2, g.getLogHeight()/2-100/2, 200, 100)) {
                     Assets.click.play(1);
-                    engine.setScreen(new ChooseLevelScreen(engine));
+                    engine.setScreen(new ChooseLevelScreen());
                     return;
                 }
             }

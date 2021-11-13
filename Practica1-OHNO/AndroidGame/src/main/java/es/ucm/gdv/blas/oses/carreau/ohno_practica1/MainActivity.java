@@ -12,8 +12,8 @@ import es.ucm.gdv.blas.oses.carreau.androidengine.Android.AndroidGame;
 import es.ucm.gdv.blas.oses.carreau.lib.EstadoCelda;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.ChooseLevelScreen;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.GameScreen;
-import es.ucm.gdv.blas.oses.carreau.lib.Game.LoadingScreen;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.MainMenuScreen;
+import es.ucm.gdv.blas.oses.carreau.lib.Game.ResourceCharger;
 import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 
@@ -41,15 +41,15 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     break;
                 case 1:
-                    newScreen = new MainMenuScreen(this.game);
+                    newScreen = new MainMenuScreen();
                     break;
                 case 2:
-                    newScreen = new ChooseLevelScreen(this.game);
+                    newScreen = new ChooseLevelScreen();
                     break;
                 case 3:
                 {
                     int dimensions = savedInstanceState.getInt("dimensiones");
-                    newScreen = new GameScreen(this.game, dimensions, false);
+                    newScreen = new GameScreen(dimensions, false);
 
                     Tablero t =((GameScreen)newScreen).getTablero();
                     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs = ((GameScreen) newScreen).getUltimosMovs();
@@ -107,13 +107,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Carga de recursos
-        LoadingScreen loadScreen = new LoadingScreen(game);
-        game.setScreen(loadScreen);
+        ResourceCharger loadScreen = new ResourceCharger(game);
 
         //si hemos cargado un estado desde el savedInstance
         if(newScreen != null)game.setScreen(newScreen);
         // en caso contrario, main menu
-        else game.setScreen(new MainMenuScreen(this.game));
+        else game.setScreen(new MainMenuScreen());
 
 
         setContentView(game.getView());

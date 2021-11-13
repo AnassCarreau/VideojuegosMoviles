@@ -22,11 +22,8 @@ import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 import es.ucm.gdv.blas.oses.carreau.lib.Vector;
 
 public class GameScreen implements Screen {
-    private Engine engine;
     private Tablero board;
     private int boardDimensions;
-
-
 
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
@@ -39,15 +36,11 @@ public class GameScreen implements Screen {
     HashMap<Celda, Fade> fadeTime;
     List<Celda>quitafade;
 
-
-
-
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
 
-    public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
-        this.engine = eng;
+    public GameScreen( int tableroSize, boolean randomBoard) {
         this.board = new Tablero(tableroSize, randomBoard);
         this.boardDimensions = tableroSize;
         pista = null;
@@ -69,17 +62,11 @@ public class GameScreen implements Screen {
             for (int i = 0; i < boardDimensions; i++) {
                 for (int j = 0; j < boardDimensions; j++) {
                     Celda c = board.getCelda(j, i);
-
-                    fadeTime.put(c, new Fade(255, 16, -300));
+                    fadeTime.put(c, new Fade(255, 0, -300));
 
                 }
             }
         }
-
-
-
-
-
 
         if (!animaTime.isEmpty()) {
             for (Celda key : animaTime.keySet()) {
@@ -127,16 +114,12 @@ public class GameScreen implements Screen {
             }
             quitafade.clear();
         }
-        if (solved &&  fadeTime.isEmpty() ){
 
-                engine.setScreen(new ChooseLevelScreen(engine));
-        }
 
     }
 
     @Override
-    public void render() {
-        Graphics g = engine.getGraphics();
+    public void render(Graphics g) {
         g.setColor(0x000000FF);
         //Juego empezado
         //dibujamos el texto que tiene que ir en la zona superior
@@ -148,8 +131,7 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void handleEvents() {
-        Graphics g = engine.getGraphics();
+    public void handleEvents(Engine engine) {
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
 
         int len = touchEvents.size();
@@ -158,10 +140,14 @@ public class GameScreen implements Screen {
             if (event.type == TouchEvent.TOUCH_UP) {
                 botonPista = false;
                 cerrado = false;
-                if (checkUIButtons(event, g)) return; //¿?continue
+                if (checkUIButtons(event, engine)) return; //TODO ¿?continue
 
-                if (checkCirclePressed(event, g)) return; //¿?continue
+                if (checkCirclePressed(event, engine.getGraphics())) return; //TODO ¿?continue
             }
+        }
+
+        if (solved &&  fadeTime.isEmpty() ) {
+            engine.setScreen(new ChooseLevelScreen());
         }
     }
 
@@ -243,14 +229,8 @@ public class GameScreen implements Screen {
 
                 if (fadeTime.containsKey(c)) {
 
-                    int val = color;
-                    String hex = Integer.toHexString(val);
-
-                    hex= hex.substring(0,hex.length()-2);
                     Fade f= fadeTime.get(c);
-                    int parsedResult = (int) Long.parseLong(hex + Integer.toHexString( f.colorIni), 16);
-                    color= parsedResult;
-                    System.out.println( "cOLOR "+  Integer.toHexString(color));
+                    color = modifyAlphaColor(color,f.colorIni);
                 }
                 g.setColor(color);
 
@@ -337,12 +317,12 @@ public class GameScreen implements Screen {
     /**
      * Métodos que chequea si hemos pulsado uno de los botones inferiores de las UI
      * @param event
-     * @param g
      * @return boolean
      */
-    private boolean checkUIButtons(TouchEvent event, Graphics g) {
+    private boolean checkUIButtons(TouchEvent event, Engine engine) {
+        Graphics g = engine.getGraphics();
         if (inBounds(event, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2)) {
-            engine.setScreen(new ChooseLevelScreen(engine));
+            engine.setScreen(new ChooseLevelScreen());
             return true;
         } else if (inBounds(event, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2)) {
             if (ultimosMovs.size() != 0) {
@@ -363,6 +343,12 @@ public class GameScreen implements Screen {
             return true;
         }
         return false;
+    }
+
+    private int modifyAlphaColor(int colorToChange, int newAlpha){
+        colorToChange =  colorToChange & 0xFFFFFF00 | newAlpha & 0X000000FF;
+
+        return colorToChange;
     }
 }
 

@@ -160,7 +160,7 @@ public class AndroidGame  implements Engine, Runnable {
             _lastFrameTime = currentTime;
 
             double deltaTime = (double) nanoElapsedTime / 1.0e9;
-            screen.handleEvents();
+            screen.handleEvents(this);
             screen.update(deltaTime);
 
             //Bloqueamos hasta que conseguimos la superficie
@@ -175,7 +175,7 @@ public class AndroidGame  implements Engine, Runnable {
             //Nos preparamos para pintar (transladar y escalar)
             this.graphics.prepareFrame();
             //Pintamos
-            screen.render();
+            screen.render(graphics);
 
             //Hacemos el swap de los buffers de pintado
             holder.unlockCanvasAndPost(canvas);

@@ -12,17 +12,14 @@ import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 
 public class ChooseLevelScreen implements Screen {
 
-    private Engine engine;
     private List<Pair<Integer, Integer>> celdas;
 
-    public ChooseLevelScreen(Engine eng) {
-        this.engine = eng;
+    public ChooseLevelScreen() {
         celdas=new ArrayList<>();
-        Graphics g = engine.getGraphics();
-        int radio = (g.getLogWidth() / 5) / 2;
+        int radio = (400 / 5) / 2;
         for (int i = 0; i < 6; i++) {
-            int x = g.getLogWidth() / 5 + radio + ((i % 3) * radio * 2);
-            int y = 2 * g.getLogHeight() / 5 + (i / 3) * (radio * 2) + radio;
+            int x = 400  / 5 + radio + ((i % 3) * radio * 2);
+            int y = 2 * 600 / 5 + (i / 3) * (radio * 2) + radio;
             celdas.add(new Pair<Integer, Integer>(x, y));
         }
     }
@@ -34,8 +31,7 @@ public class ChooseLevelScreen implements Screen {
 
 
     @Override
-    public void render() {
-        Graphics g = engine.getGraphics();
+    public void render(Graphics g) {
 
         //Eleccion
         g.setColor(0x000000FF);
@@ -55,7 +51,7 @@ public class ChooseLevelScreen implements Screen {
     }
 
     @Override
-    public void handleEvents() {
+    public void handleEvents(Engine engine) {
         Graphics g = engine.getGraphics();
         List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
         int len = touchEvents.size();
@@ -65,7 +61,7 @@ public class ChooseLevelScreen implements Screen {
 
                 if(inBounds(event,g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight()*2, Assets.close.getWidth(), Assets.close.getHeight() ))
                 {
-                    engine.setScreen(new MainMenuScreen(engine));
+                    engine.setScreen(new MainMenuScreen());
 
                 }
                 int radio = (g.getLogWidth() / 5) / 2;
@@ -76,7 +72,7 @@ public class ChooseLevelScreen implements Screen {
                     if (inBoundsCircle(event,x, y, radio))
                     {
                         Assets.click.play(1);
-                        engine.setScreen(new GameScreen(engine, j + 4, true));
+                        engine.setScreen(new GameScreen( j + 4, true));
                     }
                 }
             }
