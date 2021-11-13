@@ -1,6 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.androidengine.Android;
 
 import android.graphics.Typeface;
+
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 
 public class AndroidFont implements Font {
@@ -10,6 +11,7 @@ public class AndroidFont implements Font {
 
     /**
      * Construye un objeto de tipo fuente especifico para la implementacion en Android
+     *
      * @param font, tipo de fuente, especifico de Android, usando un objeto de la clase Typeface
      */
     public AndroidFont(Typeface font, float size, String fontName) {
@@ -20,6 +22,7 @@ public class AndroidFont implements Font {
 
     /**
      * Metodo para saber si la fuente esta en negrita o no
+     *
      * @return boolean, true si la fuente esta en negrita, false si no
      */
     @Override

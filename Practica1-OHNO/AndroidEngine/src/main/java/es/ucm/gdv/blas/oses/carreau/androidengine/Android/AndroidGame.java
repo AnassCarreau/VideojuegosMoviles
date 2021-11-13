@@ -10,13 +10,12 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 
-public class AndroidGame  implements Engine, Runnable {
+public class AndroidGame implements Engine, Runnable {
     SurfaceView renderView;
     AndroidGraphics graphics;
     AndroidInput input;
@@ -30,8 +29,9 @@ public class AndroidGame  implements Engine, Runnable {
 
     /**
      * Constructora del engine especifico de Android
-     * @param activity, actividad de android
-     * @param logicalWidth, int, ancho logico del juego
+     *
+     * @param activity,      actividad de android
+     * @param logicalWidth,  int, ancho logico del juego
      * @param logicalHeight, int, alto logico del juego
      */
     public AndroidGame(AppCompatActivity activity, int logicalWidth, int logicalHeight) {
@@ -47,7 +47,7 @@ public class AndroidGame  implements Engine, Runnable {
                 frameBufferHeight, Config.RGB_565);
 
         renderView = new SurfaceView(activity.getApplicationContext());
-        graphics = new AndroidGraphics(activity, frameBuffer,logicalWidth,logicalHeight);
+        graphics = new AndroidGraphics(activity, frameBuffer, logicalWidth, logicalHeight);
         audio = new AndroidAudio(activity);
         input = new AndroidInput(this, renderView);
 
@@ -57,8 +57,10 @@ public class AndroidGame  implements Engine, Runnable {
     /**
      * Metodo que devuelve el motor que se encarga de gestionar la
      * entrada del juego
+     *
      * @return el motor de AndroidInput
      */
+    @Override
     public Input getInput() {
         return input;
     }
@@ -66,25 +68,100 @@ public class AndroidGame  implements Engine, Runnable {
     /**
      * Metodo que devuelve el motor que se encarga del pintado
      * del juego
+     *
      * @return el motor grafico de PC
      */
-    public Graphics getGraphics() { return graphics; }
+    @Override
+    public Graphics getGraphics() {
+        return graphics;
+    }
 
     /**
      * Metodo que devuelve el motor que se encarga de gestionar
      * el audio de juego
+     *
      * @return el motor de AndroidAudio
      */
-    public AndroidAudio getAudio() { return audio; }
+    @Override
+    public AndroidAudio getAudio() {
+        return audio;
+    }
 
 
     /**
      * Metodo para obtener cual es la pantalla/nivel/estado de juego
      * actual
+     *
      * @return Screen, pantalla actual
      */
+    @Override
     public Screen getCurrentScreen() {
         return screen;
+    }
+
+
+    /**
+     * Metodo para actualizar cual es la pantalla del juego actual
+     * en la que nos encontramos
+     *
+     * @param screen, pantalla/nivel/estado al que vamos a cambiar
+     */
+    @Override
+    public void setScreen(Screen screen) {
+        if (screen == null)
+            throw new IllegalArgumentException("Screen must not be null");
+        this.screen = screen;
+    }
+
+
+    /**
+     * Metodo heredado de la clase Runnable
+     * Contiene el bucle principal del juego.
+     * En cada iteracion se calcula el deltaTime, se actualiza
+     * el estado de la Screen llamando a sus metodos update y handleEvents
+     * y despues se pinta el estado de dicha pantalla de juego
+     */
+    @Override
+    public void run() {
+        long _lastFrameTime = System.nanoTime();
+        //Guarda una superficie donde se puede pintar
+        SurfaceHolder holder = renderView.getHolder();
+
+        while (running_) {
+            long currentTime = System.nanoTime();
+            long nanoElapsedTime = currentTime - _lastFrameTime;
+            _lastFrameTime = currentTime;
+
+            double deltaTime = (double) nanoElapsedTime / 1.0e9;
+            screen.handleEvents(this);
+            screen.update(deltaTime);
+
+            //Bloqueamos hasta que conseguimos la superficie
+            while (!holder.getSurface().isValid()) ;
+
+            //Pedimos el canvas para poder pintar
+            Canvas canvas = holder.lockCanvas();
+            //Setteamos el canvas para usarlo al pintar
+            this.graphics.setCanvas(canvas);
+            //Clear pantalla
+            this.graphics.clear(0xFFFFFFFF);
+            //Nos preparamos para pintar (transladar y escalar)
+            this.graphics.prepareFrame();
+            //Pintamos
+            screen.render(graphics);
+
+            //Hacemos el swap de los buffers de pintado
+            holder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    /**
+     * Metodo que devuelve la surfaceView
+     *
+     * @return SurfaceView
+     */
+    public SurfaceView getView() {
+        return renderView;
     }
 
     /**
@@ -118,67 +195,6 @@ public class AndroidGame  implements Engine, Runnable {
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    /**
-     * Metodo para actualizar cual es la pantalla del juego actual
-     * en la que nos encontramos
-     * @param screen, pantalla/nivel/estado al que vamos a cambiar
-     */
-    public void setScreen(Screen screen) {
-        if (screen == null)
-            throw new IllegalArgumentException("Screen must not be null");
-        this.screen = screen;
-    }
-
-    /**
-     * Metodo que devuelve la surfaceView
-     * @return SurfaceView
-     */
-
-    public SurfaceView getView(){
-        return renderView;
-    }
-
-    /**
-     * Metodo heredado de la clase Runnable
-     * Contiene el bucle principal del juego.
-     * En cada iteracion se calcula el deltaTime, se actualiza
-     * el estado de la Screen llamando a sus metodos update y handleEvents
-     * y despues se pinta el estado de dicha pantalla de juego
-     */
-    @Override
-    public void run() {
-        long _lastFrameTime = System.nanoTime();
-        //Guarda una superficie donde se puede pintar
-        SurfaceHolder holder = renderView.getHolder();
-
-        while (running_) {
-            long currentTime = System.nanoTime();
-            long nanoElapsedTime = currentTime - _lastFrameTime;
-            _lastFrameTime = currentTime;
-
-            double deltaTime = (double) nanoElapsedTime / 1.0e9;
-            screen.handleEvents(this);
-            screen.update(deltaTime);
-
-            //Bloqueamos hasta que conseguimos la superficie
-            while (!holder.getSurface().isValid());
-
-            //Pedimos el canvas para poder pintar
-            Canvas canvas = holder.lockCanvas();
-            //Setteamos el canvas para usarlo al pintar
-            this.graphics.setCanvas(canvas);
-            //Clear pantalla
-            this.graphics.clear(0xFFFFFFFF);
-            //Nos preparamos para pintar (transladar y escalar)
-            this.graphics.prepareFrame();
-            //Pintamos
-            screen.render(graphics);
-
-            //Hacemos el swap de los buffers de pintado
-            holder.unlockCanvasAndPost(canvas);
         }
     }
 }

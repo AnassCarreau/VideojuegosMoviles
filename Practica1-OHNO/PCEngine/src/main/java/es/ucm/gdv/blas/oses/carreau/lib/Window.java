@@ -1,34 +1,37 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
+
 import javax.swing.JFrame;
 
 public class Window extends JFrame {
 
     /**
      * Constructor de una ventana usando SWING
+     *
      * @param windowName
      */
-    public Window(String windowName){
+    public Window(String windowName) {
         super(windowName);
     }
 
     /**
      * Metodo para configurar la ventan
-     * @param width, int, ancho, en pixeles, de la ventana
-     * @param height, int, alto, en pixeles, de la ventana
+     *
+     * @param width,      int, ancho, en pixeles, de la ventana
+     * @param height,     int, alto, en pixeles, de la ventana
      * @param fullscreen, boolean, si queremos la ventana en pantalla completa o no
      * @param numBuffers, numero de buffers que vamos a crear
      * @return
      */
-    public boolean initWindow(int width, int height, boolean fullscreen, int numBuffers){
+    public boolean initWindow(int width, int height, boolean fullscreen, int numBuffers) {
         //Setteamos el tamano de la ventana
         //No confundir con el tam logico que tenemos que ajustar
-        setSize(width,height);
+        setSize(width, height);
 
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Configuracion en pantalla completa
-        if(fullscreen){
+        if (fullscreen) {
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             setUndecorated(true);
         }
@@ -42,12 +45,11 @@ public class Window extends JFrame {
 
         // Intentamos crear el buffer strategy con numBuffers buffers.
         int intentos = 100;
-        while(intentos-- > 0) {
+        while (intentos-- > 0) {
             try {
                 createBufferStrategy(numBuffers);
                 break;
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         } // while pidiendo la creación de la buffeStrategy

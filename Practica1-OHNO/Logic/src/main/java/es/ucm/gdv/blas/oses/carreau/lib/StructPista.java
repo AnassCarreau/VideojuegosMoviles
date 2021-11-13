@@ -5,21 +5,21 @@ public class StructPista {
     private Vector posPista;
     private Vector dirPista;
 
-    public StructPista(TipoPista tp, Vector pos, Vector dir){
+    public StructPista(TipoPista tp, Vector pos, Vector dir) {
         this.tipoPista = tp;
         this.posPista = pos;
         this.dirPista = dir;
     }
 
-    public TipoPista getTipoPista(){
+    public TipoPista getTipoPista() {
         return tipoPista;
     }
 
-    public Vector getPosPista(){
+    public Vector getPosPista() {
         return posPista;
     }
 
-    public Vector getDirPista(){
+    public Vector getDirPista() {
         return dirPista;
     }
 }

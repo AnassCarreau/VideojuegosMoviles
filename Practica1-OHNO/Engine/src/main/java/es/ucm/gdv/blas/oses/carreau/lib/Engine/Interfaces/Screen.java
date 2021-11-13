@@ -4,10 +4,11 @@ public interface Screen {
     /**
      * Metodo que se encarga de actualizar el estado de los objetos de
      * juego
+     *
      * @param deltaTime, double, tiempo transcurrido desde la ultima iteracion
      *                   del bucle principal de juego
      */
-    public void update(double deltaTime);
+    void update(double deltaTime);
 
     /**
      * Metodo que se encarga de pintar todos los elementos
@@ -24,7 +25,8 @@ public interface Screen {
     /**
      * Metodo que devuelve el identificador de la pantalla de juego
      * Añadido para el guardado del estado de juego
+     *
      * @return int, numero con el identificador de la pantalla de juego
      */
-    public int getScreenID();
+    int getScreenID();
 }

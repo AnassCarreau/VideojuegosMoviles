@@ -10,9 +10,8 @@ public class Assets {
     public static Image history;
     public static Image eye;
     public static Image close;
-    public static Font  josefisans;
-    public static Font  molleregular;
-    //TO DO:
+    public static Font josefisans;
+    public static Font molleregular;
     public static Sound click;
     public static Sound ganar;
 

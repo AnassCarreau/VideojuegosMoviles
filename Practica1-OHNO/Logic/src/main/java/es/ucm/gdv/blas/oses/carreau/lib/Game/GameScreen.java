@@ -2,16 +2,15 @@ package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Formatter;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Deque;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Animacion;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Celda;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
@@ -22,20 +21,19 @@ import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 import es.ucm.gdv.blas.oses.carreau.lib.Vector;
 
 public class GameScreen implements Screen {
-    private Tablero board;
-    private int boardDimensions;
-
+  
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
     Vector pos;
     //Pila con los últimos movimientos para así poder deshacer
     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
-    HashMap<Celda,Animacion> animaTime;
-    List<Celda>quitaAnima;
-
+    HashMap<Celda, Animacion> animaTime;
+    List<Celda> quitaAnima;
     HashMap<Celda, Fade> fadeTime;
-    List<Celda>quitafade;
-
+    List<Celda> quitafade;
+    private final Engine engine;
+    private final Tablero board;
+    private final int boardDimensions;
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
@@ -46,15 +44,15 @@ public class GameScreen implements Screen {
         pista = null;
         ultimosMovs = new ArrayDeque<>();
 
-        animaTime=new HashMap<>();
-        quitaAnima=new ArrayList<>() ;
-        fadeTime=new HashMap<>();
-        quitafade=new ArrayList<>() ;
+        animaTime = new HashMap<>();
+        quitaAnima = new ArrayList<>();
+        fadeTime = new HashMap<>();
+        quitafade = new ArrayList<>();
     }
 
     @Override
     public void update(double deltaTime) {
-        if (board.tableroResuelto() && !solved ) {
+        if (board.tableroResuelto() && !solved) {
             solved = true;
             //Si llegamos aqui, significa que hemos resuelto el tablero
             Assets.ganar.play(1);
@@ -97,14 +95,13 @@ public class GameScreen implements Screen {
         if (!fadeTime.isEmpty()) {
             for (Celda key : fadeTime.keySet()) {
                 Fade f = fadeTime.get(key);
-                int var =(int)(deltaTime * f.vel);
-                if(f.colorIni + var > f.colorFin &&  f.vel>0  || f.vel < 0 && f.colorIni + var < f.colorFin){
-                    f.colorIni=f.colorFin;
-                }
-                else f.colorIni+=var;
+                int var = (int) (deltaTime * f.vel);
+                if (f.colorIni + var > f.colorFin && f.vel > 0 || f.vel < 0 && f.colorIni + var < f.colorFin) {
+                    f.colorIni = f.colorFin;
+                } else f.colorIni += var;
 
                 System.out.println(f.colorIni);
-                if ((f.vel > 0 && f.colorIni >= f.colorFin) || (f.vel < 0 && f.colorIni <= f.colorFin) ){
+                if ((f.vel > 0 && f.colorIni >= f.colorFin) || (f.vel < 0 && f.colorIni <= f.colorFin)) {
                     quitafade.add(key);
                     System.out.println("Termino");
                 }
@@ -114,7 +111,6 @@ public class GameScreen implements Screen {
             }
             quitafade.clear();
         }
-
 
     }
 
@@ -148,6 +144,7 @@ public class GameScreen implements Screen {
 
         if (solved &&  fadeTime.isEmpty() ) {
             engine.setScreen(new ChooseLevelScreen());
+            //TODO return??
         }
     }
 
@@ -156,11 +153,11 @@ public class GameScreen implements Screen {
         return 3;
     }
 
-    public Tablero getTablero(){
+    public Tablero getTablero() {
         return board;
     }
 
-    public Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> getUltimosMovs(){
+    public Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> getUltimosMovs() {
         return ultimosMovs;
     }
 
@@ -171,19 +168,20 @@ public class GameScreen implements Screen {
     private boolean inBoundsCircle(TouchEvent event, int cx, int cy, int radius) {
         int rx = event.x - cx;
         int ry = event.y - cy;
-        float dis= (float)Math.sqrt(Math.pow(ry,2) +  Math.pow(rx,2));
+        float dis = (float) Math.sqrt(Math.pow(ry, 2) + Math.pow(rx, 2));
         return dis <= radius;
     }
 
     /**
      * Método que dibuja el texto de la zona superior, es decir las dimensiones del tablero, una pista
      * o si se ha ganado
+     *
      * @param g
      */
     private void drawUIText(Graphics g) {
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
         if (!solved && pista == null) {
-            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7, 50);
+            g.drawText(boardDimensions + "x" + boardDimensions, Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7, 50);
         } else if (!solved) {
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
             for (int i = 0; i < pista.length; i++) {
@@ -198,6 +196,7 @@ public class GameScreen implements Screen {
 
     /**
      * Método que dibuja el estado actual del tablero
+     *
      * @param g
      */
     private void drawBoard(Graphics g) {
@@ -208,20 +207,20 @@ public class GameScreen implements Screen {
             for (int j = 0; j < boardDimensions; j++) {
                 Celda c = board.getCelda(j, i);
 
-                int color=0;
+                int color = 0;
 
                 switch (c.getEstado()) {
                     case Azul: {
-                        color=0x00BFFFFF;
+                        color = 0x00BFFFFF;
                         break;
                     }
                     case Rojo: {
-                        color= 0xFF3D53FF;
+                        color = 0xFF3D53FF;
 
                         break;
                     }
                     case Vacia: {
-                        color=0xD3D3D3FF;
+                        color = 0xD3D3D3FF;
                         break;
                     }
                 }
@@ -266,9 +265,10 @@ public class GameScreen implements Screen {
 
     /**
      * Método que dibuja los botones de la parte inferior, cerrar, deshacer y pista
+     *
      * @param g
      */
-    private void drawUIButtons(Graphics g){
+    private void drawUIButtons(Graphics g) {
         g.drawImage(Assets.close, g.getLogWidth() / 5 - Assets.close.getWidth(), g.getLogHeight() - Assets.close.getHeight(), Assets.close.getWidth() / 2, Assets.close.getHeight() / 2);
         g.drawImage(Assets.history, g.getLogWidth() / 5 * 3 - Assets.history.getWidth(), g.getLogHeight() - Assets.history.getHeight(), Assets.history.getWidth() / 2, Assets.history.getHeight() / 2);
         g.drawImage(Assets.eye, g.getLogWidth() - Assets.eye.getWidth(), g.getLogHeight() - Assets.eye.getHeight(), Assets.eye.getWidth() / 2, Assets.eye.getHeight() / 2);
@@ -276,6 +276,7 @@ public class GameScreen implements Screen {
 
     /**
      * Método que comprueba si un circulo del tablero ha sido pulsado
+     *
      * @param event
      * @param g
      * @return boolean
@@ -299,12 +300,12 @@ public class GameScreen implements Screen {
                         }
                         ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
                         board.cambiaCelda(k, j);
-                        fadeTime.put(c, new Fade(125,254,1000));
+                        fadeTime.put(c, new Fade(125, 254, 1000));
                         return true;
                     } else if (!c.isModifiable()) {
                         if (c.getEstado() == EstadoCelda.Rojo) cerrado = true;
 
-                        animaTime.put(c,new Animacion(0.80,0.00,true));
+                        animaTime.put(c, new Animacion(0.80, 0.00, true));
                         pista = new String[]{"This cell cannot be modified"};
                         return true;
                     }
@@ -316,6 +317,7 @@ public class GameScreen implements Screen {
 
     /**
      * Métodos que chequea si hemos pulsado uno de los botones inferiores de las UI
+     *
      * @param event
      * @return boolean
      */
