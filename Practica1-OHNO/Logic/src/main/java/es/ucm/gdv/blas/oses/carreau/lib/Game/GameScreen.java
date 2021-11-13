@@ -31,7 +31,6 @@ public class GameScreen implements Screen {
     List<Celda> quitaAnima;
     HashMap<Celda, Fade> fadeTime;
     List<Celda> quitafade;
-    private final Engine engine;
     private final Tablero board;
     private final int boardDimensions;
     private boolean botonPista = false;
