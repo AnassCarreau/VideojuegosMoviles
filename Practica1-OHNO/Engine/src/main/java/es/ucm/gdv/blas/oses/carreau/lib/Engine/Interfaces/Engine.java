@@ -33,11 +33,4 @@ public interface Engine {
      */
     void setScreen(Screen screen);
 
-    /**
-     * Metodo para obtener cual es la pantalla/nivel/estado de juego
-     * actual
-     *
-     * @return
-     */
-    Screen getCurrentScreen();
 }

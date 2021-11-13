@@ -18,7 +18,6 @@ import es.ucm.gdv.blas.oses.carreau.lib.Game.ResourceCharger;
 import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 
-
 public class MainActivity extends AppCompatActivity {
 
     //Referencia al juego
@@ -99,10 +98,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
         //Carga de recursos
-        ResourceCharger loadScreen = new ResourceCharger(game);
-
+        new ResourceCharger(game);
         //si hemos cargado un estado desde el savedInstance
         if(newScreen != null)game.setScreen(newScreen);
         // en caso contrario, main menu
@@ -161,11 +158,6 @@ public class MainActivity extends AppCompatActivity {
                 boolean mod = c.isModifiable();
                 outState.putInt("CellState:" + j + "," + i, state.ordinal());
                 outState.putBoolean("CellMod:" + j + "," + i, mod);
-
-                /*if(state == EstadoCelda.Azul){
-                    outState.putInt("CellDef:" + j + "," + i, c.getValorDefault());
-                    outState.putInt("CellAct:"+ j + "," + i, c.getCurrentVisibles());
-                }*/
 
                 if (state == EstadoCelda.Azul && !mod) {
                     outState.putInt("CellDef:" + j + "," + i, c.getValorDefault());

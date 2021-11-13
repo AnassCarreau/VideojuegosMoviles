@@ -7,9 +7,8 @@ import java.util.Stack;
 
 public class Tablero {
     private Celda[][] _tablero;
-    private List<Vector> _dirs;
+    private final List<Vector> _dirs;
     private List<Vector> _celdasFijas;
-    private int _posX = 0, _posY = 0;
     //LISTA DE PISTAS
     private Pistas pistas = null;
 
@@ -64,8 +63,7 @@ public class Tablero {
         }
 
         c.setModificable(false);
-        Vector v = new Vector(x, y);
-        return v;
+        return new Vector(x, y);
     }
 
     private Vector recibidaWouldExceed(StructPista pista, int auxX, int auxY) {
@@ -181,9 +179,6 @@ public class Tablero {
                             auxPista = compruebaPistas(vector.x, vector.y);
                             numCasillasMod++;
                         }
-                         /*else {
-                            auxPista = compruebaPistas(auxX, auxY);
-                        }*/
                         break;
                     }
                     case MustBeWall:
@@ -534,9 +529,8 @@ public class Tablero {
      * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
      * casillas que ven las celdas azules predefinidas utilizando el metodo de compruebaAdyacentes()
      */
-    public boolean cambiaCelda(int _posX, int _posY) {
+    public void cambiaCelda(int _posX, int _posY) {
         if (_tablero[_posY][_posX].isModifiable()) {
-            //EstadoCelda sig = EstadoCelda.values()[(_tablero[_posX][_posY].getEstado().ordinal() + 1) % EstadoCelda.Default.ordinal()];
             EstadoCelda sig = EstadoCelda.Vacia;
 
             switch (_tablero[_posY][_posX].getEstado()) {
@@ -560,15 +554,13 @@ public class Tablero {
 
             Pistas aux = compruebaPistas(_posX, _posY);
             pistas.getListaPistas().addAll(aux.getListaPistas());
-            return true;
-        } else return false;
+        }
 
     }
 
 
-    public boolean cambiaCeldaInversa(int _posX, int _posY) {
+    public void cambiaCeldaInversa(int _posX, int _posY) {
         if (_tablero[_posY][_posX].isModifiable()) {
-            //EstadoCelda sig = EstadoCelda.values()[(_tablero[_posX][_posY].getEstado().ordinal() + 1) % EstadoCelda.Default.ordinal()];
             EstadoCelda sig = EstadoCelda.Vacia;
 
             switch (_tablero[_posY][_posX].getEstado()) {
@@ -592,8 +584,7 @@ public class Tablero {
 
             Pistas aux = compruebaPistas(_posX, _posY);
             pistas.getListaPistas().addAll(aux.getListaPistas());
-            return true;
-        } else return false;
+        }
 
     }
 

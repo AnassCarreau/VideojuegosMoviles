@@ -60,11 +60,7 @@ public abstract class AbstractGraphics implements Graphics {
      * @return factor de escalado
      */
     protected final float getScaleFactor() {
-        float factorWidth = winWidth / logWidth;
-        float factorHeight = winHeight / logHeight;
-
-        if (factorWidth < factorHeight) return factorWidth;
-        else return factorHeight;
+        return Math.min(winWidth / logWidth, winHeight / logHeight);
     }
 
     /**

@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 
 public class AndroidImage implements Image {
-    Bitmap bitmap;
+    final Bitmap bitmap;
 
     /**
      * Construye un objeto de tipo imagen especifico para la implementacion en Android

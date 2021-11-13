@@ -116,14 +116,4 @@ public class PCGame implements Engine {
         this.screen = sc;
     }
 
-    /**
-     * Metodo para obtener cual es la pantalla/nivel/estado de juego
-     * actual
-     *
-     * @return Screen, pantalla actual
-     */
-    @Override
-    public final Screen getCurrentScreen() {
-        return this.screen;
-    }
 }

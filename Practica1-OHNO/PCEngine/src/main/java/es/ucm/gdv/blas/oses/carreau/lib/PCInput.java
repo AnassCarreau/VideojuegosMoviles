@@ -14,9 +14,9 @@ import java.awt.event.MouseListener;
 
 public class PCInput implements Input, MouseListener, MouseMotionListener {
 
-    protected Engine engine;
+    protected final Engine engine;
 
-    private List<TouchEvent> events;
+    private final List<TouchEvent> events;
 
     /**
      * Contructora del motor de gestion de entrada para

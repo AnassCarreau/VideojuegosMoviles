@@ -1,19 +1,13 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Sound;
 
 
 public class PCSound implements Sound {
 
-    private javax.sound.sampled.Clip clip;
+    private final javax.sound.sampled.Clip clip;
 
     /**
      * Constructora PcSound

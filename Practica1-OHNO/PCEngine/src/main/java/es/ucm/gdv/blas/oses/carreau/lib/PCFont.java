@@ -3,7 +3,7 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 import java.awt.Font;
 
 class PCFont implements es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font {
-    protected Font _font;
+    protected final Font _font;
 
     /**
      * Construye un objeto de tipo fuente especifico para la implementacion en PC

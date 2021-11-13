@@ -5,19 +5,15 @@ import android.graphics.Typeface;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;
 
 public class AndroidFont implements Font {
-    protected Typeface _font;
-    protected float _size;
-    protected String _fontName;
+    protected final Typeface _font;
 
     /**
      * Construye un objeto de tipo fuente especifico para la implementacion en Android
      *
      * @param font, tipo de fuente, especifico de Android, usando un objeto de la clase Typeface
      */
-    public AndroidFont(Typeface font, float size, String fontName) {
+    public AndroidFont(Typeface font) {
         this._font = font;
-        this._size = size;
-        this._fontName = fontName;
     }
 
     /**

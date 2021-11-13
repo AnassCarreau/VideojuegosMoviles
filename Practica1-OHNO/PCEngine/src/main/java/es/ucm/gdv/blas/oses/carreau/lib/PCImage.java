@@ -1,7 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
 public class PCImage implements es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image {
-    public java.awt.Image _image;
+    public final java.awt.Image _image;
 
     /**
      * Construye un objeto de tipo imagen especifico para la implementacion en PC

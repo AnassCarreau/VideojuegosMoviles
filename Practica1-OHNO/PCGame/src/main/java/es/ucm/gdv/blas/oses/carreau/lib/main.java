@@ -20,7 +20,7 @@ public class main {
         //Creamos el engine
         PCGame pcGame = new PCGame(ventana, 400, 600);
         //Pantalla de carga de recursos
-        ResourceCharger loadScreen = new ResourceCharger(pcGame);
+        new ResourceCharger(pcGame);
         //Cargamos pantalla de menu principal
         pcGame.setScreen(new MainMenuScreen());
         //Comenzamos juego

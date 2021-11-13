@@ -12,7 +12,7 @@ import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 
 public class ChooseLevelScreen implements Screen {
 
-    private List<Pair<Integer, Integer>> celdas;
+    private final List<Pair<Integer, Integer>> celdas;
 
     public ChooseLevelScreen() {
         //TODO los 400 y 600 estan a pelo
@@ -46,7 +46,7 @@ public class ChooseLevelScreen implements Screen {
 
             g.fillCircle(celdas.get(i).getLeft(), celdas.get(i).getRight(), radio);
             g.setColor(0xFFFFFFFF);
-            g.drawText(Integer.toString(i + 4), Assets.josefisans, celdas.get(i).getLeft(), celdas.get(i).getRight() + radio * 2 / 4, radio * 4 / 3);
+            g.drawText(Integer.toString(i + 4), Assets.josefisans, celdas.get(i).getLeft(), celdas.get(i).getRight() + radio * 2 / 4, radio * 4.0f / 3.0f);
         }
         g.drawImage(Assets.close, g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight() * 2, Assets.close.getWidth(), Assets.close.getHeight());
     }

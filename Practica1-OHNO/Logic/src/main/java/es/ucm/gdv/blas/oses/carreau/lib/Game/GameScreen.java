@@ -26,11 +26,11 @@ public class GameScreen implements Screen {
     String[] pista;
     Vector pos;
     //Pila con los últimos movimientos para así poder deshacer
-    Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
-    HashMap<Celda, Animacion> animaTime;
-    List<Celda> quitaAnima;
-    HashMap<Celda, Fade> fadeTime;
-    List<Celda> quitafade;
+    final Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
+    final HashMap<Celda, Animacion> animaTime;
+    final List<Celda> quitaAnima;
+    final HashMap<Celda, Fade> fadeTime;
+    final List<Celda> quitafade;
     private final Tablero board;
     private final int boardDimensions;
     private boolean botonPista = false;
@@ -188,7 +188,6 @@ public class GameScreen implements Screen {
             }
         } else if (solved) {
 
-
             g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60, 60);
         }
     }
@@ -246,7 +245,7 @@ public class GameScreen implements Screen {
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
                 if (c.getValorDefault() != 0 && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
-                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4, 2 * circleSize / 3);
+                    g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4, 2 * circleSize / 3.0f);
                 } else if (!c.isModifiable() && cerrado) {
                     g.drawImage(Assets.lock, x - Assets.lock.getWidth() / 4, y - Assets.lock.getHeight() / 4, Assets.lock.getWidth() / 2, Assets.lock.getHeight() / 2);
 

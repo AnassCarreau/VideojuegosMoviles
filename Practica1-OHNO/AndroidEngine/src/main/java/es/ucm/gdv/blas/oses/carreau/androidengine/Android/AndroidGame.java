@@ -16,11 +16,11 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 
 public class AndroidGame implements Engine, Runnable {
-    SurfaceView renderView;
-    AndroidGraphics graphics;
-    AndroidInput input;
+    final SurfaceView renderView;
+    final AndroidGraphics graphics;
+    final AndroidInput input;
     Screen screen;
-    AndroidAudio audio;
+    final AndroidAudio audio;
 
     //Para avisar al compilador que el valor de este atributo
     //puede ser cambiado en una hebra
@@ -94,7 +94,6 @@ public class AndroidGame implements Engine, Runnable {
      *
      * @return Screen, pantalla actual
      */
-    @Override
     public Screen getCurrentScreen() {
         return screen;
     }

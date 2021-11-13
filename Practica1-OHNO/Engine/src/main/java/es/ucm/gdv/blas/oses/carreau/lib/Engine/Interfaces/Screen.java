@@ -14,13 +14,13 @@ public interface Screen {
      * Metodo que se encarga de pintar todos los elementos
      * del juego
      */
-    public void render(Graphics g);
+    void render(Graphics g);
 
     /**
      * Metodo que se encarga de procesar los eventos de Input
      * y realizar cambios en relacion a los mismos
      */
-    public void handleEvents(Engine engine) ;
+    void handleEvents(Engine engine) ;
 
     /**
      * Metodo que devuelve el identificador de la pantalla de juego

@@ -1,9 +1,9 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
 public class Animacion {
-    public double actTime;
-    public double lstTime;
-    public boolean vibrate;
+    public final double actTime;
+    public final double lstTime;
+    public final boolean vibrate;
 
     public Animacion(double actTime,
                      double lstTime,

@@ -23,13 +23,12 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 
 
 public class AndroidGraphics extends AbstractGraphics {
-    AssetManager assets;
-    Bitmap frameBuffer;
+    final AssetManager assets;
     Canvas canvas;
-    Paint paint;
-    Rect srcRect = new Rect();
-    Rect dstRect = new Rect();
-    float dpi;
+    final Paint paint;
+    final Rect srcRect = new Rect();
+    final Rect dstRect = new Rect();
+    final float dpi;
 
     /**
      * Constructora del motor grafico para la implementacion especifica de Android
@@ -41,7 +40,6 @@ public class AndroidGraphics extends AbstractGraphics {
      */
     public AndroidGraphics(AppCompatActivity activity, Bitmap frameBuffer, int logWidth, int logHeight) {
         this.assets = activity.getAssets();
-        this.frameBuffer = frameBuffer;
         this.canvas = new Canvas(frameBuffer);
         this.paint = new Paint();
         this.logWidth = logWidth;
@@ -118,7 +116,6 @@ public class AndroidGraphics extends AbstractGraphics {
     @Override
     public void fillCircle(float cx, float cy, int r) {
         this.canvas.drawCircle(cx, cy, r, this.paint);
-
     }
 
     /**
@@ -152,7 +149,7 @@ public class AndroidGraphics extends AbstractGraphics {
     public void drawText(String text, Font font, int x, int y, float tam) {
         Typeface aFont = ((AndroidFont) font)._font;
 
-        if (font != null && aFont != null) {
+        if (aFont != null) {
             paint.setTypeface(aFont);
             paint.setTextSize((getScaleFactor() * tam) / dpi);
             paint.setTextAlign(Paint.Align.CENTER);
@@ -180,7 +177,6 @@ public class AndroidGraphics extends AbstractGraphics {
         dstRect.top = y;
         dstRect.right = x + w;
         dstRect.bottom = y + h;
-
         canvas.drawBitmap(((AndroidImage) image).bitmap, srcRect, dstRect, null);
     }
 
@@ -212,9 +208,6 @@ public class AndroidGraphics extends AbstractGraphics {
      */
     @Override
     public Image newImage(String name) {
-        Config config = null;
-        Options options = new Options();
-        options.inPreferredConfig = config;
         Bitmap bitmap = null;
         InputStream in = null;
 
@@ -232,6 +225,7 @@ public class AndroidGraphics extends AbstractGraphics {
                 try {
                     in.close();
                 } catch (IOException e) {
+                    System.err.println(e.getCause().toString());
                 }
             }
         }
@@ -249,7 +243,7 @@ public class AndroidGraphics extends AbstractGraphics {
      */
     @Override
     public Font newFont(String filename, float size, boolean isBold) {
-        return new AndroidFont(Typeface.createFromAsset(this.assets, filename), size, filename);
+        return new AndroidFont(Typeface.createFromAsset(this.assets, filename));
     }
 
     /**

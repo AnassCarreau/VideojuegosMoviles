@@ -9,7 +9,7 @@ public class Pistas {
 
     //Lista de pista cuya clase StructPista contiene el tipo de pista, su posicion y direccion si
     //aplica
-    private List<StructPista> listaPistas;
+    private final List<StructPista> listaPistas;
 
     public Pistas() {
         listaPistas = new ArrayList<>();
@@ -28,7 +28,7 @@ public class Pistas {
     }
 
     public Pair<String, Vector> getPistaTablero() {
-        String s = new String();
+        String s = "";
         StructPista p = getRandomCasilla();
 
         if (p == null) return null;

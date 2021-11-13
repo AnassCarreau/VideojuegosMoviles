@@ -11,11 +11,8 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 
 public class AndroidInput implements View.OnTouchListener, Input {
-    //TODO para que es este booleano??
-    boolean isTouched;
 
     private final List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-    private final Engine engine;
     private final AbstractGraphics graphics;
 
     /**
@@ -26,7 +23,6 @@ public class AndroidInput implements View.OnTouchListener, Input {
      * @param view,   renderView
      */
     public AndroidInput(Engine engine, View view) {
-        this.engine = engine;
         this.graphics = (AbstractGraphics) (engine.getGraphics());
         view.setOnTouchListener(this);
     }
@@ -67,15 +63,12 @@ public class AndroidInput implements View.OnTouchListener, Input {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         touchEvent.type = TouchEvent.TOUCH_DOWN;
-                        isTouched = true;
                         break;
                     case MotionEvent.ACTION_MOVE:
                         touchEvent.type = TouchEvent.TOUCH_DRAGGED;
-                        isTouched = true;
                         break;
                     case MotionEvent.ACTION_UP:
                         touchEvent.type = TouchEvent.TOUCH_UP;
-                        isTouched = false;
                         break;
                 }
                 touchEvent.pointer = event.getPointerId(i);
@@ -83,9 +76,6 @@ public class AndroidInput implements View.OnTouchListener, Input {
                 touchEvent.x = pos[0];
                 touchEvent.y = pos[1];
                 touchEventsBuffer.add(touchEvent);
-                /*synchronized (this) {
-                    touchEventsBuffer.add(touchEvent);
-                }*/
             }
             return true;
         }

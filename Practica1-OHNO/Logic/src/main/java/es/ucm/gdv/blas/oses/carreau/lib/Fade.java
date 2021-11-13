@@ -2,8 +2,8 @@ package es.ucm.gdv.blas.oses.carreau.lib;
 
 public class Fade {
     public int colorIni;
-    public int colorFin;
-    public int vel;
+    public final int colorFin;
+    public final int vel;
 
     public Fade(int colorIni,
                 int colorFin
