@@ -12,6 +12,10 @@ import javax.sound.sampled.Clip;
 
 public class PCAudio implements Audio {
 
+    /**
+     * Metodo que carga un sonido
+     * @param filename, String, nombre del archivo
+     */
     @Override
     public Sound newSound(String filename) {
         PCSound s = null;

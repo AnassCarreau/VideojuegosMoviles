@@ -5,6 +5,13 @@ import java.io.IOException;
 import javax.sound.sampled.LineUnavailableException;
 
 public interface Sound {
-    void play(float volume) ;
+    /**
+     * Metodo que reproduce un sonido con determinado volumen
+     * @param volume, float, volumen del juego
+     */
+    void play(float volume);
+    /**
+     * Metodo que libera el sonido
+     */
     void dispose();
 }
