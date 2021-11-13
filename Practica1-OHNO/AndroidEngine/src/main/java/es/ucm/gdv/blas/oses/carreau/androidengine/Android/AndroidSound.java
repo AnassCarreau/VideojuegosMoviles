@@ -19,6 +19,7 @@ public class AndroidSound implements Sound {
      * Metodo que reproduce un sonido con determinado volumen
      * @param volume, float, volumen del juego
      */
+    @Override
     public void play(float volume) {
         soundPool.play(soundId, volume, volume, 0, 0, 1);
 
@@ -26,6 +27,7 @@ public class AndroidSound implements Sound {
     /**
      * Metodo que libera la carga del sonido
      */
+    @Override
     public void dispose() {
         soundPool.unload(soundId);
     }

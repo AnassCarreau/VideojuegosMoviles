@@ -88,9 +88,7 @@ public class PCGame implements Engine {
      * @return el motor de audioPC
      */
     @Override
-    public final Audio getAudio() {
-        return this.pc_audio;
-    }
+    public final Audio getAudio() { return this.pc_audio; }
 
     /**
      * Metodo que devuelve el motor que se encarga del pintado

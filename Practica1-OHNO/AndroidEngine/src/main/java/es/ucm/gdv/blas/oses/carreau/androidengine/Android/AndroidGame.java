@@ -59,6 +59,7 @@ public class AndroidGame  implements Engine, Runnable {
      * entrada del juego
      * @return el motor de AndroidInput
      */
+    @Override
     public Input getInput() {
         return input;
     }
@@ -68,6 +69,7 @@ public class AndroidGame  implements Engine, Runnable {
      * del juego
      * @return el motor grafico de PC
      */
+    @Override
     public Graphics getGraphics() { return graphics; }
 
     /**
@@ -75,6 +77,7 @@ public class AndroidGame  implements Engine, Runnable {
      * el audio de juego
      * @return el motor de AndroidAudio
      */
+    @Override
     public AndroidAudio getAudio() { return audio; }
 
 
@@ -83,63 +86,25 @@ public class AndroidGame  implements Engine, Runnable {
      * actual
      * @return Screen, pantalla actual
      */
+    @Override
     public Screen getCurrentScreen() {
         return screen;
     }
 
-    /**
-     * Metodo al que llamaremos cuando desde el Main activity pasemos
-     * al estado onResume.
-     * Este estado es al que se le llama siempre cuando por ejemplo hay
-     * un giro de pantalla, por lo que es en el que creamos la hebra
-     */
-    public void onResume() {
-        if (!running_) {
-            running_ = true;
-            thread_ = new Thread(this);
-            thread_.start();
-        }
-    }
-
-    /**
-     * Metodo al que llamaremos cuando la aplicacion pase al estado de pausa desde
-     * la actividad
-     * Pausamos el juego y hacemos que la hebra termine
-     */
-    public void onPause() {
-        running_ = false;
-        while (true) {
-            try {
-                thread_.join();
-                break;
-            }
-            //Suelta excepcion si despues de hacer el join,
-            // la hebra recibe un mensaje y la reactiva.
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     /**
      * Metodo para actualizar cual es la pantalla del juego actual
      * en la que nos encontramos
      * @param screen, pantalla/nivel/estado al que vamos a cambiar
      */
+    @Override
     public void setScreen(Screen screen) {
         if (screen == null)
             throw new IllegalArgumentException("Screen must not be null");
         this.screen = screen;
     }
 
-    /**
-     * Metodo que devuelve la surfaceView
-     * @return SurfaceView
-     */
 
-    public SurfaceView getView(){
-        return renderView;
-    }
 
     /**
      * Metodo heredado de la clase Runnable
@@ -179,6 +144,47 @@ public class AndroidGame  implements Engine, Runnable {
 
             //Hacemos el swap de los buffers de pintado
             holder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    /**
+     * Metodo que devuelve la surfaceView
+     * @return SurfaceView
+     */
+    public SurfaceView getView(){
+        return renderView;
+    }
+    /**
+     * Metodo al que llamaremos cuando desde el Main activity pasemos
+     * al estado onResume.
+     * Este estado es al que se le llama siempre cuando por ejemplo hay
+     * un giro de pantalla, por lo que es en el que creamos la hebra
+     */
+    public void onResume() {
+        if (!running_) {
+            running_ = true;
+            thread_ = new Thread(this);
+            thread_.start();
+        }
+    }
+
+    /**
+     * Metodo al que llamaremos cuando la aplicacion pase al estado de pausa desde
+     * la actividad
+     * Pausamos el juego y hacemos que la hebra termine
+     */
+    public void onPause() {
+        running_ = false;
+        while (true) {
+            try {
+                thread_.join();
+                break;
+            }
+            //Suelta excepcion si despues de hacer el join,
+            // la hebra recibe un mensaje y la reactiva.
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

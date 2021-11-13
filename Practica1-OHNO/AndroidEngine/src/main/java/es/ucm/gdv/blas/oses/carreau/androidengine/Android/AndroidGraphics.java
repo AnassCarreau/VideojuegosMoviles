@@ -238,8 +238,7 @@ public class AndroidGraphics extends AbstractGraphics {
      */
     @Override
     public Font newFont(String filename, float size, boolean isBold) {
-        AndroidFont font = new AndroidFont(Typeface.createFromAsset(this.assets, filename), size, filename);
-        return font;
+        return new AndroidFont(Typeface.createFromAsset(this.assets, filename), size, filename);
     }
 
     /**

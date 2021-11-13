@@ -18,6 +18,7 @@ public class AndroidImage implements Image{
      * Metodo que devuelve el ancho de la imagen
      * @return int, ancho de la imagen
      */
+    @Override
     public int getWidth() {
         return bitmap.getWidth();
     }
@@ -26,6 +27,7 @@ public class AndroidImage implements Image{
      * Metodo que devuelve el alto de la imagen
      * @return int, alto de la imagen
      */
+    @Override
     public int getHeight() {
         return bitmap.getHeight();
     }

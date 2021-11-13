@@ -188,7 +188,7 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     public final void drawText(String text, Font font, int x, int y, float tam) {
         g.setFont(((PCFont) font)._font.deriveFont(tam));
         int len = g.getFontMetrics().stringWidth(text) / 2;
-        g.drawString(text, (int) x - len, y);
+        g.drawString(text, x - len, y);
     }
 
     /**
