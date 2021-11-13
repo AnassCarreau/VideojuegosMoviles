@@ -2,6 +2,7 @@ package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Deque;
@@ -44,8 +45,6 @@ public class GameScreen implements Screen {
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
-    private  boolean sonGanar=false;
-    private  double timetoExit=3;
 
     public GameScreen(Engine eng, int tableroSize, boolean randomBoard) {
         this.engine = eng;
@@ -64,14 +63,22 @@ public class GameScreen implements Screen {
     public void update(double deltaTime) {
         if (board.tableroResuelto() && !solved ) {
             solved = true;
-        }
+            //Si llegamos aqui, significa que hemos resuelto el tablero
+            Assets.ganar.play(1);
 
-        if (solved) {
-            timetoExit -= deltaTime;
-            if (timetoExit <= 0) {
-                engine.setScreen(new ChooseLevelScreen(engine));
+            for (int i = 0; i < boardDimensions; i++) {
+                for (int j = 0; j < boardDimensions; j++) {
+                    Celda c = board.getCelda(j, i);
+
+                    fadeTime.put(c, new Fade(255, 16, -300));
+
+                }
             }
         }
+
+
+
+
 
 
         if (!animaTime.isEmpty()) {
@@ -102,30 +109,28 @@ public class GameScreen implements Screen {
 
         if (!fadeTime.isEmpty()) {
             for (Celda key : fadeTime.keySet()) {
-
                 Fade f = fadeTime.get(key);
+                int var =(int)(deltaTime * f.vel);
+                if(f.colorIni + var > f.colorFin &&  f.vel>0  || f.vel < 0 && f.colorIni + var < f.colorFin){
+                    f.colorIni=f.colorFin;
+                }
+                else f.colorIni+=var;
 
-                int colAct = f.colorA +   (int)(deltaTime * (f.dir ? -400:1000  ));
-                System.out.println(colAct);
-
-                if ( !f.dir ?  colAct < f.colorB : colAct> f.colorB) {
-                    System.out.println("Cambio");
-                    fadeTime.put(key, new Fade(colAct,f.colorB,f.dir));
-                } else {
-
+                System.out.println(f.colorIni);
+                if ((f.vel > 0 && f.colorIni >= f.colorFin) || (f.vel < 0 && f.colorIni <= f.colorFin) ){
                     quitafade.add(key);
-
                     System.out.println("Termino");
-
                 }
             }
-
             for (Celda c : quitafade) {
                 fadeTime.remove(c);
             }
             quitafade.clear();
         }
+        if (solved &&  fadeTime.isEmpty() ){
 
+                engine.setScreen(new ChooseLevelScreen(engine));
+        }
 
     }
 
@@ -200,20 +205,7 @@ public class GameScreen implements Screen {
             }
         } else if (solved) {
 
-            //Si llegamos aqui, significa que hemos resuelto el tablero
-            if (!sonGanar) {
-                Assets.ganar.play(1);
 
-                for (int i = 0; i < boardDimensions; i++) {
-                    for (int j = 0; j < boardDimensions; j++) {
-                        Celda c = board.getCelda(j, i);
-
-                        fadeTime.put(c, new Fade(255,0,true));
-
-                    }
-                }
-                sonGanar = true;
-            }
             g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60, 60);
         }
     }
@@ -235,7 +227,6 @@ public class GameScreen implements Screen {
                 switch (c.getEstado()) {
                     case Azul: {
                         color=0x00BFFFFF;
-
                         break;
                     }
                     case Rojo: {
@@ -254,9 +245,12 @@ public class GameScreen implements Screen {
 
                     int val = color;
                     String hex = Integer.toHexString(val);
+
                     hex= hex.substring(0,hex.length()-2);
-                    int parsedResult = (int) Long.parseLong(hex + Integer.toHexString(fadeTime.get(c).colorA), 16);
+                    Fade f= fadeTime.get(c);
+                    int parsedResult = (int) Long.parseLong(hex + Integer.toHexString( f.colorIni), 16);
                     color= parsedResult;
+                    System.out.println( "cOLOR "+  Integer.toHexString(color));
                 }
                 g.setColor(color);
 
@@ -325,7 +319,7 @@ public class GameScreen implements Screen {
                         }
                         ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
                         board.cambiaCelda(k, j);
-                        fadeTime.put(c, new Fade(125,255,false));
+                        fadeTime.put(c, new Fade(125,254,1000));
                         return true;
                     } else if (!c.isModifiable()) {
                         if (c.getEstado() == EstadoCelda.Rojo) cerrado = true;

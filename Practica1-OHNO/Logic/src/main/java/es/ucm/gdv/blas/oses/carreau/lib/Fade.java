@@ -1,14 +1,14 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 public class Fade {
-    public int colorA;
-    public int colorB;
-    public boolean dir;
+    public int colorIni;
+    public int colorFin;
+    public int vel;
 
-    public Fade(int colorA,
-                int colorB,
-                boolean dir) {
-        this.colorA = colorA;
-        this.colorB = colorB;
-        this.dir = dir;
+    public Fade(int colorIni,
+                int colorFin
+                ,int vel) {
+        this.colorIni = colorIni;
+        this.colorFin = colorFin;
+        this.vel = vel;
     }
 }
