@@ -1,10 +1,10 @@
 package es.ucm.gdv.blas.oses.carreau.androidengine.Android;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
@@ -14,9 +14,9 @@ public class AndroidInput implements View.OnTouchListener, Input {
     //TODO para que es este booleano??
     boolean isTouched;
 
-    private List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-    private Engine engine;
-    private AbstractGraphics graphics;
+    private final List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
+    private final Engine engine;
+    private final AbstractGraphics graphics;
 
     /**
      * Contructora del motor de gestion de entrada para

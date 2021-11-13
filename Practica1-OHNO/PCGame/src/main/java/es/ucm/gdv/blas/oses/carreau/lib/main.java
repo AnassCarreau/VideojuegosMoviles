@@ -1,7 +1,7 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
-import es.ucm.gdv.blas.oses.carreau.lib.Game.MainMenuScreen;
 import es.ucm.gdv.blas.oses.carreau.lib.Game.LoadingScreen;
+import es.ucm.gdv.blas.oses.carreau.lib.Game.MainMenuScreen;
 
 public class main {
 
@@ -10,12 +10,12 @@ public class main {
     private static final boolean FULLSCREEN = false;
     private static final int NUM_BUFFERS = 2;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         //Creacion de la ventana
         Window ventana = new Window("OhNo!");
 
         //Si no conseguimos crear la ventana terminamos
-        if(!ventana.initWindow(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN, NUM_BUFFERS)) return;
+        if (!ventana.initWindow(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN, NUM_BUFFERS)) return;
 
         //Creamos el engine
         PCGame pcGame = new PCGame(ventana, 400, 600);

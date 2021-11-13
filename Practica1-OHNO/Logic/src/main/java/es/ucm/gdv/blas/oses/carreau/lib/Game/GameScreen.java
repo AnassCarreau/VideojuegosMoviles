@@ -2,16 +2,15 @@ package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Formatter;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Deque;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Animacion;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Celda;
-import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
+import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input.TouchEvent;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
@@ -22,11 +21,6 @@ import es.ucm.gdv.blas.oses.carreau.lib.Tablero;
 import es.ucm.gdv.blas.oses.carreau.lib.Vector;
 
 public class GameScreen implements Screen {
-    private Engine engine;
-    private Tablero board;
-    private int boardDimensions;
-
-
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
     String[] pista;
     Vector pos;
@@ -34,11 +28,11 @@ public class GameScreen implements Screen {
     Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
     HashMap<Celda, Animacion> animaTime;
     List<Celda> quitaAnima;
-
     HashMap<Celda, Fade> fadeTime;
     List<Celda> quitafade;
-
-
+    private final Engine engine;
+    private final Tablero board;
+    private final int boardDimensions;
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
@@ -190,7 +184,7 @@ public class GameScreen implements Screen {
     private void drawUIText(Graphics g) {
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
         if (!solved && pista == null) {
-            g.drawText(Integer.toString(boardDimensions) + "x" + Integer.toString(boardDimensions), Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7, 50);
+            g.drawText(boardDimensions + "x" + boardDimensions, Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7, 50);
         } else if (!solved) {
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
             for (int i = 0; i < pista.length; i++) {

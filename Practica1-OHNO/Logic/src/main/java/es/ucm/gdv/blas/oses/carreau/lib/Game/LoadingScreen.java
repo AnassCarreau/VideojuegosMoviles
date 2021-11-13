@@ -1,14 +1,13 @@
 package es.ucm.gdv.blas.oses.carreau.lib.Game;
 
 
+import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
-//import es.ucm.gdv.blas.oses.carreau.ohno_practica1.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
-import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 
 public class LoadingScreen implements Screen {
-    private Engine engine;
+    private final Engine engine;
 
     public LoadingScreen(Engine engine) {
         this.engine = engine;

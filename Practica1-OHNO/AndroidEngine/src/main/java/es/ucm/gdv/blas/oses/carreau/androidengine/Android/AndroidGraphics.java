@@ -1,8 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.androidengine.Android;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -16,6 +13,9 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Font;

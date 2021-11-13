@@ -10,11 +10,11 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 
 public class PCGame implements Engine {
 
-    private PCInput pc_input;
-    private PCGraphics pc_graphics;
-    private PCAudio pc_audio;
+    private final PCInput pc_input;
+    private final PCGraphics pc_graphics;
+    private final PCAudio pc_audio;
     private Screen screen;
-    private Window window;
+    private final Window window;
 
     /**
      * Constructora del Engine de PC

@@ -12,8 +12,8 @@ import es.ucm.gdv.blas.oses.carreau.lib.Pair;
 
 public class ChooseLevelScreen implements Screen {
 
-    private Engine engine;
-    private List<Pair<Integer, Integer>> celdas;
+    private final Engine engine;
+    private final List<Pair<Integer, Integer>> celdas;
 
     public ChooseLevelScreen(Engine eng) {
         this.engine = eng;

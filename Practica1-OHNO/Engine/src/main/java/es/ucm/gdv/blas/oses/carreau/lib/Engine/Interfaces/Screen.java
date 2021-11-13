@@ -8,19 +8,19 @@ public interface Screen {
      * @param deltaTime, double, tiempo transcurrido desde la ultima iteracion
      *                   del bucle principal de juego
      */
-    public void update(double deltaTime);
+    void update(double deltaTime);
 
     /**
      * Metodo que se encarga de pintar todos los elementos
      * del juego
      */
-    public void render();
+    void render();
 
     /**
      * Metodo que se encarga de procesar los eventos de Input
      * y realizar cambios en relacion a los mismos
      */
-    public void handleEvents();
+    void handleEvents();
 
     /**
      * Metodo que devuelve el identificador de la pantalla de juego
@@ -28,5 +28,5 @@ public interface Screen {
      *
      * @return int, numero con el identificador de la pantalla de juego
      */
-    public int getScreenID();
+    int getScreenID();
 }

@@ -7,7 +7,7 @@ public interface Engine {
      *
      * @return el motor de Input
      */
-    public Input getInput();
+    Input getInput();
 
     /**
      * Metodo que devuelve el motor que se encarga de gestionar
@@ -15,7 +15,7 @@ public interface Engine {
      *
      * @return el motor de audio
      */
-    public Audio getAudio();
+    Audio getAudio();
 
     /**
      * Metodo que devuelve el motor que se encarga del pintado
@@ -23,7 +23,7 @@ public interface Engine {
      *
      * @return el motor grafico
      */
-    public Graphics getGraphics();
+    Graphics getGraphics();
 
     /**
      * Metodo para actualizar cual es la pantalla del juego actual
@@ -31,7 +31,7 @@ public interface Engine {
      *
      * @param screen, pantalla/nivel/estado al que vamos a cambiar
      */
-    public void setScreen(Screen screen);
+    void setScreen(Screen screen);
 
     /**
      * Metodo para obtener cual es la pantalla/nivel/estado de juego
@@ -39,5 +39,5 @@ public interface Engine {
      *
      * @return
      */
-    public Screen getCurrentScreen();
+    Screen getCurrentScreen();
 }
