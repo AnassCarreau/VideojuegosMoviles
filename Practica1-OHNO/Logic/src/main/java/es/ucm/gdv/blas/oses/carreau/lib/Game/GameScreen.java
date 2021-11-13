@@ -129,14 +129,24 @@ public class GameScreen implements Screen {
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
 
         int len = touchEvents.size();
+        System.out.println("---------------------");
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_UP) {
+            if (event.type == TouchEvent.TOUCH_DOWN) {
+                System.out.println("EVENTO DE TOUCH DOWN");
+                System.out.println("Pointer: " + event.pointer);
+                System.out.println("Pos x : " + event.x + " , y:" + event.y);
                 botonPista = false;
                 cerrado = false;
-                if (checkUIButtons(event, engine)) return; //TODO ¿?continue
+                if (checkUIButtons(event, engine)){
+                    System.out.println("Pulsacion");
+                    continue; //TODO ¿?continue
+                }
 
-                if (checkCirclePressed(event, engine.getGraphics())) return; //TODO ¿?continue
+                if (checkCirclePressed(event, engine.getGraphics())){
+                    System.out.println("Pulsacion");
+                    continue; //TODO ¿?continue
+                }
             }
         }
 
@@ -215,7 +225,6 @@ public class GameScreen implements Screen {
                     }
                     case Rojo: {
                         color = 0xFF3D53FF;
-
                         break;
                     }
                     case Vacia: {
