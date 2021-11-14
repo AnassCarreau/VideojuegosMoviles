@@ -58,7 +58,7 @@ public class ChooseLevelScreen implements Screen {
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             Input.TouchEvent event = touchEvents.get(i);
-            if (event.type == Input.TouchEvent.TOUCH_DOWN) {
+            if (event.type == Input.TouchEvent.TOUCH_UP) {
 
                 if(inBounds(event,g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight()*2, Assets.close.getWidth(), Assets.close.getHeight() ))
                 {

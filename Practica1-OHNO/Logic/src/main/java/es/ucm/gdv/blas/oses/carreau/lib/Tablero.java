@@ -22,17 +22,12 @@ public class Tablero {
         _dirs.add(new Vector(-1, 0));//IZQDA
         _dirs.add(new Vector(0, -1));//ARRIBA
 
-        //Inicializacion tablero
-        _tablero = new Celda[N][N];
-
         //Inicializar lista fijas
         _celdasFijas = new ArrayList<>();
         pistas = new Pistas();
-        for (int i = 0; i < _tablero.length; i++) {
-            for (int j = 0; j < _tablero.length; j++) {
-                _tablero[i][j] = new Celda();
-            }
-        }
+
+        //Inicializacion tablero
+        _tablero = getTableroVacio(N);
 
         //generamos un tablero aleatorio con una unica solucion
         if (randomBoard) {
@@ -91,10 +86,13 @@ public class Tablero {
 
         int newX = auxX + dir.x;
         int newY = auxY + dir.y;
+
+        //Nos saltamos los azules adyacentes
         while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
             newX += dir.x;
             newY += dir.y;
         }
+
         //Por seguridad, pero si no nos hemos salido es que esa celda vacia es azul
         //porque es la que debemos poner en esa direccion
         if (posCorrecta(newX, newY)) {
@@ -243,7 +241,6 @@ public class Tablero {
         //Ponemos las pistas del estado inicial
         compruebaPistasTablero();
 
-        //Devolvemos true si conseguimos crear el tablero
         numCeldasNoVacias = _celdasFijas.size();
         return true;
     }
@@ -339,15 +336,19 @@ public class Tablero {
     public StructPista getPistaInCoordenada(int x, int y) {
         Celda actual = _tablero[y][x];
         Pair<Integer, Boolean> ady = compruebaAdyacentes(x, y);
+
+        //Si la celda actual es azul, actualizamos su valor de visibles
+        if(actual.getEstado() == EstadoCelda.Azul) actual.setCurrentVisibles(ady.getLeft());
+
         StructPista pista = null;
         StructPista pistaAct = actual.getPista();
         if (actual.getEstado() == EstadoCelda.Azul && !actual.isModifiable()) {
 
-            actual.setCurrentVisibles(ady.getLeft());
             //PISTA 1 -> Veo todas las que tengo que ver pero no estoy cerrada
             if (actual.getCurrentVisibles() == actual.getValorDefault() && !ady.getRight()) {
                 pista = new StructPista(TipoPista.ValueReached, new Vector(x, y), new Vector(0, 0));
-            } else if (!ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()) {
+            }
+            else if (!ady.getRight() && actual.getCurrentVisibles() < actual.getValorDefault()) {
 
                 //PISTA 10
                 int maxColocables = 0;

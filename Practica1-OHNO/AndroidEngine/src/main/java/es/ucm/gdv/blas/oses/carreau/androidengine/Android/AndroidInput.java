@@ -11,8 +11,6 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 
-
-
 public class AndroidInput implements View.OnTouchListener, Input {
 
     private final List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
@@ -45,17 +43,17 @@ public class AndroidInput implements View.OnTouchListener, Input {
      */
     @Override
     public List<TouchEvent> getTouchEvents() {
-        synchronized (this) {
-            if (touchEventsBuffer.size() > 0) {
-                List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
+        List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
 
+        synchronized (touchEventsBuffer) {
+            if (touchEventsBuffer.size() > 0) {
                 touchEvents.addAll(touchEventsBuffer);
                 touchEventsBuffer.clear();
                 Arrays.fill(indexProcessed, Boolean.FALSE);
-                return touchEvents;
             }
-            return touchEventsBuffer;
         }
+        return touchEvents;
+
     }
 
     /**
@@ -67,54 +65,50 @@ public class AndroidInput implements View.OnTouchListener, Input {
      * @param event, MotionEvent, evento de haber tocado la pantalla
      * @return
      */
-    //TODO REVISAR EL SYNCHRONIZED PORQUE IGUAL SOLO HACE FALTA AL AÑADIR EL EVENTO
     public boolean onTouch(View v, MotionEvent event) {
-        synchronized (this) {
-            TouchEvent touchEvent = new TouchEvent();
-            for (int i = 0; i < event.getPointerCount(); i++) {
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_POINTER_DOWN: {
-                        touchEvent.type = TouchEvent.TOUCH_DOWN;
-                        touchEvent.pointer = event.getPointerId(event.getActionIndex());
-                        if(!indexProcessed[touchEvent.pointer]) {
-                            indexProcessed[touchEvent.pointer] = true;
-                            int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
-                            touchEvent.x = pos[0];
-                            touchEvent.y = pos[1];
-                            touchEventsBuffer.add(touchEvent);
-                        }
-                        break;
-                    }
-                    case MotionEvent.ACTION_MOVE: {
-                        touchEvent.type = TouchEvent.TOUCH_DRAGGED;
-                        touchEvent.pointer = event.getPointerId(event.getActionIndex());
-                        if(!indexProcessed[touchEvent.pointer]) {
-                            indexProcessed[touchEvent.pointer] = true;
-                            int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
-                            touchEvent.x = pos[0];
-                            touchEvent.y = pos[1];
-                            touchEventsBuffer.add(touchEvent);
-                        }
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_POINTER_UP: {
-                        touchEvent.type = TouchEvent.TOUCH_UP;
-                        touchEvent.pointer = event.getPointerId(event.getActionIndex());
-                        if(!indexProcessed[touchEvent.pointer]) {
-                            indexProcessed[touchEvent.pointer] = true;
-                            int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
-                            touchEvent.x = pos[0];
-                            touchEvent.y = pos[1];
-                            touchEventsBuffer.add(touchEvent);
-                        }
-                        break;
-                    }
+        for (int i = 0; i < event.getPointerCount(); i++) {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_POINTER_DOWN: {
+                    addEvent(TouchEvent.TOUCH_DOWN, event);
+                    break;
                 }
-
+                case MotionEvent.ACTION_MOVE: {
+                    addEvent(TouchEvent.TOUCH_DRAGGED, event);
+                    break;
+                }
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_POINTER_UP: {
+                    addEvent(TouchEvent.TOUCH_UP, event);
+                    break;
+                }
             }
-            return true;
+        }
+
+        return true;
+    }
+
+    /**
+     * Metodo para añadir un evento del tipo eventType a nuestra lista de eventos
+     * Necesario que este sincronizado cuando añadimos el evento a la lista para
+     * asegurarnos que no hay otra hebra modificandola
+     * @param eventType, int, tipo de evento
+     * @param event, MotionEvent, informacion del evento
+     */
+    private void addEvent(int eventType, MotionEvent event) {
+        TouchEvent touchEvent = new TouchEvent();
+
+        touchEvent.pointer = event.getPointerId(event.getActionIndex());
+        if(!indexProcessed[touchEvent.pointer]) {
+            touchEvent.type = eventType;
+            int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
+            touchEvent.x = pos[0];
+            touchEvent.y = pos[1];
+
+            synchronized (touchEventsBuffer) {
+                indexProcessed[touchEvent.pointer] = true;
+                touchEventsBuffer.add(touchEvent);
+            }
         }
     }
 }

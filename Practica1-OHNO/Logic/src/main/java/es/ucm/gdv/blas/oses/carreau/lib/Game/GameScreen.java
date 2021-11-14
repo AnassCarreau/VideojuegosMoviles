@@ -32,12 +32,13 @@ public class GameScreen implements Screen {
     final HashMap<Celda, Fade> fadeTime;
     final List<Celda> quitafade;
     private final Tablero board;
+
     private final int boardDimensions;
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
+    private int porcentaje = 0;
 
-    int porcentaje=0;
     public GameScreen( int tableroSize, boolean randomBoard) {
         this.board = new Tablero(tableroSize, randomBoard);
         this.boardDimensions = tableroSize;
@@ -57,6 +58,7 @@ public class GameScreen implements Screen {
             //Si llegamos aqui, significa que hemos resuelto el tablero
             Assets.ganar.play(1);
 
+            //Inicializamos las animaciones de fadeOut del final
             for (int i = 0; i < boardDimensions; i++) {
                 for (int j = 0; j < boardDimensions; j++) {
                     Celda c = board.getCelda(j, i);
@@ -129,30 +131,20 @@ public class GameScreen implements Screen {
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
 
         int len = touchEvents.size();
-        System.out.println("---------------------");
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_DOWN) {
-                System.out.println("EVENTO DE TOUCH DOWN");
-                System.out.println("Pointer: " + event.pointer);
-                System.out.println("Pos x : " + event.x + " , y:" + event.y);
                 botonPista = false;
                 cerrado = false;
-                if (checkUIButtons(event, engine)){
-                    System.out.println("Pulsacion");
-                    continue; //TODO ¿?continue
-                }
+                if (checkUIButtons(event, engine))continue;
 
-                if (checkCirclePressed(event, engine.getGraphics())){
-                    System.out.println("Pulsacion");
-                    continue; //TODO ¿?continue
-                }
+                if (checkCirclePressed(event, engine.getGraphics()))continue;
+
             }
         }
 
         if (solved &&  fadeTime.isEmpty() ) {
             engine.setScreen(new ChooseLevelScreen());
-            //TODO return??
         }
     }
 
@@ -190,15 +182,18 @@ public class GameScreen implements Screen {
         //si la pista es null dibujamos encima del tablero las dimensiones si no dibujaremos la pista
         if (!solved && pista == null) {
             g.drawText(boardDimensions + "x" + boardDimensions, Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 7, 50);
-        } else if (!solved) {
+        }
+        else if (!solved) {
             //La pista esta dividida en dos partes para visualizarla mejor en pantalla en dos lineas
             for (int i = 0; i < pista.length; i++) {
                 g.drawText(pista[i], Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 100 + (25 * i), 25);
             }
-        } else if (solved) {
-
-            g.drawText("GANASTE BRO!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60, 60);
         }
+        else if (solved) {
+            g.drawText("Ganaste!", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() / 4 - 60, 60);
+        }
+
+        //Porcentaje de celdas rellenas
         g.setColor(0xCCCCCCFF);
         g.drawText(Integer.toString(porcentaje) + "%", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() - (Assets.history.getHeight()+ 15)   , 30);
     }
@@ -233,35 +228,39 @@ public class GameScreen implements Screen {
                     }
                 }
 
-
                 if (fadeTime.containsKey(c)) {
-
                     Fade f= fadeTime.get(c);
                     color = modifyAlphaColor(color,f.colorIni);
                 }
                 g.setColor(color);
 
-
                 int x = initialX + circleSize / 2 + j * circleSize;
                 int y = (g.getLogHeight() / 6) + circleSize / 2 + (i * circleSize);
 
                 if (animaTime.containsKey(c)) {
-
                     g.fillCircle(x, y, circleSize / 2 + 1 * (animaTime.get(c).vibrate ? -1 : 1));
-                } else {
+                }
+                else {
                     g.fillCircle(x, y, circleSize / 2);
                 }
 
                 //Si es de las azules fijas, pintamos sus numeros correspondientes
-                if (c.getValorDefault() != 0 && !c.isModifiable()) {
+                if (c.getEstado() == EstadoCelda.Azul && !c.isModifiable()) {
                     g.setColor(0xFFFFFFFF);
                     g.drawText(Integer.toString(c.getValorDefault()), Assets.josefisans, x, y + circleSize / 4, 2 * circleSize / 3.0f);
-                } else if (!c.isModifiable() && cerrado) {
+                }
+                //Si han pulsado en una roja no modificable mostramos el candado
+                else if (!c.isModifiable() && cerrado) {
                     g.drawImage(Assets.lock, x - Assets.lock.getWidth() / 4, y - Assets.lock.getHeight() / 4, Assets.lock.getWidth() / 2, Assets.lock.getHeight() / 2);
-
+                }
+                //Si ya se ha resuelto el tablero, mostramos el numero de casillas visibles de las celdas azules modificables
+                else if(solved && c.isModifiable() && c.getEstado() == EstadoCelda.Azul){
+                    g.setColor(0xFFFFFFFF);
+                    g.drawText(Integer.toString(c.getCurrentVisibles()), Assets.josefisans, x, y + circleSize / 4, 2 * circleSize / 3.0f);
                 }
             }
         }
+
         //Si se ha pulsado el boton de pista dibujamos un reborde negro sobre la casilla que da dicha pista
         if (botonPista) {
             int x = initialX + circleSize / 2 + pos.x * circleSize;
@@ -269,7 +268,6 @@ public class GameScreen implements Screen {
             g.setColor(0x000000FF);
             g.drawCircle(x, y, (circleSize) / 2);
         }
-
 
     }
 
@@ -288,7 +286,7 @@ public class GameScreen implements Screen {
      * Método que comprueba si un circulo del tablero ha sido pulsado
      *
      * @param event
-     * @param g
+     * @param g, motor grafico
      * @return boolean
      */
     private boolean checkCirclePressed(TouchEvent event, Graphics g) {

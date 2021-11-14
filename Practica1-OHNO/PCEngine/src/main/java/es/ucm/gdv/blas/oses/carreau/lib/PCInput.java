@@ -1,6 +1,5 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
-
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,24 +49,15 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
 
     /**
      * Metodo heredado de la clase abstracta MouseListener
-     * Se invoca cuando hay un click de raton. Cuando esto ocurre añadimos
-     * un evento a nuestra lista de eventos
+     * Se invoca cuando hay un click de raton. Si se llama a este metodo
+     * tambien se invoca a mousePressed y mouseReleased por lo que no
+     * hace falta su implementacion
      *
      * @param mouseEvent, MouseEvent, evento de raton
      */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        TouchEvent touchEvent = new TouchEvent();
-        touchEvent.type = TouchEvent.TOUCH_DOWN;
-        touchEvent.x = mouseEvent.getX();
-        touchEvent.y = mouseEvent.getY();
-        touchEvent.pointer = mouseEvent.getID();
-        int[] aux = ((AbstractGraphics) engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
-        touchEvent.x = aux[0];
-        touchEvent.y = aux[1];
-        synchronized (this) {
-            events.add(touchEvent);
-        }
+
     }
 
     /**
@@ -84,7 +74,6 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
         touchEvent.x = mouseEvent.getX();
         touchEvent.y = mouseEvent.getY();
         touchEvent.pointer = mouseEvent.getID();
-        //touchEvent.pointer = 0;
         int[] aux = ((AbstractGraphics) engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
         touchEvent.x = aux[0];
         touchEvent.y = aux[1];
@@ -107,8 +96,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
         touchEvent.type = TouchEvent.TOUCH_UP;
         touchEvent.x = mouseEvent.getX();
         touchEvent.y = mouseEvent.getY();
-        touchEvent.pointer = mouseEvent.getID(); //TO DO: REVISAR SI ES CON GETID O SI ES 0
-        //touchEvent.pointer = 0;
+        touchEvent.pointer = mouseEvent.getID();
         int[] aux = ((AbstractGraphics) engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
         touchEvent.x = aux[0];
         touchEvent.y = aux[1];
@@ -151,8 +139,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
         touchEvent.type = TouchEvent.TOUCH_DRAGGED;
         touchEvent.x = mouseEvent.getX();
         touchEvent.y = mouseEvent.getY();
-        touchEvent.pointer = mouseEvent.getID(); //TO DO: REVISAR SI ES CON GETID O SI ES 0
-        //touchEvent.pointer = 0
+        touchEvent.pointer = mouseEvent.getID();
         int[] aux = ((AbstractGraphics) engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
         touchEvent.x = aux[0];
         touchEvent.y = aux[1];
