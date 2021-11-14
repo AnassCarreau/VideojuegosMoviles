@@ -24,8 +24,8 @@ public class AndroidGame implements Engine, Runnable {
 
     //Para avisar al compilador que el valor de este atributo
     //puede ser cambiado en una hebra
-    volatile boolean running_ = false;
-    Thread thread_;
+    private volatile boolean running_ = false;
+    private Thread thread_;
 
     /**
      * Constructora del engine especifico de Android
