@@ -38,7 +38,7 @@ public class MainMenuScreen implements Screen {
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_UP) {
+            if (event.type == TouchEvent.TOUCH_DOWN) {
                 if (inBounds(event, g.getLogWidth() / 2 - 200 / 2, g.getLogHeight() / 2 - 100 / 2, 200, 100)) {
                     Assets.click.play(1);
                     engine.setScreen(new ChooseLevelScreen());

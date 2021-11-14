@@ -65,6 +65,7 @@ public class AndroidInput implements View.OnTouchListener, Input {
      * @param event, MotionEvent, evento de haber tocado la pantalla
      * @return
      */
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         for (int i = 0; i < event.getPointerCount(); i++) {
             switch (event.getActionMasked()) {
@@ -99,7 +100,7 @@ public class AndroidInput implements View.OnTouchListener, Input {
         TouchEvent touchEvent = new TouchEvent();
 
         touchEvent.pointer = event.getPointerId(event.getActionIndex());
-        if(!indexProcessed[touchEvent.pointer]) {
+        if(touchEvent.pointer < MAX_ID_PERMITTED && !indexProcessed[touchEvent.pointer]) {
             touchEvent.type = eventType;
             int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
             touchEvent.x = pos[0];

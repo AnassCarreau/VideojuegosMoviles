@@ -8,26 +8,27 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
-import es.ucm.gdv.blas.oses.carreau.lib.Pair;
+import es.ucm.gdv.blas.oses.carreau.lib.Vector;
 
 public class ChooseLevelScreen implements Screen {
 
-    private final List<Pair<Integer, Integer>> celdas;
+    private final List<Vector> celdas;
+    private static final int RADIO_SIZE = 40;
+    private static final int CIRCLES_PER_ROW  = 3;
+    private static final int ROWS = 2;
+    private static final int MAX_LEVELS = 6;
 
     public ChooseLevelScreen() {
-        //TODO los 400 y 600 estan a pelo
         celdas=new ArrayList<>();
-        int radio = (400 / 5) / 2;
-        for (int i = 0; i < 6; i++) {
-            int x = 400  / 5 + radio + ((i % 3) * radio * 2);
-            int y = 2 * 600 / 5 + (i / 3) * (radio * 2) + radio;
-            celdas.add(new Pair<Integer, Integer>(x, y));
+        for (int i = 0; i < MAX_LEVELS; i++) {
+            int x = 400  / 5 + RADIO_SIZE + ((i % CIRCLES_PER_ROW) * RADIO_SIZE * 2);
+            int y = 2 * 600 / 5 + (i / CIRCLES_PER_ROW) * (RADIO_SIZE * 2) + RADIO_SIZE;
+            celdas.add(new Vector(x, y));
         }
     }
 
     @Override
     public void update(double deltaTime) {
-
     }
 
 
@@ -41,12 +42,12 @@ public class ChooseLevelScreen implements Screen {
 
         int radio = (g.getLogWidth() / 5) / 2;
         for (int i = 0; i < celdas.size(); i++) {
-            if (i % 2 == 0) g.setColor(0xFF3D53FF);
+            if (i % ROWS == 0) g.setColor(0xFF3D53FF);
             else g.setColor(0x00BFFFFF);
 
-            g.fillCircle(celdas.get(i).getLeft(), celdas.get(i).getRight(), radio);
+            g.fillCircle(celdas.get(i).x, celdas.get(i).y, radio);
             g.setColor(0xFFFFFFFF);
-            g.drawText(Integer.toString(i + 4), Assets.josefisans, celdas.get(i).getLeft(), celdas.get(i).getRight() + radio * 2 / 4, radio * 4.0f / 3.0f);
+            g.drawText(Integer.toString(i + 4), Assets.josefisans, celdas.get(i).x, celdas.get(i).y + radio * 2 / 4, radio * 4.0f / 3.0f);
         }
         g.drawImage(Assets.close, g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight() * 2, Assets.close.getWidth(), Assets.close.getHeight());
     }
@@ -58,21 +59,22 @@ public class ChooseLevelScreen implements Screen {
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             Input.TouchEvent event = touchEvents.get(i);
-            if (event.type == Input.TouchEvent.TOUCH_UP) {
+            if (event.type == Input.TouchEvent.TOUCH_DOWN) {
 
-                if(inBounds(event,g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight()*2, Assets.close.getWidth(), Assets.close.getHeight() ))
-                {
-                    engine.setScreen(new MainMenuScreen());
-                }
                 int radio = (g.getLogWidth() / 5) / 2;
 
                 for (int j = 0; j < celdas.size(); j++) {
-                    int x = celdas.get(j).getLeft();
-                    int y = celdas.get(j).getRight();
+                    int x = celdas.get(j).x;
+                    int y = celdas.get(j).y;
                     if (inBoundsCircle(event, x, y, radio)) {
                         Assets.click.play(1);
                         engine.setScreen(new GameScreen( j + 4, true));
                     }
+                }
+
+                if(inBounds(event,g.getLogWidth() / 2 - Assets.close.getWidth() / 2, g.getLogHeight() - Assets.close.getHeight()*2, Assets.close.getWidth(), Assets.close.getHeight() ))
+                {
+                    engine.setScreen(new MainMenuScreen());
                 }
             }
         }

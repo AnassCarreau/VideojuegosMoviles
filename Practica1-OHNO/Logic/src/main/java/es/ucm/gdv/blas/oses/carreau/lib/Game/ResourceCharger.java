@@ -5,8 +5,16 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Engine;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Graphics;
 import es.ucm.gdv.blas.oses.carreau.lib.Assets;
 
+/**
+ * Clase que funciona a modo de cargador de recursos para nuestra aplicacion
+ */
 public class ResourceCharger {
 
+    /**
+     * Constructor de la clase resourceCharger, inicializamos los recursos definidos
+     * en la Assets
+     * @param engine
+     */
     public ResourceCharger(Engine engine) {
         Graphics g = engine.getGraphics();
         Assets.q42 = g.newImage("q42.png");

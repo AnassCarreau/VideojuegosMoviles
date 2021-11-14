@@ -1,5 +1,8 @@
 package es.ucm.gdv.blas.oses.carreau.lib;
 
+/**
+ * Enum con los diferentes tipos de pista que podemos conseguir en el juego
+ */
 public enum TipoPista {
 
     ValueReached,            //'This number can see all its dots ', // [1] No cerrada y visibles == DefVisibles

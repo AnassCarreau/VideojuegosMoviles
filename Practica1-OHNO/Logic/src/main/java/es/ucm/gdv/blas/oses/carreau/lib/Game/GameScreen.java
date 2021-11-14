@@ -23,14 +23,14 @@ import es.ucm.gdv.blas.oses.carreau.lib.Vector;
 public class GameScreen implements Screen {
   
     //array que será de dos posiciones para que asi la pista se escriba en dos lineas
-    String[] pista;
-    Vector pos;
+    private String[] pista;
+    private Vector pos;
     //Pila con los últimos movimientos para así poder deshacer
-    final Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
-    final HashMap<Celda, Animacion> animaTime;
-    final List<Celda> quitaAnima;
-    final HashMap<Celda, Fade> fadeTime;
-    final List<Celda> quitafade;
+    private final Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs;
+    private final HashMap<Celda, Animacion> animaTime;
+    private final List<Celda> quitaAnima;
+    private final HashMap<Celda, Fade> fadeTime;
+    private final List<Celda> quitafade;
     private final Tablero board;
 
     private final int boardDimensions;
@@ -130,20 +130,21 @@ public class GameScreen implements Screen {
     public void handleEvents(Engine engine) {
         List<TouchEvent> touchEvents = engine.getInput().getTouchEvents();
 
-        int len = touchEvents.size();
-        for (int i = 0; i < len; i++) {
-            TouchEvent event = touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_DOWN) {
-                botonPista = false;
-                cerrado = false;
-                if (checkUIButtons(event, engine))continue;
+        if (!solved) {
+            int len = touchEvents.size();
+            for (int i = 0; i < len; i++) {
+                TouchEvent event = touchEvents.get(i);
+                if (event.type == TouchEvent.TOUCH_DOWN) {
+                    botonPista = false;
+                    cerrado = false;
+                    if (checkUIButtons(event, engine)) continue;
 
-                if (checkCirclePressed(event, engine.getGraphics()))continue;
+                    if (checkCirclePressed(event, engine.getGraphics())) continue;
 
+                }
             }
         }
-
-        if (solved &&  fadeTime.isEmpty() ) {
+        else if (solved && fadeTime.isEmpty()) {
             engine.setScreen(new ChooseLevelScreen());
         }
     }
@@ -213,6 +214,7 @@ public class GameScreen implements Screen {
 
                 int color = 0;
 
+
                 switch (c.getEstado()) {
                     case Azul: {
                         color = 0x00BFFFFF;
@@ -231,6 +233,9 @@ public class GameScreen implements Screen {
                 if (fadeTime.containsKey(c)) {
                     Fade f= fadeTime.get(c);
                     color = modifyAlphaColor(color,f.colorIni);
+                }
+                else if(solved && fadeTime.isEmpty()){
+                    color = 0x00000000;
                 }
                 g.setColor(color);
 

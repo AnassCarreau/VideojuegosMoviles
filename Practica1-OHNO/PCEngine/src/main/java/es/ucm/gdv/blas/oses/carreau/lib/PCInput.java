@@ -36,7 +36,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
      */
     @Override
     public final List<TouchEvent> getTouchEvents() {
-        synchronized (this) {
+        synchronized (events) {
             if (events.size() > 0) {
                 List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
                 touchEvents.addAll(events);
@@ -77,7 +77,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
         int[] aux = ((AbstractGraphics) engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
         touchEvent.x = aux[0];
         touchEvent.y = aux[1];
-        synchronized (this) {
+        synchronized (events) {
             events.add(touchEvent);
         }
     }
@@ -100,7 +100,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
         int[] aux = ((AbstractGraphics) engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
         touchEvent.x = aux[0];
         touchEvent.y = aux[1];
-        synchronized (this) {
+        synchronized (events) {
             events.add(touchEvent);
         }
     }
@@ -143,7 +143,7 @@ public class PCInput implements Input, MouseListener, MouseMotionListener {
         int[] aux = ((AbstractGraphics) engine.getGraphics()).physicalToLogical(touchEvent.x, touchEvent.y);
         touchEvent.x = aux[0];
         touchEvent.y = aux[1];
-        synchronized (this) {
+        synchronized (events) {
             events.add(touchEvent);
         }
     }

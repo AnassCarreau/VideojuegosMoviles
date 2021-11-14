@@ -13,6 +13,13 @@ public class Tablero {
     private Pistas pistas = null;
     private int numCeldasNoVacias = 0;
 
+    /**
+     * Constructora de la clase Tablero, construye un tablero
+     * de NxN casillas
+     * @param N, numero de filas/columnas que va a tener el tablero
+     * @param randomBoard, boolean, si queremos generar un tablero aleatorio
+     *                     o no
+     */
     public Tablero(int N, boolean randomBoard) {
         //Inicializacion vector direcciones
         _dirs = new ArrayList<>();
@@ -62,10 +69,16 @@ public class Tablero {
         return new Vector(x, y);
     }
 
-    private Vector recibidaWouldExceed(StructPista pista, int auxX, int auxY) {
+    /**
+     * Metodo auxiliar para la construccion del tablero de forma aleatoria. Nos ayuda a
+     * aplicar la pista WOULDEXCEED en la casilla que marque dicha pista
+     * @param pista, pista recibida, debe de ser del tipo WOULDEXCEED
+     * @return, Vector, casilla la cual hemos cambiado su estado
+     */
+    private Vector recibidaWouldExceed(StructPista pista) {
         //mirar en que direccion te pasas y poner una roja
         Vector dir = pista.getDirPista();
-        int newX = auxX + dir.x, newY = auxY + dir.y;
+        int newX = pista.getPosPista().x + dir.x, newY = pista.getPosPista().y + dir.y;
 
         //Nos saltamos los azules adyacentes
         while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
@@ -81,11 +94,17 @@ public class Tablero {
         return null;
     }
 
-    private Vector recibidaOneDirectionRequired(StructPista pista, int auxX, int auxY) {
+    /**
+     * Metodo auxiliar para la construccion del tablero de forma aleatoria. Nos ayuda a
+     * aplicar la pista ONEDIRECTIONREQUIRED en la casilla que marque dicha pista
+     * @param pista, pista recibida, debe de ser del tipo ONEDIRECTIONREQUIRED
+     * @return, Vector, casilla la cual hemos cambiado su estado
+     */
+    private Vector recibidaOneDirectionRequired(StructPista pista) {
         Vector dir = pista.getDirPista();
 
-        int newX = auxX + dir.x;
-        int newY = auxY + dir.y;
+        int newX = pista.getPosPista().x + dir.x;
+        int newY = pista.getPosPista().y + dir.y;
 
         //Nos saltamos los azules adyacentes
         while (posCorrecta(newX, newY) && _tablero[newY][newX].getEstado() == EstadoCelda.Azul) {
@@ -103,6 +122,16 @@ public class Tablero {
         return null;
     }
 
+
+    /**
+     * Metodo que genera un tablero aleatorio con una unica solucion de NxN casillas
+     * funciona colocando una celda fija (Azul o Roja) y, usando las pistas que estas casillas
+     * fijas nos den, ir rellenando el tablero hasta tener uno totalmente lleno y que cumpla
+     * los requisitos del juego. Si en un numero concreto de intentos (entendemos por intentos
+     * el añadir una nueva casilla fija) no hemos sido capaces de generar un tablero lo descartamos
+     * @param N, numero de filas/columnas del tablero que vamos a crear
+     * @return boolean, true si hemos sido capaces de generarlo, false en caso contrario
+     */
     private boolean generaTablero(int N) {
         int intentos = 0;
 
@@ -144,7 +173,7 @@ public class Tablero {
                 //cogemos que tipo de pista es
                 switch (pista.getTipoPista()) {
                     case WouldExceed: {
-                        Vector vector = recibidaWouldExceed(pista, auxX, auxY);
+                        Vector vector = recibidaWouldExceed(pista);
                         if (vector != null) {
                             _celdasNoVacias.add(vector);
                             auxPista = compruebaPistas(vector.x, vector.y);
@@ -171,8 +200,7 @@ public class Tablero {
                         break;
                     }
                     case OneDirectionRequired: {
-                        //Cogemos la direccion de la pista y asi no tenemos que recorrer todas las dirs
-                        Vector vector = recibidaOneDirectionRequired(pista, auxX, auxY);
+                        Vector vector = recibidaOneDirectionRequired(pista);
                         if (vector != null) {
                             _celdasNoVacias.add(vector);
                             auxPista = compruebaPistas(vector.x, vector.y);
@@ -245,6 +273,13 @@ public class Tablero {
         return true;
     }
 
+    /**
+     * Metodo auxiliar empleado a la hora de crear un tablero aleatorio cuando recibimos la
+     * pista VALUEREACHED -> lo que implica que tenemos que cerrar dicha celda
+     * @param x,int, coordenada x de la casilla que tenemos que cerrar
+     * @param y, int, coordenada y de la casilla que tenemos que cerrar
+     * @return, lista de Vectores con las coordenadas de las casillas que hemos puesto como rojas
+     */
     private List<Vector> encierraCelda(int x, int y) {
         List<Vector> l = new ArrayList<>();
         for (int i = 0; i < _dirs.size(); i++) {
@@ -265,6 +300,11 @@ public class Tablero {
         return l;
     }
 
+    /**
+     * Metodo auxiliar que crea un tablero vacio de NXN dimensiones
+     * @param N, int, numero de filas/columnas que va a tener nuestro tablero
+     * @return Celda[][] con un tablero de celdas por defecto
+     */
     private Celda[][] getTableroVacio(int N) {
         Celda[][] tablero = new Celda[N][N];
         for (int i = 0; i < N; i++) {
@@ -326,6 +366,11 @@ public class Tablero {
         else return false;
     }
 
+    /**
+     * Metodo que quita la pista de la lista y la actualiza en la pista de la celda
+     * @param pista, pista nueva
+     * @param pistaAct, pista a quitar de la lista
+     */
     public void quitaPista(StructPista pista, StructPista pistaAct) {
         if (pistaAct != null) {
             _tablero[pistaAct.getPosPista().y][pistaAct.getPosPista().x].setCurrentPista(pista);
@@ -333,6 +378,13 @@ public class Tablero {
         }
     }
 
+    /**
+     * Metodo que, dadas las coordenadas de una celda, calcula si dicha celda en el estado actual del tablero
+     * proporciona una pista.
+     * @param x, int, coordenada x de la casilla de la que queremos obtener la pista
+     * @param y, int, coordenada y de la casilla de la que queremos obtener la pista
+     * @return StructPista, pista actual que genera dicha casilla teniendo en cuenta el estado del tablero actual
+     */
     public StructPista getPistaInCoordenada(int x, int y) {
         Celda actual = _tablero[y][x];
         Pair<Integer, Boolean> ady = compruebaAdyacentes(x, y);
@@ -468,10 +520,22 @@ public class Tablero {
         return pista;
     }
 
+    /**
+     * Metodo que devuelve una pista aleatoria con su correspondiente mensaje y la posicion de la celda que
+     * genera dicha pista
+     * @return
+     */
     public Pair<String, Vector> damePistaAleatoria() {
         return pistas.getPistaTablero();
     }
 
+    /**
+     * Metodo para actualizar las pistas de la celda que se ha modificado en CambiaCelda o CambiaCeldaInversa,
+     * además del estado de todas las celdas que se encuentran en la misma fila y en la misma columna
+     * @param x, int, coordenada x de la celda que vamos a actualizar su pista
+     * @param y, int, coordenada y de la celda que vamos a actualizar su pista
+     * @return
+     */
     public Pistas compruebaPistas(int x, int y) {
         Pistas nuevasPistas = new Pistas();
 
@@ -513,6 +577,10 @@ public class Tablero {
     }
 
 
+    /**
+     * Metodo que, teniendo en cuenta el estado del tablero actual, te actualiza la lista pistas
+     * con todas las pistas que cuenta actualmente el tablero
+     */
     public void compruebaPistasTablero() {
         pistas = new Pistas();
 
@@ -529,8 +597,8 @@ public class Tablero {
     }
 
     /**
-     * Metodo que cambia el estado de la celda si esta es modificable y actualiza el numero de
-     * casillas que ven las celdas azules predefinidas utilizando el metodo de compruebaAdyacentes()
+     * Metodo que cambia el estado de la celda si esta es modificable y actualiza la pista correspondiente a esta celda
+     * llamando a compruebasPistas
      */
     public void cambiaCelda(int _posX, int _posY) {
         if (_tablero[_posY][_posX].isModifiable()) {
@@ -563,7 +631,10 @@ public class Tablero {
 
     }
 
-
+    /**
+     * Metodo que cambia el estado de la celda si esta es modificable y actualiza la pista correspondiente a esta celda
+     * llamando a compruebasPistas. Empleado a la hora de deshacer movimientos.
+     */
     public void cambiaCeldaInversa(int _posX, int _posY) {
         if (_tablero[_posY][_posX].isModifiable()) {
             EstadoCelda sig = EstadoCelda.Vacia;
@@ -602,8 +673,6 @@ public class Tablero {
      * Para ello comprueba en todas las direcciones posibles si se encuentra dicha casilla encerrada
      * sin ninguna conexion con alguna azul
      * <p>
-     * //TO DO: igual el bucle while no hace falta si se mantiene actualizado cuantas casillas azules ve
-     * cada casilla
      * <p>
      * Este método se corresponde con la pista descrita en el punto nº6 de la practica
      */
@@ -620,6 +689,13 @@ public class Tablero {
         return true;
     }
 
+    /**
+     * Metodo que calcula el maximo de celdas colocables en la celda x,y en la direccion dir
+     * @param x
+     * @param y
+     * @param dir
+     * @return Pair con el maximo de celdas azules colocables (Left) y las celdas visibles(Right) en esa direccion
+     */
     private Pair<Integer, Integer> calculaMaxColocablesYVisibles(int x, int y, Vector dir) {
         int auxX = x + dir.x, auxY = y + dir.y, colocables = 0, adyInDir = 0;
         int visibles = _tablero[y][x].getCurrentVisibles();
@@ -649,8 +725,14 @@ public class Tablero {
         return new Pair<Integer, Integer>(colocables, visiblesEnDir);
     }
 
-    //Calcula cual es el maximo de casillas potencialmente azules en una direccion
-    //para cuando nos salimos de los limites del tablero o cuando nos encontramos con una celda roja
+    /**
+     * Calcula cual es el maximo de casillas potencialmente azules en una direccion
+     * para cuando nos salimos de los limites del tablero o cuando nos encontramos con una celda roja
+     * @param x, int, coordenada x de la casilla de la que queremos calcular cual es el maximo de azules que podra ver
+     * @param y, int, coordenada y de la casilla de la que queremos calcular cual es el maximo de azules que podra ver
+     * @param dir
+     * @return
+     */
     private int calculaMaxPosiblesVisibles(int x, int y, Vector dir) {
         int i = 0;
         int auxX = x + dir.x, auxY = y + dir.y;
@@ -662,6 +744,13 @@ public class Tablero {
         return i;
     }
 
+    /**
+     * Metodo que dadas las coordenadas de una casilla, calcula el numero de casillas azules inmediatas que hay en la direccion dir
+     * @param x, int, coordenada x de la casilla
+     * @param y, int, coordenada y de la casilla
+     * @param dir, Vector, direccion en la que queremos calcular el numero de adyacentes
+     * @return
+     */
     private int calculaAdyInmediatas(int x, int y, Vector dir) {
         int auxX = x + dir.x, auxY = y + dir.y, adyInDir = 0;
 
@@ -675,19 +764,38 @@ public class Tablero {
         return adyInDir;
     }
 
+    /**
+     * Metodo que dadas unas coordenadas de celda te devuelve la celda pedida
+     * @param x, int, coordenada x de la celda
+     * @param y, int, coordenada y de la celda
+     * @return, la celda en la fila y columna x
+     */
     public Celda getCelda(int x, int y) {
         return _tablero[y][x];
     }
 
+    /**
+     * Metodo para obtener el numero de filas que tiene nuestro tablero
+     * @return int, dimensiones del tablero
+     */
     public int getDimensions() {
         return _tablero.length;
     }
 
+    /**
+     * Metodo que dadas las coordenadas de una celda, la añade en las lista de celdas
+     * no modificables
+     * @param x, int, coordenada x de la celda que vamos a añadir a la lista
+     * @param y, int, coordenada y de la celda que vamos a añadir a la lista
+     */
     public void addToListaNoModificables(int x, int y) {
         _celdasFijas.add(new Vector(x, y));
     }
 
-    //TODO igual se puede hacer solo con la lista de celdas fijas
+    /**
+     * Metodo para actualizar las celdas visibles que estan viendo las celdas azules del
+     * tablero
+     */
     private void actualizaVisiblesTablero() {
         for (int i = 0; i < _tablero.length; i++) {
             for (int j = 0; j < _tablero.length; j++) {
@@ -702,6 +810,11 @@ public class Tablero {
         }
     }
 
+    /**
+     * Metodo que calcula el porcentaje de celdas que estan rellenas (No son vacias) sobre
+     * las que no son modificables
+     * @return
+     */
     public int porcentajeCeldas() {
         return (int)((float)(numCeldasNoVacias - _celdasFijas.size()) / (float)( _tablero.length * _tablero.length - _celdasFijas.size()) * 100);
     }
