@@ -37,7 +37,6 @@ public class GameScreen implements Screen {
     private boolean botonPista = false;
     private boolean cerrado = false;
     private boolean solved = false;
-    private int porcentaje = 0;
 
     public GameScreen( int tableroSize, boolean randomBoard) {
         this.board = new Tablero(tableroSize, randomBoard);
@@ -196,7 +195,7 @@ public class GameScreen implements Screen {
 
         //Porcentaje de celdas rellenas
         g.setColor(0xCCCCCCFF);
-        g.drawText(Integer.toString(porcentaje) + "%", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() - (Assets.history.getHeight()+ 15)   , 30);
+        g.drawText(Integer.toString(board.porcentajeCeldas()) + "%", Assets.josefisans, g.getLogWidth() / 2, g.getLogHeight() - (Assets.history.getHeight()+ 15)   , 30);
     }
 
     /**
@@ -313,7 +312,6 @@ public class GameScreen implements Screen {
                         }
                         ultimosMovs.addLast(new Pair(c.getEstado(), new Pair(j, k)));
                         board.cambiaCelda(k, j);
-                        porcentaje=board.porcentajeCeldas();
                         fadeTime.put(c, new Fade(125, 254, 1000));
                         return true;
                     } else if (!c.isModifiable()) {
@@ -344,7 +342,6 @@ public class GameScreen implements Screen {
             if (ultimosMovs.size() != 0) {
                 Pair<EstadoCelda, Pair<Integer, Integer>> pairAux = ultimosMovs.getLast();
                 board.cambiaCeldaInversa(pairAux.getRight().getRight(), pairAux.getRight().getLeft());
-                porcentaje=board.porcentajeCeldas();
                 ultimosMovs.removeLast();
             } else {
                 pista = new String[]{"Nothing to undo."};

@@ -818,4 +818,19 @@ public class Tablero {
     public int porcentajeCeldas() {
         return (int)((float)(numCeldasNoVacias - _celdasFijas.size()) / (float)( _tablero.length * _tablero.length - _celdasFijas.size()) * 100);
     }
+
+    /**
+     * Metodo que devuelve el numero de celdas actuales no vacias
+     * @return
+     */
+    public int getNumCeldasNoVacias(){
+        return numCeldasNoVacias;
+    }
+    /**
+     * Metodo para actualizar el numero de celdas no vacias
+     * @param newNum
+     */
+    public void setNumCeldasNoVacias(int newNum){
+        numCeldasNoVacias =newNum;
+    }
 }

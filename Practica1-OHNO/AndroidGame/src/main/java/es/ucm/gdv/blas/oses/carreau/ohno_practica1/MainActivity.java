@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                         Pair<EstadoCelda, Pair<Integer, Integer>> pairMov = new Pair<>(celdaState, new Pair(movX, movY));
                         ultimosMovs.addLast(pairMov);
                     }
+
+                    t.setNumCeldasNoVacias(savedInstanceState.getInt("numCeldasNoVacias"));
                     break;
                 }
 
@@ -119,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         if (screenID == 3) {
             //Serializamos tablero
             outState = saveBoardState(outState);
-            //TO DO:Serializar stack de deshacer
-            outState = saveMovementsStack(outState);
+            //Serializar cola doble de deshacer
+            outState = saveMovementsDeque(outState);
         }
 
         super.onSaveInstanceState(outState);
@@ -166,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+        outState.putInt("numCeldasNoVacias", t.getNumCeldasNoVacias());
         return outState;
     }
 
@@ -175,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
      * @param outState, bundle con el estado que queremos salvar
      * @return Bundle, el bundle actualizado
      */
-    private Bundle saveMovementsStack(Bundle outState) {
+    private Bundle saveMovementsDeque(Bundle outState) {
         GameScreen gameScreen = (GameScreen) game.getCurrentScreen();
         Deque<Pair<EstadoCelda, Pair<Integer, Integer>>> ultimosMovs = gameScreen.getUltimosMovs();
 

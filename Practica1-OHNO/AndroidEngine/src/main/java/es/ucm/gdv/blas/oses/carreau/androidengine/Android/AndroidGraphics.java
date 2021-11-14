@@ -29,7 +29,6 @@ public class AndroidGraphics extends AbstractGraphics {
     private final Paint paint;
     private final Rect srcRect = new Rect();
     private final Rect dstRect = new Rect();
-    private final float dpi;
 
     /**
      * Constructora del motor grafico para la implementacion especifica de Android
@@ -50,7 +49,6 @@ public class AndroidGraphics extends AbstractGraphics {
         activity.getWindowManager().getDefaultDisplay().getSize(p);
         this.winWidth = p.x;
         this.winHeight = p.y;
-        this.dpi = activity.getBaseContext().getResources().getDisplayMetrics().density;
 
     }
 
@@ -155,7 +153,7 @@ public class AndroidGraphics extends AbstractGraphics {
 
         if (aFont != null) {
             paint.setTypeface(aFont);
-            paint.setTextSize((getScaleFactor() * tam) / dpi);
+            paint.setTextSize(tam);
             paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText(text, x, y, paint);
             paint.reset();
