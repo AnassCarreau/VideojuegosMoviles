@@ -5,8 +5,8 @@ import android.media.SoundPool;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Sound;
 
 public class AndroidSound implements Sound {
-    final int soundId;
-    final SoundPool soundPool;
+    private final int soundId;
+    private final SoundPool soundPool;
 
     /**
      * Constructora AndroidSound

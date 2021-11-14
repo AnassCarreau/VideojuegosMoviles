@@ -14,10 +14,10 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 
 public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
-    final Window window;
-    final java.awt.image.BufferStrategy strategy;
-    Color currentColor = Color.WHITE;
-    java.awt.Graphics g;
+    private final Window window;
+    private final java.awt.image.BufferStrategy strategy;
+    private Color currentColor = Color.WHITE;
+    private java.awt.Graphics g;
 
     /**
      * Constructora del motor grafico para la implementacion especifica de PC

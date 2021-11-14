@@ -12,8 +12,8 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Audio;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Sound;
 
 public class AndroidAudio implements Audio {
-    final AssetManager assets;
-    final SoundPool soundPool;
+    private final AssetManager assets;
+    private final SoundPool soundPool;
 
     /**
      * Constructora de AndroidAudio

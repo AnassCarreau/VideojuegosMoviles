@@ -16,11 +16,11 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Input;
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Screen;
 
 public class AndroidGame implements Engine, Runnable {
-    final SurfaceView renderView;
-    final AndroidGraphics graphics;
-    final AndroidInput input;
-    Screen screen;
-    final AndroidAudio audio;
+    private final SurfaceView renderView;
+    private final AndroidGraphics graphics;
+    private final AndroidInput input;
+    private Screen screen;
+    private final AndroidAudio audio;
 
     //Para avisar al compilador que el valor de este atributo
     //puede ser cambiado en una hebra

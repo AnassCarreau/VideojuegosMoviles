@@ -24,12 +24,12 @@ import es.ucm.gdv.blas.oses.carreau.lib.Engine.Interfaces.Image;
 
 
 public class AndroidGraphics extends AbstractGraphics {
-    final AssetManager assets;
-    Canvas canvas;
-    final Paint paint;
-    final Rect srcRect = new Rect();
-    final Rect dstRect = new Rect();
-    final float dpi;
+    private final AssetManager assets;
+    private Canvas canvas;
+    private final Paint paint;
+    private final Rect srcRect = new Rect();
+    private final Rect dstRect = new Rect();
+    private final float dpi;
 
     /**
      * Constructora del motor grafico para la implementacion especifica de Android
