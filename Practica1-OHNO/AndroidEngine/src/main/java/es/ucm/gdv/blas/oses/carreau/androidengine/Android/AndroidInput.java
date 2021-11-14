@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import es.ucm.gdv.blas.oses.carreau.lib.Engine.AbstractGraphics;
@@ -16,6 +17,12 @@ public class AndroidInput implements View.OnTouchListener, Input {
 
     private final List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
     private final AbstractGraphics graphics;
+    private final int MAX_ID_PERMITTED = 10;
+
+    //Array auxiliar para no añadir dos veces eventos con el mismo identificador en
+    //la lista de eventos
+    private boolean [] indexProcessed = new boolean [MAX_ID_PERMITTED];
+
 
     /**
      * Contructora del motor de gestion de entrada para
@@ -27,6 +34,7 @@ public class AndroidInput implements View.OnTouchListener, Input {
     public AndroidInput(Engine engine, View view) {
         this.graphics = (AbstractGraphics) (engine.getGraphics());
         view.setOnTouchListener(this);
+        Arrays.fill(indexProcessed, Boolean.FALSE);
     }
 
     /**
@@ -40,21 +48,10 @@ public class AndroidInput implements View.OnTouchListener, Input {
         synchronized (this) {
             if (touchEventsBuffer.size() > 0) {
                 List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
-                boolean [] indexProcessed = new boolean [10];
 
-                for(int i = 0; i< indexProcessed.length; i++){
-                    indexProcessed[i] = false;
-                }
-
-                for(int i = 0 ; i < touchEventsBuffer.size(); i++){
-                    if(!indexProcessed[touchEventsBuffer.get(i).pointer]){
-                        indexProcessed[touchEventsBuffer.get(i).pointer] = true;
-                        touchEvents.add(touchEventsBuffer.get(i));
-                    }
-                }
-
-                //touchEvents.addAll(touchEventsBuffer);
+                touchEvents.addAll(touchEventsBuffer);
                 touchEventsBuffer.clear();
+                Arrays.fill(indexProcessed, Boolean.FALSE);
                 return touchEvents;
             }
             return touchEventsBuffer;
@@ -80,29 +77,38 @@ public class AndroidInput implements View.OnTouchListener, Input {
                     case MotionEvent.ACTION_POINTER_DOWN: {
                         touchEvent.type = TouchEvent.TOUCH_DOWN;
                         touchEvent.pointer = event.getPointerId(event.getActionIndex());
-                        int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
-                        touchEvent.x = pos[0];
-                        touchEvent.y = pos[1];
-                        touchEventsBuffer.add(touchEvent);
+                        if(!indexProcessed[touchEvent.pointer]) {
+                            indexProcessed[touchEvent.pointer] = true;
+                            int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
+                            touchEvent.x = pos[0];
+                            touchEvent.y = pos[1];
+                            touchEventsBuffer.add(touchEvent);
+                        }
                         break;
                     }
                     case MotionEvent.ACTION_MOVE: {
                         touchEvent.type = TouchEvent.TOUCH_DRAGGED;
                         touchEvent.pointer = event.getPointerId(event.getActionIndex());
-                        int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
-                        touchEvent.x = pos[0];
-                        touchEvent.y = pos[1];
-                        touchEventsBuffer.add(touchEvent);
+                        if(!indexProcessed[touchEvent.pointer]) {
+                            indexProcessed[touchEvent.pointer] = true;
+                            int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
+                            touchEvent.x = pos[0];
+                            touchEvent.y = pos[1];
+                            touchEventsBuffer.add(touchEvent);
+                        }
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_POINTER_UP: {
                         touchEvent.type = TouchEvent.TOUCH_UP;
                         touchEvent.pointer = event.getPointerId(event.getActionIndex());
-                        int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
-                        touchEvent.x = pos[0];
-                        touchEvent.y = pos[1];
-                        touchEventsBuffer.add(touchEvent);
+                        if(!indexProcessed[touchEvent.pointer]) {
+                            indexProcessed[touchEvent.pointer] = true;
+                            int[] pos = graphics.physicalToLogical((int) event.getX(event.getActionIndex()), (int) event.getY(event.getActionIndex()));
+                            touchEvent.x = pos[0];
+                            touchEvent.y = pos[1];
+                            touchEventsBuffer.add(touchEvent);
+                        }
                         break;
                     }
                 }
