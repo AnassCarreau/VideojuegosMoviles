@@ -1,0 +1,1986 @@
+/* promo */
+"    regularly %@" = "原價 %@";
+
+/* promo */
+"    regularly 5 for %@" = "5 個原價 %@";
+
+/* format of post to twitter text */
+"%@ #flowfree" = "%@ #flowfree";
+
+/* promo */
+"%@ additional premium packs" = "%@ 額外的高級關卡包";
+
+/* formatting for the level description for example: Mania, 9x9 level 20 */
+"%@ level %d" = "%1$@ 關卡 %2$d";
+
+/* promo */
+"%@ new levels" = "%@ 個新關卡";
+
+/* promo */
+"%@ new premium packs" = "%@ 個新的高級關卡包";
+
+/* promo */
+"%@ premium packs" = "%@ 個高級關卡包";
+
+/* promo */
+"%@, huge savings over full price." = "%@，超值特價優惠！";
+
+/* promo */
+"%@, Unlock today and beat the game!" = "%@，立即解鎖，攻破這個遊戲吧！";
+
+/* Label text describing daily puzzles, shown when there are new daily puzzles to play.  %d will be replaced with the current streak length, greater than 1, example: '3 day streak!' */
+"%d day streak!  New puzzles available!" = "%d天連擊！出現新的謎題！";
+
+/* Label text describing daily puzzles, shown after the user has completed today's puzzles.  %d will be replaced with the current streak length, greater than 1, example: '3 day streak!' */
+"%d day streak!  Play more tomorrow!" = "%d天連擊！明日有更多可玩！";
+
+/* Label text indicating the length of a daily puzzle streak.  %d will be replaced with the number of days, either zero or greater than one, example: '0 days' or '2 days' */
+"%d days" = "%d天";
+
+/* buy %d hints button. The %d is a number greater than 1. */
+"%d hints" = "%d個提示";
+
+/* Item for purchase.  A hint shows the user part of the solution to the puzzle. */
+"%d Hints" = "%d個提示";
+
+/* Number of hints remaining plus prompt to buy more. The %d is a number greater than 1, or zero. */
+"%d Hints Remain: Get More!" = "尚餘%d個提示：取得更多！";
+
+/* more than one hint remaining */
+"%d hints remaining" = "剩餘 %d 個提示";
+
+/* 20 or more hints left.  Keep %d because it will be replaced with a number 20 or greater. */
+"%d hints remaining.  Get more now!" = "剩餘 %d 個提示。快去取得更多吧！";
+
+/* Number of levels in packs. The %d is a number, such as 150. */
+"%d Premium Levels" = "%d個卓越關卡";
+
+/* Number of levels in packs. The %d is a number, such as 150. */
+"%d Premium Levels Each" = "每個含%d個卓越關卡";
+
+/* Show how many boards are solved, keep %d it will be replaced with a number */
+"%d solved" = "已破解 %d";
+
+/* Label text indicating the number of weeks that weekly puzzles have been completed.  %d will be replaced with the number of weeks, either zero or greater than one, example: '0 weeks' or '2 weeks' */
+"%d weeks" = "%d周";
+
+/* Label text describing weekly puzzles, shown when there are new weekly puzzles to play.  %d will be replaced with the number of weekly weeks completed, greater than 1, example: '3 weeks completed!  New puzzles available!' */
+"%d weeks completed!  New puzzles available!" = "已完成%d周挑戰！可玩新拼圖！";
+
+/* Label text describing weekly puzzles, shown after the user has completed this week's puzzles.  %d will be replaced with the number of weekly weeks completed, greater than 1, example: '3 weeks completed!  Play more on Monday!' */
+"%d weeks completed!  Play more on Monday!" = "已完成%d周挑戰！星期一再玩！";
+
+/* Refers to the ability to buy all game packs as one purchase. */
+"(Best Deal)" = "(超值優惠)";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", \"Flow Free: Bridges\", and the Bridges icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 4,396,260 and 4,414,889)." = "* \"Flow\"、\"Flow Free\"、\"Flow Free: Bridges\" 和 Bridges 圖示均為 Big Duck Games®, LLC 的國際註冊商標（其中包括美國）（註冊編號：4,395,937、4,320,256、4,396,260 和 4,414,889）。";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", \"Flow Free: Hexes\", and the Hexes icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 5,213,571 and 5,213,574)." = "* \"Flow\"、\"Flow Free\"、\"Flow Free: Hexes\" 和 Hexes 圖示均為 Big Duck Games®, LLC 的國際註冊商標（其中包括美國）（註冊編號：4,395,937、4,320,256、5,213,571 和 5,213,574）。";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", and the Flow Free icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256 and 4,356,856)." = "* \"Flow\"、\"Flow Free\" 和 Flow Free 圖示均為 Big Duck Games®, LLC 的國際註冊商標（其中包括美國）（註冊編號：4,395,937、4,320,256 和 4,356,856）。";
+
+/* Label text indicating a one day daily puzzle streak */
+"1 day" = "1天";
+
+/* Label text describing daily puzzles, shown when there are new daily puzzles to play.  Translation should be similar to the corresponding plural string: '%d day streak!  New puzzles available!' */
+"1 day streak!  New puzzles available!" = "1天連擊！出現新的謎題！";
+
+/* Label text describing daily puzzles, shown after the user has completed today's puzzles.  Translation should be similar to the corresponding plural string: '%d day streak!  Play more tomorrow!' */
+"1 day streak!  Play more tomorrow!" = "1天連擊！明日有更多可玩！";
+
+/* only one hint remaining */
+"1 hint remaining" = "剩餘 1 個提示";
+
+/* One hint remaining plus prompt to buy more. Translation should be similar to the corresponding plural string: '%d Hints Remain: Get More!' */
+"1 Hint Remains: Get More!" = "只餘 1 個提示。立即取得更多！";
+
+/* duration of time trial */
+"1 minute" = "1 分鐘";
+
+/* Label text indicating one week of weekly puzzles have been completed. */
+"1 week" = "1周";
+
+/* Label text describing weekly puzzles, shown when there are new weekly puzzles to play.  Translation should be similar to the corresponding plural string: '%d weeks completed!  New puzzles available!' */
+"1 week complete!  New puzzles available!" = "已完成1周挑戰！可玩新拼圖！";
+
+/* Label text describing weekly puzzles, shown after the user has completed this week's puzzles.  Translation should be similar to the corresponding plural string: '%d weeks completed!  Play more on Monday!' */
+"1 week complete!  Play more on Monday!" = "已完成1周挑戰！星期一再玩！";
+
+/* short description of the Jumbo, Purple, and Pink Pack */
+"10x10 - 14x14 boards" = "10x10 至 14x14 版圖";
+
+/* short description of the Jumbo Rainbow Pack */
+"10x10 - 14x14 rainbow" = "10x10 至 14x14 彩虹";
+
+/* short level pack name */
+"10x10 Mania" = "10x10 狂熱";
+
+/* long level pack name */
+"10x10 Mania Pack" = "10x10 狂熱";
+
+/* description of the Jumbo Pack and Yellow Pack */
+"10x10 to 14x14 boards" = "10x10 至 14x14 版圖";
+
+/* description of the Tangle Pack */
+"10x10 to 14x14 boards with tangles" = "10x10 至 14x14 具纏結版圖";
+
+/* description of the Warpway Pack */
+"10x10 to 14x14 boards with warpways" = "10x10 至 14x14 彎曲版圖";
+
+/* description of the Worm Pack */
+"10x10 to 14x14 boards with worms" = "10x10 至 14x14 蟲蟲版圖";
+
+/* short description of the Jumbo Courtyard Pack */
+"11x11 - 15x15 boards" = "11x11 - 15x15 版圖";
+
+/* short level pack name */
+"11x11 Mania" = "11x11 狂熱";
+
+/* long level pack name */
+"11x11 Mania Pack" = "11x11 狂熱";
+
+/* description of the Pathway Pack */
+"11x11 to 15x15 boards with pathways" = "11x11 至 15x15 小徑版圖";
+
+/* description of the Star Field Pack */
+"11x11 to 15x15 boards with stars" = "11x11 至 15x15 明星版圖";
+
+/* description of the Jumbo Courtyard Pack */
+"11x11 to 15x15 boards with walls" = "11x11 至 15x15 有邊牆的版圖";
+
+/* description of the Flower Field Pack */
+"11x11 to 15x15 fields of flowers" = "11x11 至 15x15 花田版圖";
+
+/* short description of the Jumbo Rectangle and Hextangle Packs */
+"11x14 - 15x18 boards" = "11x11 - 15x18 版圖";
+
+/* description of the Jumbo Rectangle Pack */
+"11x14 to 15x18 boards" = "11x14 至 15x18 版圖";
+
+/* short level pack name */
+"12x12 Mania" = "12x12 狂熱";
+
+/* long level pack name */
+"12x12 Mania Pack" = "12x12 狂熱";
+
+/* short level pack name */
+"13x13 Mania" = "13x13 狂熱";
+
+/* long level pack name */
+"13x13 Mania Pack" = "13x13 狂熱";
+
+/* short level pack name */
+"14x14 Mania" = "14x14 狂熱";
+
+/* long level pack name */
+"14x14 Mania Pack" = "14x14 狂熱";
+
+/* short level pack name */
+"15x15 Mania" = "15x15 狂熱";
+
+/* long level pack name */
+"15x15 Mania Pack" = "15x15 狂熱";
+
+/* duration of time trial */
+"2 minutes" = "2 分鐘";
+
+/* duration of time trial */
+"30 seconds" = "30 秒";
+
+/* duration of time trial */
+"4 minutes" = "4 分鐘";
+
+/* description of the 4x4 Boundless Pack */
+"4x4 boards with full warps" = "4x4 版圖及完整的 Warps";
+
+/* short level pack name */
+"4x4 Boundless" = "4x4 無邊際";
+
+/* long level pack name */
+"4x4 Boundless Pack" = "4x4 無邊際關卡包";
+
+/* description of the Small Galaxy Pack */
+"4x4 to 6x6 boards with wide warps" = "4x4 至 6x6 版圖及廣闊的 Warps";
+
+/* description of the Tower Pack */
+"4x5 to 8x14 boards" = "4x5 至 8x14 版圖";
+
+/* promo */
+"5 new color sets" = "5 套新色版";
+
+/* short description of the Blue and Green Packs, and Hexes Classic Pack 2 */
+"5x5 - 9x9 boards" = "5x5 - 9x9 版圖";
+
+/* description of the Starter Pack */
+"5x5 and 6x6 boards" = "5x5 與 6x6 版圖";
+
+/* description of the Kids Pack in Warps */
+"5x5 boards with easy warps" = "5x5 版圖及簡易的 Warps";
+
+/* description of the 5x5 Boundless Pack */
+"5x5 boards with full warps" = "5x5 版圖及完整的 Warps";
+
+/* description of the Starter Pack */
+"5x5 boards with increasing warps" = "5x5 版圖及更多 Warps";
+
+/* short description of the Comet Pack */
+"5x5 boards with warps" = "5x5 變形版圖";
+
+/* short level pack name */
+"5x5 Boundless" = "5x5 無邊際";
+
+/* long level pack name */
+"5x5 Boundless Pack" = "5x5 無邊際關卡包";
+
+/* short level pack name */
+"5x5 Mania" = "5x5 狂熱";
+
+/* long level pack name */
+"5x5 Mania Pack" = "5x5 狂熱";
+
+/* description of the Classic, Regular, and Bonus Pack */
+"5x5 to 9x9 boards" = "5x5 至 9x9 版圖";
+
+/* description of the Jet Pack */
+"5x5 to 9x9 boards with 2 warps" = "5x5 至 9x9 版圖及 2 Warps";
+
+/* description of the Scanline Pack */
+"5x5 to 9x9 boards with scanning walls" = "5x5 至 9x9 具掃描線版圖";
+
+/* description of the Warps Pack. 'warps' is the brand name of one of our apps and shouldn't be localized. */
+"5x5 to 9x9 boards with warps" = "5x5 至 9x9 版圖及 Warps";
+
+/* description of the Flower Pack */
+"5x5 to 9x9 flowers" = "5x5 至 9x9 花卉";
+
+/* description of the Tower Pack */
+"5x6 to 9x15 boards" = "5x6 至 9x15 版圖";
+
+/* promo */
+"60% off!" = "4 折！";
+
+/* promo */
+"60% savings over full price!" = "原價四折優惠！";
+
+/* promo */
+"60% savings over regular price!" = "原價四折優惠！";
+
+/* short level pack name */
+"6x6 Boundless" = "6x6 無邊際";
+
+/* long level pack name */
+"6x6 Boundless Pack" = "6x6 無邊際關卡包";
+
+/* short description of the 6x6 Boundless Pack */
+"6x6 full warps boards" = "6x6 整面變形版圖";
+
+/* short level pack name */
+"6x6 Mania" = "6x6 狂熱";
+
+/* long level pack name */
+"6x6 Mania Pack" = "6x6 狂熱";
+
+/* description of the Pockets Pack */
+"6x6 to 10x10 boards with pockets" = "6x6 至 10x10 口袋版圖";
+
+/* description of the Worm Pack */
+"6x6 to 10x10 boards with worms" = "6x6 至 10x10 蟲蟲版圖";
+
+/* description of the Large Galaxy Pack */
+"6x6 to 8x8 boards with wide warps" = "6x6 至 8x8 版圖及廣闊的 Warps";
+
+/* description of the Tower Pack */
+"6x7 to 10x16 boards" = "6x7 至 10x16 版圖";
+
+/* promo */
+"7 bonus hints" = "7 個獎勵提示";
+
+/* promo */
+"7 extra hints" = "7 個額外提示";
+
+/* short description of the Extreme Rainbow Pack */
+"7x7 - 15x15 rainbow" = "7x7 - 15x15 彩虹";
+
+/* description of the Challenge Pack */
+"7x7 and 8x8 boards" = "7x7 與 8x8 版圖";
+
+/* short level pack name */
+"7x7 Boundless" = "7x7 無邊際";
+
+/* long level pack name */
+"7x7 Boundless Pack" = "7x7 無邊際關卡包";
+
+/* short description of the 7x7 Boundless Pack */
+"7x7 full warps boards" = "7x7 整面變形版圖";
+
+/* short level pack name */
+"7x7 Mania" = "7x7 狂熱";
+
+/* long level pack name */
+"7x7 Mania Pack" = "7x7 狂熱";
+
+/* description of the Hashed Pack */
+"7x7 to 11x11 boards with hashes" = "7x7 至 11x11 井號版圖";
+
+/* description of the Warps Scattered Pack */
+"7x7 to 11x11 boards with obstacles" = "設有障礙物的 7x7 至 11x11 版圖";
+
+/* description of the Rift Pack */
+"7x7 to 11x11 boards with rifts" = "7x7 至 11x11 裂痕版圖";
+
+/* description of the Stitched Pack */
+"7x7 to 11x11 boards with stitches" = "7x7 至 11x11 有縫線的版圖";
+
+/* description of the Courtyard, Warpyard, and Capacitor Packs */
+"7x7 to 11x11 boards with walls" = "7x7 至 11x11 有邊牆的版圖";
+
+/* description of the Sunflower Pack */
+"7x7 to 15x15 flowers" = "7x7 至 15x15 花卉";
+
+/* description of the Rectangle and Hextangle Pack */
+"8x10 to 12x14 boards" = "8x10 至 12x14 版圖";
+
+/* short description of the Extreme Rainbow Pack */
+"8x8 - 15x15 rainbow" = "8x8 - 15x15 彩虹";
+
+/* short description of the Deep Space Pack 2 */
+"8x8 - 9x9 star boards" = "8x8 - 9x9 星星版圖";
+
+/* description of the Deep Space Pack */
+"8x8 and 9x9 boards with star walls" = "8x8 及 9x9 有明星背景的版圖";
+
+/* short level pack name */
+"8x8 Mania" = "8x8 狂熱";
+
+/* long level pack name */
+"8x8 Mania Pack" = "8x8 狂熱";
+
+/* description of the Scattered Pack */
+"8x8 to 12x12 boards with obstacles" = "設有障礙物的 8x8 至 12x12 版圖";
+
+/* description of the Pockets Pack */
+"8x8 to 12x12 boards with pockets" = "8x8 至 12x12 口袋版圖";
+
+/* description of the Hourglass Pack */
+"9x11 to 13x15 hourglass boards" = "9x11 至 13x15 的沙漏版圖";
+
+/* description of the Time Warp Pack */
+"9x11 to 13x15 time warp boards" = "9x11 至 13x15 的時空隧道版圖";
+
+/* short description of the Jumbo Interval Pack */
+"9x9 - 15x15 intervals" = "9x9 - 15x15 間隔版圖";
+
+/* description of the Bonus Pack */
+"9x9 boards" = "9x9 版圖";
+
+/* short level pack name */
+"9x9 Mania" = "9x9 狂熱";
+
+/* long level pack name */
+"9x9 Mania Pack" = "9x9 狂熱";
+
+/* description of the Jumbo Jet Pack */
+"9x9 to 13x13 boards with 2 warps" = "9x9 至 13x13 版圖及 2 Warps";
+
+/* description of the Courtyard Spin Pack */
+"9x9 to 13x13 boards with walls" = "9x9 至 13x13 有邊牆的版圖";
+
+/* description of the Party Pack */
+"A celebration of Flow Free!" = "慶祝 Flow Free！";
+
+/* promo */
+"A fun and challenging new twist on Flow Free!" = "一個有趣及富有挑戰性的 Flow Free 新玩法!";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"A new weekly challenge is out!" = "全新每周挑戰現已出爐！";
+
+/* Choice on the main menu to read about the game. */
+"about" = "關於";
+
+/* promo */
+"Add some color to your game with themes!" = "用各種主題為您的遊戲增添色彩吧！";
+
+/* Menu label for animations that are turned on fully. */
+"all" = "全部";
+
+/* description of the 10x10 Mania Pack */
+"All 10x10, all the time!" = "全天候全部 10x10！";
+
+/* short description of the 11x11 Mania Pack */
+"All 11x11, all the time!" = "全天候全部 11x11！";
+
+/* short description of the 12x12 Mania Pack */
+"All 12x12, all the time!" = "全天候全部 12x12！";
+
+/* short description of the 13x13 Mania Pack */
+"All 13x13, all the time!" = "全天候全部 13x13！";
+
+/* short description of the 14x14 Mania Pack */
+"All 14x14, all the time!" = "全天候全部 14x14！";
+
+/* short description of the 15x15 Mania Pack */
+"All 15x15, all the time!" = "全天候全部 15x15！";
+
+/* description of the 5x5 Mania Pack */
+"All 5x5, all the time!" = "全天候全部 5x5！";
+
+/* description of the 6x6 Mania Pack */
+"All 6x6, all the time!" = "全天候全部 6x6！";
+
+/* description of the 7x7 Mania Pack */
+"All 7x7, all the time!" = "全天候全部 7x7！";
+
+/* description of the 8x8 Mania Pack */
+"All 8x8, all the time!" = "全天候全部 8x8！";
+
+/* description of the 9x9 Mania Pack */
+"All 9x9, all the time!" = "全天候全部 9x9！";
+
+/* promo */
+"All board sizes" = "全部版圖大小";
+
+/* Something the user will get, themes change all the colors in the game */
+"All color themes!" = "所有顏色主題！";
+
+/* promo */
+"All for just %@" = "全部只需 %@";
+
+/* Something the user will get, level packs give the user more puzzles to solve */
+"All premium level packs!" = "所有高級關卡包！";
+
+/* Flows finished but pipe remaining dialog title */
+"Almost there..." = "快到了...";
+
+/* description of the Amoeba Pack */
+"Amoeba boards increasing in size" = "阿米巴版圖正在變大";
+
+/* weekly puzzle theme name. 'Amoeba' translation should be similar to the related pack 'Amoeba Pack' */
+"Amoeba Challenge" = "變形蟲挑戰";
+
+/* short level pack name */
+"Amoeba Pack" = "阿米巴卡包";
+
+/* promo */
+"An exciting limited time offer:" = "驚喜限時優惠：";
+
+/* Price of what you get for free, for example: An over $8 value for free! */
+"An over $10 value for free!" = "免費獲得超過$10的價值！";
+
+/* Price of what you get for free, for example: An over $8 value for free! */
+"An over $8 value for free!" = "免費獲得超過$8的價值！";
+
+/* Menu item for toggling animations on or off. */
+"animations: %@" = "動畫：%@";
+
+/* Ask if the user would like to exit the game.  Do not localize 'Flow Free'. */
+"Are you sure that you want to exit Flow Free?" = "您確定要結束 Flow Free 嗎？";
+
+/* Message popup asking user to confirm reset. */
+"Are you sure you want to reset all level progress?" = "您確定要重設所有關卡的進度嗎?";
+
+/* Confirm back navigation dialog button */
+"back to menu" = "回到選單";
+
+/* Pack is locked. %@ will be replaced with a localized pack name. example: 'Beat any pack to play the Blue Pack' */
+"Beat any pack to play the %@." = "完成任意一個關卡包以解鎖 %@。";
+
+/* Pack is locked.  %1$@ and %2$@ will be replaced with localized pack names, example: 'Beat the Blue Pack to play the Pink Pack' */
+"Beat the %@ to play the %@." = "完成 %1$@ 才能玩 %2$@。";
+
+/* Pack is locked. %@ will be replaced with a localized pack name. example: 'Beat the Blue Pack to play this pack' */
+"Beat the %@ to play this pack." = "完成 %@ 才能玩這個關卡包。";
+
+/* buy more hints to get a better price per hint */
+"Best Deal" = "超值優惠";
+
+/* Selling point for the Unlock All bundle */
+"Best deal!" = "超值優惠！";
+
+/* short level pack name */
+"Blue Pack" = "藍色關卡包";
+
+/* text on the game screen telling the user the board number */
+"board %d" = "第 %d 版圖";
+
+/* Header title on the board size menu. */
+"board size" = "版圖大小";
+
+/* Show the size of the board, keep %d it will be replaced with a number, example 8x8 */
+"board size: %dx%d" = "版圖大小：%1$dx%2$d";
+
+/* short level pack name */
+"Bonus Pack" = "獎勵關卡包";
+
+/* section name */
+"Boundless" = "無邊";
+
+/* short level pack name. 'Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Bridges Sampler" = "Bridges 樣本";
+
+/* text used on a button to cancel the action */
+"cancel" = "取消";
+
+/* text used on a button to cancel the action */
+"Cancel" = "取消";
+
+/* weekly puzzle theme name. 'Capacitor' translation should be similar to the related pack 'Capacitor Pack' */
+"Capacitor Challenge" = "電容挑戰";
+
+/* short level pack name */
+"Capacitor Pack" = "電容關卡包";
+
+/* section name */
+"Challenge" = "挑戰";
+
+/* short level pack name */
+"Challenge Pack" = "挑戰關卡包";
+
+/* pause dialog button */
+"change settings" = "變更設定";
+
+/* promo for game, for example Check out my progress in Flow Free! */
+"Check out my progress in %@!" = "來看看我在 %@ 的進度！";
+
+/* promo for game, for example Check out this Flow Free puzzle! */
+"Check out this %@ puzzle!" = "來看看這個 %@ 謎題！";
+
+/* Language name, for display as a game language option */
+"Chinese (Simp.)" = "簡體中文";
+
+/* Language name, for display as a game language option */
+"Chinese (Trad.)" = "繁體中文";
+
+/* Claim hint reward after watching a rewarded video. */
+"claim" = "領取";
+
+/* short theme name */
+"Classic" = "經典";
+
+/* promo */
+"Classic and Jumbo boards" = "經典與巨大版圖";
+
+/* short level pack name */
+"Classic Pack" = "經典關卡包";
+
+/* short level pack name */
+"Classic Pack 2" = "經典關卡包 2";
+
+/* full theme name */
+"Classic Theme" = "經典主題";
+
+/* Button to close the dialog */
+"Close" = "關閉";
+
+/* Menu item indicating whether syncing game progress to the cloud is currently on or off. %@ will be replaced with 'on' or 'off', example: 'cloud sync: off' */
+"cloud sync: %@" = "雲端同步: %@";
+
+/* weekly puzzle theme name */
+"Clovers Challenge" = "幸運草挑戰";
+
+/* Menu item for toggling flow color labels on or off.  Labeling each flow color with a letter is useful for players that are color blind.  %@ will be replaced with 'on' or 'off', example: 'color labels: off' */
+"color labels: %@" = "顏色標示：%@";
+
+/* Description on the store submenu that explains Themes. */
+"Color your game and boards!" = "為您的遊戲與版圖添上色彩！";
+
+/* short level pack name */
+"Comet Pack" = "彗星關卡包";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"Complete this week's puzzles before they're gone!" = "在本周挑戰消失前完成拼圖！";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"Complete today's puzzles before midnight to extend your streak!" = "午夜前完成今日謎題，延長連擊！";
+
+/* short level pack name */
+"Concepts Pack" = "概念關卡包";
+
+/* Title for back confirmation dialog */
+"Confirm" = "確認";
+
+/* Dialog title that is used when asking the user if they want to exit the game. */
+"Confirm Exit" = "確認結束";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'Congratulations on beating the Green Pack' */
+"Congratulations on beating the %@!" = "恭喜您完成了 %@！";
+
+/* Dialog title text */
+"Congratulations!" = "恭喜您！";
+
+/* Button to continue after completing a Time Trial. */
+"continue" = "繼續";
+
+/* weekly puzzle theme name */
+"Cornerless Challenge" = "無角挑戰";
+
+/* Hints error message */
+"couldn't load" = "無法讀取";
+
+/* short level pack name */
+"Courtyard Pack" = "庭院關卡包";
+
+/* short level pack name */
+"Courtyard Spin" = "庭院旋轉";
+
+/* long level pack name */
+"Courtyard Spin Pack" = "庭院旋轉關卡包";
+
+/* Label text indicating the length of the user's current daily puzzle streak.  %@ will be replaced with the number of days, example: 'Current streak: 2 days' */
+"Current streak: %@" = "目前連擊：%@";
+
+/* Two letter language code for this language (for example, 'en' for English).  See ISO 639-1: http://www.loc.gov/standards/iso639-2/php/English_list.php */
+"currentLanguage" = "zh-Hant";
+
+/* promo */
+"Customize your boards with color themes!" = "以顏色主題自訂您的版圖！";
+
+/* Choice on the main menu to play the daily puzzles. */
+"daily puzzles" = "每日謎題";
+
+/* New puzzles every day */
+"Daily Puzzles" = "每日謎題";
+
+/* short theme name */
+"Dark" = "暗黑";
+
+/* full theme name */
+"Dark Matter" = "暗黑物質";
+
+/* Label text indicating the total number of daily puzzle packs the user has completed.  %@ will be replaced with the number of days, example: 'Days played: 7 days' */
+"Days played: %@" = "累積完成日數: %@";
+
+/* short level pack name */
+"Deep Space" = "宇宙深空";
+
+/* short level pack name */
+"Deep Space 2" = "宇宙深空 2";
+
+/* long level pack name */
+"Deep Space Pack" = "宇宙深空關卡包";
+
+/* long level pack name */
+"Deep Space Pack 2" = "宇宙深空關卡包 2";
+
+/* promo */
+"Discover a new dimension of Flow Free!" = "發現 Flow Free 的新面貌！";
+
+/* Button to decline reviewing the app */
+"Don't Ask Again" = "不要再詢問";
+
+/* weekly puzzle theme name */
+"Donuts Challenge" = "甜甜圈挑戰";
+
+/* weekly puzzle theme name */
+"Dotted Challenge" = "班點挑戰";
+
+/* promo */
+"download\nfree!" = "免費\n下載!";
+
+/* Help text for Flow Free: Warps app */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.  But watch out, pipes will break if they cross or overlap!\n\nDrag outwards through a warp to make the pipe appear on the opposite side.\n\nAfter warping, you may need to lift your finger to complete the flow.  Don't worry, it won't affect your score!\n\nOn some boards, you may not need to use all of the warps." = "拖放以連接相同顏色的管子，形成水流。\n\n連接相同的顏色，同時管子需經過整個版圖，才算解開謎題。\n請小心，如果管子互相交錯或重疊就會破掉！\n\n用 Warp 將管子拖向外，管子就會向相反方向彎曲。\n\n彎曲之後，可能要鬆開手指才能完成水流。別擔心，這不會影響您的分數！\n\n有些版圖未必需要用到所有的 Warps。";
+
+/* Help text for Flow Free: Bridges app */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!  Use the bridge to cross two pipes and solve the puzzle.\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode." = "拖放以連接相同顏色的管子，形成水流。\n\n連接相同的顏色，同時管子需經過整個版圖，才算解開謎題。\n\n請小心，如果管子互相交錯或重疊就會破掉！使用橋樑即可重疊管子，助您解開謎題。\n\n太簡單嗎？試試選擇一個更大的版圖或不同的關卡包。又或者選擇限時關卡模式，挑戰您的速度。";
+
+/* Help text for Flow Free and Flow Free: Hexes apps */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode." = "拖放以連接相同顏色的管子，形成水流。\n\n連接相同的顏色，同時管子需經過整個版圖，才算解開謎題。\n\n請小心，如果管子互相交錯或重疊就會破掉！\n\n太簡單嗎？試試選擇一個更大的版圖或不同的關卡包。又或者選擇限時關卡模式，挑戰您的速度。";
+
+/* weekly puzzle theme name */
+"Dumbbell Challenge" = "啞鈴挑戰";
+
+/* level difficulty */
+"easy" = "簡單";
+
+/* short description of the Kids Pack */
+"Easy 5x5 - 6x6 boards" = "簡易5x5 - 6x6版圖";
+
+/* description of the Kids Pack */
+"Easy 5x5 and 6x6 boards" = "簡易 5x5 與 6x6 版圖";
+
+/* short description of the Kids Pack */
+"Easy 5x5 boards" = "簡易5x5版圖";
+
+/* Language name, for display as a game language option */
+"English" = "英文";
+
+/* Remove Ads Dialog Message */
+"Enjoy thousands of puzzles, with zero ads!" = "暢玩過千款解謎遊戲，兼享零廣告體驗！";
+
+/* Ask the user to review the app in the app store. */
+"Enjoying the app?\nPlease give us a review." = "喜歡這個遊戲嗎？\n請給我們一個評價吧。";
+
+/* promo */
+"Exciting Offer!" = "驚喜優惠！";
+
+/* description of the Bridges Sampler. 'Flow Free: Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Bridges" = "體驗 Flow Free: Bridges";
+
+/* description of the Hexes Sampler. 'Flow Free: Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Hexes" = "體驗 Flow Free: Hexes";
+
+/* description of the Warps Sampler. 'Flow Free: Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Warps" = "體驗 Flow Free: Warps";
+
+/* Extra options and functionality. */
+"Extras" = "雜項";
+
+/* section name */
+"Extreme" = "極限";
+
+/* weekly puzzle theme name */
+"Extreme Cornerless" = "極限無邊角";
+
+/* weekly puzzle theme name. 'Courtyard' translation should be similar to the related pack 'Courtyard Pack' */
+"Extreme Courtyard" = "極限庭院";
+
+/* weekly puzzle theme name. 'Courtyard Spin' translation should be similar to the related pack 'Courtyard Spin Pack' */
+"Extreme Courtyard Spin" = "極限迴轉庭院";
+
+/* short level pack name and weekly puzzle theme name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Extreme Hextangle" = "極限正六邊形";
+
+/* long level pack name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Extreme Hextangle Pack" = "極限正六邊形關卡包";
+
+/* weekly puzzle theme name */
+"Extreme Interval" = "極限間隔";
+
+/* short level pack name */
+"Extreme Pack" = "極限關卡包";
+
+/* short level pack name */
+"Extreme Pack 2" = "極限關卡包 2";
+
+/* short level pack name and weekly puzzle theme name */
+"Extreme Rainbow" = "極限彩虹";
+
+/* long level pack name */
+"Extreme Rainbow Pack" = "極限彩虹關卡包";
+
+/* weekly puzzle theme name */
+"Extreme Rectangle" = "極限矩形";
+
+/* weekly puzzle theme name */
+"Extreme Sawtooth" = "極限鋸齒";
+
+/* weekly puzzle theme name. 'Tower' translation should be similar to the related pack 'Tower Pack' */
+"Extreme Tower" = "極限高塔";
+
+/* short theme name */
+"Fall" = "秋天";
+
+/* full theme name */
+"Fall Harvest" = "秋收";
+
+/* title of color theme for in app purchase */
+"Fall Harvest Colors" = "秋收色";
+
+/* description of color theme in app purchase */
+"Fall Harvest Colors theme" = "秋收色主題";
+
+/* promo */
+"Feed your addiction and\nunlock all packs today!" = "不用再心癮難耐，\n立即解鎖所有關卡包吧！";
+
+/* Flows finished but pipe remaining dialog message */
+"Fill the board with pipe to complete the level." = "管子需經過整個版圖，才算解開謎題。";
+
+/* Header on the store submenu.  Themes change the colors within the game. */
+"Flow Themes" = "水流主題";
+
+/* short level pack name */
+"Flower Field Pack" = "花田關卡包";
+
+/* short level pack name */
+"Flower Pack" = "花卉關卡包";
+
+/* weekly puzzle theme name */
+"Flower Rainbow" = "花卉彩虹";
+
+/* On the game screen, how many flows are complete / how many to go */
+"flows: %d/%d" = "流動: %1$d/%2$d";
+
+/* weekly puzzle theme name */
+"Frames Challenge" = "框框挑戰";
+
+/* Item is free, no cost to purchase */
+"Free" = "免費";
+
+/* Dialog title text */
+"Free Hint" = "免費提示";
+
+/* Rewarded Hint Dialog Header */
+"Free Hint!" = "免費提示！";
+
+/* Something the user will get, hints help users solve puzzles */
+"Free hints!" = "免費提示！";
+
+/* promo */
+"Free Mania, Boundless,\nand Deep Space packs" = "免費的狂熱、無邊際及\n宇宙深空關卡包";
+
+/* promo */
+"Free Mania, Flower,\nand Extreme packs" = "免費的狂熱、花卉及\n極限關卡包";
+
+/* promo */
+"Free Mania, Jumbo,\nand Extreme packs" = "免費的狂熱、巨大及\n極限關卡包";
+
+/* Choice on the main menu to play without trying to beat the clock */
+"free play" = "玩遊戲";
+
+/* Language name, for display as a game language option */
+"French" = "法文";
+
+/* Dialog title */
+"Game Paused" = "遊戲暫停";
+
+/* Language name, for display as a game language option */
+"German" = "德文";
+
+/* description of hints in app purchase. The %d is a number greater than 1. */
+"get %d hints" = "%d 個提示";
+
+/* get hint with rewarded video button */
+"get 1 free hint!" = "1 個免費提示！";
+
+/* Free hint button on the level complete dialog. */
+"get a free hint" = "取得免費提示";
+
+/* Flows finished but pipe remaining dialog button */
+"get a hint" = "取得 1 個提示";
+
+/* Prompt the user to get achievements from online. */
+"Get Achievements?" = "是否取得成就？";
+
+/* Hint Dialog Header */
+"Get Hints" = "取得提示";
+
+/* Button on the notification dialog asking the user to download the promoted app */
+"Get It" = "取得";
+
+/* promo */
+"get it now" = "立即取得";
+
+/* promo */
+"get it now!" = "立即取得！";
+
+/* Button on the notification dialog asking the user to download the promoted app */
+"Get It!" = "取得！";
+
+/* Upsell the user to download one of our other games to get more levels.  Will appear before the text logo of the game, example: 'get more <bridges logo>' */
+"get more" = "取得更多";
+
+/* More hints button on the level complete dialog. */
+"get more hints" = "取得更多提示";
+
+/* Button to promote purchasing more hints. */
+"Get More Hints" = "取得更多提示";
+
+/* upsell text */
+"Get more hints today!" = "立即取得更多提示！";
+
+/* Upsell the user to get more levels. */
+"get more levels" = "取得更多關卡";
+
+/* Button to promote purchasing more levels. */
+"Get More Levels" = "取得更多關卡";
+
+/* promo */
+"Get the Starter Bundle today!" = "立即取得入門套裝！";
+
+/* promo */
+"Get them all for just %@" = "取得全部只要 %@";
+
+/* promo */
+"Get them all now!" = "現在就一網打盡吧！";
+
+/* upsell text */
+"Go Pro! Get more levels today!" = "升級專業版！今天就來取得更多的關卡！";
+
+/* promo */
+"Great Deal!" = "超划算的優惠！";
+
+/* promo */
+"Great Flowing!" = "傑出的水流！";
+
+/* short level pack name */
+"Green Pack" = "綠色關卡包";
+
+/* level difficulty */
+"hard" = "難";
+
+/* section name */
+"Hard Manias" = "高難度狂熱";
+
+/* level difficulty */
+"harder" = "更難";
+
+/* level difficulty */
+"hardest" = "最難";
+
+/* short level pack name */
+"Hashed Pack" = "井號關卡包";
+
+/* weekly puzzle theme name. 'Hashtag' as in the symbol # */
+"Hashtag Bridges Challenge" = "井字橋樑挑戰";
+
+/* Header title on the help menu. */
+"help" = "幫助";
+
+/* weekly puzzle theme name. Play on the phrase 'X marks the spot' */
+"Hex Marks The Spot" = "完美六邊形";
+
+/* short level pack name. 'Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Hexes Sampler" = "Hexes 樣本";
+
+/* weekly puzzle theme name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Hextangle Challenge" = "正六邊形挑戰";
+
+/* short level pack name (a play on Hexagon + Rectangle) */
+"Hextangle Pack" = "六邊形關卡包";
+
+/* section name (a play on Hexagon + Rectangle) */
+"Hextangles" = "六邊形";
+
+/* short theme name */
+"Holiday" = "假日";
+
+/* full theme name */
+"Holiday Gift" = "假日禮物";
+
+/* short theme name */
+"Honey" = "蜂窩";
+
+/* full theme name */
+"Honeycomb" = "蜂窩";
+
+/* short level pack name */
+"Hourglass Pack" = "沙漏關卡包";
+
+/* Option on the about menu that will explain the game rules. */
+"how to play" = "遊戲規則說明";
+
+/* promo price, example: Just $1.99 */
+"Huge savings over full price." = "超值特價優惠";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat %@ levels in %@!  Can you?" = "我完成了 %2$@ 中的 %1$@ 關卡！您能嗎？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat %@ levels perfectly in %@!  Can you?" = "我完美地完成了 %2$@ 中的 %1$@ 關卡！您能嗎？";
+
+/* Social invite. %d is number of levels, %@ is Flow Free or Flow Free Bridges. */
+"I beat %d level packs in %@!  Can you?" = "我完成了 %2$@ 中的 %1$d 關！挑戰我吧？";
+
+/* Social invite. %d is number of levels, %@ is Flow Free or Flow Free Bridges. */
+"I beat %d level packs perfectly in %@!  Can you?" = "我完美地完成了 %2$@ 中的 %1$d 關！挑戰我吧？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat all the free level packs in %@!  Can you?" = "我完成了所有在 %@ 裡的免費關卡包！挑戰我吧？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat all the included level packs in %@!  Can you?" = "我完成了所有在 %@ 裡的關卡包！挑戰我吧？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat EVERY level pack in %@!  Can you?" = "我完成了所有在 %@ 裡的關卡包！挑戰我吧？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat one level in %@!  Can you?" = "我完成了 %@ 的一個關卡！您能嗎？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat one level perfectly in %@!  Can you?" = "我完成地完成了一個 %@ 的關卡！您能嗎？";
+
+/* Social invite. %1$@ is the Pack Name, %2$@ is Flow Free or Flow Free Bridges. example: 'I beat the Green Pack in Flow Free!  Can you?'' */
+"I beat the %@ in %@!  Can you?" = "我完成了 %2$@ 的 %1$@ ！您能嗎？";
+
+/* Social invite. %1$@ is the Pack Name, %2$@ is Flow Free or Flow Free Bridges. example: 'I beat the Green Pack perfectly in Flow Free!  Can you?' */
+"I beat the %@ perfectly in %@!  Can you?" = "我完美地完成了 %2$@ 的 %1$@ ！您能嗎？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on all the free level packs in %@!  Can you beat that?" = "我完美完成了所有 %@ 的關卡包！您敢挑戰嗎？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on all the included level packs in %@!  Can you beat that?" = "我完美完成了所有 %@ 的關卡包！您敢挑戰嗎？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on EVERY level pack in %@!  Can you match that?" = "我完美完成了所有 %@ 的關卡包！您敢挑戰嗎？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I haven't beaten any levels in %@ yet.  Can you?" = "我尚未在 %@ 完成任何關卡。您能嗎？";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free perfectly!  Can you? */
+"I solved %@ in %@ perfectly!  Can you?" = "我完美地完成了 %2$@ 中的 %1$@ ！您能嗎？";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free!  Can you? */
+"I solved %@ in %@!  Can you?" = "我完成了 %2$@ 的 %1$@ ！您能嗎？";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free.  Join me! */
+"I solved %@ in %@.  Join me!" = "我在 %2$@ 完成了 %1$@。快來一起玩！";
+
+/* promo for game, for example I'm working on Mania, 9x9 level 20 in Flow Free.  Can you solve it? */
+"I'm working on %@ in %@.  Can you solve it?" = "我卡在 %2$@ 的 %1$@。您有頭緒嗎？";
+
+/* Menu item indicating syncing game progress to iCloud is currently off. */
+"iCloud sync: off" = "iCloud 同步：停用";
+
+/* Menu item indicating syncing game progress to iCloud is currently on. */
+"iCloud sync: on" = "iCloud 同步：啟用";
+
+/* Message popup on iOS asking user to confirm reset. */
+"If you've previously purchased any level packs, this will download them again for free." = "如果您之前曾經購買過任何關卡包，系統將免費重新下載這些關卡包。";
+
+/* description of the Inkblot Pack */
+"Inkblot boards increasing in size" = "墨跡版圖正在變大";
+
+/* weekly puzzle theme name. 'Inkblot' translation should be similar to the related pack 'Inkblot Pack' */
+"Inkblot Challenge" = "墨跡版圖";
+
+/* short level pack name */
+"Inkblot Pack" = "黑跡版圖";
+
+/* weekly puzzle theme name. 'Interval' translation should be similar to the related pack 'Interval Pack' */
+"Interval Challenge" = "間隔挑戰";
+
+/* short level pack name */
+"Interval Pack" = "中場套裝";
+
+/* description of the Interval Pack */
+"Intervals from 6x6 to 12x12" = "中場套裝由 6x6 至 12x12";
+
+/* description of the Jumbo Interval Pack */
+"Intervals from 9x9 to 15x15" = "中場套裝由 9x9 至 15x15";
+
+/* section name */
+"Intro" = "入門";
+
+/* short level pack name */
+"Intro Pack" = "起步關卡包";
+
+/* Language name, for display as a game language option */
+"Italian" = "義大利文";
+
+/* Language name, for display as a game language option */
+"Japanese" = "日文";
+
+/* short level pack name */
+"Jet Pack" = "噴射機關卡包";
+
+/* section name */
+"Jumbo" = "巨形";
+
+/* short level pack name */
+"Jumbo Courtyard" = "巨大庭院";
+
+/* long level pack name */
+"Jumbo Courtyard Pack" = "巨大庭院關卡包";
+
+/* short level pack name */
+"Jumbo Hextangle" = "大型正六邊形";
+
+/* long level pack name */
+"Jumbo Hextangle Pack" = "大型正六邊形關卡包";
+
+/* short level pack name */
+"Jumbo Interval" = "巨大中場";
+
+/* long level pack name */
+"Jumbo Interval Pack" = "巨大中場套裝";
+
+/* short level pack name */
+"Jumbo Jet Pack" = "巨大噴射機關卡包";
+
+/* short level pack name */
+"Jumbo Pack" = "巨大關卡包";
+
+/* short level pack name */
+"Jumbo Pack 2" = "巨大關卡包 2";
+
+/* short level pack name */
+"Jumbo Rainbow" = "巨大彩虹";
+
+/* long level pack name */
+"Jumbo Rainbow Pack" = "巨大彩虹套裝";
+
+/* short level pack name */
+"Jumbo Rectangle" = "巨大長方形";
+
+/* short level pack name */
+"Jumbo Rectangle 2" = "巨大長方形 2";
+
+/* long level pack name */
+"Jumbo Rectangle Pack" = "巨大長方形關卡包";
+
+/* long level pack name */
+"Jumbo Rectangle Pack 2" = "巨大長方形關卡包 2";
+
+/* promo price, example: Just $1.99 */
+"Just %@" = "只需 %@";
+
+/* promo */
+"Just %@ for a limited time only." = "限時優惠只需 %@。";
+
+/* Flows finished but pipe remaining dialog button */
+"keep playing" = "繼續遊戲";
+
+/* section name */
+"Kids" = "孩童";
+
+/* short level pack name */
+"Kids Pack" = "孩童關卡包";
+
+/* Language name, for display as a game language option */
+"Korean" = "韓文";
+
+/* Header title on the language selection menu. */
+"language" = "語言";
+
+/* option on the settings menu.  %@ will be replaced with the localized name of the current game language, example: 'language: english' */
+"language: %@" = "語言：%@";
+
+/* short level pack name */
+"Large Galaxy" = "大銀河";
+
+/* long level pack name */
+"Large Galaxy Pack" = "大銀河關卡包";
+
+/* text on the game screen showing the current level number.  %d will be replaced by the level number, example: 'level 3' */
+"level %d" = "關卡 %d";
+
+/* text on the game screen showing the current level number, and total number of levels in the pack.  Translation should be similar to the string 'level %d'.  %1$d is the level number, and %2$d is the total number of levels, example: 'level 3/10' */
+"level %d/%d" = "關卡 %1$d/%2$d";
+
+/* Title text indicating the user completed a level. */
+"Level complete!" = "完成關卡！";
+
+/* Menu header for selecting a level. */
+"levels" = "關卡";
+
+/* promo */
+"Limited time only." = "指定時間內限定。";
+
+/* Text shown while items for purchase are being loaded. */
+"Loading Store..." = "正在載入商店...";
+
+/* Hints menu */
+"loading..." = "載入中...";
+
+/* Label text indicating the length of the user's longest ever daily puzzle streak.  %@ will be replaced with the number of days, example: 'Longest streak: 7 days' */
+"Longest streak: %@" = "最長連擊：%@";
+
+/* promo text. 'Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Love Bridges?\nGet Flow Free: Bridges!" = "喜歡 Bridges?\n取得 Flow Free: Bridges!";
+
+/* upsell text */
+"Love Flow Free? Upgrade today!" = "喜歡 Flow Free 嗎？立即升級吧！";
+
+/* Ask the user to review the app in the app store. */
+"Love Flow Free?\nPlease give us a review." = "喜歡 Flow Free 嗎？\n請給我們一個評價吧！";
+
+/* promo text. 'Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Love Hexes?\nGet Flow Free: Hexes!" = "喜歡 Hexes?\n取得 Flow Free: Hexes!";
+
+/* promo text. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Love Warps?\nGet Flow Free: Warps!" = "喜歡 Warps?\n取得 Flow Free: Warps!";
+
+/* Menu label for animations that are turned to the low or reduced setting. */
+"low" = "少量";
+
+/* promo */
+"Make the rest even better." = "下一關要更加出色！";
+
+/* section name */
+"Manias" = "狂熱";
+
+/* No. Maybe watch a video later. */
+"maybe later" = "遲一點吧";
+
+/* level difficulty */
+"medium" = "中等";
+
+/* weekly puzzle theme name */
+"Mega Rainbow" = "巨形彩虹";
+
+/* Choice on the menu to find other games written by Big Duck Games. */
+"more games" = "更多遊戲";
+
+/* The most popular hint package that we sell */
+"Most Popular" = "最熱門";
+
+/* Show how many moves the user has made while trying to solve the puzzle and number of moves for their personal best */
+"moves: %d   best: %d" = "已移動：%1$d 最佳：%2$d";
+
+/* Show how many moves the user has made while trying to solve the puzzle, they have not solved this puzzle yet so no personal best */
+"moves: %d   best: -" = "已移動：%d 最佳：-";
+
+/* Navigating back out of a level */
+"Navigating back will lose your current level progress." = "現在離開會失去現在的關卡進度。";
+
+/* promo */
+"Need more color in your life?" = "您的人生需要更多色彩嗎？";
+
+/* upsell text */
+"Need more hints? Get some now!" = "需要更多提示嗎？立即取得！";
+
+/* short theme name */
+"Neon" = "霓虹";
+
+/* full theme name */
+"Neon Rainbow" = "霓虹彩虹";
+
+/* title of color theme for in app purchase */
+"Neon Rainbow Colors" = "霓虹彩虹色";
+
+/* description of color theme in app purchase */
+"Neon Rainbow Colors theme" = "霓虹彩虹色主題";
+
+/* promo */
+"Neon, pastel and more" = "霓虹、柔和以及更多";
+
+/* Label text describing daily puzzles, shown when the user doesn't have a current streak. */
+"New puzzles every day!  Start a streak!" = "每日新謎題！開始連擊！";
+
+/* Label text describing weekly puzzles, shown when the user hasn't completed a week. */
+"New puzzles every week!" = "每周新拼圖！";
+
+/* Dialog title */
+"New record!" = "新紀錄！";
+
+/* Dialog title shown after completing today's daily puzzles, and starting a new daily streak.  A streak can be extended by completing puzzles multiple days in a row. */
+"New Streak!" = "新的連擊！";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"New Weekly Puzzles!" = "全新每周拼圖！";
+
+/* promo */
+"new\ngame!" = "新\n遊戲!";
+
+/* Button text on the dialog allowing the user to progress to the next level. */
+"next level" = "下一關卡";
+
+/* text used on a button */
+"No" = "否";
+
+/* Warning shown when user runs out of hints. */
+"No hints remaining.  Get more now!" = "沒有剩餘提示。立即取得更多！";
+
+/* decline more hints */
+"no thanks" = "不用了謝謝";
+
+/* Button on the notification dialog */
+"No thanks" = "不用了謝謝";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"Not long left to beat the weekly puzzles for this week!" = "只餘少量時間完成本周拼圖！";
+
+/* Button to decline reviewing the app */
+"Not Now" = "現在不要";
+
+/* Menu item indicating whether notifications are currently on or off. %@ will be replaced with 'on' or 'off', example: 'notifications: off' */
+"notifications: %@" = "通知：%@";
+
+/* Description text for permissions prompt */
+"NSCalendarsUsageDescription" = "部分廣告可能要求新增活動到你的行事曆";
+
+/* Description text for permissions prompt */
+"NSPhotoLibraryAddUsageDescription" = "儲存截圖至相片";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescription" = "啟用後，我們可提供更佳的廣告體驗。";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescriptionAlt1" = "啟用後，我們可提供個人化的廣告體驗，展示的廣告更配合你需要。";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescriptionAlt2" = "你的有關資料會用作提供更理想、更配合個人所需的廣告體驗。";
+
+/* section name */
+"Obstacles" = "障礙";
+
+/* Menu label for a setting option that is turned off.  Translation should be as short as possible, and correspond with the 'on' string.  Example usage, tapping will toggle on/off: 'color labels: off' */
+"off" = "停用";
+
+/* text used on a button to acknowledge the message */
+"OK" = "確定";
+
+/* text used on a button to acknowledge the message */
+"okay" = "確定";
+
+/* text used on a button to acknowledge the message */
+"Okay" = "確定";
+
+/* Menu label for a setting option that is turned on.  Translation should be as short as possible, and correspond with the 'off' string.  Example usage, tapping will toggle on/off: 'color labels: on' */
+"on" = "啟用";
+
+/* promo */
+"One premium level pack" = "一個高級關卡包";
+
+/* More than 2 hints left.  Keep %d because it will be replaced with a number between 2 and 20. */
+"Only %d hints remaining.  Get more now!" = "只餘 %d 個提示。立即取得更多！";
+
+/* Warning shown when user has one hint left. */
+"Only 1 hint remaining.  Get more now!" = "只餘 1 個提示。立即取得更多！";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"Only a few hours left to beat today's puzzles and extend your streak!" = "您還剩幾小時時間可以完成今日謎題，延長連擊！";
+
+/* Dialog title */
+"Options" = "選項";
+
+/* promo */
+"Over 1,000 new levels!" = "超過 1,000 個新關卡!";
+
+/* promo */
+"Over 2,000 free levels!" = "超過 2,000 個免費關卡！";
+
+/* Dialog title shown after completing all levels in a pack. */
+"Pack Complete!" = "關卡包完成！";
+
+/* The game requires an update to play the pack. */
+"Pack not found.  Would you like to check for an update?" = "找不到關卡包。你想檢查更新嗎？";
+
+/* Dialog title shown after completing all levels in a pack perfectly, with no mistakes. */
+"Pack Perfect!" = "關卡包完美完成！";
+
+/* short level pack name */
+"Party Pack" = "派對關卡包";
+
+/* short theme name */
+"Pastel" = "柔和";
+
+/* full theme name */
+"Pastel Colors" = "柔和顏色";
+
+/* description of color theme in app purchase */
+"Pastel Colors theme" = "粉彩色主題";
+
+/* short level pack name */
+"Pathway Pack" = "小徑關卡包";
+
+/* weekly puzzle theme name. 'Pathways' translation should be similar to the related pack 'Pathway Pack' */
+"Pathways Challenge" = "通道挑戰";
+
+/* Title text indicating the user completed a level without making a mistake. */
+"Perfect!" = "完美！";
+
+/* short theme name */
+"Pink" = "粉紅";
+
+/* short level pack name */
+"Pink Pack" = "粉紅關卡包";
+
+/* On the game screen, what percent of pipe is complete */
+"pipe: %d%%" = "管子：%d%%";
+
+/* Message on the level complete dialog, %@ will be replaced with the name of a level pack, or a board size/type, for example '8x8' */
+"play %@" = "開啟 %@";
+
+/* promo */
+"Play ad free forever" = "永久移除廣告";
+
+/* upsell text */
+"Play ad-free! Upgrade today!" = "移除廣告！立即升級吧！";
+
+/* time trial complete dialog button */
+"play again" = "再玩一次";
+
+/* promo */
+"Play all the Mania packs" = "遊玩全部狂熱包";
+
+/* Upsell the user to play one of our other games to get more levels.  Will appear before the text logo of the game, example: 'play more <bridges logo>' */
+"play more" = "遊玩更多";
+
+/* short level pack name */
+"Playground Pack" = "遊樂場關卡包";
+
+/* weekly puzzle theme name */
+"Plaza Challenge" = "廣場挑戰";
+
+/* weekly puzzle theme name */
+"Pluses Challenge" = "加號挑戰";
+
+/* short level pack name */
+"Pockets Pack" = "口袋關卡包";
+
+/* Language name, for display as a game language option */
+"Portuguese" = "葡萄牙文";
+
+/* description of the Jumbo, Purple, and Pink Pack */
+"Premium 10x10 to 14x14 boards" = "高級 10x10 至 14x14 版圖";
+
+/* description of the Jumbo Courtyard Pack */
+"Premium 11x11 to 15x15 with walls" = "高級版 11x11 至 15x15 有邊牆的版圖";
+
+/* description of the Jumbo Rectangle and Hextangle Packs */
+"Premium 11x14 to 15x18 boards" = "高級 11x14 至 15x18 版圖";
+
+/* description of the Comet Pack */
+"Premium 5x5 boards with increasing warps" = "高級 5x5 版圖及更多 Warps";
+
+/* description of the Blue and Green Packs, and Hexes Classic Pack 2 */
+"Premium 5x5 to 9x9 boards" = "高級 5x5 至 9x9 版圖";
+
+/* description of the 6x6 Boundless Pack */
+"Premium 6x6 boards with full warps" = "高級 6x6 版圖及完整的 Warps";
+
+/* description of the 7x7 Boundless Pack */
+"Premium 7x7 boards with full warps" = "高級 7x7 版圖及完整的 Warps";
+
+/* description of the Deep Space Pack 2 */
+"Premium 8x8 and 9x9 boards with star walls" = "高級 8x8 及 9x9  版圖，更有明星背景";
+
+/* description of the 10x10 Mania Pack */
+"Premium all 10x10, all the time!" = "高級 全天候全部 10×10！";
+
+/* description of the 11x11 Mania Pack */
+"Premium all 11x11, all the time!" = "高級 全天候全部 11×11！";
+
+/* description of the 12x12 Mania Pack */
+"Premium all 12x12, all the time!" = "高級 全天候全部 12×12！";
+
+/* description of the 13x13 Mania Pack */
+"Premium all 13x13, all the time!" = "高級 全天候全部 13×13！";
+
+/* description of the 14x14 Mania Pack */
+"Premium all 14x14, all the time!" = "高級 全天候全部 14×14！";
+
+/* description of the 15x15 Mania Pack */
+"Premium all 15x15, all the time!" = "高級 全天候全部 15×15！";
+
+/* Heading for list of premium packs for purchase */
+"Premium Level Packs" = "卓越關卡包";
+
+/* full theme name */
+"Pretty Pink" = "美麗粉紅";
+
+/* Link to Privacy Policy */
+"privacy policy" = "隱私權政策";
+
+/* section name */
+"Progression" = "進度";
+
+/* Message on the themes for purchase dialog. */
+"Purchase any theme to remove ads." = "購買任意一個主題即可移除廣告！";
+
+/* short level pack name */
+"Purple Pack" = "紫色關卡包";
+
+/* time trail complete dialog button */
+"quit" = "離開";
+
+/* weekly puzzle theme name. 'Rainbow' translation should be similar to the related pack 'Rainbow Pack' */
+"Rainbow Challenge" = "彩虹挑戰";
+
+/* short level pack name */
+"Rainbow Pack" = "彩虹關卡包";
+
+/* description of the Jumbo Rainbow Pack */
+"Rainbows of 10x10 to 14x14 boards" = "10x10 至 14x14 彩虹版圖";
+
+/* description of the Rainbow Pack */
+"Rainbows of 5x5 to 9x9 boards" = "5x5 至 9x9 彩虹版圖";
+
+/* description of the Extreme Rainbow Pack */
+"Rainbows of tricky 7x7 to 15x15 boards" = "刁鑽的 7x7 至 15x15 彩虹版圖";
+
+/* description of the Extreme Rainbow Pack */
+"Rainbows of tricky 8x8 to 15x15 boards" = "刁鑽的 8x8 至 15x15 彩虹版圖";
+
+/* weekly puzzle theme name. 'Rectangle' translation should be similar to the related pack 'Rectangle Pack' */
+"Rectangle Challenge" = "矩形挑戰";
+
+/* short level pack name */
+"Rectangle Pack" = "長方形關卡包";
+
+/* section name */
+"Rectangles" = "矩形";
+
+/* Button to remove advertisements by making a purchase. */
+"remove ads" = "移除廣告";
+
+/* promo */
+"Remove ads" = "移除廣告";
+
+/* Button to promote purchase that removes ads. */
+"Remove Ads" = "移除廣告";
+
+/* upsell text */
+"Remove ads!" = "移除廣告！";
+
+/* Remove Ads Dialog Header */
+"Remove Ads?" = "要移除廣告嗎？";
+
+/* Text shown when viewing the store submenu. */
+"Remove ads\n by purchasing any level pack!" = "購買任何關卡包\n即可移除廣告！";
+
+/* Remove all ads by purchasing the Unlock All bundle */
+"Remove all ads" = "移除所有廣告";
+
+/* option on the settings menu */
+"reset progress" = "重設進度";
+
+/* option in the store page */
+"Restore Purchases" = "恢復購買";
+
+/* Option on the about menu that links to the app store to review this game. */
+"review app" = "評價應用程式";
+
+/* Button to review the app in the app store. */
+"Review App" = "評價應用程式";
+
+/* weekly puzzle theme name. 'Rift' translation should be similar to the related pack 'Rift Pack' */
+"Rift Challenge" = "裂痕挑戰";
+
+/* short level pack name */
+"Rift Pack" = "裂痕關卡包";
+
+/* weekly puzzle theme name */
+"Rotating Warp Challenge" = "迴轉隧道挑戰";
+
+/* Language name, for display as a game language option */
+"Russian" = "俄文";
+
+/* promo */
+"Sale!" = "特價！";
+
+/* weekly puzzle theme name */
+"Sawtooth Challenge" = "鋸齒挑戰";
+
+/* weekly puzzle theme name. 'Scanline' translation should be similar to the related pack 'Scanline Pack' */
+"Scanline Challenge" = "掃描線挑戰";
+
+/* short level pack name */
+"Scanline Pack" = "掃描線包";
+
+/* weekly puzzle theme name. 'Scattered' translation should be similar to the related pack 'Scattered Pack' */
+"Scattered Challenge" = "零散挑戰";
+
+/* short level pack name */
+"Scattered Pack" = "零散關卡包";
+
+/* title text on select level menu */
+"Select Level" = "選擇關卡";
+
+/* Button to move to the next level pack */
+"select next pack" = "選擇下一個關卡包";
+
+/* Option on the about menu to send feedback on this game. */
+"send feedback" = "發送反饋";
+
+/* Choice on main menu and header on the settings submenu. */
+"settings" = "設定";
+
+/* description of the Concepts Pack */
+"Shaped and walled boards" = "不同形狀和邊牆的版圖";
+
+/* Button text on the level complete dialog allowing the user to share their progress with friends. */
+"share" = "分享";
+
+/* dialog title */
+"Share" = "分享";
+
+/* pause dialog button */
+"share board" = "分享版圖";
+
+/* Message on share progress dialog to share progress with friends. */
+"Share Progress" = "分享進度";
+
+/* pause dialog button */
+"share solution" = "分享解法";
+
+/* Prompt the user to sign in to get achievements from online. */
+"Sign in to Game Center to start unlocking your achievements." = "登入 Game Center 以解鎖您的成就。";
+
+/* Menu item that allows for logging in to Google Play */
+"sign in to Google Play" = "登入 Google Play";
+
+/* Prompt the user to sign in to get achievements from online. */
+"Sign in to Google Play to start unlocking your achievements." = "登入 Google Play 以解鎖您的成就。";
+
+/* Menu item that allows for logging out of Google Play. */
+"sign out of Google Play" = "登出 Google Play";
+
+/* weekly puzzle theme name */
+"Simply Extreme" = "簡直極限";
+
+/* short level pack name */
+"Small Galaxy" = "小銀河";
+
+/* long level pack name */
+"Small Galaxy Pack" = "小銀河關卡包";
+
+/* weekly puzzle theme name */
+"Snowflake Challenge" = "雪花挑戰";
+
+/* Show how many puzzles the user solved during a timed game and their personal best */
+"solved: %d   best: %d" = "完成：%1$d   最佳：%2$d";
+
+/* Show how many puzzles the user solved during a timed game, no personal best yet becuase this is their first attempt */
+"solved: %d   best: -" = "完成：%d   最佳：-";
+
+/* The current sound volume. Do not remove %d, it will be replaced with an number 0 to 9. */
+"sound: %d" = "音量：%d";
+
+/* Sound volume status on the menu indicating that sound currently off. */
+"sound: off" = "音量：停用";
+
+/* Language name, for display as a game language option */
+"Spanish" = "西班牙文";
+
+/* promo */
+"Special Offer!" = "特價優惠！";
+
+/* description of the Spectrum Pack */
+"Spectrum of 5x5 to 9x9 boards" = "5x5 至 9x9 光譜版圖";
+
+/* short level pack name */
+"Spectrum Pack" = "光譜關卡包";
+
+/* short theme name */
+"Spring" = "春天";
+
+/* full theme name */
+"Spring Greens" = "春天綠茵";
+
+/* title of color theme for in app purchase */
+"Spring Greens Colors" = "春綠色";
+
+/* description of color theme in app purchase */
+"Spring Greens Colors theme" = "春綠色主題";
+
+/* weekly puzzle theme name. 'Star Field' translation should be similar to the related pack 'Star Field Pack' */
+"Star Field Challenge" = "星圖挑戰";
+
+/* short level pack name */
+"Star Field Pack" = "明星關卡包";
+
+/* promo */
+"Starter Bundle" = "入門套裝";
+
+/* In app purchase description of the Starter Bundle */
+"Starter Bundle with premium level pack and extra hints" = "初心者包包含高級關卡包與額外的提示";
+
+/* short level pack name */
+"Starter Pack" = "入門關卡包";
+
+/* weekly puzzle theme name. 'Stitched' translation should be similar to the related pack 'Stitched Pack' */
+"Stitched Challenge" = "縫線挑戰";
+
+/* short level pack name */
+"Stitched Pack" = "縫線套裝";
+
+/* upsell text */
+"Stock up on hints today!" = "立即儲下更多提示！";
+
+/* The menu header when when viewing the store submenu. */
+"store" = "商店";
+
+/* Dialog title shown after completing today's daily puzzles, and extending an existing daily streak.  A streak is extended by completing puzzles multiple days in a row. */
+"Streak Extended!" = "連擊已延長！";
+
+/* short level pack name */
+"Sunflower Pack" = "太陽花關卡包";
+
+/* weekly puzzle theme name */
+"Sunny Day Challenge" = "陽光明媚挑戰";
+
+/* weekly puzzle theme name */
+"Swiss Cheese Challenge" = "瑞士起司挑戰";
+
+/* weekly puzzle theme name. 'Tangle' translation should be similar to the related pack 'Tangle Pack' */
+"Tangle Challenge" = "纏結挑戰";
+
+/* short level pack name */
+"Tangle Pack" = "纏結包";
+
+/* Text shown after a purchase is made. */
+"Thanks for your support!" = "非常感謝您的支持！";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"The clock is ticking...  Come beat this week's puzzles before they're gone!" = "時間緊迫...在本周拼圖消失前快來挑戰！";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"The clock is ticking...  Come beat today's puzzles to extend your streak!" = "時間緊迫...快來完成今日謎題，延長連擊！";
+
+/* Unlock All promo description. */
+"The Complete Package!" = "完全關卡包！";
+
+/* promo */
+"The next evolution of\nFlow Free!" = "Flow Free\n的另一輪進化!";
+
+/* option on the settings menu */
+"theme:" = "主題：";
+
+/* The menu header when when viewing the themes submenu. */
+"themes" = "主題";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"There is a new set of weekly puzzles!" = "全新每周掛圖組現已出爐！";
+
+/* Message on cloud sync dialog */
+"There's more level progress saved in iCloud.  Would you like to sync with iCloud?" = "在 iCloud 上更多進度存檔，請問要與 iCloud 同步嗎？";
+
+/* Message on the cloud sync dialog */
+"There's more level progress saved in the cloud.  Would you like to sync with the cloud?" = "在雲端上有更多進度存檔，您希望與雲端同步嗎?";
+
+/* Special version of the application gives some some benifits to the user */
+"This Flow Free version exclusively from Amazon includes:" = "此Flow Free版本由Amazon獨家發布，其中包括：";
+
+/* Choice on the main menu to play a game mode where you race against the clock to solve puzzles quickly. */
+"time trial" = "限時關卡";
+
+/* description of the Time Trial Pack */
+"Time trial pack" = "限時關卡包";
+
+/* short level pack name */
+"Time Trial Pack" = "限時關卡包";
+
+/* short level pack name */
+"Time Warp Pack" = "時空隧道關卡包";
+
+/* Dialog title */
+"Time's up." = "時間到。";
+
+/* short version of 'time trial' for menu header that does not fit */
+"timed" = "計時";
+
+/* Header text displayed above the list of daily puzzles that are available today.  The puzzles change every day. */
+"Today's Puzzles" = "今日謎題";
+
+/* short level pack name */
+"Tower Pack" = "高塔關卡包";
+
+/* description of the Extreme Hextangle Pack */
+"Tricky 8x10 to 12x14 boards" = "刁鑽的 8x10 至 12x14 版圖";
+
+/* description of the Extreme Pack and Extreme Pack 2 */
+"Tricky 8x8 to 12x12 boards" = "刁鑽的 8x8 至 12x12 版圖";
+
+/* section name */
+"Tutorial" = "教學";
+
+/* Error text when store connection fails. */
+"Unable to connect to Store." = "無法連接至商店";
+
+/* error */
+"Unable to purchase.  In-App Purchases are not enabled." = "無法購買。In-App Purchases功能未被啟用。";
+
+/* error */
+"Unable to purchase.  In-App Purchases have been restricted in Settings." = "無法購買。In-App Purchases功能受到設定限制。";
+
+/* error */
+"Unable to purchase.  Please check your connection to the App Store and try again later." = "無法購買。請檢查您與 App Store 的連線稍後再試。";
+
+/* A description of how many premium levels you would unlock if you purchase the package. %@ is a number such as 1,500. */
+"Unlock all %@ Premium Levels" = "解鎖全%@個卓越關卡！";
+
+/* promo */
+"Unlock all level packs today!" = "立即解鎖所有關卡包吧！";
+
+/* promo */
+"Unlock all level packs today! (%@)" = "立即解鎖所有關卡包吧！ (%@)";
+
+/* Offer the user the ability to buy all game packs as one purchase. */
+"Unlock All Packs" = "解鎖所有關卡包";
+
+/* Offer the user the ability to buy all game packs as one purchase. */
+"Unlock All Packs and Remove Ads" = "立即解鎖所有關卡包及移除廣告";
+
+/* Option to purchase all themes. */
+"Unlock All Themes" = "解鎖所有主題";
+
+/* description of color theme in app purchase */
+"Unlock every color theme" = "解鎖所有顏色主題";
+
+/* Purchase that will give the user access to all level packs in the game */
+"Unlock every level pack and remove ads" = "購買任意一個關卡包及移除廣告";
+
+/* promo */
+"Unlock today and beat the game!" = "立即解鎖，攻破這個遊戲吧！";
+
+/* upsell text */
+"Upgrade your game!" = "升級您的遊戲！";
+
+/* upsell text */
+"Upgrade your levels!" = "升級您的關卡！";
+
+/* button text if user has not yet logged in to game center */
+"use Game Center" = "使用 Game Center";
+
+/* button text if user has not yet logged in to Google Play */
+"use Google Play" = "使用 Google Play";
+
+/* section name */
+"Variety" = "多類";
+
+/* description of the Variety Pack */
+"Variety of fun-shaped boards" = "多款形狀有趣的版圖";
+
+/* description of the Showcase Pack */
+"Variety of playful boards" = "形形色色的有趣版圖";
+
+/* short level pack name */
+"Variety Pack" = "多種類套裝";
+
+/* Button to show important progress points the user has completed. */
+"View Achievements" = "查看成就";
+
+/* pause dialog button */
+"view store" = "查看商店";
+
+/* section name */
+"Walls" = "牆壁";
+
+/* upsell text */
+"Want more levels? Get some now!" = "想要更多關卡嗎？立即取得！";
+
+/* promo */
+"Want to be a master plumber?" = "想成為一個大師級的水管工人嗎？";
+
+/* short level pack name. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Warps Pack" = "Warps 關卡包";
+
+/* short level pack name. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Warps Sampler" = "Warps 樣本";
+
+/* short level pack name */
+"Warpway Pack" = "彎曲關卡包";
+
+/* 'Warpyard' is a play on 'Courtyard', if there is no fitting way to attach 'Warp' to a translation of 'Courtyard', then use 'Courtyard'. */
+"Warpyard Pack" = "庭院關卡包";
+
+/* short level pack name */
+"Warpyard Spin" = "庭院旋轉";
+
+/* long level pack name */
+"Warpyard Spin Pack" = "庭院旋轉關卡包";
+
+/* Text warning the user to complete an easier level pack.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend completing the Starter Pack first.  Do you want to play the Daily Pack anyway?' */
+"We recommend completing the %@ first.  Do you want to play the %@ anyway?" = "我們建議您先完成 %1$@，您確定現在就要玩 %2$@ 嗎？";
+
+/* Text warning the user to play an easier level pack first.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend playing the Warps Sampler first.  Do you want to play the Party Pack anyway?' */
+"We recommend playing the %@ first.  Do you want to play the %@ anyway?" = "我們建議您先玩 %1$@，您確定現在就要玩 %2$@ 嗎？";
+
+/* Text warning the user to try an easier level.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend starting with the Starter Pack.  Do you want to play the Blue Pack anyway?' */
+"We recommend starting with the %@.  Do you want to play the %@ anyway?" = "我們建議從 %1$@ 開始。還是您仍然想玩 %2$@？";
+
+/* Dialog title shown after completing this week's weekly puzzles. */
+"Week Completed!" = "本周挑戰完成！";
+
+/* Dialog title shown after completing this week's weekly puzzles perfectly. */
+"Week Perfected!" = "本週的表現無可匹敵！";
+
+/* Choice on the main menu to play the weekly puzzles. */
+"weekly puzzles" = "每周拼圖";
+
+/* New puzzles every week */
+"Weekly Puzzles" = "每周拼圖";
+
+/* Label text indicating the total number of weekly puzzle weeks the user has completed.  %@ will be replaced with the number of weeks, example: 'Weeks completed: 7 weeks' */
+"Weeks completed: %@" = "完成周數：%@";
+
+/* description of the Intro Pack */
+"Welcome to Flow Free!" = "歡迎暢玩 Flow Free！";
+
+/* section name */
+"Wide Warps" = "廣闊變形";
+
+/* short theme name */
+"Winter" = "冬天";
+
+/* full theme name */
+"Winter Chill" = "寒冬";
+
+/* title of color theme for in app purchase */
+"Winter Chill Colors" = "寒冬色";
+
+/* description of color theme in app purchase */
+"Winter Chill Colors theme" = "寒冬色主題";
+
+/* weekly puzzle theme name. 'Worm' translation should be similar to the related pack 'Worm Pack' */
+"Worm Challenge" = "蟲蟲挑戰";
+
+/* short level pack name */
+"Worm Pack" = "蟲蟲套裝";
+
+/* Pause dialog message */
+"Would you like to customize your game settings?" = "您希望自訂遊戲設定嗎？";
+
+/* Pause dialog message */
+"Would you like to customize your game, or get more hints?" = "是否希望自訂遊戲或得到更多提示？";
+
+/* Pause dialog message */
+"Would you like to customize your game, or get more levels?" = "想要自訂您的遊戲、或取得更多關卡嗎？";
+
+/* Dialog message offering to enable device notifications when new daily puzzle content is available. */
+"Would you like to get notifications when new daily puzzles are available, so you don't lose your streak?" = "您是否希望在出現新謎題時收到通知，以免丟失連擊？";
+
+/* Prompt the user to sign in to use cloud sync from Google Play. */
+"Would you like to sign in to Google Play to enable cloud sync of your game progress?" = "您希望登入Google Play 來啟用遊戲進度雲端同步嗎?";
+
+/* promo */
+"Would you like to unlock all level packs? Includes:" = "想解鎖所有關卡包嗎？包括有：";
+
+/* Rewarded Hint Dialog Message */
+"Would you like to watch a short video to earn a free hint?" = "您想觀看一段短片來獲得免費提示嗎？";
+
+/* section name */
+"Woven" = "交織";
+
+/* short level pack name */
+"Yellow Pack" = "黃色關卡包";
+
+/* Button text */
+"yes" = "好";
+
+/* text used on a button */
+"Yes" = "是";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'You beat the Green Pack' */
+"You beat the %@!" = "您完成了%@！";
+
+/* User completed a level. Keep the %d because it will be replaced with a number. */
+"You completed the level in\n%d moves." = "您以 %d 次移動完成了這個關卡。";
+
+/* Time trial complete dialog message */
+"You solved %d puzzles in\n%@." = "您在 %2$@ 之內完成了\n%1$d 謎題。";
+
+/* Time trial complete dialog message */
+"You solved 1 puzzle in\n%@." = "您在 %@ 完成了一個謎題。";
+
+/* Dialog message shown after completing all levels in a pack perfectly.  %@ will be replaced with a localized pack name, example: 'You've completed the Green Pack perfectly!' */
+"You've completed the\n%@ perfectly!" = "您已完美地完成\n%@！";
+
+/* Dialog message shown after completing all levels in a pack.  %@ will be replaced with a localized pack name, example: 'You've completed the Green Pack!' */
+"You've completed the\n%@!" = "您已完成\n%@！";
+
+/* Dialog message shown after completing all weekly puzzles perfectly. */
+"You've completed the\nweekly puzzles perfectly!" = "你已完美完成每周拼圖！";
+
+/* Dialog message shown after completing all weekly puzzles. */
+"You've completed the\nweekly puzzles!" = "你已完成每周拼圖！";
+
+/* Dialog message shown after completing today's daily puzzles.  %d will be replaced by the length of the streak in days, greater than 1, example: '3 day streak!' */
+"You've completed today's puzzles!  %d day streak!" = "您已完成今日謎題！%d天連擊！";
+
+/* Dialog message shown after completing today's daily puzzles.  Translation should be similar to the corresponding plural string: 'You've completed today's puzzles!  %d day streak!' */
+"You've completed today's puzzles!  1 day streak!" = "您已完成今日謎題！1天連擊！";
+
+/* Claim hint dialog message. */
+"You've earned a free hint!" = "你取得免費提示！";
+
+/* Message on the level complete dialog, %@ will be replaced with the board size or type, for example '8x8' */
+"You've reached the end of the\n%@ boards." = "您已到達 %@ 版圖的結尾。";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'You've reached the end of the Green Pack' */
+"You've reached the end of the\n%@." = "您已到達 %@ 的結尾。";
+
+/* promo */
+"You've solved %@ puzzles." = "您已完成了 %@ 個謎題。";
+
+/* promo */
+"You've solved 1 puzzle" = "您已完成了 1 個謎題。";
+
+/* A new level pack was unlocked.  %@ will be replaced with a localized pack name, example: 'You've unlocked the Green Pack' */
+"You've unlocked the\n%@." = "您已解鎖了\n%@。";
+

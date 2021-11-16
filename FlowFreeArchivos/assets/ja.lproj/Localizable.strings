@@ -1,0 +1,1986 @@
+/* promo */
+"    regularly %@" = "    通常は %@";
+
+/* promo */
+"    regularly 5 for %@" = "    通常は 5 個で %@";
+
+/* format of post to twitter text */
+"%@ #flowfree" = "%@ #flowfree";
+
+/* promo */
+"%@ additional premium packs" = "%@ 個の追加プレミアムパック";
+
+/* formatting for the level description for example: Mania, 9x9 level 20 */
+"%@ level %d" = "%1$@ レベル %2$d";
+
+/* promo */
+"%@ new levels" = "%@個の新たなレベル";
+
+/* promo */
+"%@ new premium packs" = "%@ 個の新プレミアムパック";
+
+/* promo */
+"%@ premium packs" = "%@ 個のプレミアムパック";
+
+/* promo */
+"%@, huge savings over full price." = "定価（%@）から大幅値引！";
+
+/* promo */
+"%@, Unlock today and beat the game!" = "%@, 今すぐアンロックしてクリアするチャンス！";
+
+/* Label text describing daily puzzles, shown when there are new daily puzzles to play.  %d will be replaced with the current streak length, greater than 1, example: '3 day streak!' */
+"%d day streak!  New puzzles available!" = "%d 日間連続記録達成！\n新しいパズルが挑戦可能になりました！";
+
+/* Label text describing daily puzzles, shown after the user has completed today's puzzles.  %d will be replaced with the current streak length, greater than 1, example: '3 day streak!' */
+"%d day streak!  Play more tomorrow!" = "%d 日間連続記録達成！\n明日またプレイしましょう！";
+
+/* Label text indicating the length of a daily puzzle streak.  %d will be replaced with the number of days, either zero or greater than one, example: '0 days' or '2 days' */
+"%d days" = "%d 日";
+
+/* buy %d hints button. The %d is a number greater than 1. */
+"%d hints" = "%d 個のヒント";
+
+/* Item for purchase.  A hint shows the user part of the solution to the puzzle. */
+"%d Hints" = "%d 個のヒント";
+
+/* Number of hints remaining plus prompt to buy more. The %d is a number greater than 1, or zero. */
+"%d Hints Remain: Get More!" = "ヒントは残り %d 個\n今すぐ追加しよう！";
+
+/* more than one hint remaining */
+"%d hints remaining" = "残りヒントは %d 個";
+
+/* 20 or more hints left.  Keep %d because it will be replaced with a number 20 or greater. */
+"%d hints remaining.  Get more now!" = "残りヒントは %d 個です。今すぐ追加！";
+
+/* Number of levels in packs. The %d is a number, such as 150. */
+"%d Premium Levels" = "%d 個のプレミアムレベル";
+
+/* Number of levels in packs. The %d is a number, such as 150. */
+"%d Premium Levels Each" = "各 %d 個のプレミアムレベル";
+
+/* Show how many boards are solved, keep %d it will be replaced with a number */
+"%d solved" = "%d 個クリア済み";
+
+/* Label text indicating the number of weeks that weekly puzzles have been completed.  %d will be replaced with the number of weeks, either zero or greater than one, example: '0 weeks' or '2 weeks' */
+"%d weeks" = "%d 週";
+
+/* Label text describing weekly puzzles, shown when there are new weekly puzzles to play.  %d will be replaced with the number of weekly weeks completed, greater than 1, example: '3 weeks completed!  New puzzles available!' */
+"%d weeks completed!  New puzzles available!" = "%d 週クリア！新しいパズルが挑戦可能になりました！";
+
+/* Label text describing weekly puzzles, shown after the user has completed this week's puzzles.  %d will be replaced with the number of weekly weeks completed, greater than 1, example: '3 weeks completed!  Play more on Monday!' */
+"%d weeks completed!  Play more on Monday!" = "%d 週クリア！また月曜日にプレイしてください！";
+
+/* Refers to the ability to buy all game packs as one purchase. */
+"(Best Deal)" = "(最もお得)";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", \"Flow Free: Bridges\", and the Bridges icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 4,396,260 and 4,414,889)." = "* 「Flow」「Flow Free」「Flow Free: Bridges」ならびに「Bridges」のアイコンは国際登録商標です。商標権はアメリカ合衆国でも効力があり、その権利は Big Duck Games®, LLC（登録番号： 4,395,937、4,320,256、4,396,260、4,414,889）に帰属します。";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", \"Flow Free: Hexes\", and the Hexes icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 5,213,571 and 5,213,574)." = "* 「Flow」「Flow Free」「Flow Free: Hexes」ならびに「Hexes」のアイコンは国際登録商標です。商標権はアメリカ合衆国でも効力があり、その権利は Big Duck Games®, LLC（登録番号： 4,395,937、4,320,256、5,213,571、5,213,574）に帰属します。";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", and the Flow Free icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256 and 4,356,856)." = "*「Flow」「Flow Free」ならびに「Flow Free」のアイコンは国際登録商標です。商標権はアメリカ合衆国でも効力があり、その権利は Big Duck Games®, LLC（登録番号： 4,395,937、4,320,256、4,356,856）に帰属します。";
+
+/* Label text indicating a one day daily puzzle streak */
+"1 day" = "1 日";
+
+/* Label text describing daily puzzles, shown when there are new daily puzzles to play.  Translation should be similar to the corresponding plural string: '%d day streak!  New puzzles available!' */
+"1 day streak!  New puzzles available!" = "1 日間連続記録達成！\n新しいパズルが挑戦可能になりました！";
+
+/* Label text describing daily puzzles, shown after the user has completed today's puzzles.  Translation should be similar to the corresponding plural string: '%d day streak!  Play more tomorrow!' */
+"1 day streak!  Play more tomorrow!" = "1 日間連続記録達成！\n明日またプレイしましょう！";
+
+/* only one hint remaining */
+"1 hint remaining" = "残りのヒントは 1 個";
+
+/* One hint remaining plus prompt to buy more. Translation should be similar to the corresponding plural string: '%d Hints Remain: Get More!' */
+"1 Hint Remains: Get More!" = "ヒントは残り 1 個\n今すぐ追加しよう！";
+
+/* duration of time trial */
+"1 minute" = "1 分";
+
+/* Label text indicating one week of weekly puzzles have been completed. */
+"1 week" = "1 週";
+
+/* Label text describing weekly puzzles, shown when there are new weekly puzzles to play.  Translation should be similar to the corresponding plural string: '%d weeks completed!  New puzzles available!' */
+"1 week complete!  New puzzles available!" = "1 週クリア！新しいパズルが挑戦可能になりました！";
+
+/* Label text describing weekly puzzles, shown after the user has completed this week's puzzles.  Translation should be similar to the corresponding plural string: '%d weeks completed!  Play more on Monday!' */
+"1 week complete!  Play more on Monday!" = "1 週クリア！また月曜日にプレイしてください！";
+
+/* short description of the Jumbo, Purple, and Pink Pack */
+"10x10 - 14x14 boards" = "10x10 から 14x14";
+
+/* short description of the Jumbo Rainbow Pack */
+"10x10 - 14x14 rainbow" = "10x10 から 14x14 の虹";
+
+/* short level pack name */
+"10x10 Mania" = "10x10 マニア";
+
+/* long level pack name */
+"10x10 Mania Pack" = "10x10 のマニアパック";
+
+/* description of the Jumbo Pack and Yellow Pack */
+"10x10 to 14x14 boards" = "10x10 から 14x14 のボード";
+
+/* description of the Tangle Pack */
+"10x10 to 14x14 boards with tangles" = "10x10 から 14x14 のもつれが使えるボード";
+
+/* description of the Warpway Pack */
+"10x10 to 14x14 boards with warpways" = "ワープが使える 10x10 から 14x14 のボード";
+
+/* description of the Worm Pack */
+"10x10 to 14x14 boards with worms" = "10x10 から 14x14 のワームが使えるボード";
+
+/* short description of the Jumbo Courtyard Pack */
+"11x11 - 15x15 boards" = "11x11 から 15x15";
+
+/* short level pack name */
+"11x11 Mania" = "11x11 マニア";
+
+/* long level pack name */
+"11x11 Mania Pack" = "11x11 のマニアパック";
+
+/* description of the Pathway Pack */
+"11x11 to 15x15 boards with pathways" = "経路が使える 11x11 から 15x15 のボード";
+
+/* description of the Star Field Pack */
+"11x11 to 15x15 boards with stars" = "11x11 から 15x15 の星が使えるボード";
+
+/* description of the Jumbo Courtyard Pack */
+"11x11 to 15x15 boards with walls" = "11x11 から 15x15 の壁が使えるボード";
+
+/* description of the Flower Field Pack */
+"11x11 to 15x15 fields of flowers" = "11x11 から 15x15 の花畑";
+
+/* short description of the Jumbo Rectangle and Hextangle Packs */
+"11x14 - 15x18 boards" = "11x14 から 15x18";
+
+/* description of the Jumbo Rectangle Pack */
+"11x14 to 15x18 boards" = "11x14 から 15x18 のボード";
+
+/* short level pack name */
+"12x12 Mania" = "12x12 マニア";
+
+/* long level pack name */
+"12x12 Mania Pack" = "12x12 のマニアパック";
+
+/* short level pack name */
+"13x13 Mania" = "13x13 マニア";
+
+/* long level pack name */
+"13x13 Mania Pack" = "13x13 のマニアパック";
+
+/* short level pack name */
+"14x14 Mania" = "14x14 マニア";
+
+/* long level pack name */
+"14x14 Mania Pack" = "14x14 のマニアパック";
+
+/* short level pack name */
+"15x15 Mania" = "15x15 マニア";
+
+/* long level pack name */
+"15x15 Mania Pack" = "15x15 のマニアパック";
+
+/* duration of time trial */
+"2 minutes" = "2 分";
+
+/* duration of time trial */
+"30 seconds" = "30 秒";
+
+/* duration of time trial */
+"4 minutes" = "4 分";
+
+/* description of the 4x4 Boundless Pack */
+"4x4 boards with full warps" = "4x4 の最大回数のwarpsが使えるボード";
+
+/* short level pack name */
+"4x4 Boundless" = "4x4 無限";
+
+/* long level pack name */
+"4x4 Boundless Pack" = "4x4 の無限パック";
+
+/* description of the Small Galaxy Pack */
+"4x4 to 6x6 boards with wide warps" = "4x4 から 6x6 のワイドwarpsが使えるボード";
+
+/* description of the Tower Pack */
+"4x5 to 8x14 boards" = "4x5 から 8x14 のボード";
+
+/* promo */
+"5 new color sets" = "5 個の新しいカラーセット";
+
+/* short description of the Blue and Green Packs, and Hexes Classic Pack 2 */
+"5x5 - 9x9 boards" = "5x5 から 9x9";
+
+/* description of the Starter Pack */
+"5x5 and 6x6 boards" = "5x5 と 6x6 のボード";
+
+/* description of the Kids Pack in Warps */
+"5x5 boards with easy warps" = "5x5 の初級warpsが使えるボード";
+
+/* description of the 5x5 Boundless Pack */
+"5x5 boards with full warps" = "5x5 の最大回数のwarpsが使えるボード";
+
+/* description of the Starter Pack */
+"5x5 boards with increasing warps" = "5x5 のwarpsが増えていくボード";
+
+/* short description of the Comet Pack */
+"5x5 boards with warps" = "5x5 ードWarpsあり";
+
+/* short level pack name */
+"5x5 Boundless" = "5x5 無限";
+
+/* long level pack name */
+"5x5 Boundless Pack" = "5x5 の無限パック";
+
+/* short level pack name */
+"5x5 Mania" = "5x5 マニア";
+
+/* long level pack name */
+"5x5 Mania Pack" = "5x5 のマニアパック";
+
+/* description of the Classic, Regular, and Bonus Pack */
+"5x5 to 9x9 boards" = "5x5 から 9x9 のボード";
+
+/* description of the Jet Pack */
+"5x5 to 9x9 boards with 2 warps" = "5x5 から 9x9 の２warpsが使えるボード";
+
+/* description of the Scanline Pack */
+"5x5 to 9x9 boards with scanning walls" = "5x5 から 9x9 のスキャンウォールが使えるボード";
+
+/* description of the Warps Pack. 'warps' is the brand name of one of our apps and shouldn't be localized. */
+"5x5 to 9x9 boards with warps" = "5x5 から 9x9 のwarpsが使えるボード";
+
+/* description of the Flower Pack */
+"5x5 to 9x9 flowers" = "5x5 から 9x9 のフラワー";
+
+/* description of the Tower Pack */
+"5x6 to 9x15 boards" = "5x6 から 9x15 のボード";
+
+/* promo */
+"60% off!" = "60% オフ！";
+
+/* promo */
+"60% savings over full price!" = "定価から 60% 割引！";
+
+/* promo */
+"60% savings over regular price!" = "通常価格から 60% 割引！";
+
+/* short level pack name */
+"6x6 Boundless" = "6x6 無限";
+
+/* long level pack name */
+"6x6 Boundless Pack" = "6x6 の無限パック";
+
+/* short description of the 6x6 Boundless Pack */
+"6x6 full warps boards" = "6x6 フル Warps";
+
+/* short level pack name */
+"6x6 Mania" = "6x6 マニア";
+
+/* long level pack name */
+"6x6 Mania Pack" = "6x6 のマニアパック";
+
+/* description of the Pockets Pack */
+"6x6 to 10x10 boards with pockets" = "6x6 から 10x10のボート（ポケットあり）";
+
+/* description of the Worm Pack */
+"6x6 to 10x10 boards with worms" = "6x6 から 10x10 のワームが使えるボード";
+
+/* description of the Large Galaxy Pack */
+"6x6 to 8x8 boards with wide warps" = "6x6 から 8x8 のワイドwarpsが使えるボード";
+
+/* description of the Tower Pack */
+"6x7 to 10x16 boards" = "6x7 から 10x16 のボード";
+
+/* promo */
+"7 bonus hints" = "7 個のボーナスヒント";
+
+/* promo */
+"7 extra hints" = "7 個の追加ヒント";
+
+/* short description of the Extreme Rainbow Pack */
+"7x7 - 15x15 rainbow" = "7x7 から 15x15の虹";
+
+/* description of the Challenge Pack */
+"7x7 and 8x8 boards" = "7x7 と 8x8 のボード";
+
+/* short level pack name */
+"7x7 Boundless" = "7x7 無限";
+
+/* long level pack name */
+"7x7 Boundless Pack" = "7x7 の無限パック";
+
+/* short description of the 7x7 Boundless Pack */
+"7x7 full warps boards" = "7x7 フル Warps";
+
+/* short level pack name */
+"7x7 Mania" = "7x7 マニア";
+
+/* long level pack name */
+"7x7 Mania Pack" = "7x7 のマニアパック";
+
+/* description of the Hashed Pack */
+"7x7 to 11x11 boards with hashes" = "7x7 と 11x11 のシャープが使えるボード";
+
+/* description of the Warps Scattered Pack */
+"7x7 to 11x11 boards with obstacles" = "7x7 から 11x11 の障害物ありボード";
+
+/* description of the Rift Pack */
+"7x7 to 11x11 boards with rifts" = "7x7 と 11x11 の裂け目が使えるボード";
+
+/* description of the Stitched Pack */
+"7x7 to 11x11 boards with stitches" = "7x7 から 11x11 のステッチが使えるボード";
+
+/* description of the Courtyard, Warpyard, and Capacitor Packs */
+"7x7 to 11x11 boards with walls" = "7x7 と 11x11 の壁が使えるボード";
+
+/* description of the Sunflower Pack */
+"7x7 to 15x15 flowers" = "7x7 から 15x15 のフラワー";
+
+/* description of the Rectangle and Hextangle Pack */
+"8x10 to 12x14 boards" = "8x10 から 12x14 のボード";
+
+/* short description of the Extreme Rainbow Pack */
+"8x8 - 15x15 rainbow" = "8x8 から 15x15 の虹";
+
+/* short description of the Deep Space Pack 2 */
+"8x8 - 9x9 star boards" = "8x8 から 9x9 の星";
+
+/* description of the Deep Space Pack */
+"8x8 and 9x9 boards with star walls" = "8x8 と 9x9 の星型壁が使えるボード";
+
+/* short level pack name */
+"8x8 Mania" = "8x8 マニア";
+
+/* long level pack name */
+"8x8 Mania Pack" = "8x8 のマニアパック";
+
+/* description of the Scattered Pack */
+"8x8 to 12x12 boards with obstacles" = "8x8 から 12x12 の障害物ありボード";
+
+/* description of the Pockets Pack */
+"8x8 to 12x12 boards with pockets" = "8x8 から 12x12 のボード（ポケットあり）";
+
+/* description of the Hourglass Pack */
+"9x11 to 13x15 hourglass boards" = "9x11 から 13x15 の砂時計ボード";
+
+/* description of the Time Warp Pack */
+"9x11 to 13x15 time warp boards" = "9x11 から 13x15 のタイムワープボード";
+
+/* short description of the Jumbo Interval Pack */
+"9x9 - 15x15 intervals" = "9x9 から 15x15";
+
+/* description of the Bonus Pack */
+"9x9 boards" = "9x9 のボード";
+
+/* short level pack name */
+"9x9 Mania" = "9x9 マニア";
+
+/* long level pack name */
+"9x9 Mania Pack" = "9x9 のマニアパック";
+
+/* description of the Jumbo Jet Pack */
+"9x9 to 13x13 boards with 2 warps" = "9x9 から 13x13 の2warpsが使えるボード";
+
+/* description of the Courtyard Spin Pack */
+"9x9 to 13x13 boards with walls" = "9x9 と 13x13 の壁が使えるボード";
+
+/* description of the Party Pack */
+"A celebration of Flow Free!" = "Flow Free のお祝い！";
+
+/* promo */
+"A fun and challenging new twist on Flow Free!" = "Flow Free に挑戦しがいのある楽しい新展開あり！";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"A new weekly challenge is out!" = "新たなウィークリーパズル登場！";
+
+/* Choice on the main menu to read about the game. */
+"about" = "説明";
+
+/* promo */
+"Add some color to your game with themes!" = "テーマを変更してゲームをカラフルに楽しもう！";
+
+/* Menu label for animations that are turned on fully. */
+"all" = "すべて";
+
+/* description of the 10x10 Mania Pack */
+"All 10x10, all the time!" = "全て 10x10！";
+
+/* short description of the 11x11 Mania Pack */
+"All 11x11, all the time!" = "全て 11x11！";
+
+/* short description of the 12x12 Mania Pack */
+"All 12x12, all the time!" = "全て 12x12！";
+
+/* short description of the 13x13 Mania Pack */
+"All 13x13, all the time!" = "全て 13x13！";
+
+/* short description of the 14x14 Mania Pack */
+"All 14x14, all the time!" = "全て 14x14！";
+
+/* short description of the 15x15 Mania Pack */
+"All 15x15, all the time!" = "全て 15x15！";
+
+/* description of the 5x5 Mania Pack */
+"All 5x5, all the time!" = "全て 5x5！";
+
+/* description of the 6x6 Mania Pack */
+"All 6x6, all the time!" = "全て 6x6！";
+
+/* description of the 7x7 Mania Pack */
+"All 7x7, all the time!" = "全て 7x7！";
+
+/* description of the 8x8 Mania Pack */
+"All 8x8, all the time!" = "全て 8x8！";
+
+/* description of the 9x9 Mania Pack */
+"All 9x9, all the time!" = "全て 9x9！";
+
+/* promo */
+"All board sizes" = "全てのボードサイズ";
+
+/* Something the user will get, themes change all the colors in the game */
+"All color themes!" = "全カラーテーマ！";
+
+/* promo */
+"All for just %@" = "全部入ってたったの %@";
+
+/* Something the user will get, level packs give the user more puzzles to solve */
+"All premium level packs!" = "全プレミアムレベルパック！";
+
+/* Flows finished but pipe remaining dialog title */
+"Almost there..." = "もう少しです…";
+
+/* description of the Amoeba Pack */
+"Amoeba boards increasing in size" = "アメーバボードのサイズが増えます";
+
+/* weekly puzzle theme name. 'Amoeba' translation should be similar to the related pack 'Amoeba Pack' */
+"Amoeba Challenge" = "アメーバチャレンジ";
+
+/* short level pack name */
+"Amoeba Pack" = "アメーバパック";
+
+/* promo */
+"An exciting limited time offer:" = "期間限定の大チャンス：";
+
+/* Price of what you get for free, for example: An over $8 value for free! */
+"An over $10 value for free!" = "$10を超える価値のコンテンツが無料！";
+
+/* Price of what you get for free, for example: An over $8 value for free! */
+"An over $8 value for free!" = "$8を超える価値のコンテンツが無料！";
+
+/* Menu item for toggling animations on or off. */
+"animations: %@" = "アニメーション：%@";
+
+/* Ask if the user would like to exit the game.  Do not localize 'Flow Free'. */
+"Are you sure that you want to exit Flow Free?" = "本当に Flow Free を終了してもよろしいですか？";
+
+/* Message popup asking user to confirm reset. */
+"Are you sure you want to reset all level progress?" = "本当に全てのレベル記録をリセットしますか？";
+
+/* Confirm back navigation dialog button */
+"back to menu" = "メニューに戻る";
+
+/* Pack is locked. %@ will be replaced with a localized pack name. example: 'Beat any pack to play the Blue Pack' */
+"Beat any pack to play the %@." = "%@ をプレイするには、いずれかのパックをクリアしてください。";
+
+/* Pack is locked.  %1$@ and %2$@ will be replaced with localized pack names, example: 'Beat the Blue Pack to play the Pink Pack' */
+"Beat the %@ to play the %@." = "%2$@ をプレイするには、%1$@ をクリアしてください。";
+
+/* Pack is locked. %@ will be replaced with a localized pack name. example: 'Beat the Blue Pack to play this pack' */
+"Beat the %@ to play this pack." = "このパックをプレイするには、%@ をクリアしてください。";
+
+/* buy more hints to get a better price per hint */
+"Best Deal" = "最安価格";
+
+/* Selling point for the Unlock All bundle */
+"Best deal!" = "とってもお得！";
+
+/* short level pack name */
+"Blue Pack" = "ブルーパック";
+
+/* text on the game screen telling the user the board number */
+"board %d" = "ボード %d";
+
+/* Header title on the board size menu. */
+"board size" = "サイズ";
+
+/* Show the size of the board, keep %d it will be replaced with a number, example 8x8 */
+"board size: %dx%d" = "ボードサイズ： %1$dx%2$d";
+
+/* short level pack name */
+"Bonus Pack" = "ボーナスパック";
+
+/* section name */
+"Boundless" = "無限";
+
+/* short level pack name. 'Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Bridges Sampler" = "Bridgesのサンプル";
+
+/* text used on a button to cancel the action */
+"cancel" = "キャンセル";
+
+/* text used on a button to cancel the action */
+"Cancel" = "キャンセル";
+
+/* weekly puzzle theme name. 'Capacitor' translation should be similar to the related pack 'Capacitor Pack' */
+"Capacitor Challenge" = "キャパシタチャレンジ";
+
+/* short level pack name */
+"Capacitor Pack" = "コンデンサパック";
+
+/* section name */
+"Challenge" = "チャレンジ";
+
+/* short level pack name */
+"Challenge Pack" = "チャレンジパック";
+
+/* pause dialog button */
+"change settings" = "設定の変更";
+
+/* promo for game, for example Check out my progress in Flow Free! */
+"Check out my progress in %@!" = "%@ での記録をチェック！";
+
+/* promo for game, for example Check out this Flow Free puzzle! */
+"Check out this %@ puzzle!" = "この %@ パズルをチェック！";
+
+/* Language name, for display as a game language option */
+"Chinese (Simp.)" = "中国語（簡体字）";
+
+/* Language name, for display as a game language option */
+"Chinese (Trad.)" = "中国語（繁体字）";
+
+/* Claim hint reward after watching a rewarded video. */
+"claim" = "取得する";
+
+/* short theme name */
+"Classic" = "クラシック";
+
+/* promo */
+"Classic and Jumbo boards" = "\"クラシック\"＆\"ジャンボ\"ボード";
+
+/* short level pack name */
+"Classic Pack" = "クラシックパック";
+
+/* short level pack name */
+"Classic Pack 2" = "クラシックパック 2";
+
+/* full theme name */
+"Classic Theme" = "クラシック テーマ";
+
+/* Button to close the dialog */
+"Close" = "閉じる";
+
+/* Menu item indicating whether syncing game progress to the cloud is currently on or off. %@ will be replaced with 'on' or 'off', example: 'cloud sync: off' */
+"cloud sync: %@" = "クラウド同期: %@";
+
+/* weekly puzzle theme name */
+"Clovers Challenge" = "クローバーチャレンジ";
+
+/* Menu item for toggling flow color labels on or off.  Labeling each flow color with a letter is useful for players that are color blind.  %@ will be replaced with 'on' or 'off', example: 'color labels: off' */
+"color labels: %@" = "カラーラベル: %@";
+
+/* Description on the store submenu that explains Themes. */
+"Color your game and boards!" = "ゲームとボードをカラフルに彩ろう！";
+
+/* short level pack name */
+"Comet Pack" = "コメットパック";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"Complete this week's puzzles before they're gone!" = "なくなる前に、今週のパズルをクリアしましょう！";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"Complete today's puzzles before midnight to extend your streak!" = "今晩の 12 時前までに今日のパズルをクリアして、連続記録を更新しましょう！";
+
+/* short level pack name */
+"Concepts Pack" = "概念パック";
+
+/* Title for back confirmation dialog */
+"Confirm" = "確定";
+
+/* Dialog title that is used when asking the user if they want to exit the game. */
+"Confirm Exit" = "終了を確認する";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'Congratulations on beating the Green Pack' */
+"Congratulations on beating the %@!" = "%@ のクリアおめでとうございます！";
+
+/* Dialog title text */
+"Congratulations!" = "おめでとうございます！";
+
+/* Button to continue after completing a Time Trial. */
+"continue" = "続ける";
+
+/* weekly puzzle theme name */
+"Cornerless Challenge" = "コーナーなしチャレンジ";
+
+/* Hints error message */
+"couldn't load" = "読み込めません";
+
+/* short level pack name */
+"Courtyard Pack" = "コートヤードパック";
+
+/* short level pack name */
+"Courtyard Spin" = "コートヤードスピン";
+
+/* long level pack name */
+"Courtyard Spin Pack" = "コートヤードスピンパック";
+
+/* Label text indicating the length of the user's current daily puzzle streak.  %@ will be replaced with the number of days, example: 'Current streak: 2 days' */
+"Current streak: %@" = "現在の連続記録: %@";
+
+/* Two letter language code for this language (for example, 'en' for English).  See ISO 639-1: http://www.loc.gov/standards/iso639-2/php/English_list.php */
+"currentLanguage" = "ja";
+
+/* promo */
+"Customize your boards with color themes!" = "カラー テーマでボードをカスタマイズ！";
+
+/* Choice on the main menu to play the daily puzzles. */
+"daily puzzles" = "デイリーパズル";
+
+/* New puzzles every day */
+"Daily Puzzles" = "デイリーパズル";
+
+/* short theme name */
+"Dark" = "ダーク";
+
+/* full theme name */
+"Dark Matter" = "ダークマター";
+
+/* Label text indicating the total number of daily puzzle packs the user has completed.  %@ will be replaced with the number of days, example: 'Days played: 7 days' */
+"Days played: %@" = "プレイ日数: %@";
+
+/* short level pack name */
+"Deep Space" = "ディープスペース";
+
+/* short level pack name */
+"Deep Space 2" = "ディープスペース2";
+
+/* long level pack name */
+"Deep Space Pack" = "ディープスペースパック";
+
+/* long level pack name */
+"Deep Space Pack 2" = "ディープスペースパック2";
+
+/* promo */
+"Discover a new dimension of Flow Free!" = "Flow Free の新次元を発見！";
+
+/* Button to decline reviewing the app */
+"Don't Ask Again" = "次から表示しない";
+
+/* weekly puzzle theme name */
+"Donuts Challenge" = "ドーナツチャレンジ";
+
+/* weekly puzzle theme name */
+"Dotted Challenge" = "ドットチャレンジ";
+
+/* promo */
+"download\nfree!" = "無料で\nダウンロード！";
+
+/* Help text for Flow Free: Warps app */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.  But watch out, pipes will break if they cross or overlap!\n\nDrag outwards through a warp to make the pipe appear on the opposite side.\n\nAfter warping, you may need to lift your finger to complete the flow.  Don't worry, it won't affect your score!\n\nOn some boards, you may not need to use all of the warps." = "同じ色どうしをドラッグしてパイプで繋げ、流れを作り出します。 \n\nパズルをクリアするには、全ての色どうしを繋げ、ボード全体に隙間なくパイプを通してください。 ただし、パイプどうしが重なったり交差したりすると壊れてしまうので注意！\n\nwarpsを通って外側へドラッグすると、パイプを反対側に出現させることができます。\n\nwarps後は、指を離して流れを完成させる必要がある場合があります。ご心配なく。スコアには影響しません！\n\n一部のボードでは、warpsをすべて使う必要がない場合もあります。";
+
+/* Help text for Flow Free: Bridges app */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!  Use the bridge to cross two pipes and solve the puzzle.\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode." = "同じ色どうしをドラッグしてパイプで繋げ、流れを作り出します。\n\nパズルをクリアするには、全ての色どうしを繋げ、ボード全体に隙間なくパイプを通してください。\n\nただし、パイプどうしが重なったり交差したりすると壊れてしまうので注意！ブリッジを使ってパイプをうまく交差させながらパズルを解きましょう。\n\n簡単すぎますか？それなら、もっと大きなボードや上のレベルのパックに挑戦しましょう。タイムトライアル モードでクリアまでのスピードを試すこともできます。";
+
+/* Help text for Flow Free and Flow Free: Hexes apps */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode." = "同じ色どうしをドラッグしてパイプで繋げ、流れを作り出します。\n\nパズルをクリアするには、全ての色どうしを繋げ、ボード全体に隙間なくパイプを通してください。\n\nただし、パイプどうしが重なったり交差したりすると壊れてしまうので注意！\n\n簡単すぎますか？それなら、もっと大きなボードや上のレベルのパックに挑戦しましょう。タイムトライアル モードでクリアまでのスピードを試すこともできます。";
+
+/* weekly puzzle theme name */
+"Dumbbell Challenge" = "ダンベルチャレンジ";
+
+/* level difficulty */
+"easy" = "初級";
+
+/* short description of the Kids Pack */
+"Easy 5x5 - 6x6 boards" = "5x5 から 6x6";
+
+/* description of the Kids Pack */
+"Easy 5x5 and 6x6 boards" = "簡単な 5x5 と 6x6 のボード";
+
+/* short description of the Kids Pack */
+"Easy 5x5 boards" = "簡単な 5x5 のボード";
+
+/* Language name, for display as a game language option */
+"English" = "英語";
+
+/* Remove Ads Dialog Message */
+"Enjoy thousands of puzzles, with zero ads!" = "数千種類の対戦パズルが楽しめる。広告なし！";
+
+/* Ask the user to review the app in the app store. */
+"Enjoying the app?\nPlease give us a review." = "アプリをお楽しみいただけましたか？\nぜひレビューを書いてください。";
+
+/* promo */
+"Exciting Offer!" = "お得なチャンス！";
+
+/* description of the Bridges Sampler. 'Flow Free: Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Bridges" = "Flow Free: Bridgesを体験しましょう";
+
+/* description of the Hexes Sampler. 'Flow Free: Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Hexes" = "Flow Free: Hexesを体験しましょう";
+
+/* description of the Warps Sampler. 'Flow Free: Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Warps" = "Flow Free: Warpsを体験しましょう";
+
+/* Extra options and functionality. */
+"Extras" = "エクストラ";
+
+/* section name */
+"Extreme" = "エクストリーム";
+
+/* weekly puzzle theme name */
+"Extreme Cornerless" = "エクストリーム・コーナーレス";
+
+/* weekly puzzle theme name. 'Courtyard' translation should be similar to the related pack 'Courtyard Pack' */
+"Extreme Courtyard" = "エクストリーム・コートヤード";
+
+/* weekly puzzle theme name. 'Courtyard Spin' translation should be similar to the related pack 'Courtyard Spin Pack' */
+"Extreme Courtyard Spin" = "エクストリーム・コートヤードスピン";
+
+/* short level pack name and weekly puzzle theme name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Extreme Hextangle" = "エクストリーム長六角形";
+
+/* long level pack name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Extreme Hextangle Pack" = "エクストリーム長六角形パック";
+
+/* weekly puzzle theme name */
+"Extreme Interval" = "エクストリーム・インターバル";
+
+/* short level pack name */
+"Extreme Pack" = "エクストリーム";
+
+/* short level pack name */
+"Extreme Pack 2" = "エクストリーム 2";
+
+/* short level pack name and weekly puzzle theme name */
+"Extreme Rainbow" = "エクストリーム虹";
+
+/* long level pack name */
+"Extreme Rainbow Pack" = "エクストリーム虹パック";
+
+/* weekly puzzle theme name */
+"Extreme Rectangle" = "エクストリーム長方形";
+
+/* weekly puzzle theme name */
+"Extreme Sawtooth" = "エクストリームのこぎり歯";
+
+/* weekly puzzle theme name. 'Tower' translation should be similar to the related pack 'Tower Pack' */
+"Extreme Tower" = "エクストリームタワー";
+
+/* short theme name */
+"Fall" = "フォール";
+
+/* full theme name */
+"Fall Harvest" = "フォール ハーベスト";
+
+/* title of color theme for in app purchase */
+"Fall Harvest Colors" = "秋の収穫カラー";
+
+/* description of color theme in app purchase */
+"Fall Harvest Colors theme" = "秋の収穫カラーテーマ";
+
+/* promo */
+"Feed your addiction and\nunlock all packs today!" = "どれだけハマったか発信して\n全てのパックを今すぐアンロック！";
+
+/* Flows finished but pipe remaining dialog message */
+"Fill the board with pipe to complete the level." = "ボード上をパイプで埋め尽くすとレベルクリアです。";
+
+/* Header on the store submenu.  Themes change the colors within the game. */
+"Flow Themes" = "フローのテーマ";
+
+/* short level pack name */
+"Flower Field Pack" = "花畑パック";
+
+/* short level pack name */
+"Flower Pack" = "フラワーパック";
+
+/* weekly puzzle theme name */
+"Flower Rainbow" = "フラワーレインボー";
+
+/* On the game screen, how many flows are complete / how many to go */
+"flows: %d/%d" = "フロー：%1$d/%2$d";
+
+/* weekly puzzle theme name */
+"Frames Challenge" = "フレームチャレンジ";
+
+/* Item is free, no cost to purchase */
+"Free" = "無料";
+
+/* Dialog title text */
+"Free Hint" = "無料ヒント";
+
+/* Rewarded Hint Dialog Header */
+"Free Hint!" = "無料ヒント！";
+
+/* Something the user will get, hints help users solve puzzles */
+"Free hints!" = "無料ヒント！";
+
+/* promo */
+"Free Mania, Boundless,\nand Deep Space packs" = "無料のマニア、無限\nそしてディープスペースパック";
+
+/* promo */
+"Free Mania, Flower,\nand Extreme packs" = "無料のマニア、フラワー、\nそしてエクストリームパック";
+
+/* promo */
+"Free Mania, Jumbo,\nand Extreme packs" = "無料のマニア、ジャンボ、\nそしてエクストリームパック";
+
+/* Choice on the main menu to play without trying to beat the clock */
+"free play" = "無料プレイ";
+
+/* Language name, for display as a game language option */
+"French" = "フランス語";
+
+/* Dialog title */
+"Game Paused" = "ポーズ中";
+
+/* Language name, for display as a game language option */
+"German" = "ドイツ語";
+
+/* description of hints in app purchase. The %d is a number greater than 1. */
+"get %d hints" = "%d 個のヒント";
+
+/* get hint with rewarded video button */
+"get 1 free hint!" = "無料ヒント！";
+
+/* Free hint button on the level complete dialog. */
+"get a free hint" = "無料ヒント";
+
+/* Flows finished but pipe remaining dialog button */
+"get a hint" = "ヒントを手に入れる";
+
+/* Prompt the user to get achievements from online. */
+"Get Achievements?" = "実績を取得しますか？";
+
+/* Hint Dialog Header */
+"Get Hints" = "ヒントを手に入れる";
+
+/* Button on the notification dialog asking the user to download the promoted app */
+"Get It" = "手に入れる";
+
+/* promo */
+"get it now" = "今すぐゲット";
+
+/* promo */
+"get it now!" = "今すぐゲット！";
+
+/* Button on the notification dialog asking the user to download the promoted app */
+"Get It!" = "手に入れる！";
+
+/* Upsell the user to download one of our other games to get more levels.  Will appear before the text logo of the game, example: 'get more <bridges logo>' */
+"get more" = "さらに獲得:";
+
+/* More hints button on the level complete dialog. */
+"get more hints" = "ヒントを追加する";
+
+/* Button to promote purchasing more hints. */
+"Get More Hints" = "ヒントを追加する";
+
+/* upsell text */
+"Get more hints today!" = "今すぐ追加のヒントを手に入れよう！";
+
+/* Upsell the user to get more levels. */
+"get more levels" = "レベルを追加する";
+
+/* Button to promote purchasing more levels. */
+"Get More Levels" = "レベルを追加する";
+
+/* promo */
+"Get the Starter Bundle today!" = "今すぐスターター セットを手に入れよう！";
+
+/* promo */
+"Get them all for just %@" = "全て入ってたったの %@";
+
+/* promo */
+"Get them all now!" = "今すぐ全て手に入れよう！";
+
+/* upsell text */
+"Go Pro! Get more levels today!" = "今すぐレベルを追加しよう！";
+
+/* promo */
+"Great Deal!" = "超お買い得！";
+
+/* promo */
+"Great Flowing!" = "最高のフロー！";
+
+/* short level pack name */
+"Green Pack" = "グリーンパック";
+
+/* level difficulty */
+"hard" = "上級";
+
+/* section name */
+"Hard Manias" = "上級マニア";
+
+/* level difficulty */
+"harder" = "達人級";
+
+/* level difficulty */
+"hardest" = "超人級";
+
+/* short level pack name */
+"Hashed Pack" = "シャープパック";
+
+/* weekly puzzle theme name. 'Hashtag' as in the symbol # */
+"Hashtag Bridges Challenge" = "ハッシュタグブリッジチャレンジ";
+
+/* Header title on the help menu. */
+"help" = "ヘルプ";
+
+/* weekly puzzle theme name. Play on the phrase 'X marks the spot' */
+"Hex Marks The Spot" = "六が示す場所";
+
+/* short level pack name. 'Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Hexes Sampler" = "Hexesのサンプル";
+
+/* weekly puzzle theme name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Hextangle Challenge" = "長六角形チャレンジ";
+
+/* short level pack name (a play on Hexagon + Rectangle) */
+"Hextangle Pack" = "長六角形パック";
+
+/* section name (a play on Hexagon + Rectangle) */
+"Hextangles" = "長六角形";
+
+/* short theme name */
+"Holiday" = "ホリデイ";
+
+/* full theme name */
+"Holiday Gift" = "ホリデイ ギフト";
+
+/* short theme name */
+"Honey" = "ハニー";
+
+/* full theme name */
+"Honeycomb" = "ハニカム";
+
+/* short level pack name */
+"Hourglass Pack" = "砂時計パック";
+
+/* Option on the about menu that will explain the game rules. */
+"how to play" = "プレイ方法";
+
+/* promo price, example: Just $1.99 */
+"Huge savings over full price." = "定価から大幅に割り引き。";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat %@ levels in %@!  Can you?" = "%2$@ で %1$@ レベルをクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat %@ levels perfectly in %@!  Can you?" = "%2$@ で %1$@ レベルをパーフェクトでクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %d is number of levels, %@ is Flow Free or Flow Free Bridges. */
+"I beat %d level packs in %@!  Can you?" = "%2$@ で %1$d 個のレベルパックをクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %d is number of levels, %@ is Flow Free or Flow Free Bridges. */
+"I beat %d level packs perfectly in %@!  Can you?" = "%2$@ で %1$d 個のレベルパックをパーフェクトでクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat all the free level packs in %@!  Can you?" = "%@ で全ての無料レベルパックをクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat all the included level packs in %@!  Can you?" = "%@ の全てのレベルパックをクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat EVERY level pack in %@!  Can you?" = "%@ の全てのレベルパックをクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat one level in %@!  Can you?" = "%@ で 1 レベルをクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat one level perfectly in %@!  Can you?" = "%@ で 1 レベルをパーフェクトでクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %1$@ is the Pack Name, %2$@ is Flow Free or Flow Free Bridges. example: 'I beat the Green Pack in Flow Free!  Can you?'' */
+"I beat the %@ in %@!  Can you?" = "%2$@ で %1$@ をクリアしました！あなたも挑戦してみる？";
+
+/* Social invite. %1$@ is the Pack Name, %2$@ is Flow Free or Flow Free Bridges. example: 'I beat the Green Pack perfectly in Flow Free!  Can you?' */
+"I beat the %@ perfectly in %@!  Can you?" = "%2$@ で %1$@ をパーフェクトでクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on all the free level packs in %@!  Can you beat that?" = "%@ で全ての無料のレベルパックをパーフェクトでクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on all the included level packs in %@!  Can you beat that?" = "%@ で全てのレベルパックをパーフェクトでクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on EVERY level pack in %@!  Can you match that?" = "%@ の全てのレベルパックをパーフェクトでクリアしました。あなたも挑戦してみる？";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I haven't beaten any levels in %@ yet.  Can you?" = "%@ がまだ 1 レベルもクリアできません…。あなたも挑戦してみる？";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free perfectly!  Can you? */
+"I solved %@ in %@ perfectly!  Can you?" = "%2$@ で %1$@ をパーフェクトで解きました！あなたも挑戦してみる？";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free!  Can you? */
+"I solved %@ in %@!  Can you?" = "%2$@ で %1$@ を解きました！あなたも挑戦してみる？";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free.  Join me! */
+"I solved %@ in %@.  Join me!" = "%2$@ で %1$@ を解きました！挑戦してみてね！";
+
+/* promo for game, for example I'm working on Mania, 9x9 level 20 in Flow Free.  Can you solve it? */
+"I'm working on %@ in %@.  Can you solve it?" = "%2$@ で %1$@ に挑戦中。あなたは解ける？";
+
+/* Menu item indicating syncing game progress to iCloud is currently off. */
+"iCloud sync: off" = "iCloud の同期： オフ";
+
+/* Menu item indicating syncing game progress to iCloud is currently on. */
+"iCloud sync: on" = "iCloud の同期： オン";
+
+/* Message popup on iOS asking user to confirm reset. */
+"If you've previously purchased any level packs, this will download them again for free." = "これまでに購入したレベルパックがある場合は、この操作でそれらを再び無料でダウンロードします。";
+
+/* description of the Inkblot Pack */
+"Inkblot boards increasing in size" = "インクブロットボードのサイズが増えます";
+
+/* weekly puzzle theme name. 'Inkblot' translation should be similar to the related pack 'Inkblot Pack' */
+"Inkblot Challenge" = "インクブロットチャレンジ";
+
+/* short level pack name */
+"Inkblot Pack" = "インクブロットパック";
+
+/* weekly puzzle theme name. 'Interval' translation should be similar to the related pack 'Interval Pack' */
+"Interval Challenge" = "インターバルチャレンジ";
+
+/* short level pack name */
+"Interval Pack" = "インターバルパック";
+
+/* description of the Interval Pack */
+"Intervals from 6x6 to 12x12" = "6x6～12x12のインターバル";
+
+/* description of the Jumbo Interval Pack */
+"Intervals from 9x9 to 15x15" = "9x9～15x15のインターバル";
+
+/* section name */
+"Intro" = "導入";
+
+/* short level pack name */
+"Intro Pack" = "導入パック";
+
+/* Language name, for display as a game language option */
+"Italian" = "イタリア語";
+
+/* Language name, for display as a game language option */
+"Japanese" = "日本語";
+
+/* short level pack name */
+"Jet Pack" = "ジェットパック";
+
+/* section name */
+"Jumbo" = "ジャンボ";
+
+/* short level pack name */
+"Jumbo Courtyard" = "ジャンボコートヤード";
+
+/* long level pack name */
+"Jumbo Courtyard Pack" = "ジャンボコートヤードパック";
+
+/* short level pack name */
+"Jumbo Hextangle" = "ジャンボ長六方形";
+
+/* long level pack name */
+"Jumbo Hextangle Pack" = "ジャンボ長六方形パック";
+
+/* short level pack name */
+"Jumbo Interval" = "ジャンボインターバル";
+
+/* long level pack name */
+"Jumbo Interval Pack" = "ジャンボインターバルパック";
+
+/* short level pack name */
+"Jumbo Jet Pack" = "ジャンボジェット";
+
+/* short level pack name */
+"Jumbo Pack" = "ジャンボパック";
+
+/* short level pack name */
+"Jumbo Pack 2" = "ジャンボパック 2";
+
+/* short level pack name */
+"Jumbo Rainbow" = "ジャンボレインボー";
+
+/* long level pack name */
+"Jumbo Rainbow Pack" = "ジャンボレインボーパック";
+
+/* short level pack name */
+"Jumbo Rectangle" = "ジャンボ長方形";
+
+/* short level pack name */
+"Jumbo Rectangle 2" = "ジャンボ長方形 2";
+
+/* long level pack name */
+"Jumbo Rectangle Pack" = "ジャンボ長方形パック";
+
+/* long level pack name */
+"Jumbo Rectangle Pack 2" = "ジャンボ長方形パック 2";
+
+/* promo price, example: Just $1.99 */
+"Just %@" = "たったの %@";
+
+/* promo */
+"Just %@ for a limited time only." = "期間限定でたったの %@";
+
+/* Flows finished but pipe remaining dialog button */
+"keep playing" = "プレイを続ける";
+
+/* section name */
+"Kids" = "キッズ";
+
+/* short level pack name */
+"Kids Pack" = "キッズパック";
+
+/* Language name, for display as a game language option */
+"Korean" = "韓国語";
+
+/* Header title on the language selection menu. */
+"language" = "言語";
+
+/* option on the settings menu.  %@ will be replaced with the localized name of the current game language, example: 'language: english' */
+"language: %@" = "言語: %@";
+
+/* short level pack name */
+"Large Galaxy" = "ギャラクシ（大）";
+
+/* long level pack name */
+"Large Galaxy Pack" = "ギャラクシーパック（大）";
+
+/* text on the game screen showing the current level number.  %d will be replaced by the level number, example: 'level 3' */
+"level %d" = "レベル %d";
+
+/* text on the game screen showing the current level number, and total number of levels in the pack.  Translation should be similar to the string 'level %d'.  %1$d is the level number, and %2$d is the total number of levels, example: 'level 3/10' */
+"level %d/%d" = "レベル %1$d/%2$d";
+
+/* Title text indicating the user completed a level. */
+"Level complete!" = "レベルクリア！";
+
+/* Menu header for selecting a level. */
+"levels" = "レベル";
+
+/* promo */
+"Limited time only." = "期間限定";
+
+/* Text shown while items for purchase are being loaded. */
+"Loading Store..." = "ストアを読み込んでいます…";
+
+/* Hints menu */
+"loading..." = "読み込み中…";
+
+/* Label text indicating the length of the user's longest ever daily puzzle streak.  %@ will be replaced with the number of days, example: 'Longest streak: 7 days' */
+"Longest streak: %@" = "最長連続記録: %@";
+
+/* promo text. 'Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Love Bridges?\nGet Flow Free: Bridges!" = "Bridgesはお好きですか？\nぜひFlow Free: Bridgesをゲットしましょう！";
+
+/* upsell text */
+"Love Flow Free? Upgrade today!" = "今すぐアップデート！";
+
+/* Ask the user to review the app in the app store. */
+"Love Flow Free?\nPlease give us a review." = "Flow Free を気に入っていただけましたか？\nぜひレビューを書いてください。";
+
+/* promo text. 'Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Love Hexes?\nGet Flow Free: Hexes!" = "Hexesはお好きですか？\nぜひFlow Free: Hexesをゲットしましょう！";
+
+/* promo text. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Love Warps?\nGet Flow Free: Warps!" = "Warpsはお好きですか？\nぜひFlow Free: Warpsをゲットしましょう！";
+
+/* Menu label for animations that are turned to the low or reduced setting. */
+"low" = "低";
+
+/* promo */
+"Make the rest even better." = "これからも頑張りましょう！";
+
+/* section name */
+"Manias" = "マニア";
+
+/* No. Maybe watch a video later. */
+"maybe later" = "後で";
+
+/* level difficulty */
+"medium" = "中級";
+
+/* weekly puzzle theme name */
+"Mega Rainbow" = "メガ虹";
+
+/* Choice on the menu to find other games written by Big Duck Games. */
+"more games" = "他のゲーム";
+
+/* The most popular hint package that we sell */
+"Most Popular" = "最も人気";
+
+/* Show how many moves the user has made while trying to solve the puzzle and number of moves for their personal best */
+"moves: %d   best: %d" = "手数：%1$d   ベスト：%2$d";
+
+/* Show how many moves the user has made while trying to solve the puzzle, they have not solved this puzzle yet so no personal best */
+"moves: %d   best: -" = "手数：%d   ベスト：-";
+
+/* Navigating back out of a level */
+"Navigating back will lose your current level progress." = "戻ると現在の進捗が失われます。";
+
+/* promo */
+"Need more color in your life?" = "世界をもっとカラフルにしませんか？";
+
+/* upsell text */
+"Need more hints? Get some now!" = "ヒントが足りない？";
+
+/* short theme name */
+"Neon" = "ネオン";
+
+/* full theme name */
+"Neon Rainbow" = "ネオンレインボー";
+
+/* title of color theme for in app purchase */
+"Neon Rainbow Colors" = "ネオンレインボーカラー";
+
+/* description of color theme in app purchase */
+"Neon Rainbow Colors theme" = "ネオンレインボーカラーテーマ";
+
+/* promo */
+"Neon, pastel and more" = "ネオンカラー、パステルカラーなど他にも色々";
+
+/* Label text describing daily puzzles, shown when the user doesn't have a current streak. */
+"New puzzles every day!  Start a streak!" = "毎日、新しいパズルが登場！\n連続記録を狙いましょう！";
+
+/* Label text describing weekly puzzles, shown when the user hasn't completed a week. */
+"New puzzles every week!" = "毎週、新しいパズルが登場！";
+
+/* Dialog title */
+"New record!" = "新記録！";
+
+/* Dialog title shown after completing today's daily puzzles, and starting a new daily streak.  A streak can be extended by completing puzzles multiple days in a row. */
+"New Streak!" = "連続記録開始！";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"New Weekly Puzzles!" = "新たなウィークリーパズル！";
+
+/* promo */
+"new\ngame!" = "新たな\nゲーム登場！";
+
+/* Button text on the dialog allowing the user to progress to the next level. */
+"next level" = "次のレベル";
+
+/* text used on a button */
+"No" = "いいえ";
+
+/* Warning shown when user runs out of hints. */
+"No hints remaining.  Get more now!" = "ヒントを使い切りました！";
+
+/* decline more hints */
+"no thanks" = "必要ありません";
+
+/* Button on the notification dialog */
+"No thanks" = "必要ありません";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"Not long left to beat the weekly puzzles for this week!" = "今週のウィークリーパズル消滅間近！今すぐクリアしましょう！";
+
+/* Button to decline reviewing the app */
+"Not Now" = "今は見ない";
+
+/* Menu item indicating whether notifications are currently on or off. %@ will be replaced with 'on' or 'off', example: 'notifications: off' */
+"notifications: %@" = "通知: %@";
+
+/* Description text for permissions prompt */
+"NSCalendarsUsageDescription" = "広告の一部はカレンダーにイベントの追加を求める場合があります";
+
+/* Description text for permissions prompt */
+"NSPhotoLibraryAddUsageDescription" = "スクリーンショットを[写真]に保存";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescription" = "これはより優れた広告体験の提供を可能とします。";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescriptionAlt1" = "これは広告体験をパーソナライズすることでより関連性のある広告を表示できるようにします。";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescriptionAlt2" = "お客様のデータは、パーソナライズされたより優れた広告体験を提供するために使用されます。";
+
+/* section name */
+"Obstacles" = "障害物";
+
+/* Menu label for a setting option that is turned off.  Translation should be as short as possible, and correspond with the 'on' string.  Example usage, tapping will toggle on/off: 'color labels: off' */
+"off" = "オフ";
+
+/* text used on a button to acknowledge the message */
+"OK" = "OK";
+
+/* text used on a button to acknowledge the message */
+"okay" = "OK";
+
+/* text used on a button to acknowledge the message */
+"Okay" = "OK";
+
+/* Menu label for a setting option that is turned on.  Translation should be as short as possible, and correspond with the 'off' string.  Example usage, tapping will toggle on/off: 'color labels: on' */
+"on" = "オン";
+
+/* promo */
+"One premium level pack" = "1 種類のプレミアムレベルパック";
+
+/* More than 2 hints left.  Keep %d because it will be replaced with a number between 2 and 20. */
+"Only %d hints remaining.  Get more now!" = "ヒントが残り %d 個しかありません！";
+
+/* Warning shown when user has one hint left. */
+"Only 1 hint remaining.  Get more now!" = "ヒントが残り 1 個しかありません！";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"Only a few hours left to beat today's puzzles and extend your streak!" = "今日のパズルの挑戦可能期間が残り数時間になりました。忘れずに連続記録を更新しましょう！";
+
+/* Dialog title */
+"Options" = "オプション";
+
+/* promo */
+"Over 1,000 new levels!" = "1,000を越える新レベル！";
+
+/* promo */
+"Over 2,000 free levels!" = "2,000を超える無料レベル！";
+
+/* Dialog title shown after completing all levels in a pack. */
+"Pack Complete!" = "パッククリア";
+
+/* The game requires an update to play the pack. */
+"Pack not found.  Would you like to check for an update?" = "パックがありません。アップデートをチェックしますか？";
+
+/* Dialog title shown after completing all levels in a pack perfectly, with no mistakes. */
+"Pack Perfect!" = "パックノーミスクリア";
+
+/* short level pack name */
+"Party Pack" = "パーティーパック";
+
+/* short theme name */
+"Pastel" = "パステル";
+
+/* full theme name */
+"Pastel Colors" = "パステルカラー";
+
+/* description of color theme in app purchase */
+"Pastel Colors theme" = "パステルカラーテーマ";
+
+/* short level pack name */
+"Pathway Pack" = "経路パック";
+
+/* weekly puzzle theme name. 'Pathways' translation should be similar to the related pack 'Pathway Pack' */
+"Pathways Challenge" = "パスウェイチャレンジ";
+
+/* Title text indicating the user completed a level without making a mistake. */
+"Perfect!" = "パーフェクト！";
+
+/* short theme name */
+"Pink" = "ピンク";
+
+/* short level pack name */
+"Pink Pack" = "ピンクパック";
+
+/* On the game screen, what percent of pipe is complete */
+"pipe: %d%%" = "パイプ：%d%%";
+
+/* Message on the level complete dialog, %@ will be replaced with the name of a level pack, or a board size/type, for example '8x8' */
+"play %@" = "%@ をプレイ";
+
+/* promo */
+"Play ad free forever" = "広告表示なし";
+
+/* upsell text */
+"Play ad-free! Upgrade today!" = "今すぐアップデートして、広告なしでプレイしよう！";
+
+/* time trial complete dialog button */
+"play again" = "もう一度プレイ";
+
+/* promo */
+"Play all the Mania packs" = "全てのマニアパックをプレイ";
+
+/* Upsell the user to play one of our other games to get more levels.  Will appear before the text logo of the game, example: 'play more <bridges logo>' */
+"play more" = "さらにプレイ:";
+
+/* short level pack name */
+"Playground Pack" = "遊び場パック";
+
+/* weekly puzzle theme name */
+"Plaza Challenge" = "プラザチャレンジ";
+
+/* weekly puzzle theme name */
+"Pluses Challenge" = "プラスチャレンジ";
+
+/* short level pack name */
+"Pockets Pack" = "ポケットパック";
+
+/* Language name, for display as a game language option */
+"Portuguese" = "ポルトガル語";
+
+/* description of the Jumbo, Purple, and Pink Pack */
+"Premium 10x10 to 14x14 boards" = "10x10 から 14x14 のボード";
+
+/* description of the Jumbo Courtyard Pack */
+"Premium 11x11 to 15x15 with walls" = "壁が使える 11x11 から 15x15 のボード";
+
+/* description of the Jumbo Rectangle and Hextangle Packs */
+"Premium 11x14 to 15x18 boards" = "11x14 から 15x18 のボード";
+
+/* description of the Comet Pack */
+"Premium 5x5 boards with increasing warps" = "5x5 のwarpsが増えていくボード";
+
+/* description of the Blue and Green Packs, and Hexes Classic Pack 2 */
+"Premium 5x5 to 9x9 boards" = "5x5 から 9x9 のボード";
+
+/* description of the 6x6 Boundless Pack */
+"Premium 6x6 boards with full warps" = "6x6 の最大回数のwarpsが使えるボード";
+
+/* description of the 7x7 Boundless Pack */
+"Premium 7x7 boards with full warps" = "7x7 の最大回数のwarpsが使えるボード";
+
+/* description of the Deep Space Pack 2 */
+"Premium 8x8 and 9x9 boards with star walls" = "8x8 と 9x9 の星型壁が使えるボード";
+
+/* description of the 10x10 Mania Pack */
+"Premium all 10x10, all the time!" = "全て 10ｘ10！";
+
+/* description of the 11x11 Mania Pack */
+"Premium all 11x11, all the time!" = "全て 11ｘ11！";
+
+/* description of the 12x12 Mania Pack */
+"Premium all 12x12, all the time!" = "全て 12ｘ12！";
+
+/* description of the 13x13 Mania Pack */
+"Premium all 13x13, all the time!" = "全て 13ｘ13！";
+
+/* description of the 14x14 Mania Pack */
+"Premium all 14x14, all the time!" = "全て 14ｘ14！";
+
+/* description of the 15x15 Mania Pack */
+"Premium all 15x15, all the time!" = "全て 15ｘ15！";
+
+/* Heading for list of premium packs for purchase */
+"Premium Level Packs" = "プレミアムレベルパック";
+
+/* full theme name */
+"Pretty Pink" = "プリティピンク";
+
+/* Link to Privacy Policy */
+"privacy policy" = "プライバシー ポリシー";
+
+/* section name */
+"Progression" = "プログレッション";
+
+/* Message on the themes for purchase dialog. */
+"Purchase any theme to remove ads." = "広告を非表示にするには、いずれかのテーマを購入してください。";
+
+/* short level pack name */
+"Purple Pack" = "パープルパック";
+
+/* time trail complete dialog button */
+"quit" = "終了";
+
+/* weekly puzzle theme name. 'Rainbow' translation should be similar to the related pack 'Rainbow Pack' */
+"Rainbow Challenge" = "虹パック";
+
+/* short level pack name */
+"Rainbow Pack" = "虹パック";
+
+/* description of the Jumbo Rainbow Pack */
+"Rainbows of 10x10 to 14x14 boards" = "10x10 から 14x14 の虹のボード";
+
+/* description of the Rainbow Pack */
+"Rainbows of 5x5 to 9x9 boards" = "5x5 から 9x9 の 虹 のボード";
+
+/* description of the Extreme Rainbow Pack */
+"Rainbows of tricky 7x7 to 15x15 boards" = "7x7 から 15x15 の 虹 の 手強いボード";
+
+/* description of the Extreme Rainbow Pack */
+"Rainbows of tricky 8x8 to 15x15 boards" = "8x8 から 15x15 の 虹 の 手強いボード";
+
+/* weekly puzzle theme name. 'Rectangle' translation should be similar to the related pack 'Rectangle Pack' */
+"Rectangle Challenge" = "長方形パック";
+
+/* short level pack name */
+"Rectangle Pack" = "長方形パック";
+
+/* section name */
+"Rectangles" = "長方形";
+
+/* Button to remove advertisements by making a purchase. */
+"remove ads" = "広告を非表示化";
+
+/* promo */
+"Remove ads" = "広告なし";
+
+/* Button to promote purchase that removes ads. */
+"Remove Ads" = "広告をなくす";
+
+/* upsell text */
+"Remove ads!" = "広告をなくそう！";
+
+/* Remove Ads Dialog Header */
+"Remove Ads?" = "広告をなくしますか？";
+
+/* Text shown when viewing the store submenu. */
+"Remove ads\n by purchasing any level pack!" = "いずれかのレベルパック購入で\n広告が非表示に！";
+
+/* Remove all ads by purchasing the Unlock All bundle */
+"Remove all ads" = "全ての広告を非表示にする";
+
+/* option on the settings menu */
+"reset progress" = "記録をリセット";
+
+/* option in the store page */
+"Restore Purchases" = "復元";
+
+/* Option on the about menu that links to the app store to review this game. */
+"review app" = "レビュー";
+
+/* Button to review the app in the app store. */
+"Review App" = "アプリのレビューを書く";
+
+/* weekly puzzle theme name. 'Rift' translation should be similar to the related pack 'Rift Pack' */
+"Rift Challenge" = "裂け目チャレンジ";
+
+/* short level pack name */
+"Rift Pack" = "裂け目パック";
+
+/* weekly puzzle theme name */
+"Rotating Warp Challenge" = "ローテーションワープチャレンジ";
+
+/* Language name, for display as a game language option */
+"Russian" = "ロシア語";
+
+/* promo */
+"Sale!" = "セール！";
+
+/* weekly puzzle theme name */
+"Sawtooth Challenge" = "のこぎり歯チャレンジ";
+
+/* weekly puzzle theme name. 'Scanline' translation should be similar to the related pack 'Scanline Pack' */
+"Scanline Challenge" = "スキャンラインチャレンジ";
+
+/* short level pack name */
+"Scanline Pack" = "スキャンラインパック";
+
+/* weekly puzzle theme name. 'Scattered' translation should be similar to the related pack 'Scattered Pack' */
+"Scattered Challenge" = "スキャッターチャレンジ";
+
+/* short level pack name */
+"Scattered Pack" = "スキャッターパック";
+
+/* title text on select level menu */
+"Select Level" = "レベルの選択";
+
+/* Button to move to the next level pack */
+"select next pack" = "次のパックを選択";
+
+/* Option on the about menu to send feedback on this game. */
+"send feedback" = "フィードバックを送信";
+
+/* Choice on main menu and header on the settings submenu. */
+"settings" = "設定";
+
+/* description of the Concepts Pack */
+"Shaped and walled boards" = "様々な形と壁のボード";
+
+/* Button text on the level complete dialog allowing the user to share their progress with friends. */
+"share" = "シェア";
+
+/* dialog title */
+"Share" = "シェア";
+
+/* pause dialog button */
+"share board" = "ボードをシェア";
+
+/* Message on share progress dialog to share progress with friends. */
+"Share Progress" = "記録をシェア";
+
+/* pause dialog button */
+"share solution" = "解法をシェア";
+
+/* Prompt the user to sign in to get achievements from online. */
+"Sign in to Game Center to start unlocking your achievements." = "Game Center にサインインして実績のアンロックを開始します。";
+
+/* Menu item that allows for logging in to Google Play */
+"sign in to Google Play" = "Google Play にサインイン";
+
+/* Prompt the user to sign in to get achievements from online. */
+"Sign in to Google Play to start unlocking your achievements." = "Google Play にサインインして実績のアンロックを開始します。";
+
+/* Menu item that allows for logging out of Google Play. */
+"sign out of Google Play" = "Google Play をサインアウト";
+
+/* weekly puzzle theme name */
+"Simply Extreme" = "シンプリーエクストリーム";
+
+/* short level pack name */
+"Small Galaxy" = "ギャラクシ（小）";
+
+/* long level pack name */
+"Small Galaxy Pack" = "ギャラクシーパック（小）";
+
+/* weekly puzzle theme name */
+"Snowflake Challenge" = "雪片チャレンジ";
+
+/* Show how many puzzles the user solved during a timed game and their personal best */
+"solved: %d   best: %d" = "完了：%1$d ベスト：%2$d";
+
+/* Show how many puzzles the user solved during a timed game, no personal best yet becuase this is their first attempt */
+"solved: %d   best: -" = "完了：%d  ベスト：-";
+
+/* The current sound volume. Do not remove %d, it will be replaced with an number 0 to 9. */
+"sound: %d" = "音量： %d";
+
+/* Sound volume status on the menu indicating that sound currently off. */
+"sound: off" = "音量： オフ";
+
+/* Language name, for display as a game language option */
+"Spanish" = "スペイン語";
+
+/* promo */
+"Special Offer!" = "スペシャルチャンス！";
+
+/* description of the Spectrum Pack */
+"Spectrum of 5x5 to 9x9 boards" = "5x5 から 9x9 のスペクトラムボード";
+
+/* short level pack name */
+"Spectrum Pack" = "スペクトラムパック";
+
+/* short theme name */
+"Spring" = "スプリング";
+
+/* full theme name */
+"Spring Greens" = "スプリング グリーン";
+
+/* title of color theme for in app purchase */
+"Spring Greens Colors" = "春の緑カラー";
+
+/* description of color theme in app purchase */
+"Spring Greens Colors theme" = "春の緑カラーテーマ";
+
+/* weekly puzzle theme name. 'Star Field' translation should be similar to the related pack 'Star Field Pack' */
+"Star Field Challenge" = "星空チャレンジ";
+
+/* short level pack name */
+"Star Field Pack" = "星空パック";
+
+/* promo */
+"Starter Bundle" = "スターターセット";
+
+/* In app purchase description of the Starter Bundle */
+"Starter Bundle with premium level pack and extra hints" = "スターターバンドル（プレミアムレベル＆追加ヒント収録）";
+
+/* short level pack name */
+"Starter Pack" = "スターターパック";
+
+/* weekly puzzle theme name. 'Stitched' translation should be similar to the related pack 'Stitched Pack' */
+"Stitched Challenge" = "ステッチチャレンジ";
+
+/* short level pack name */
+"Stitched Pack" = "ステッチパック";
+
+/* upsell text */
+"Stock up on hints today!" = "今すぐ大量のヒントを手に入れよう！";
+
+/* The menu header when when viewing the store submenu. */
+"store" = "ストア";
+
+/* Dialog title shown after completing today's daily puzzles, and extending an existing daily streak.  A streak is extended by completing puzzles multiple days in a row. */
+"Streak Extended!" = "連続記録更新！";
+
+/* short level pack name */
+"Sunflower Pack" = "サンフラワーパック";
+
+/* weekly puzzle theme name */
+"Sunny Day Challenge" = "サニーデイチャレンジ";
+
+/* weekly puzzle theme name */
+"Swiss Cheese Challenge" = "スイスチーズチャレンジ";
+
+/* weekly puzzle theme name. 'Tangle' translation should be similar to the related pack 'Tangle Pack' */
+"Tangle Challenge" = "もつれチャレンジ";
+
+/* short level pack name */
+"Tangle Pack" = "もつれパック";
+
+/* Text shown after a purchase is made. */
+"Thanks for your support!" = "ご協力ありがとうございます！";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"The clock is ticking...  Come beat this week's puzzles before they're gone!" = "もう時間がありません…消えてしまう前に、今すぐ今週のパズルをクリアしましょう！";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"The clock is ticking...  Come beat today's puzzles to extend your streak!" = "もう時間がありません…今すぐ今日のパズルをクリアして連続記録を更新しましょう！";
+
+/* Unlock All promo description. */
+"The Complete Package!" = "コンプリートパッケージ！";
+
+/* promo */
+"The next evolution of\nFlow Free!" = "Flow Freeの\n新たな進化形！";
+
+/* option on the settings menu */
+"theme:" = "テーマ:";
+
+/* The menu header when when viewing the themes submenu. */
+"themes" = "テーマ";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"There is a new set of weekly puzzles!" = "新たなウィークリーパズルセットが登場！";
+
+/* Message on cloud sync dialog */
+"There's more level progress saved in iCloud.  Would you like to sync with iCloud?" = "この他にも、iCloud に保存されているレベル記録があります。iCloud と同期しますか？";
+
+/* Message on the cloud sync dialog */
+"There's more level progress saved in the cloud.  Would you like to sync with the cloud?" = "この他にも、クラウドに保存されているレベル記録があります。クラウドと同期しますか？";
+
+/* Special version of the application gives some some benifits to the user */
+"This Flow Free version exclusively from Amazon includes:" = "Flow Free（Amazon 限定版）には以下が含まれます:";
+
+/* Choice on the main menu to play a game mode where you race against the clock to solve puzzles quickly. */
+"time trial" = "タイムアタック";
+
+/* description of the Time Trial Pack */
+"Time trial pack" = "タイムトライアルパック";
+
+/* short level pack name */
+"Time Trial Pack" = "タイムトライアルパック";
+
+/* short level pack name */
+"Time Warp Pack" = "タイムワープパック";
+
+/* Dialog title */
+"Time's up." = "時間切れ";
+
+/* short version of 'time trial' for menu header that does not fit */
+"timed" = "タイムアタック";
+
+/* Header text displayed above the list of daily puzzles that are available today.  The puzzles change every day. */
+"Today's Puzzles" = "今日のパズル";
+
+/* short level pack name */
+"Tower Pack" = "タワーパック";
+
+/* description of the Extreme Hextangle Pack */
+"Tricky 8x10 to 12x14 boards" = "8x10 から 12x12 の手強いボード";
+
+/* description of the Extreme Pack and Extreme Pack 2 */
+"Tricky 8x8 to 12x12 boards" = "8x8 から 12x12 の手強いボード";
+
+/* section name */
+"Tutorial" = "チュートリアル";
+
+/* Error text when store connection fails. */
+"Unable to connect to Store." = "ストアに接続できません。";
+
+/* error */
+"Unable to purchase.  In-App Purchases are not enabled." = "購入できません。アプリ内の購入が無効になっています。";
+
+/* error */
+"Unable to purchase.  In-App Purchases have been restricted in Settings." = "購入できません。アプリ内の購入が設定により制限されています。";
+
+/* error */
+"Unable to purchase.  Please check your connection to the App Store and try again later." = "購入できません。アプリストアへの接続を確認してからやり直してください。";
+
+/* A description of how many premium levels you would unlock if you purchase the package. %@ is a number such as 1,500. */
+"Unlock all %@ Premium Levels" = "全 %@ 個のプレミアムレベルをアンロック";
+
+/* promo */
+"Unlock all level packs today!" = "今すぐ全てのレベルパックをアンロック！";
+
+/* promo */
+"Unlock all level packs today! (%@)" = "今すぐ全てのレベルパックをアンロック！(%@)";
+
+/* Offer the user the ability to buy all game packs as one purchase. */
+"Unlock All Packs" = "全てのパックをアンロック";
+
+/* Offer the user the ability to buy all game packs as one purchase. */
+"Unlock All Packs and Remove Ads" = "全パックがアンロックされ、広告が非表示になります";
+
+/* Option to purchase all themes. */
+"Unlock All Themes" = "全てのテーマをアンロック";
+
+/* description of color theme in app purchase */
+"Unlock every color theme" = "すべてのカラーテーマをアンロック";
+
+/* Purchase that will give the user access to all level packs in the game */
+"Unlock every level pack and remove ads" = "パックのアンロック＆広告の削除！";
+
+/* promo */
+"Unlock today and beat the game!" = "今すぐアンロックしてクリアを目指そう！";
+
+/* upsell text */
+"Upgrade your game!" = "ゲームをアップグレードしよう！";
+
+/* upsell text */
+"Upgrade your levels!" = "レベルをアップグレードしよう！";
+
+/* button text if user has not yet logged in to game center */
+"use Game Center" = "サインイン";
+
+/* button text if user has not yet logged in to Google Play */
+"use Google Play" = "Google Play を利用する";
+
+/* section name */
+"Variety" = "バラエティー";
+
+/* description of the Variety Pack */
+"Variety of fun-shaped boards" = "色々な形の楽しいボード";
+
+/* description of the Showcase Pack */
+"Variety of playful boards" = "多彩な楽しいボード";
+
+/* short level pack name */
+"Variety Pack" = "バラエティーパック";
+
+/* Button to show important progress points the user has completed. */
+"View Achievements" = "新しい実績";
+
+/* pause dialog button */
+"view store" = "ストアを見る";
+
+/* section name */
+"Walls" = "ウォール";
+
+/* upsell text */
+"Want more levels? Get some now!" = "他のレベルもプレイしてみたい？";
+
+/* promo */
+"Want to be a master plumber?" = "パイプの達人を目指しませんか？";
+
+/* short level pack name. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Warps Pack" = "Warpsパック";
+
+/* short level pack name. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Warps Sampler" = "Warpsのサンプル";
+
+/* short level pack name */
+"Warpway Pack" = "ワープパック";
+
+/* 'Warpyard' is a play on 'Courtyard', if there is no fitting way to attach 'Warp' to a translation of 'Courtyard', then use 'Courtyard'. */
+"Warpyard Pack" = "ワープヤードパック";
+
+/* short level pack name */
+"Warpyard Spin" = "ワープヤードスピン";
+
+/* long level pack name */
+"Warpyard Spin Pack" = "ワープヤードスピンパック";
+
+/* Text warning the user to complete an easier level pack.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend completing the Starter Pack first.  Do you want to play the Daily Pack anyway?' */
+"We recommend completing the %@ first.  Do you want to play the %@ anyway?" = "最初に%1$@を完了することをおすすめします。とにかく%2$@をプレイしますか？";
+
+/* Text warning the user to play an easier level pack first.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend playing the Warps Sampler first.  Do you want to play the Party Pack anyway?' */
+"We recommend playing the %@ first.  Do you want to play the %@ anyway?" = "最初に%1$@をプレイすることをおすすめします。とにかく%2$@をプレイしますか？";
+
+/* Text warning the user to try an easier level.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend starting with the Starter Pack.  Do you want to play the Blue Pack anyway?' */
+"We recommend starting with the %@.  Do you want to play the %@ anyway?" = "最初にプレイするのは %1$@ がおすすめです。%2$@ をプレイしますか？";
+
+/* Dialog title shown after completing this week's weekly puzzles. */
+"Week Completed!" = "今週のパズルをクリアしました！";
+
+/* Dialog title shown after completing this week's weekly puzzles perfectly. */
+"Week Perfected!" = "1週間を完璧に達成！";
+
+/* Choice on the main menu to play the weekly puzzles. */
+"weekly puzzles" = "ウィークリーパズル";
+
+/* New puzzles every week */
+"Weekly Puzzles" = "ウィークリーパズル";
+
+/* Label text indicating the total number of weekly puzzle weeks the user has completed.  %@ will be replaced with the number of weeks, example: 'Weeks completed: 7 weeks' */
+"Weeks completed: %@" = "クリアした週の数: %@";
+
+/* description of the Intro Pack */
+"Welcome to Flow Free!" = "Flow Freeにようこそ！";
+
+/* section name */
+"Wide Warps" = "ワイドWarp";
+
+/* short theme name */
+"Winter" = "ウィンター";
+
+/* full theme name */
+"Winter Chill" = "ウィンター チル";
+
+/* title of color theme for in app purchase */
+"Winter Chill Colors" = "厳寒の冬カラー";
+
+/* description of color theme in app purchase */
+"Winter Chill Colors theme" = "厳寒の冬カラーテーマ";
+
+/* weekly puzzle theme name. 'Worm' translation should be similar to the related pack 'Worm Pack' */
+"Worm Challenge" = "ワームチャレンジ";
+
+/* short level pack name */
+"Worm Pack" = "ワームパック";
+
+/* Pause dialog message */
+"Would you like to customize your game settings?" = "ゲームの設定をカスタマイズしますか？";
+
+/* Pause dialog message */
+"Would you like to customize your game, or get more hints?" = "ゲームをカスタマイズし、もっとヒントを手に入れましょう！";
+
+/* Pause dialog message */
+"Would you like to customize your game, or get more levels?" = "カスタマイズしたり、レベルを増やしたりしてみませんか？";
+
+/* Dialog message offering to enable device notifications when new daily puzzle content is available. */
+"Would you like to get notifications when new daily puzzles are available, so you don't lose your streak?" = "連続記録が更新できるように、新たなデイリーパズルが挑戦可能になったら通知を受け取りますか？";
+
+/* Prompt the user to sign in to use cloud sync from Google Play. */
+"Would you like to sign in to Google Play to enable cloud sync of your game progress?" = "Google Play にサインインして、ゲームの進行状況のクラウド同期を有効にしますか？";
+
+/* promo */
+"Would you like to unlock all level packs? Includes:" = "全てのレベルパックをアンロックしませんか？たとえば：";
+
+/* Rewarded Hint Dialog Message */
+"Would you like to watch a short video to earn a free hint?" = "短編ビデオを観て無料のヒントを獲得したいですか？";
+
+/* section name */
+"Woven" = "編み目";
+
+/* short level pack name */
+"Yellow Pack" = "イエローパック";
+
+/* Button text */
+"yes" = "はい";
+
+/* text used on a button */
+"Yes" = "はい";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'You beat the Green Pack' */
+"You beat the %@!" = "%@ をクリア！";
+
+/* User completed a level. Keep the %d because it will be replaced with a number. */
+"You completed the level in\n%d moves." = "%d 手でレベルを\nクリアしました。";
+
+/* Time trial complete dialog message */
+"You solved %d puzzles in\n%@." = "%2$@ で %1$d 個のパズル\nを解きました。";
+
+/* Time trial complete dialog message */
+"You solved 1 puzzle in\n%@." = "%@ で 1 個のパズル\nを解きました。";
+
+/* Dialog message shown after completing all levels in a pack perfectly.  %@ will be replaced with a localized pack name, example: 'You've completed the Green Pack perfectly!' */
+"You've completed the\n%@ perfectly!" = "%@ をノーミスでクリアしました！";
+
+/* Dialog message shown after completing all levels in a pack.  %@ will be replaced with a localized pack name, example: 'You've completed the Green Pack!' */
+"You've completed the\n%@!" = "%@ を\nクリアしました！";
+
+/* Dialog message shown after completing all weekly puzzles perfectly. */
+"You've completed the\nweekly puzzles perfectly!" = "ウィークリーパズルを\nノーミスでクリアしました！";
+
+/* Dialog message shown after completing all weekly puzzles. */
+"You've completed the\nweekly puzzles!" = "ウィークリーパズルを\nクリアしました！";
+
+/* Dialog message shown after completing today's daily puzzles.  %d will be replaced by the length of the streak in days, greater than 1, example: '3 day streak!' */
+"You've completed today's puzzles!  %d day streak!" = "今日のパズルをクリアしました！%d 日間連続記録達成！";
+
+/* Dialog message shown after completing today's daily puzzles.  Translation should be similar to the corresponding plural string: 'You've completed today's puzzles!  %d day streak!' */
+"You've completed today's puzzles!  1 day streak!" = "今日のパズルをクリアしました！ 1 日間連続記録達成！";
+
+/* Claim hint dialog message. */
+"You've earned a free hint!" = "無料ヒントを獲得しました！";
+
+/* Message on the level complete dialog, %@ will be replaced with the board size or type, for example '8x8' */
+"You've reached the end of the\n%@ boards." = "%@ ボードの最後までプレイしました。";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'You've reached the end of the Green Pack' */
+"You've reached the end of the\n%@." = "%@\nを最後までプレイしました。";
+
+/* promo */
+"You've solved %@ puzzles." = "%@ 個のパズルを解きました。";
+
+/* promo */
+"You've solved 1 puzzle" = "1 個のパズルを解きました。";
+
+/* A new level pack was unlocked.  %@ will be replaced with a localized pack name, example: 'You've unlocked the Green Pack' */
+"You've unlocked the\n%@." = "%@\nをアンロックしました。";
+
