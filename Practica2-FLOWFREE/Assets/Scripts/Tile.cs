@@ -2,17 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+namespace FreeFlowGame
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Tile : MonoBehaviour
     {
-        
-    }
+        private Color tileColor;
+        private Touch theTouch;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        void Start()
+        {
+
+        }
+
+        void Update()
+        {
+            if(Input.touchCount > 0)
+            {
+                theTouch = Input.GetTouch(0);
+                if(theTouch.phase == TouchPhase.Moved)
+                {
+                    Debug.Log("toque arrastrando");
+                }
+            }
+        }
+
+        void setColor(Color color)
+        {
+            tileColor = color;
+        }
     }
 }
