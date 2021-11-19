@@ -4,29 +4,62 @@ using UnityEngine;
 
 namespace FreeFlowGame
 {
-
-    public class GridManager : MonoBehaviour
+    public class BoardManager : MonoBehaviour
     {
-        [SerializeField] private int _width, _height;
+        private bool boardComplete;
 
-        [SerializeField] private Tile _tilePrefab;
+        [SerializeField] 
+        private int _width, _height, numPipes;
 
-        [SerializeField] private Transform _cam;
+        [SerializeField] 
+        private Tile _tilePrefab;
+
+        [SerializeField] 
+        private Transform _cam;
+
+        int[][] pipes;
 
         private Dictionary<Vector2, Tile> _tiles;
 
-        void Start()
+        private void Start()
         {
+            pipes = new int[numPipes][];
+            setPipes();
             GenerateGrid();
+        }
+
+        //este va a ser el único Update del juego¿?
+        private void Update()
+        {
+            
+        }
+
+        private void setPipes()
+        {
+            pipes[0] = new int[6] { 0, 5, 10, 15, 20, 21 };
+            pipes[1] = new int[5] { 2, 1, 6, 11, 16 };
+            pipes[2] = new int[4] { 7, 12, 17, 22 };
+            pipes[3] = new int[5] { 4, 3, 8, 13, 18 };
+            pipes[4] = new int[5] { 9, 14, 19, 24, 23 };
         }
 
         void GenerateGrid()
         {
             _tiles = new Dictionary<Vector2, Tile>();
+
+            for(int i = 0; i < numPipes; i++)
+            {
+                for (int j = 0; j < numPipes; j++)
+                {
+
+                }
+            }
+
             for (int x = 0; x < _width; x++)
             {
                 for (int y = 0; y < _height; y++)
                 {
+
                     var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity);
                     spawnedTile.name = $"Tile {x} {y}";
                     spawnedTile.Init();
@@ -36,7 +69,6 @@ namespace FreeFlowGame
 
             _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
         }
-
 
         public Tile GetTileAtPosition(Vector2 pos)
         {

@@ -60,27 +60,32 @@ namespace FreeFlowGame
             {
                 for (int j = 0; j < pipes[i].Length; j++)
                 {
-                    int posX = pipes[i][j] % _width;
-                    int posY = pipes[i][j] / _height;
-                    if(_width != _height)
-                    {
-                        if (_width < _height) posY = pipes[i][j] / _width;
-                    }
-                    
-                    var spawnedTile = Instantiate(_tilePrefab, new Vector3(posX, -posY), Quaternion.identity);
-                    spawnedTile.name = $"Tile {posX} {posY}";
+                    var spawnedTile = Instantiate(_tilePrefab, new Vector3(i, j), Quaternion.identity);
+                    spawnedTile.name = $"Tile {i} {j}";
                     if(j == 0 || j == pipes[i].Length - 1)
                     {
                         circleSpriteRenderer.color = pipesColor[i];
-                        Instantiate(circleGameObject, new Vector3(posX, -posY), Quaternion.identity);
+                        Instantiate(circleGameObject, new Vector3(i, j), Quaternion.identity);
                     }
                     spawnedTile.Init();
 
-                    _tiles[new Vector2(posX, -posY)] = spawnedTile;
+                    _tiles[new Vector2(i, j)] = spawnedTile;
                 }
             }
 
-            _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 5f, -10);
+            //for (int x = 0; x < _width; x++)
+            //{
+            //    for (int y = 0; y < _height; y++)
+            //    {
+
+            //        var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity);
+            //        spawnedTile.name = $"Tile {x} {y}";
+            //        spawnedTile.Init();
+            //        _tiles[new Vector2(x, y)] = spawnedTile;
+            //    }
+            //}
+
+            _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
         }
 
         public Tile GetTileAtPosition(Vector2 pos)
