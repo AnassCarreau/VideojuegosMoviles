@@ -30,7 +30,6 @@ public  struct Category
 
 public class LectutaLote : MonoBehaviour
 {
-    DataSystem data;
    [SerializeField] Category[] cat;
     Dictionary<string, List<Slot>> Categories;
     int clues;
@@ -53,9 +52,9 @@ public class LectutaLote : MonoBehaviour
   
     private void Start()
     {
+        DataSystem data = GameManager.Instance.getData();
         clues = 0;
         Categories = new Dictionary<string, List<Slot>>();
-        data = SaveSystem.LoadData();
         if (data == null) 
         {
             saveCorrect = false;
@@ -111,7 +110,7 @@ public class LectutaLote : MonoBehaviour
 
             }
         }
-
+        GameManager.Instance.setData(data);
     }
 
     public Dictionary<string, List<Slot>> getCategories() 

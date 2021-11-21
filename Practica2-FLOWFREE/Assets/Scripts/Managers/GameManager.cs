@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private FreeFlowGame.BoardManager boardManager;
-
+    private LectutaLote lvlManager;
+    DataSystem data;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        data = SaveSystem.LoadData();
         ads.ShowBanner();
     }
 
@@ -46,5 +48,17 @@ public class GameManager : MonoBehaviour
     public FreeFlowGame.BoardManager GetBoardManager()
     {
         return boardManager;
+    }
+
+
+
+    public DataSystem getData() { return data; }
+    public void setData(DataSystem data) { this.data = data; }
+
+    public void Quit()
+    {
+        SaveSystem.SaveData(data);
+       // PlayerPrefs.Save();
+        Application.Quit();
     }
 }
