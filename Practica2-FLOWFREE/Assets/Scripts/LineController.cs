@@ -24,15 +24,12 @@ public class LineController : MonoBehaviour
 
     private void Update()
     {
-
-
         RaycastHit2D ra = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
-
 
         // Debug.Log(inicio.position + " " + Camera.main.ScreenToWorldPoint(Input.mousePosition));
         if (ra.collider != null && ra.collider.CompareTag("Inicio") && Input.GetMouseButtonDown(0))
         {
-                pintar = true;
+            pintar = true;
             inicioCircle = ra.collider;
             start = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             points.Clear();
@@ -47,7 +44,6 @@ public class LineController : MonoBehaviour
 
         if (pintar)
         {
-
             if (Input.GetMouseButton(0))
             {
 
@@ -71,8 +67,6 @@ public class LineController : MonoBehaviour
                     points.Add(ra.collider.bounds.center);
                     lr.positionCount++;
                     Debug.Log(lr.positionCount);
-
-
                 }
                 else if (ra.collider != null && _tiles.Contains(ra.collider) && ra.collider.CompareTag("Casilla") && _tiles[_tiles.Count-1] != ra.collider )
                 {
@@ -98,7 +92,6 @@ public class LineController : MonoBehaviour
 
             for (int i = 0; i < points.Count; i++)
             {
-                
                 lr.SetPosition(i, points[i]);
             }
         }

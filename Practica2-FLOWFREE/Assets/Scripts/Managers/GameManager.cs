@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public AdsManager ads;
     public static GameManager Instance { get { return _instance; } }
 
+    [SerializeField]
+    private FreeFlowGame.BoardManager boardManager;
 
     private void Awake()
     {
@@ -36,10 +38,13 @@ public class GameManager : MonoBehaviour
         ads.ShowBanner();
     }
 
-
-
     public void LevelSuccess() 
     {
         ads.PlayAd();
+    }
+
+    public FreeFlowGame.BoardManager GetBoardManager()
+    {
+        return boardManager;
     }
 }

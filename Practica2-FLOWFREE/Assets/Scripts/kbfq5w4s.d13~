@@ -16,11 +16,6 @@ namespace FreeFlowGame
         [SerializeField]
         private GameObject circleObject;
 
-        [SerializeField]
-        private SpriteRenderer circleRenderer;
-
-        private Vector2 posTile;
-
         public void Init(bool emptyTile)
         {
             _renderer.color = _color;
@@ -28,31 +23,6 @@ namespace FreeFlowGame
             {
                 circleObject.SetActive(true);
             }
-        }
-
-        public void SetCircleColor(Color c)
-        {
-            circleRenderer.color = c;
-        }
-
-        public Color GetCircleColor()
-        {
-            return circleRenderer.color;
-        }
-
-        public Vector2 GetPosTile()
-        {
-            return posTile;
-        }
-
-        public void SetPosTile(Vector2 pos)
-        {
-            posTile = pos;
-        }
-
-        public bool IsEmpty()
-        {
-            return !circleObject.activeSelf;
         }
     }
 }
