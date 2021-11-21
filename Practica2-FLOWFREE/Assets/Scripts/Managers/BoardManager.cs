@@ -8,8 +8,6 @@ namespace FreeFlowGame
     {
         private bool boardComplete;
 
-        [SerializeField] 
-        private int _width, _height, numPipes;
 
         [SerializeField] 
         private Tile _tilePrefab;
@@ -26,14 +24,18 @@ namespace FreeFlowGame
         [SerializeField]
         private SpriteRenderer circleSpriteRenderer;
 
-        int[][] pipes;
+        List<List<int>> pipes;
 
         private Dictionary<Vector2, Tile> _tiles;
 
+
+        private Map m;
+
         private void Start()
         {
-            pipes = new int[numPipes][];
-           
+            pipes = new List<List<int>>();
+            m = new Map();
+
             setPipes();
             GenerateGrid();
         }
@@ -46,19 +48,25 @@ namespace FreeFlowGame
 
         private void setPipes()
         {
-            pipes[0] = new int[6] { 0, 5, 10, 15, 20, 21 };
-            pipes[1] = new int[5] { 2, 1, 6, 11, 16 };
-            pipes[2] = new int[4] { 7, 12, 17, 22 };
-            pipes[3] = new int[5] { 4, 3, 8, 13, 18 };
-            pipes[4] = new int[5] { 9, 14, 19, 24, 23 };
+           
+            m.Parse(LectutaLote.Instance.getCategories()["Intro"][0].levels[1]);
+            pipes = m.GetPipes();
+            //pipes[0] = new int[6] { 0, 5, 10, 15, 20, 21 };
+            //pipes[1] = new int[5] { 2, 1, 6, 11, 16 };
+            //pipes[2] = new int[4] { 7, 12, 17, 22 };
+            //pipes[3] = new int[5] { 4, 3, 8, 13, 18 };
+            //pipes[4] = new int[5] { 9, 14, 19, 24, 23 };
         }
 
         void GenerateGrid()
         {
+            int _width =m.GetWidth() ;
+            int _height= m.GetHeight();
+            int flownum= m.GetFlownum();
             _tiles = new Dictionary<Vector2, Tile>();
-            for(int i = 0; i < numPipes; i++)
+            for(int i = 0; i < flownum; i++)
             {
-                for (int j = 0; j < pipes[i].Length; j++)
+                for (int j = 0; j < pipes[i].Count; j++)
                 {
                     int posX = pipes[i][j] % _width;
                     int posY = pipes[i][j] / _height;
@@ -69,7 +77,7 @@ namespace FreeFlowGame
                     
                     var spawnedTile = Instantiate(_tilePrefab, new Vector3(posX, -posY), Quaternion.identity);
                     spawnedTile.name = $"Tile {posX} {posY}";
-                    if(j == 0 || j == pipes[i].Length - 1)
+                    if(j == 0 || j == pipes[i].Count - 1)
                     {
                         circleSpriteRenderer.color = pipesColor[i];
                         Instantiate(circleGameObject, new Vector3(posX, -posY), Quaternion.identity);

@@ -11,11 +11,14 @@ public class LineController : MonoBehaviour
     bool pintar = false;
 
     Collider2D inicioCircle;
+    private List<Collider2D> _tiles;
+
     // Start is called before the first frame update
     void Awake()
     {
         lr =GetComponent<LineRenderer>();
         points = new List<Vector2>();
+        _tiles = new List<Collider2D>();
        
     }
 
@@ -38,39 +41,53 @@ public class LineController : MonoBehaviour
             lr.startColor = ra.collider.GetComponent<SpriteRenderer>().color;
             lr.endColor = ra.collider.GetComponent<SpriteRenderer>().color;
             lr.positionCount = 2;
+            //_tiles.Add(ra.collider.gameObject);
+
         }
 
         if (pintar)
         {
-           
+
             if (Input.GetMouseButton(0))
             {
 
                 //Cerrar
 
-                 ra = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
+                ra = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
 
-                // Debug.Log(inicio.position + " " + Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                if (ra.collider != null && ra.collider!= inicioCircle && ra.collider.CompareTag("Inicio"))
+                if (ra.collider != null && ra.collider != inicioCircle && ra.collider.CompareTag("Inicio") && ra.collider.transform.GetComponent<SpriteRenderer>().color == lr.startColor)
                 {
                     pintar = false;
                 }
 
                 //
                 Vector2 actual = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 vec = Vector2.MoveTowards(points[points.Count - 2], actual,10000).normalized;
-                Debug.Log(vec.x + " " + vec.y);
-                float dis = Vector2.Distance(points[points.Count - 2], actual);
-              
-                if (dis > 10 /*&& (Mathf.Approximately(90.0f,ang) || Mathf.Approximately(0.0f,ang)*/ )
+                //     Vector2 vec = Vector2.MoveTowards(points[points.Count - 2], actual,10000).normalized;
+                //float dis = Vector2.Distance(points[points.Count - 2], actual);
+
+                if (ra.collider != null && !_tiles.Contains(ra.collider) && ra.collider.CompareTag("Casilla") /*&& (Mathf.Approximately(90.0f,ang) || Mathf.Approximately(0.0f,ang)*/ )
                 {
-                    Debug.Log("hola");
-                    points.Add(actual);
+                    _tiles.Add(ra.collider);
+                    points.Add(ra.collider.bounds.center);
                     lr.positionCount++;
+                    Debug.Log(lr.positionCount);
+
+
                 }
-                else
+                else if (ra.collider != null && _tiles.Contains(ra.collider) && ra.collider.CompareTag("Casilla") && _tiles[_tiles.Count-1] != ra.collider )
                 {
-                    points[points.Count - 1] = actual;
+                    points.Remove(_tiles[_tiles.Count - 1].bounds.center);
+                    _tiles.RemoveAt(_tiles.Count-1);
+                    _tiles.Remove(ra.collider);
+                    lr.positionCount--;
+                    Debug.Log(lr.positionCount);
+                }
+                else 
+                {
+                    if (points.Count > 1)
+                    {
+                        points[points.Count - 2] = actual;
+                    }
                 }
             }
             if (Input.GetMouseButtonUp(0))
@@ -81,11 +98,13 @@ public class LineController : MonoBehaviour
 
             for (int i = 0; i < points.Count; i++)
             {
+                
                 lr.SetPosition(i, points[i]);
             }
         }
+
     }
-   
+
 
 
 }

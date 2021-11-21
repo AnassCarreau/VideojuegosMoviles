@@ -1,0 +1,83 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+
+public struct Slot
+{
+    public string[] levels;
+    public int[] minFlow;
+    public string Name;
+    public bool lvlblocked;
+    public Slot(string[] levels, int[] minFlow, string Name, bool lvlblocked)
+    {
+        this.levels = levels;
+        this.minFlow = minFlow;
+        this.Name = Name;
+        this.lvlblocked = lvlblocked;
+    }
+}
+[Serializable]
+public  struct Category
+{
+    public string name;
+    public Color color;
+    public bool lvlblocked;
+}
+
+
+public class LectutaLote : MonoBehaviour
+{
+
+    [SerializeField]Category[] cat;
+    Dictionary<Category,List<Slot>> Categories;
+    int clues;
+
+    void Start()
+    {
+        clues = 0;
+        Categories = new Dictionary<Category, List<Slot>>();
+        DataSystem data = SaveSystem.LoadData();
+        if (data != null) 
+        {
+            clues = data.clues;
+        }
+        
+        for (int i = 0; i < cat.Length; i++)
+        {
+
+            string[] slot = Directory.GetFiles(Application.dataPath + "Resources/" + cat[i].name);
+            for (int j = 0; j < slot.Length; j++)
+            {
+
+                Debug.Log(slot[j].Substring( Application.dataPath.Length + "Resources/".Length + cat[i].name.Length);
+                TextAsset textAsset = Resources.Load(cat[i].name + "/" + slot[j]) as TextAsset;
+
+                string[] lvls = textAsset.text.Split('\n');
+                int[] minflow = new int[lvls.Length];
+                if (data != null)
+                {
+                    minflow = data.minFlow[cat[i]][j];
+                }
+                Slot s = new Slot(lvls, minflow, slot[j], cat[i].lvlblocked);
+
+                if (!Categories.ContainsKey(cat[i]))
+                {
+                    List<Slot> lslot = new List<Slot>();
+                    lslot.Add(s);
+                    Categories.Add(cat[i], lslot);
+                }
+                else
+                {
+                    Categories[cat[i]].Add(s);
+                }
+
+            }
+        }
+        Debug.Log("hola");
+
+    }
+
+
+   
+}

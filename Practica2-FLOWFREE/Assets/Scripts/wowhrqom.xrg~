@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+
+public class LectutaLote : MonoBehaviour
+{
+
+
+    Dictionary<Color, string[]> Categorias;
+
+    public TextAsset textFile;     // drop your file here in inspector
+
+    void Start()
+    {
+
+       string[] res= Directory.GetFiles("Resources");
+        
+        for(int i =0;i< h.Length; i++) 
+        {
+            string[]  = Directory.GetFiles("Resources"); h[i]
+        } 
+        
+        //Categorias.Add("#008D00");
+
+        
+
+        textFile = Resources.Load("Intro/levelpack_1") as TextAsset;
+       string text = textFile.text;  //this is the content as string
+       string[]lineas=  text.Split('\n');
+      // byte[] byteText = textFile.bytes;  //this is the content as byte array
+
+
+
+    }
+
+   
+}

@@ -1,26 +1,18 @@
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 
-//Cada paquete tiene un array con los tipos y niveles
-//Cada nivel pasado se asocia al numero de movimientos . Si es 0 es porque ese nivel no ha sido pasado 
-//Si no significa que si lo cual el siguiente es jugable 
-public struct package
-{
-    int [][] movLevels;
-}
-public class DataUser
+public class DataSystem
 {
     public int clues;
-    //mat of All levels unblocks
-    public package[] p;
+    public Dictionary<Category, List<int[]>> minFlow;
 }
 public class SaveSystem
 {
 
-    
   //se puede inicializar la data antes o en el propio metodo 
-    public static void SaveData(DataUser data) 
+    public static void SaveData(DataSystem data) 
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/save.fun";
@@ -31,14 +23,14 @@ public class SaveSystem
     }
 
 
-    public static DataUser LoadData()
+    public static DataSystem LoadData()
     {
         string path = Application.persistentDataPath + "/save.fun";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-            DataUser data= (DataUser)formatter.Deserialize(stream);
+            DataSystem data = (DataSystem)formatter.Deserialize(stream);
             stream.Close();
             return data;
         }
