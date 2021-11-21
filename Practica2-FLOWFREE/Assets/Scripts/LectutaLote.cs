@@ -30,10 +30,11 @@ public  struct Category
 
 public class LectutaLote : MonoBehaviour
 {
-    [SerializeField] Category[] cat;
+    DataSystem data;
+   [SerializeField] Category[] cat;
     Dictionary<string, List<Slot>> Categories;
     int clues;
-
+    bool saveCorrect;
     private static LectutaLote _instance;
     public static LectutaLote Instance { get { return _instance; } }
 
@@ -54,9 +55,15 @@ public class LectutaLote : MonoBehaviour
     {
         clues = 0;
         Categories = new Dictionary<string, List<Slot>>();
-        DataSystem data = SaveSystem.LoadData();
-        if (data != null) 
+        data = SaveSystem.LoadData();
+        if (data == null) 
         {
+            saveCorrect = false;
+            data = new DataSystem(0);
+        }
+        else
+        {
+            saveCorrect = true;
             clues = data.clues;
         }
         
@@ -71,10 +78,24 @@ public class LectutaLote : MonoBehaviour
                 string[] lvls = slot[j].text.Split(c,StringSplitOptions.RemoveEmptyEntries);
                 
                 int[] minflow = new int[lvls.Length];
-                if (data != null)
+                if (saveCorrect)
                 {
-                    minflow = data.minFlow[cat[i]][j];
+                    minflow = data.minFlow[cat[i].name][j];
                 }
+                else
+                {
+                    if (data.minFlow.ContainsKey(cat[i].name))
+                    {
+                        data.minFlow[cat[i].name].Add(minflow);
+                    }
+                    else
+                    {
+                        List<int[]> lminflow = new List<int[]>();
+                        lminflow.Add(minflow);
+                        data.minFlow.Add(cat[i].name, lminflow);
+                    }
+                }
+
                 Slot s = new Slot(lvls, minflow, slot[j].name, cat[i].lvlblocked);
 
                 if (!Categories.ContainsKey(cat[i].name))
