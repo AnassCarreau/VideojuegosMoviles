@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-// <summary>
-/// LevelsScrollViewController - generate scrollview items
-/// handle all things those required for scrollview controller
-/// </summary>
+
 public class LevelsScrollViewController : MonoBehaviour
 {
-
-   // [SerializeField] Text levelNumberText;
+    // [SerializeField] Text levelNumberText;
     [SerializeField] int numberOfLevels;
     [SerializeField] GameObject levelBtnPref;
-    [SerializeField] Transform levelBtnParent;
+    [SerializeField] GameObject levelBtnParent;
+    [SerializeField]
+    private Color[] pipesColor;
+    // [SerializeField] Transform levelBtnParent;
 
     private void Start()
     {
@@ -22,10 +20,23 @@ public class LevelsScrollViewController : MonoBehaviour
     // load level buttons on game start
     private void LoadLevelButtons()
     {
+
+        int contentnum = numberOfLevels / 30;
+
+
+
+        int conAct = -1;
+        GameObject levelBtnParentAux = new GameObject();
         for (int i = 0; i < numberOfLevels; i++)
         {
-            GameObject levelBtnObj = Instantiate(levelBtnPref, levelBtnParent) as GameObject;
+            if (i / 30 > conAct)
+            {
+                conAct++;
+                levelBtnParentAux = Instantiate(levelBtnParent, transform) as GameObject;
+            }
+            GameObject levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.transform) as GameObject;
             levelBtnObj.GetComponent<LevelButtonItem>().levelIndex = i;
+            levelBtnObj.GetComponent<LevelButtonItem>().SetColor(pipesColor[i / 30]);
             levelBtnObj.GetComponent<LevelButtonItem>().levelsScrollViewController = this;
         }
     }
@@ -36,5 +47,4 @@ public class LevelsScrollViewController : MonoBehaviour
     {
         //levelNumberText.text = "Level " + (levelIndex + 1);
     }
-
 }

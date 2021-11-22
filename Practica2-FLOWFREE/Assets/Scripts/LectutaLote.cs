@@ -113,10 +113,12 @@ public class LectutaLote : MonoBehaviour
         GameManager.Instance.setData(data);
     }
 
-    public Dictionary<string, List<Slot>> getCategories() 
+    public Dictionary<string, List<Slot>> getDictionaryCategories() 
     {
         return Categories;
     }
+
+    public Category[] getCategories() { return cat; }
    
     //public Tile GetTileAtPosition(Vector2 pos)
     //{

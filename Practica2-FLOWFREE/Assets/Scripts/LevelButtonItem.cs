@@ -13,6 +13,7 @@ public class LevelButtonItem : MonoBehaviour
     [HideInInspector] public int levelIndex;
     [HideInInspector] public LevelsScrollViewController levelsScrollViewController;
     //
+    public Color color;
     [SerializeField] Text levelButtonText;
 
 
@@ -21,6 +22,11 @@ public class LevelButtonItem : MonoBehaviour
         levelButtonText.text = (levelIndex + 1).ToString();
     }
 
+    public void SetColor(Color color) 
+    {
+        transform.GetComponent<Image>().color = color;
+
+    }
     // click event of level button
     public void OnLevelButtonClick()
     {

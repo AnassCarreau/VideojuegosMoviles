@@ -43,7 +43,7 @@ namespace FreeFlowGame
 
         private void setPipes()
         {
-            m.Parse(LectutaLote.Instance.getCategories()["Intro"][0].levels[1]);
+            m.Parse(LectutaLote.Instance.getDictionaryCategories()["Intro"][0].levels[1]);
             pipes = m.GetPipes();
         }
 
