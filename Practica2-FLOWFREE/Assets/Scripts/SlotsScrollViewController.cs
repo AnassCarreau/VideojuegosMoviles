@@ -23,9 +23,8 @@ public class SlotsScrollViewController : MonoBehaviour
         {
             GameObject cat = Instantiate(CatPref, transform) as GameObject;
             Color c = Categories[i].color;
-            c.a = 0.2f;
-            cat.transform.GetChild(0).GetComponent<Image>().color = c;
-            cat.GetComponent<Text>().text = Categories[i].name;
+            cat.GetComponent<CategoryTextItem>().SetColor(c);
+            cat.GetComponent<CategoryTextItem>().SetName(Categories[i].name);
             for (int j = 0; j < Categories[i].slots.Length; j++)
             {
                 GameObject slotButton = Instantiate(SlotPref, transform) as GameObject;

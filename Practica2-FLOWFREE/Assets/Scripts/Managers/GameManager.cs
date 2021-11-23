@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
     public void LoadScene(string name)
     {
         DontDestroyOnLoad(this);
+        DontDestroyOnLoad(boardManager);
          // SceneManager.LoadScene(name,LoadSceneMode.Single);
         SceneManager.LoadScene(name);
     }
@@ -119,12 +120,12 @@ public class GameManager : MonoBehaviour
     {
         act.levelIndex++;
         boardManager.Clear();
-        boardManager.Initialize();
+      //  boardManager.Initialize();
     } 
     public void BackLevel() 
     {
         act.levelIndex--;
         boardManager.Clear();
-        boardManager.Initialize();
+        //boardManager.Initialize();
     }
 }

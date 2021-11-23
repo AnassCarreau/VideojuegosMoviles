@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilePrefab: {fileID: 5415072373884990138, guid: e95f18894f7628243bd340fd9378efe8, type: 3}
-  _cam: {fileID: 1949430266628518755, guid: 5b532e5e65827dc4ab4bfd91ef60963b, type: 3}
+  _cam: {fileID: 0}
   pipesColor:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 1, b: 0.12585473, a: 1}
