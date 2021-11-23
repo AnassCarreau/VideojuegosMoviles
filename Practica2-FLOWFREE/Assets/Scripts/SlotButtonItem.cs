@@ -11,6 +11,7 @@ public class SlotButtonItem : MonoBehaviour
     private int slotIndex;
     private string category;
     [SerializeField]private Object scene;
+    [SerializeField] private Text text;
    
    
    
@@ -22,6 +23,13 @@ public class SlotButtonItem : MonoBehaviour
     public void SetSlot(int slot)
     {
         slotIndex = slot;
+    }
+
+    public void SetText(string tex, Color c) 
+    {
+        text.text = tex;
+        text.color = c;
+        
     }
     // click event of level button
     public void OnSlotButtonClick()

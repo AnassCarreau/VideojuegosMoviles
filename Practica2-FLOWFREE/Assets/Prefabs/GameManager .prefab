@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ecc61e8d6458c45beb8b5adeb6eec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levels: []
   ads: {fileID: 5872266812384991766}
   act:
-    category: 
+    category: Intro
     slotIndex: 0
     levelIndex: 0
   boardManager: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}

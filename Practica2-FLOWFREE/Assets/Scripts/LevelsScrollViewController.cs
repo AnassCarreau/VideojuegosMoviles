@@ -6,7 +6,7 @@ public class LevelsScrollViewController : MonoBehaviour
 {
     private int slotIndex;
     private int numberOfLevels;
-    [SerializeField] private GameObject levelBtnPref;
+    [SerializeField] private LevelButtonItem levelBtnPref;
     [SerializeField] private GameObject levelBtnParent;
     [SerializeField] private Color[] pipesColor;
 
@@ -36,11 +36,12 @@ public class LevelsScrollViewController : MonoBehaviour
                 conAct++;
                 levelBtnParentAux = Instantiate(levelBtnParent, transform) as GameObject;
             }
-            
-            GameObject levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.transform) as GameObject;
-            levelBtnObj.GetComponent<LevelButtonItem>().SetLvl(i);
-            if(!blocked || !nextLvlsBlockeds)levelBtnObj.GetComponent<LevelButtonItem>().SetColor(pipesColor[i / 30]);
-            else { levelBtnObj.GetComponent<LevelButtonItem>().SetColor(Color.black); }
+
+            LevelButtonItem levelBtnObj = Instantiate<LevelButtonItem>(levelBtnPref, levelBtnParentAux.transform) as LevelButtonItem;
+            ///to do quitar get component
+            levelBtnObj.SetLvl(i);
+            if(!blocked || !nextLvlsBlockeds)levelBtnObj.SetColor(pipesColor[i / 30]);
+            else { levelBtnObj.SetColor(Color.black); }
         }
     }
 

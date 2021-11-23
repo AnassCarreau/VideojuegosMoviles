@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class SlotsScrollViewController : MonoBehaviour
 {
 
-    [SerializeField] public GameObject CatPref;
-    [SerializeField] public GameObject SlotPref;
+    [SerializeField] public CategoryTextItem CatPref;
+    [SerializeField] public SlotButtonItem SlotPref;
 
     private void Start()
     {
@@ -21,17 +21,16 @@ public class SlotsScrollViewController : MonoBehaviour
 
         for (int i = 0; i < Categories.Length; i++)
         {
-            GameObject cat = Instantiate(CatPref, transform) as GameObject;
+            CategoryTextItem cat = Instantiate(CatPref, transform);
             Color c = Categories[i].color;
-            cat.GetComponent<CategoryTextItem>().SetColor(c);
-            cat.GetComponent<CategoryTextItem>().SetName(Categories[i].name);
+            cat.SetColor(c);
+            cat.SetName(Categories[i].name);
             for (int j = 0; j < Categories[i].slots.Length; j++)
             {
-                GameObject slotButton = Instantiate(SlotPref, transform) as GameObject;
-                slotButton.GetComponent<Text>().text = Categories[i].slots[j].name;
-                slotButton.GetComponent<Text>().color = Categories[i].color;
-                slotButton.GetComponent<SlotButtonItem>().SetCategory(Categories[i].name);
-                slotButton.GetComponent<SlotButtonItem>().SetSlot(i);
+                SlotButtonItem slotButton = Instantiate(SlotPref, transform) ;
+                slotButton.SetText(Categories[i].slots[j].name, Categories[i].color);
+                slotButton.SetCategory(Categories[i].name);
+                slotButton.SetSlot(i);
             }
         }
     }

@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
+  img: {fileID: 2482575236098690552}
+  text: {fileID: 2482575237342596927}
 --- !u!1 &2482575237342596925
 GameObject:
   m_ObjectHideFlags: 0

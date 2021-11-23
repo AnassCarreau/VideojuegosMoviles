@@ -15,21 +15,18 @@ public class LevelButtonItem : MonoBehaviour
      private Color color;
      private Text levelButtonText;
     [SerializeField] private Object scene;
-
-    private void Start()
-    {
-       // levelButtonText.text = (levelIndex + 1).ToString();
-    }
+    [SerializeField] private Image img; 
+    [SerializeField] private Text text; 
     public void SetColor(Color color) 
     {
-        transform.GetComponent<Image>().color = color;
+        img.color = color;
     }
    
 
     public void SetLvl(int lvl)
     {
        levelIndex = lvl;
-       transform.GetChild(0).GetComponent<Text>().text = (levelIndex + 1).ToString();
+       text.text = (levelIndex + 1).ToString();
 
     }
     // click event of level button

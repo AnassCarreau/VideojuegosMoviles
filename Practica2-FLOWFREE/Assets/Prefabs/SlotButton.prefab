@@ -150,3 +150,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: {fileID: 102900000, guid: 7c63c62e9e9729b4eae0081a7685552b, type: 3}
+  text: {fileID: 759632001928761617}

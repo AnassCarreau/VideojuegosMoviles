@@ -418,8 +418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fca6df76b4dc034eb9217db3843ef09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CatPref: {fileID: 1743743357835849790, guid: 9121fe45df259ab45a727a8d84d285d3, type: 3}
-  SlotPref: {fileID: 9041219916779165012, guid: cb9c800b3e98ac64690e030253bff9f9, type: 3}
+  CatPref: {fileID: 4385817719028893736, guid: 9121fe45df259ab45a727a8d84d285d3, type: 3}
+  SlotPref: {fileID: -9168133445548711407, guid: cb9c800b3e98ac64690e030253bff9f9, type: 3}
 --- !u!114 &1448341058
 MonoBehaviour:
   m_ObjectHideFlags: 0
