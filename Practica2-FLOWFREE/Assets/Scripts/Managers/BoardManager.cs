@@ -56,15 +56,7 @@ namespace FreeFlowGame
             for (int i = 0; i < m.GetFlownum(); i++)
             {
                 for (int j = 0; j < pipes[i].Count; j++)
-                {
-                    //int posX = pipes[i][j] % _width;
-                    //int posY = pipes[i][j] / _height;
-
-                    //if(_width != _height)
-                    //{
-                    //    if (_width < _height) posY = pipes[i][j] / _width;
-                    //}
-                    
+                {   
                     var spawnedTile = Instantiate(_tilePrefab, new Vector3(pipes[i][j].x, pipes[i][j].y), Quaternion.identity, boardParent);
                     spawnedTile.name = $"Tile {pipes[i][j].x} {pipes[i][j].y}";
                     if(j == 0 || j == pipes[i].Count - 1)

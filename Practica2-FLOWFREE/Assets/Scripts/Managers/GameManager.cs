@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
+    public LevelPack[] levels;
+
     public AdsManager ads;
     public static GameManager Instance { get { return _instance; } }
     //de momento publico para que podamos darle a las escenas sin que se joda 

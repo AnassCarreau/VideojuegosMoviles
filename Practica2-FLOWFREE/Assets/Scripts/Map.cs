@@ -60,7 +60,6 @@ public class Map
                 Vector2 posCasilla = new Vector2(posX, -posY);
                 aux.Add(posCasilla);
             }
-            //pipes.Add(data[i].Split(',').Select(int.Parse).ToList());
             pipes.Add(aux);
         }
         return true;
