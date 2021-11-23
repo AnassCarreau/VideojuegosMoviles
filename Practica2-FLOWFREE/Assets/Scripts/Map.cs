@@ -12,7 +12,7 @@ public class Map
     List<int> bridge;
     List<int> holes;
     List<int> walls;
-    List<List<int>> pipes;
+    List<List<Vector2>> pipes;
     public bool Parse(string lvl)
     {
         string[] data = lvl.Split(';');
@@ -42,17 +42,32 @@ public class Map
             walls = comas[6].Split('|').Select(int.Parse).ToList();
         }
 
-        pipes = new List<List<int>>();
+        pipes = new List<List<Vector2>>();
 
         for (int i = 1; i < data.Length; i++)
         {
-            pipes.Add(data[i].Split(',').Select(int.Parse).ToList());
+            string[] pipe = data[i].Split(',');
+            List<Vector2> aux = new List<Vector2>();
+            for (int j = 0; j < pipe.Length; j++)
+            {
+                int valor = int.Parse(pipe[j]);
+                int posX = valor % width;
+                int posY = valor / height;
+                if (width != height)
+                {
+                    if (width < height) posY = valor / width;
+                }
+                Vector2 posCasilla = new Vector2(posX, -posY);
+                aux.Add(posCasilla);
+            }
+            //pipes.Add(data[i].Split(',').Select(int.Parse).ToList());
+            pipes.Add(aux);
         }
         return true;
     }
 
 
-    public List<List<int>> GetPipes() { return pipes; }
+    public List<List<Vector2>> GetPipes() { return pipes; }
     public List<int> Getbridge() { return bridge; }
     public List<int> Getholes() { return holes; }
     public List<int> Getwalls() { return walls; }

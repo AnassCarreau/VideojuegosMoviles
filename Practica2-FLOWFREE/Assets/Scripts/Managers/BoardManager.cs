@@ -20,7 +20,7 @@ namespace FreeFlowGame
         [SerializeField]
         private Transform boardParent;
 
-        List<List<int>> pipes;
+        List<List<Vector2>> pipes;
 
         private Dictionary<Vector2, Tile> _tiles;
 
@@ -30,7 +30,7 @@ namespace FreeFlowGame
      
         public void Initialize()
         {
-            pipes = new List<List<int>>();
+            pipes = new List<List<Vector2>>();
             m = new Map();
 
             setPipes();
@@ -51,25 +51,22 @@ namespace FreeFlowGame
 
         void GenerateGrid()
         {
-            int _width = m.GetWidth();
-            int _height = m.GetHeight();
-            int flownum = m.GetFlownum();
             _tiles = new Dictionary<Vector2, Tile>();
             
-            for (int i = 0; i < flownum; i++)
+            for (int i = 0; i < m.GetFlownum(); i++)
             {
                 for (int j = 0; j < pipes[i].Count; j++)
                 {
-                    int posX = pipes[i][j] % _width;
-                    int posY = pipes[i][j] / _height;
+                    //int posX = pipes[i][j] % _width;
+                    //int posY = pipes[i][j] / _height;
 
-                    if(_width != _height)
-                    {
-                        if (_width < _height) posY = pipes[i][j] / _width;
-                    }
+                    //if(_width != _height)
+                    //{
+                    //    if (_width < _height) posY = pipes[i][j] / _width;
+                    //}
                     
-                    var spawnedTile = Instantiate(_tilePrefab, new Vector3(posX, -posY), Quaternion.identity, boardParent);
-                    spawnedTile.name = $"Tile {posX} {-posY}";
+                    var spawnedTile = Instantiate(_tilePrefab, new Vector3(pipes[i][j].x, pipes[i][j].y), Quaternion.identity, boardParent);
+                    spawnedTile.name = $"Tile {pipes[i][j].x} {pipes[i][j].y}";
                     if(j == 0 || j == pipes[i].Count - 1)
                     {
                         spawnedTile.Init(false);
@@ -77,13 +74,13 @@ namespace FreeFlowGame
                     }
                     else spawnedTile.Init(true);
 
-                    spawnedTile.SetPosTile(new Vector2(posX, -posY));
+                    spawnedTile.SetPosTile(new Vector2(pipes[i][j].x, pipes[i][j].y));
 
-                    _tiles[new Vector2(posX, -posY)] = spawnedTile;
+                    _tiles[new Vector2(pipes[i][j].x, pipes[i][j].y)] = spawnedTile;
                 }
             }
 
-            _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 5f, -10);
+            _cam.transform.position = new Vector3((float)m.GetWidth() / 2 - 0.5f, (float)m.GetHeight() / 2 - 5f, -10);
         }
 
         public Tile GetTileAtPosition(Vector2 pos)
