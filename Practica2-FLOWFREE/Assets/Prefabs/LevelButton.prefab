@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2482575236098690553}
   - component: {fileID: 229887055410962813}
   m_Layer: 5
-  m_Name: Button
+  m_Name: LevelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,10 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384d2036b5de7e546b8b2b43f8489d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelIndex: 0
-  levelsScrollViewController: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
-  levelButtonText: {fileID: 2482575237342596927}
+  scene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
 --- !u!1 &2482575237342596925
 GameObject:
   m_ObjectHideFlags: 0

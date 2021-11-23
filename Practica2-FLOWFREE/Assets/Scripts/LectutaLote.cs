@@ -50,7 +50,7 @@ public class LectutaLote : MonoBehaviour
     }
 
   
-    private void Start()
+    public void Initialize()
     {
         DataSystem data = GameManager.Instance.getData();
         clues = 0;
@@ -77,6 +77,7 @@ public class LectutaLote : MonoBehaviour
                 string[] lvls = slot[j].text.Split(c,StringSplitOptions.RemoveEmptyEntries);
                 
                 int[] minflow = new int[lvls.Length];
+                
                 if (saveCorrect)
                 {
                     minflow = data.minFlow[cat[i].name][j];
@@ -120,10 +121,6 @@ public class LectutaLote : MonoBehaviour
 
     public Category[] getCategories() { return cat; }
    
-    //public Tile GetTileAtPosition(Vector2 pos)
-    //{
-    //    if (_tiles.TryGetValue(pos, out var tile)) return tile;
-    //    return null;
-    //}
+    
 
 }

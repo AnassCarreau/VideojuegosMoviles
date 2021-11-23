@@ -26,7 +26,9 @@ namespace FreeFlowGame
 
         private Map m;
 
-        private void Start()
+        [SerializeField]private Object scene;
+     
+        public void Initialize()
         {
             pipes = new List<List<int>>();
             m = new Map();
@@ -35,15 +37,15 @@ namespace FreeFlowGame
             GenerateGrid();
         }
 
-        //este va a ser el único Update del juego¿?
-        private void Update()
+        public void Clear() 
         {
             
+            Destroy(boardParent.transform);
         }
-
         private void setPipes()
         {
-            m.Parse(LectutaLote.Instance.getDictionaryCategories()["Intro"][0].levels[1]);
+            LvlActual lvl= GameManager.Instance.getActualPlay();
+            m.Parse(LectutaLote.Instance.getDictionaryCategories()[lvl.category][lvl.slotIndex].levels[lvl.levelIndex]);
             pipes = m.GetPipes();
         }
 
@@ -53,7 +55,8 @@ namespace FreeFlowGame
             int _height = m.GetHeight();
             int flownum = m.GetFlownum();
             _tiles = new Dictionary<Vector2, Tile>();
-            for(int i = 0; i < flownum; i++)
+            
+            for (int i = 0; i < flownum; i++)
             {
                 for (int j = 0; j < pipes[i].Count; j++)
                 {
@@ -87,6 +90,11 @@ namespace FreeFlowGame
         {
             if (_tiles.TryGetValue(pos, out var tile)) return tile;
             return null;
+        }
+
+        public Object getScene() 
+        {
+            return scene;
         }
     }
 }

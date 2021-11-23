@@ -4,47 +4,51 @@ using UnityEngine;
 
 public class LevelsScrollViewController : MonoBehaviour
 {
-    // [SerializeField] Text levelNumberText;
-    [SerializeField] int numberOfLevels;
-    [SerializeField] GameObject levelBtnPref;
-    [SerializeField] GameObject levelBtnParent;
-    [SerializeField]
-    private Color[] pipesColor;
-    // [SerializeField] Transform levelBtnParent;
+    private int slotIndex;
+    private int numberOfLevels;
+    [SerializeField] private GameObject levelBtnPref;
+    [SerializeField] private GameObject levelBtnParent;
+    [SerializeField] private Color[] pipesColor;
 
     private void Start()
     {
-        LoadLevelButtons();
+        LoadScrollButtons();
     }
 
     // load level buttons on game start
-    private void LoadLevelButtons()
+    private void LoadScrollButtons()
     {
-
-        int contentnum = numberOfLevels / 30;
-
-
-
+        
+        numberOfLevels = LectutaLote.Instance.getDictionaryCategories()[GameManager.Instance.getActualPlay().category][slotIndex].levels.Length;
+        bool blocked = LectutaLote.Instance.getDictionaryCategories()[GameManager.Instance.getActualPlay().category][slotIndex].lvlblocked;
+        bool nextLvlsBlockeds = false;
         int conAct = -1;
         GameObject levelBtnParentAux = new GameObject();
         for (int i = 0; i < numberOfLevels; i++)
         {
+            if (blocked)
+            {
+                nextLvlsBlockeds =  LectutaLote.Instance.getDictionaryCategories()[GameManager.Instance.getActualPlay().category][slotIndex].minFlow[i] == 0 && i != 0;
+            }
+
             if (i / 30 > conAct)
             {
                 conAct++;
                 levelBtnParentAux = Instantiate(levelBtnParent, transform) as GameObject;
             }
+            
             GameObject levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.transform) as GameObject;
-            levelBtnObj.GetComponent<LevelButtonItem>().levelIndex = i;
-            levelBtnObj.GetComponent<LevelButtonItem>().SetColor(pipesColor[i / 30]);
-            levelBtnObj.GetComponent<LevelButtonItem>().levelsScrollViewController = this;
+            levelBtnObj.GetComponent<LevelButtonItem>().SetLvl(i);
+            if(!blocked || !nextLvlsBlockeds)levelBtnObj.GetComponent<LevelButtonItem>().SetColor(pipesColor[i / 30]);
+            else { levelBtnObj.GetComponent<LevelButtonItem>().SetColor(Color.black); }
         }
     }
 
-    // user defined public method to handle something when user press any level button
-    // at present we are just changing level number, in future you can do anything that is required at here
-    public void OnLevelButtonClick(int levelIndex)
+
+    
+
+    public void SetLvl(int slot)
     {
-        //levelNumberText.text = "Level " + (levelIndex + 1);
+        slotIndex = slot;
     }
 }

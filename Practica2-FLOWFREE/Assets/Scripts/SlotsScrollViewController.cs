@@ -20,7 +20,6 @@ public class SlotsScrollViewController : MonoBehaviour
         Category[] Categories =  LectutaLote.Instance.getCategories();
 
         for (int i = 0; i < Categories.Length; i++)
-
         {
             GameObject cat = Instantiate(CatPref, transform) as GameObject;
             Color c = Categories[i].color;
@@ -32,17 +31,10 @@ public class SlotsScrollViewController : MonoBehaviour
                 GameObject slotButton = Instantiate(SlotPref, transform) as GameObject;
                 slotButton.GetComponent<Text>().text = Categories[i].slots[j].name;
                 slotButton.GetComponent<Text>().color = Categories[i].color;
+                slotButton.GetComponent<SlotButtonItem>().SetCategory(Categories[i].name);
+                slotButton.GetComponent<SlotButtonItem>().SetSlot(i);
             }
         }
-
     }
-
-    // user defined public method to handle something when user press any level button
-    // at present we are just changing level number, in future you can do anything that is required at here
-    public void OnLevelButtonClick(int levelIndex)
-    {
-        //levelNumberText.text = "Level " + (levelIndex + 1);
-    }
-
 
 }

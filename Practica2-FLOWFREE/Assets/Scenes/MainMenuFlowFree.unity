@@ -309,106 +309,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334439230}
   m_CullTransparentMesh: 1
---- !u!1 &506763432
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 506763435}
-  - component: {fileID: 506763434}
-  - component: {fileID: 506763433}
-  - component: {fileID: 506763436}
-  m_Layer: 0
-  m_Name: 'GameManager '
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &506763433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506763432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c02d0a7b0bbf1e4e9618df4b3798f8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cat:
-  - name: Intro
-    color: {r: 0, g: 0.5529412, b: 0, a: 1}
-    lvlblocked: 0
-    slots:
-    - {fileID: 4900000, guid: 31cf2cb05508c5844b1590561a62d348, type: 3}
-    - {fileID: 4900000, guid: c007ba5a1ca63e1458d462d5fb04fdc2, type: 3}
-    - {fileID: 4900000, guid: ea659936b4caec945bb0297bcd6a87af, type: 3}
-    - {fileID: 4900000, guid: 75b0e7a8278f09a4eb7014b1faad109a, type: 3}
-  - name: Manias
-    color: {r: 1, g: 0, b: 0, a: 1}
-    lvlblocked: 1
-    slots:
-    - {fileID: 4900000, guid: 4ba2badd2998ea34cb70e9a08d680e9f, type: 3}
-    - {fileID: 4900000, guid: a2c5f3b5dd1e1ae40be67701be8c14e4, type: 3}
-    - {fileID: 4900000, guid: 1b9e7e1c3d112344bb9bf9938587f03e, type: 3}
-    - {fileID: 4900000, guid: 47804b2a7c234004b8f2f0444260b703, type: 3}
-    - {fileID: 4900000, guid: 39a9169c108796c44a80845c2ebf0156, type: 3}
-  - name: Rectangles
-    color: {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
-    lvlblocked: 1
-    slots:
-    - {fileID: 4900000, guid: 043753c85cca0544a8e9b246a6ef4636, type: 3}
-    - {fileID: 4900000, guid: 862aadefa8ceebf4c97572d68191b2f3, type: 3}
-    - {fileID: 4900000, guid: d11af68af38c76640a78fe4d5e4aed1d, type: 3}
---- !u!114 &506763434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506763432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79ecc61e8d6458c45beb8b5adeb6eec6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ads: {fileID: 506763436}
-  boardManager: {fileID: 0}
---- !u!4 &506763435
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506763432}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &506763436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506763432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2331542a516dcc841a1e73061852a677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameId: 
-  nameADPista: 
-  nameADNivelSuperado: 
-  nameADBanner: 
 --- !u!1 &640045057
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,3 +831,60 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5872266812824044218
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991761, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872266812384991762, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
+      propertyPath: m_Name
+      value: 'GameManager '
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}

@@ -506,7 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c40dd64211cf74d9540b1701d37fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfLevels: 150
   levelBtnPref: {fileID: 2482575236098690559, guid: cc9ca2a1ecd708446bc562c765d48304, type: 3}
   levelBtnParent: {fileID: 2861974654578151162, guid: 83dd4b42c7e5a5643abce836d7b1dd9c, type: 3}
   pipesColor:

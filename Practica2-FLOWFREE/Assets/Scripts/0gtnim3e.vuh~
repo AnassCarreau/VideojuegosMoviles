@@ -18,19 +18,16 @@ public class LevelButtonItem : MonoBehaviour
 
     private void Start()
     {
-       // levelButtonText.text = (levelIndex + 1).ToString();
+        levelButtonText.text = (levelIndex + 1).ToString();
     }
     public void SetColor(Color color) 
     {
         transform.GetComponent<Image>().color = color;
     }
-   
 
     public void SetLvl(int lvl)
     {
        levelIndex = lvl;
-       transform.GetChild(0).GetComponent<Text>().text = (levelIndex + 1).ToString();
-
     }
     // click event of level button
     public void OnLevelButtonClick()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7397851411256749725}
   - component: {fileID: 759632001928761617}
   - component: {fileID: 5352275633760052679}
+  - component: {fileID: -9168133445548711407}
   m_Layer: 5
   m_Name: SlotButton
   m_TagString: Untagged
@@ -87,7 +88,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9041219916779165012}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -123,4 +124,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 759632001928761617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -9168133445548711407}
+        m_TargetAssemblyTypeName: SlotButtonItem, Assembly-CSharp
+        m_MethodName: OnSlotButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-9168133445548711407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041219916779165012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74b708a5c6e6474493385f42eb525e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: {fileID: 102900000, guid: 7c63c62e9e9729b4eae0081a7685552b, type: 3}
