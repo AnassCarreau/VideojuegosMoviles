@@ -47,7 +47,7 @@ namespace FreeFlowGame
         {
             LvlActual lvl= GameManager.Instance.getActualPlay();
             Debug.Log(lvl.levelIndex);
-            m.Parse(LectutaLote.Instance.getDictionaryCategories()[lvl.category][lvl.slotIndex].levels[lvl.levelIndex]);
+            m.Parse(GameManager.Instance.GetCategories()[lvl.category].lotes[lvl.slotIndex].levels[lvl.levelIndex]);
             pipes = m.GetPipes();
         }
 

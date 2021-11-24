@@ -19,8 +19,8 @@ public class LevelsScrollViewController : MonoBehaviour
     private void LoadScrollButtons()
     {
         
-        numberOfLevels = LectutaLote.Instance.getDictionaryCategories()[GameManager.Instance.getActualPlay().category][slotIndex].levels.Length;
-        bool blocked = LectutaLote.Instance.getDictionaryCategories()[GameManager.Instance.getActualPlay().category][slotIndex].lvlblocked;
+        numberOfLevels = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].levels.Length;
+        bool blocked = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].levelblocked;
         bool nextLvlsBlockeds = false;
         int conAct = -1;
         GameObject levelBtnParentAux = new GameObject();
@@ -28,7 +28,7 @@ public class LevelsScrollViewController : MonoBehaviour
         {
             if (blocked)
             {
-                nextLvlsBlockeds =  LectutaLote.Instance.getDictionaryCategories()[GameManager.Instance.getActualPlay().category][slotIndex].minFlow[i] == 0 && i != 0;
+                nextLvlsBlockeds =  GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].bestScoresInLevels[i] == 0 && i != 0;
             }
 
             if (i / 30 > conAct)
@@ -44,9 +44,6 @@ public class LevelsScrollViewController : MonoBehaviour
             else { levelBtnObj.SetColor(Color.black); }
         }
     }
-
-
-    
 
     public void SetLvl(int slot)
     {

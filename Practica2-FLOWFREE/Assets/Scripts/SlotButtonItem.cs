@@ -10,16 +10,14 @@ public class SlotButtonItem : MonoBehaviour
 {
 
     private int slotIndex;
-    private string category;
+    private int category;
     [SerializeField]private  UnityEngine.Object scene;
     [SerializeField] private Text text;
     [SerializeField] private Text textRight;
    
-   
-   
-    public void SetCategory(string name)
+    public void SetCategory(int cat)
     {
-        category = name;
+        category = cat;
     }
 
     public void SetSlot(int slot)
@@ -32,15 +30,15 @@ public class SlotButtonItem : MonoBehaviour
         text.text = tex;
         text.color = c;
         int index;
-        if (LectutaLote.Instance.getDictionaryCategories()[category][slotIndex].lvlblocked)
+        if (GameManager.Instance.GetCategories()[category].lotes[slotIndex].levelblocked)
         {
-             index = Array.IndexOf(LectutaLote.Instance.getDictionaryCategories()[category][slotIndex].minFlow, 0);
+             index = Array.IndexOf(GameManager.Instance.GetCategories()[category].lotes[slotIndex].bestScoresInLevels, 0);
         }
         else 
         {
-            index = Array.FindAll(LectutaLote.Instance.getDictionaryCategories()[category][slotIndex].minFlow, i => i > 0).Length;
+            index = Array.FindAll(GameManager.Instance.GetCategories()[category].lotes[slotIndex].bestScoresInLevels, i => i > 0).Length;
         }
-            int total = LectutaLote.Instance.getDictionaryCategories()[category][slotIndex].levels.Length;
+        int total = GameManager.Instance.GetCategories()[category].lotes[slotIndex].levels.Length;
         textRight.text = index + " / " +total;
     }
     // click event of level button

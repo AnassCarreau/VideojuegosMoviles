@@ -37,7 +37,6 @@ public class SaveSystem
         string path = Application.persistentDataPath + "/save.fun";
         if (File.Exists(path))
         {
-          
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
             DataSystem data = (DataSystem)formatter.Deserialize(stream);

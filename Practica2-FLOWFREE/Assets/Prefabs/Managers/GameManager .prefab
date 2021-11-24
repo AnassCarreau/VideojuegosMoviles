@@ -45,13 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ecc61e8d6458c45beb8b5adeb6eec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels: []
-  ads: {fileID: 5872266812384991766}
-  act:
-    category: Intro
-    slotIndex: 0
-    levelIndex: 0
   boardManager: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+  categories:
+  - {fileID: 11400000, guid: a480e4b68c9bdc64996eab9f5ef3e25a, type: 2}
+  - {fileID: 11400000, guid: d939cb1cf7e451443811f34aa6e9aa2b, type: 2}
+  - {fileID: 11400000, guid: 95d2f4d4bd0eabe4fb8e7981b9fdd44f, type: 2}
+  ads: {fileID: 5872266812384991766}
+  lote: 0
+  pack: 0
+  level: 0
 --- !u!114 &5872266812384991763
 MonoBehaviour:
   m_ObjectHideFlags: 0

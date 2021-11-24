@@ -17,20 +17,20 @@ public class SlotsScrollViewController : MonoBehaviour
     // load level buttons on game start
     private void LoadLevelButtons()
     {
-        Category[] Categories =  LectutaLote.Instance.getCategories();
+        CategoryPack[] Categories =  GameManager.Instance.GetCategories();
 
         for (int i = 0; i < Categories.Length; i++)
         {
             CategoryTextItem cat = Instantiate(CatPref, transform);
-            Color c = Categories[i].color;
+            Color c = Categories[i].categoryColor;
             cat.SetColor(c);
             cat.SetName(Categories[i].name);
-            for (int j = 0; j < Categories[i].slots.Length; j++)
+            for (int j = 0; j < Categories[i].lotes.Length; j++)
             {
                 SlotButtonItem slotButton = Instantiate(SlotPref, transform) ;
-                slotButton.SetCategory(Categories[i].name);
-                slotButton.SetSlot(i);
-                slotButton.SetText(Categories[i].slots[j].name, Categories[i].color);
+                slotButton.SetCategory(i);
+                slotButton.SetSlot(j);
+                slotButton.SetText(Categories[i].lotes[j].packName, Categories[i].categoryColor);
             }
         }
     }
