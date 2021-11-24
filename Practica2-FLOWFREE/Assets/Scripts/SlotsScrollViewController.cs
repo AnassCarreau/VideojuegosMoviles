@@ -28,9 +28,9 @@ public class SlotsScrollViewController : MonoBehaviour
             for (int j = 0; j < Categories[i].slots.Length; j++)
             {
                 SlotButtonItem slotButton = Instantiate(SlotPref, transform) ;
-                slotButton.SetText(Categories[i].slots[j].name, Categories[i].color);
                 slotButton.SetCategory(Categories[i].name);
                 slotButton.SetSlot(i);
+                slotButton.SetText(Categories[i].slots[j].name, Categories[i].color);
             }
         }
     }

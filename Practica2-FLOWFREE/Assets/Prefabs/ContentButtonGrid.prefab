@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2861974654578151165}
   - component: {fileID: 2861974654578151164}
   m_Layer: 5
-  m_Name: ContentButton
+  m_Name: ContentButtonGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

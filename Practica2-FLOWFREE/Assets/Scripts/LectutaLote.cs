@@ -9,6 +9,7 @@ public struct Slot
     public int[] minFlow;
     public string Name;
     public bool lvlblocked;
+   
     public Slot(string[] levels, int[] minFlow, string Name, bool lvlblocked)
     {
         this.levels = levels;

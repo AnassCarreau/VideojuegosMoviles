@@ -17,7 +17,7 @@ namespace FreeFlowGame
         [SerializeField]
         private Color[] pipesColor;
 
-        [SerializeField]
+        
         private Transform boardParent;
 
         List<List<Vector2>> pipes;
@@ -32,19 +32,21 @@ namespace FreeFlowGame
         {
             pipes = new List<List<Vector2>>();
             m = new Map();
-
+            boardParent = new GameObject().transform;
+            boardParent.name = "BoardParent";
+            Debug.Log("Initialize");
             setPipes();
             GenerateGrid();
         }
 
         public void Clear() 
         {
-            
-            Destroy(boardParent.transform);
+            Destroy(boardParent.gameObject);
         }
         private void setPipes()
         {
             LvlActual lvl= GameManager.Instance.getActualPlay();
+            Debug.Log(lvl.levelIndex);
             m.Parse(LectutaLote.Instance.getDictionaryCategories()[lvl.category][lvl.slotIndex].levels[lvl.levelIndex]);
             pipes = m.GetPipes();
         }

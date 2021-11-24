@@ -37,7 +37,7 @@ public class LevelsScrollViewController : MonoBehaviour
                 levelBtnParentAux = Instantiate(levelBtnParent, transform) as GameObject;
             }
 
-            LevelButtonItem levelBtnObj = Instantiate<LevelButtonItem>(levelBtnPref, levelBtnParentAux.transform) as LevelButtonItem;
+            LevelButtonItem levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.transform);
             ///to do quitar get component
             levelBtnObj.SetLvl(i);
             if(!blocked || !nextLvlsBlockeds)levelBtnObj.SetColor(pipesColor[i / 30]);

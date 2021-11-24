@@ -15,18 +15,21 @@ public struct LvlActual
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance;
 
     public LevelPack[] levels;
 
     public AdsManager ads;
-    public static GameManager Instance { get { return _instance; } }
     //de momento publico para que podamos darle a las escenas sin que se joda 
-    public LvlActual act;
+    public static LvlActual act;
     [SerializeField]
     private FreeFlowGame.BoardManager boardManager;
   // [SerializeField] private LectutaLote lvlManager;
     DataSystem data;
+    private static GameManager _instance;
+
+    public static GameManager Instance { get { return _instance; } }
+
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -39,7 +42,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DarPista() {
+
+public void DarPista() {
         ads.PlayerRewardedAd(OnRewardedAdSuccess);
     }
 
@@ -68,25 +72,28 @@ public class GameManager : MonoBehaviour
         ads.PlayAd();
     }
 
-   
+
     private void OnLevelWasLoaded(int level)
     {
+        Debug.Log(level);
         Debug.Log(SceneManager.GetActiveScene().name);
-        if(SceneManager.GetActiveScene().name==boardManager.getScene().name) 
+        if (SceneManager.GetActiveScene().name == boardManager.getScene().name)
         {
             boardManager.Initialize();
         }
     }
+
+    
     public FreeFlowGame.BoardManager GetBoardManager()
     {
+    
+       
         return boardManager;
     }
 
     public void LoadScene(string name)
     {
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(boardManager);
-         // SceneManager.LoadScene(name,LoadSceneMode.Single);
         SceneManager.LoadScene(name);
     }
     public DataSystem getData() { return data; }
@@ -117,17 +124,30 @@ public class GameManager : MonoBehaviour
         act.levelIndex = lvl;
     }
 
+    public void Restart() 
+    {
+        boardManager.Clear();
+        boardManager.Initialize();
+    }
 
     public void NextLevel() 
     {
-        act.levelIndex++;
-        boardManager.Clear();
-      //  boardManager.Initialize();
+        Dictionary<string, List<Slot>> dicc = LectutaLote.Instance.getDictionaryCategories();
+        if (act.levelIndex + 1 < dicc[act.category][act.slotIndex].levels.Length 
+            && (dicc[act.category][act.slotIndex].minFlow[act.levelIndex+1]>0 || !dicc[act.category][act.slotIndex].lvlblocked))
+        {
+            act.levelIndex += 1;
+            boardManager.Clear();
+            boardManager.Initialize();
+        }
     } 
     public void BackLevel() 
     {
-        act.levelIndex--;
-        boardManager.Clear();
-        //boardManager.Initialize();
+        if (act.levelIndex - 1 >= 0)
+        {
+            act.levelIndex -= 1;
+            boardManager.Clear();
+            boardManager.Initialize();
+        }
     }
 }
