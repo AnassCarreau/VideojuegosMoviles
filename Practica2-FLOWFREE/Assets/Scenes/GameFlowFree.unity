@@ -1278,7 +1278,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'GameManager '
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5872266812384991763, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
 --- !u!1 &1682250086
 GameObject:
@@ -1362,7 +1363,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5872266812384991760, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: DarPista
         m_Mode: 1
@@ -1626,7 +1627,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5872266812384991760, guid: 008dabcbb577d004a9cfcd080187a512, type: 3}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
