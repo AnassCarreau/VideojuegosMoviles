@@ -17,7 +17,7 @@ namespace FreeFlowGame
         [SerializeField]
         private Color[] pipesColor;
 
-        
+        [SerializeField]
         private Transform boardParent;
 
         List<List<Vector2>> pipes;
@@ -28,20 +28,28 @@ namespace FreeFlowGame
 
         [SerializeField]private Object scene;
      
-        public void Initialize()
+        private void Start()
         {
             pipes = new List<List<Vector2>>();
             m = new Map();
-            boardParent = new GameObject().transform;
-            boardParent.name = "BoardParent";
-            Debug.Log("Initialize");
             setPipes();
             GenerateGrid();
         }
 
-        public void Clear() 
+        public void Initialize()
         {
-            Destroy(boardParent.gameObject);
+            Debug.Log("Initialize");
+            Clear();
+            setPipes();
+            GenerateGrid();
+        }
+
+        private void Clear() 
+        {
+            foreach (Transform child in boardParent)
+            {
+                Destroy(child.gameObject);
+            }
         }
         private void setPipes()
         {
@@ -51,7 +59,7 @@ namespace FreeFlowGame
             pipes = m.GetPipes();
         }
 
-        void GenerateGrid()
+        public void  GenerateGrid()
         {
             _tiles = new Dictionary<Vector2, Tile>();
             

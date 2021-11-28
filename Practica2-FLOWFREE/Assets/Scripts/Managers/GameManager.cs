@@ -28,16 +28,10 @@ public class GameManager : MonoBehaviour
     //
     public AdsManager ads;
 
-    //de momento publico para que podamos darle a las escenas sin que se joda 
-    public static LvlActual act;
-
 #if UNITY_EDITOR
-    //Variables públicas para seleccionar desde el inspector que lote, pack y nivel cargamos por defecto. Válido para probar desde
-    //inspector
-
-    public int lote;
-    public int pack;
-    public int level;
+    //de momento publico para que podamos darle a las escenas sin que se joda 
+    [SerializeField]
+    private LvlActual act;
 #endif
 
 #endregion
@@ -59,18 +53,24 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (_instance != null)
         {
+            _instance.boardManager = boardManager;
+#if UNITY_EDITOR
+            _instance.act = act;
+#endif
             Destroy(this.gameObject);
         }
         else
         {
             _instance = this;
+            DontDestroyOnLoad(_instance);
         }
     }
 
     private void Start()
     {
+        Debug.Log("StartGameManager");
         data = SaveSystem.LoadData();
 
         actualScene = SceneManager.GetActiveScene();
@@ -82,11 +82,6 @@ public class GameManager : MonoBehaviour
         //LectutaLote.Instance.Initialize();
 
         InitData();
-        if (SceneManager.GetActiveScene().name == boardManager.getScene().name)
-        {
-            Debug.Log("Inicio");
-            boardManager.Initialize();
-        }
     }
 
     private void InitData()
@@ -154,16 +149,6 @@ public class GameManager : MonoBehaviour
         ads.PlayAd();
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-        Debug.Log(level);
-        Debug.Log(SceneManager.GetActiveScene().name);
-        if (SceneManager.GetActiveScene().name == boardManager.getScene().name)
-        {
-            boardManager.Initialize();
-        }
-    }
-
     public FreeFlowGame.BoardManager GetBoardManager()
     {
         return boardManager;
@@ -171,7 +156,6 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(string name)
     {
-        DontDestroyOnLoad(this);
         SceneManager.LoadScene(name);
     }
 
@@ -210,7 +194,7 @@ public class GameManager : MonoBehaviour
 
     public void Restart() 
     {
-        boardManager.Clear();
+        //TO DO: Esto no esta hecho, habría que resetear los pipes
         boardManager.Initialize();
     }
 
@@ -220,7 +204,6 @@ public class GameManager : MonoBehaviour
             && (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex+1]>0 || !categories[act.category].lotes[act.slotIndex].levelblocked))
         {
             act.levelIndex += 1;
-            boardManager.Clear();
             boardManager.Initialize();
         }
     } 
@@ -229,7 +212,6 @@ public class GameManager : MonoBehaviour
         if (act.levelIndex - 1 >= 0)
         {
             act.levelIndex -= 1;
-            boardManager.Clear();
             boardManager.Initialize();
         }
     }
