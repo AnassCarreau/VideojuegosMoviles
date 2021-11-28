@@ -233,4 +233,6 @@ public class GameManager : MonoBehaviour
             boardManager.Initialize();
         }
     }
+
+  
 }
