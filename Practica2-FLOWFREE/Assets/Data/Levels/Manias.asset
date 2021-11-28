@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   categoryName: Manias
   categoryColor: {r: 1, g: 0, b: 0, a: 1}
-  levelblocked: 1
+  allLevelsUnblocked: 1
   lotes:
   - {fileID: 11400000, guid: 9d2c6f96b97fec74c8e4c6478131d8ac, type: 2}
   - {fileID: 11400000, guid: 78c0c482f43936b4ab9a96f15139a508, type: 2}

@@ -1,31 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class LevelsScrollViewController : MonoBehaviour
 {
-
     private int slotIndex;
     private int numberOfLevels;
     [SerializeField] private LevelButtonItem levelBtnPref;
     [SerializeField] private GameObject levelBtnParent;
     [SerializeField] private Color[] pipesColor;
-    [SerializeField] private Color[] IndicatorColor;
     [SerializeField] private GameObject IndicatorParent;
-    [SerializeField] private GameObject IndicatorPrefab;
-    private List<GameObject> listIndicator;
+    [SerializeField] private GameObject IndicatorParent;
     private void Start()
     {
-        listIndicator = new List<GameObject>();
         LoadScrollButtons();
     }
 
     // load level buttons on game start
     private void LoadScrollButtons()
     {
-
+        
         numberOfLevels = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].levels.Length;
         bool blocked = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].levelblocked;
         bool nextLvlsBlockeds = false;
@@ -35,30 +29,25 @@ public class LevelsScrollViewController : MonoBehaviour
         {
             if (blocked)
             {
-                nextLvlsBlockeds = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].bestScoresInLevels[i] == 0 && i != 0;
+                nextLvlsBlockeds =  GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].bestScoresInLevels[i] == 0 && i != 0;
             }
 
             if (i / 30 > conAct)
             {
                 conAct++;
-                levelBtnParentAux = Instantiate(levelBtnParent, transform);
-                listIndicator.Add(Instantiate(IndicatorPrefab, IndicatorParent.transform));
+                levelBtnParentAux = Instantiate(levelBtnParent, transform) as GameObject;
             }
 
             LevelButtonItem levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.transform);
             ///to do quitar get component
             levelBtnObj.SetLvl(i);
-            if (!blocked || !nextLvlsBlockeds) levelBtnObj.SetColor(pipesColor[i / 30]);
+            if(!blocked || !nextLvlsBlockeds)levelBtnObj.SetColor(pipesColor[i / 30]);
             else { levelBtnObj.SetColor(Color.black); }
         }
-
-        IndicatorParent.transform.position = new Vector2(IndicatorParent.transform.position.x - IndicatorPrefab.GetComponent<RectTransform>().rect.width * (float)conAct, IndicatorParent.transform.position.y);
     }
 
     public void SetLvl(int slot)
     {
         slotIndex = slot;
     }
-
-
 }
