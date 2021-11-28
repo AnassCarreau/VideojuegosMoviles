@@ -34,8 +34,6 @@ public class LevelButtonItem : MonoBehaviour
     {
         GameManager.Instance.SetLevel(levelIndex);
         GameManager.Instance.LoadScene(scene.name);
-
     }
-
 
 }

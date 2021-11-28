@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-[System.Serializable]
 public struct LvlActual
 {
     public int category;
@@ -28,10 +27,16 @@ public class GameManager : MonoBehaviour
     //
     public AdsManager ads;
 
-#if UNITY_EDITOR
     //de momento publico para que podamos darle a las escenas sin que se joda 
-    [SerializeField]
     private LvlActual act;
+
+#if UNITY_EDITOR
+    [SerializeField]
+    private int nivel;
+    [SerializeField]
+    private int lote;
+    [SerializeField]
+    private int categoria;
 #endif
 
 #endregion
@@ -56,14 +61,16 @@ public class GameManager : MonoBehaviour
         if (_instance != null)
         {
             _instance.boardManager = boardManager;
-#if UNITY_EDITOR
-            _instance.act = act;
-#endif
             Destroy(this.gameObject);
         }
         else
         {
             _instance = this;
+#if UNITY_EDITOR
+            act.category = categoria;
+            act.slotIndex = lote;
+            act.levelIndex = nivel;
+#endif
             DontDestroyOnLoad(_instance);
         }
     }
@@ -200,6 +207,7 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel() 
     {
+        Debug.Log(act.levelIndex);
         if (act.levelIndex + 1 < categories[act.category].lotes[act.slotIndex].levels.Length 
             && (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex+1]>0 || !categories[act.category].lotes[act.slotIndex].levelblocked))
         {
@@ -209,6 +217,8 @@ public class GameManager : MonoBehaviour
     } 
     public void BackLevel() 
     {
+        Debug.Log("BackLeveñ");
+        Debug.Log(act.levelIndex);
         if (act.levelIndex - 1 >= 0)
         {
             act.levelIndex -= 1;

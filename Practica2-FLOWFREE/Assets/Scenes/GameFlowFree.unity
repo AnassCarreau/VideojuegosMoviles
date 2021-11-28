@@ -179,6 +179,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
+      propertyPath: nivel
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: boardManager
       value: 
       objectReference: {fileID: 1378276131947600855}
