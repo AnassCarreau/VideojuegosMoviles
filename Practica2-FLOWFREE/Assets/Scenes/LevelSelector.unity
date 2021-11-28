@@ -248,9 +248,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1039398800}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelsScrollViewController, Assembly-CSharp
-        m_MethodName: SetIndicator
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -607,6 +607,7 @@ MonoBehaviour:
   - {r: 0, g: 0.098634005, b: 1, a: 1}
   - {r: 0.9866247, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.44892484, b: 0, a: 1}
+  IndicatorColor: []
   IndicatorParent: {fileID: 567658344}
   IndicatorPrefab: {fileID: 7112836592477750054, guid: 2ac721a9b78e8fd4bb04810107cffdd5, type: 3}
 --- !u!1001 &1565562371
