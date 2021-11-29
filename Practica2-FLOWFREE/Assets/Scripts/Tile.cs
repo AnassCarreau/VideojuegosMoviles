@@ -55,10 +55,11 @@ namespace FreeFlowGame
             posTile = pos;
         }
 
-        public bool IsEmpty()
+        public bool IsCircle()
         {
-            return !circleObject.activeSelf && free;
+            return circleObject.activeSelf;
         }
+        public bool isFree() { return free; }
 
         public void setFree(bool active) 
         {

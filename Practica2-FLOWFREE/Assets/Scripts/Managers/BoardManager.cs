@@ -94,6 +94,10 @@ namespace FreeFlowGame
         public Object getScene() 
         {
             return scene;
+        } 
+        public Color[] getPipesColor() 
+        {
+            return pipesColor;
         }
     }
 }

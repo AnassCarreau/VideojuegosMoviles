@@ -159,7 +159,8 @@ public class GameManager : MonoBehaviour
     public FreeFlowGame.BoardManager GetBoardManager()
     {
         return boardManager;
-    }
+    } 
+    
 
     public void LoadScene(string name)
     {
