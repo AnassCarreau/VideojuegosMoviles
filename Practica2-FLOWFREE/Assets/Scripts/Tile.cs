@@ -21,11 +21,16 @@ namespace FreeFlowGame
 
         private Vector2 posTile;
 
+        private bool free;
+
+
         public void Init(bool emptyTile)
         {
             _renderer.color = _color;
+            free = true;
             if (!emptyTile)
             {
+                free = false;
                 circleObject.SetActive(true);
             }
         }
@@ -52,7 +57,12 @@ namespace FreeFlowGame
 
         public bool IsEmpty()
         {
-            return !circleObject.activeSelf;
+            return !circleObject.activeSelf && free;
+        }
+
+        public void setFree(bool active) 
+        {
+            free = active;
         }
     }
 }

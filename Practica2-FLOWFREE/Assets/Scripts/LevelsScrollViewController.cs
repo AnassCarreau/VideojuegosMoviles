@@ -15,8 +15,13 @@ public class LevelsScrollViewController : MonoBehaviour
     [SerializeField] private Color[] IndicatorColor;
     [SerializeField] private GameObject IndicatorParent;
     [SerializeField] private GameObject IndicatorPrefab;
+    //TO DO PONER PRIVADA CON GET
     private List<GameObject> listIndicator;
-    private void Start()
+    public List<GameObject> listInd
+    {
+        get { return listIndicator; }
+    }
+    private void Awake()
     {
         listIndicator = new List<GameObject>();
         LoadScrollButtons();

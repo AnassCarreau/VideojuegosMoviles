@@ -13,6 +13,7 @@ public class Map
     List<int> holes;
     List<int> walls;
     List<List<Vector2>> pipes;
+   
     public bool Parse(string lvl)
     {
         string[] data = lvl.Split(';');
@@ -62,6 +63,10 @@ public class Map
             }
             pipes.Add(aux);
         }
+
+
+
+
         return true;
     }
 
