@@ -26,9 +26,7 @@ namespace FreeFlowGame
         Vector2 posIni;
         Vector2 posAct;
         Tile tileIni;
-        Tile tileAnt;
         Tile tileAct;
-        
         List<List<Vector2>> pipeSolution;
 
         public struct Circle
@@ -109,7 +107,6 @@ namespace FreeFlowGame
             {
                 Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
                 tileIni = boardManager.GetTileAtPosition(posAbsBoard);
-                tileAnt = tileIni;
                 if (tileIni != null)
                 {
                     //Si es un circulo destrimos todos los pipes de su calor
@@ -135,11 +132,11 @@ namespace FreeFlowGame
             //Arrastrar
             else if (draw && Input.GetMouseButton(0))
             {
-                if(tileAct != null) tileAnt = tileAct;
                 Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
                 tileAct = boardManager.GetTileAtPosition(posAbsBoard);
                 if (ra.collider != null && tileAct != null)
                 {
+
                     if (!tileAct.IsCircle())
                     {
                         //Si esta vacio pintamos 
@@ -147,18 +144,13 @@ namespace FreeFlowGame
                         {
                             Vector2 dir = posAbsBoard - posAct;
                             if (dir.x != 0 && dir.y != 0) { Debug.Log("No me puedo mover en diagonal pai"); }
-                            else if(boardManager.GetTileAtPosition(posAbsBoard) != null)
+                            else
                             {
-                                Vector2 posTileAnt = tileAnt.GetPosTile();
-                                float sum = 0f;
-                                if (tileIni == tileAct) sum = 0.75f;
-
-                                if(dir.x > 0) posAct = new Vector2(posTileAnt.x + sum, posTileAnt.y);
-                                else if(dir.x < 0) posAct = new Vector2(posTileAnt.x - sum, posTileAnt.y);
-                                else if (dir.y > 0) posAct = new Vector2(posTileAnt.x, posTileAnt.y + sum);
-                                else if (dir.y < 0) posAct = new Vector2(posTileAnt.x, posTileAnt.y - sum);
-                                
-                                PaintPipe(posAct, dir);
+                                if (boardManager.GetTileAtPosition(posAbsBoard) != null)
+                                {
+                                    posAct = posAbsBoard;
+                                    PaintPipe(posAct, dir);
+                                }
                             }
                         }
                         //Si no esta vacio y es de un color diferente al actual rompemos la linea
@@ -193,7 +185,7 @@ namespace FreeFlowGame
                     }
                     //Si hemos tocado el otro extremo
                     if (tileAct.IsCircle() && tileAct.GetCircleColor() == pipeRenderer.color 
-                    &&  pipeParent[pipeRenderer.color].childCount>1 && (boardManager.GetTileAtPosition(pipeCircles[pipeRenderer.color].fin)==tileAct || boardManager.GetTileAtPosition(pipeCircles[pipeRenderer.color].ini) == tileAct))
+                &&  pipeParent[pipeRenderer.color].childCount>1 && (boardManager.GetTileAtPosition(pipeCircles[pipeRenderer.color].fin)==tileAct || boardManager.GetTileAtPosition(pipeCircles[pipeRenderer.color].ini) == tileAct))
                     {
                         draw = false;
                         pipeCompleted.Add(pipeRenderer.color);
@@ -255,14 +247,15 @@ namespace FreeFlowGame
                 pipeCompleted.Add(color);
 
                 Debug.Log(pipeCompleted.Count + " " + pipeSolution.Count);
+
             }
         }
 
-        public void PaintPipe(Vector2 posPipe ,Vector2 dir)
+        public void PaintPipe(Vector2 pos,Vector2 dir )
         {
             float angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
-            pipeList[pipeRenderer.color].Add(Instantiate(pipeObject, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
+            pipeList[pipeRenderer.color].Add(Instantiate(pipeObject, new Vector2(pos.x, pos.y), rot, pipeParent[pipeRenderer.color]));
             tileAct.setFree(false);
             tileAct.setIndex(pipeList[pipeRenderer.color].Count - 1);
             tileAct.SetColor(pipeRenderer.color);
