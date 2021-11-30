@@ -28,7 +28,7 @@ namespace FreeFlowGame
 
         [SerializeField]private Object scene;
      
-        private void Start()
+        private void Awake()
         {
             pipes = new List<List<Vector2>>();
             m = new Map();
@@ -99,6 +99,6 @@ namespace FreeFlowGame
         {
             return pipesColor;
         }
-        public List<Vector2> getRandomPipe() { return pipes[Random.Range(0, pipes.Count - 1)]; }
+        public List<List<Vector2>> getPipeSolution() { return pipes; }
     }
 }
