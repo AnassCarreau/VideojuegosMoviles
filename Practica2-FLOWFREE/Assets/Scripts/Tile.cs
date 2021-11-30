@@ -23,11 +23,14 @@ namespace FreeFlowGame
 
         private bool free;
 
+        private int index;
+
 
         public void Init(bool emptyTile)
         {
             _renderer.color = _color;
             free = true;
+            index = -1;
             if (!emptyTile)
             {
                 free = false;
@@ -45,6 +48,15 @@ namespace FreeFlowGame
             return circleRenderer.color;
         }
 
+        public Color GetColor()
+        {
+            return _color;
+        }
+
+        public void SetColor(Color c)
+        {
+            _color=c;
+        }
         public Vector2 GetPosTile()
         {
             return posTile;
@@ -64,6 +76,14 @@ namespace FreeFlowGame
         public void setFree(bool active) 
         {
             free = active;
+        }  
+        public void setIndex(int i)
+        {
+            this.index = i;
+        }
+        public int getIndex()
+        {
+            return index ;
         }
     }
 }

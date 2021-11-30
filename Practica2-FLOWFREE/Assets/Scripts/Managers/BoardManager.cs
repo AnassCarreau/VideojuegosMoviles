@@ -99,5 +99,6 @@ namespace FreeFlowGame
         {
             return pipesColor;
         }
+        public List<Vector2> getRandomPipe() { return pipes[Random.Range(0, pipes.Count - 1)]; }
     }
 }
