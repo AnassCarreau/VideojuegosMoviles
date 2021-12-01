@@ -97,9 +97,10 @@ namespace FreeFlowGame
         {
             Debug.Log("DestroyChildren papaaaaaaaa");
             Color c = tileAct.IsCircle() ? tileAct.GetCircleColor() : tileAct.GetColor();
-            for (int i = index; i < tr.childCount; i++)
+            int k = tr.childCount ;
+            for (int i = index; i < k; i++)
             {
-                EachPipe pipeToRemove = pipeList[c][i];
+                EachPipe pipeToRemove = pipeList[c][index];
                 pipeList[c].Remove(pipeToRemove);
 
                 Tile childTile = boardManager.GetTileAtPosition(pipeToRemove.GetPositionInBoard());
@@ -180,6 +181,7 @@ namespace FreeFlowGame
                         //Si no esta vacio y es de un color diferente al actual rompemos la linea
                         else if (tileAct.GetColor() != pipeRenderer.color)
                         {
+                            
                             DestroyChildrenFromIndex(pipeParent[tileAct.GetColor()], tileAct.getIndex());
                         }
                     }
@@ -191,10 +193,11 @@ namespace FreeFlowGame
                         posAct = posIni;
                     }
                     //Si te echas para atras en un pipe
-                    else if (!tileAct.isFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].transform.position))
+                    else if (!tileAct.isFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].GetPositionInBoard()))
                     {
+                        posAct = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
+
                         DestroyChildrenFromIndex(pipeParent[pipeRenderer.color], pipeList[pipeRenderer.color].Count - 1);
-                        posAct = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].transform.position;
                     }                    
                     //Si hemos tocado el otro extremo
                     if (tileAct.IsCircle() && tileAct.GetCircleColor() == pipeRenderer.color 
@@ -310,6 +313,9 @@ namespace FreeFlowGame
                 if (dirAct.x == 1) return 90f;
                 else if (dirAct.x == -1) return -90f;
             }
+
+
+
             return anglePipe;
         }
     }
