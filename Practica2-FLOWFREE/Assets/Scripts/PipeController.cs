@@ -38,6 +38,7 @@ namespace FreeFlowGame
 
         [SerializeField]
         private Tile tileIni;
+        [SerializeField]
         private Tile tileAnt;
         [SerializeField]
         private Tile tileAct;
@@ -139,7 +140,7 @@ namespace FreeFlowGame
                 tileAnt = tileIni;
                 if (tileIni != null)
                 {
-                    //Si es un circulo destrimos todos los pipes de su calor
+                    //Si es un circulo destruimos todos los pipes de su color
                     if (tileIni.IsCircle())
                     {
                         draw = true;
@@ -166,10 +167,11 @@ namespace FreeFlowGame
             //Arrastrar
             else if (draw && Input.GetMouseButton(0))
             {
-                if(tileAct != null) tileAnt = tileAct;
-
                 Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
-                tileAct = boardManager.GetTileAtPosition(posAbsBoard);
+                Tile aux =  boardManager.GetTileAtPosition(posAbsBoard);
+
+                if (tileAct != null && aux != tileAct) tileAnt = tileAct;
+                tileAct = aux;
 
                 if (ra.collider != null && tileAct != null)
                 {
@@ -205,7 +207,7 @@ namespace FreeFlowGame
                     }
 
                     //Si es la primera posicion y nos echamos para atras
-                    if (boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) == tileAct && pipeList[pipeRenderer.color].Count == 1)
+                    if (tileAct.IsCircle() && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) == tileAct && pipeList[pipeRenderer.color].Count == 1)
                     {
                         DestroyChildrenFromIndex(pipeParent[pipeRenderer.color], pipeList[pipeRenderer.color].Count - 1);
                         posAct = posIni;
@@ -217,8 +219,9 @@ namespace FreeFlowGame
 
                         DestroyChildrenFromIndex(pipeParent[pipeRenderer.color], pipeList[pipeRenderer.color].Count - 1);
                     }
+
                     //Si hemos tocado el otro extremo
-                    if (continueMoving && tileAct.IsCircle() && tileAct.GetCircleColor() == pipeRenderer.color
+                    if (tileAct.IsCircle() && continueMoving && tileAct.GetCircleColor() == pipeRenderer.color
                         && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct)
                     {
                         continueMoving = false;
@@ -231,6 +234,8 @@ namespace FreeFlowGame
             else if (Input.GetMouseButtonUp(0))
             {
                 draw = false;
+                tileIni = null;
+                tileAct = null;
             }
 
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
