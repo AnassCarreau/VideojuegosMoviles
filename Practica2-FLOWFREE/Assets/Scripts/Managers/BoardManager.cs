@@ -11,6 +11,9 @@ namespace FreeFlowGame
         [SerializeField] 
         private Tile _tilePrefab;
 
+        [SerializeField]
+        private GameObject pipeControllerPrefab;
+
         [SerializeField] 
         private Transform _cam;
 
@@ -30,10 +33,14 @@ namespace FreeFlowGame
      
         private void Awake()
         {
+   
+        }
+
+        private void Start()
+        {
             pipes = new List<List<Vector2>>();
             m = new Map();
-            setPipes();
-            GenerateGrid();
+            Initialize();
         }
 
         public void Initialize()
@@ -42,6 +49,9 @@ namespace FreeFlowGame
             Clear();
             setPipes();
             GenerateGrid();
+
+            GameObject obj = Instantiate(pipeControllerPrefab, gameObject.transform);
+            obj.name = "PipeController";
         }
 
         private void Clear() 
