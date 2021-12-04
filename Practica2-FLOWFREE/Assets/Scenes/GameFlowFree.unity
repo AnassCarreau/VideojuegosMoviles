@@ -180,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: nivel
-      value: 13
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: boardManager
@@ -2026,6 +2026,58 @@ PrefabInstance:
       propertyPath: _cam
       value: 
       objectReference: {fileID: 519420032}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[6].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[6].b
+      value: 0.8197489
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[6].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[6].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[7].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[7].b
+      value: 0.11031505
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[7].g
+      value: 0.16570377
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[7].r
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[8].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[8].b
+      value: 0.47773224
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[8].g
+      value: 0.1485849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: pipesColor.Array.data[8].r
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aca59640d284c5443903dae297d94076, type: 3}
 --- !u!114 &1378276131947600855 stripped

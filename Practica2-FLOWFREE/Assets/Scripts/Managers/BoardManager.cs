@@ -6,7 +6,6 @@ namespace FreeFlowGame
 {
     public class BoardManager : MonoBehaviour
     {
-        private bool boardComplete;
 
         [SerializeField] 
         private Tile _tilePrefab;
@@ -20,6 +19,7 @@ namespace FreeFlowGame
         [SerializeField]
         private Color[] pipesColor;
 
+
         [SerializeField]
         private Transform boardParent;
 
@@ -30,11 +30,8 @@ namespace FreeFlowGame
         private Map m;
 
         [SerializeField]private Object scene;
-     
-        private void Awake()
-        {
-   
-        }
+
+        private GameObject pipeObject;
 
         private void Start()
         {
@@ -49,9 +46,7 @@ namespace FreeFlowGame
             Clear();
             setPipes();
             GenerateGrid();
-
-            GameObject obj = Instantiate(pipeControllerPrefab, gameObject.transform);
-            obj.name = "PipeController";
+            pipeObject   = Instantiate(pipeControllerPrefab, gameObject.transform);
         }
 
         private void Clear() 
@@ -60,6 +55,10 @@ namespace FreeFlowGame
             {
                 Destroy(child.gameObject);
             }
+            if (pipeObject != null) 
+            {
+                Destroy(pipeObject);
+            }
         }
         private void setPipes()
         {
@@ -67,6 +66,7 @@ namespace FreeFlowGame
             Debug.Log(lvl.levelIndex);
             m.Parse(GameManager.Instance.GetCategories()[lvl.category].lotes[lvl.slotIndex].levels[lvl.levelIndex]);
             pipes = m.GetPipes();
+       
         }
 
         public void  GenerateGrid()

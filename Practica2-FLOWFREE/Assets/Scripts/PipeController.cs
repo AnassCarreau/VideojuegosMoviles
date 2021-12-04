@@ -14,8 +14,7 @@ namespace FreeFlowGame
         //Diccionario para tener un padre donde instanciar los pipes de un color especifico
         private Dictionary<Color, Transform> pipeParent;
 
-        //Diccionario para tener el color, el principio, el fin y el tamaño de cada pipe
-        private Dictionary<Color, Pipe> pipeInfo;
+       
 
         //Set con los colores resueltos
         private HashSet<Color> colorCompleted;
@@ -58,7 +57,6 @@ namespace FreeFlowGame
             boardManager = GameManager.Instance.GetBoardManager();
             pipeParent = new Dictionary<Color, Transform>();
             pipeList = new Dictionary<Color, List<EachPipe>>();
-            pipeInfo = new Dictionary<Color, Pipe>();
 
             tilePipesIni = new Dictionary<Color, Tile>();
 
@@ -68,17 +66,10 @@ namespace FreeFlowGame
             for (int i = 0; i < c.Length; i++)
             {
                 GameObject par = new GameObject();
+                par.transform.SetParent(this.transform);
                 par.name = c[i].ToString();
                 pipeParent.Add(c[i], par.transform);
                 pipeList.Add(c[i], new List<EachPipe>());
-
-                Pipe pipe = new Pipe();
-                pipe.ini = pipeSolution[i][0];
-                pipe.fin = pipeSolution[i][pipeSolution[i].Count - 1];
-                //El tamaño es menos dos porque falta crear un pipe en el primer circulo
-                pipe.tam = pipeSolution[i].Count - 2;
-
-                pipeInfo.Add(c[i], pipe);
             }
         }
 
@@ -394,6 +385,15 @@ namespace FreeFlowGame
 
             return posPipe;
         }
+
+        private void OnDestroy()
+        {
+            foreach (Color c in boardManager.getPipesColor())
+            {
+                Destroy(pipeParent[c].gameObject);
+            }       
+        }
     }
 
+  
 }

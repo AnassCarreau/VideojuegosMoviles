@@ -83,5 +83,6 @@ MonoBehaviour:
   - {r: 0, g: 0.098634005, b: 1, a: 1}
   - {r: 0.9866247, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.44892484, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.7880776, a: 1}
   boardParent: {fileID: 294425546}
   scene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
