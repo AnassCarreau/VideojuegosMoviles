@@ -32,14 +32,16 @@ namespace FreeFlowGame
 
         private Vector2 posIni;
         private Vector2 posAct;
-
+        
+        [SerializeField]
         private Vector2 dirAct;
+        [SerializeField]
         private Vector2 dirAnt;
 
         [SerializeField]
         private Tile tileIni;
         [SerializeField]
-        private Tile tileAnt;
+        private Tile lastTilePainted;
         [SerializeField]
         private Tile tileAct;
         
@@ -128,7 +130,8 @@ namespace FreeFlowGame
         void Update()
         {
             Vector2 posInBoard = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D ra = Physics2D.Raycast(posInBoard, -Vector2.up);
+            
+            RaycastHit2D ra = Physics2D.Raycast(posInBoard, -Vector2.up, 0.1f );
 
             if (ra.collider != null) {
                 //Primera pulsacion
@@ -149,16 +152,28 @@ namespace FreeFlowGame
                     tileAct = null;
                 }
             }
+#if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
+#endif
         }
 
-        public void OnDrag(Vector2 posInBoard)
+        private void OnDrag(Vector2 posInBoard)
         {
+            //Posicion del raton en posiciones del tablero
             Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
-            Tile aux = boardManager.GetTileAtPosition(posAbsBoard);
+            //Tile correspondiente a la posicion posAbsBoard
+            Tile aux = boardManager.GetTileAtPosition(posAbsBoard);           
 
-            if (tileAct != null && aux != tileAct) tileAnt = tileAct;
-            tileAct = aux;
+            //Si estamos en un tile que no sea circulo de un color distinto al que estamos pintando y ese tile
+            //y la posicion del ultimo tile en el que hemos pintado son adyacentes
+            if (aux != null && !(aux.IsCircle() && aux.GetCircleColor() != pipeRenderer.color) && IsDirValid(posAbsBoard - posAct))
+            {
+                if (aux != tileAct)
+                {
+                    lastTilePainted = tileAct;
+                    tileAct = aux;
+                }
+            }
 
             if ( tileAct != null)
             {
@@ -167,28 +182,13 @@ namespace FreeFlowGame
                     //Si esta vacio pintamos 
                     if (tileAct.isFree())
                     {
-                        //Antes de un posible cambio de dirección guardo la dir en la que iba
-                        if (IsDirValid(dirAct)) dirAnt = dirAct;
-
-                        dirAct = posAbsBoard - posAct;
-
-                        if (IsDirValid(dirAct) && boardManager.GetTileAtPosition(posAbsBoard) != null)
-                        {
-                            Vector2 posTileAnt = tileAnt.GetPosTile();
-                            Vector2 posPipe = posAct;
-                            posAct = posAbsBoard;
-
-                            if (dirAct.x > 0) posPipe = new Vector2(posTileAnt.x + 0.5f, posTileAnt.y);
-                            else if (dirAct.x < 0) posPipe = new Vector2(posTileAnt.x - 0.5f, posTileAnt.y);
-                            else if (dirAct.y > 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y + 0.5f);
-                            else if (dirAct.y < 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y - 0.5f);
-
-                            PaintPipe(posPipe, dirAct, true);
-                        }
+                        //Actualizar lastTilePainted 
+                        CreatePipe(posAbsBoard);
                     }
                     //Si no esta vacio y es de un color diferente al actual rompemos la linea
                     else if (tileAct.GetColor() != pipeRenderer.color)
                     {
+                        //Actualizar lastTilePainted 
                         DestroyChildrenFromIndex(pipeParent[tileAct.GetColor()], tileAct.getIndex());
                     }
                 }
@@ -202,6 +202,7 @@ namespace FreeFlowGame
                 //Si te echas para atras en un pipe
                 else if (!tileAct.isFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].GetPositionInBoard()))
                 {
+                    continueMoving = true;
                     DestroyChildrenFromIndex(pipeParent[pipeRenderer.color], pipeList[pipeRenderer.color].Count - 1);
                     posAct = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
                 }
@@ -210,19 +211,22 @@ namespace FreeFlowGame
                 if (tileAct.IsCircle() && continueMoving && tileAct.GetCircleColor() == pipeRenderer.color
                     && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct)
                 {
+                    CreatePipe(posAbsBoard);
                     continueMoving = false;
-                    colorCompleted.Add(pipeRenderer.color);
                     Debug.Log("Pipe Completada");
                 }
             }
         }
-        public void InitDrag(Vector2 posInBoard)
+        private void InitDrag(Vector2 posInBoard)
         {
             Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
             tileIni = boardManager.GetTileAtPosition(posAbsBoard);
-            tileAnt = tileIni;
+            
             if (tileIni != null)
             {
+                tileAct = tileIni;
+                lastTilePainted = tileIni;
+
                 //Si es un circulo destruimos todos los pipes de su color
                 if (tileIni.IsCircle())
                 {
@@ -247,7 +251,7 @@ namespace FreeFlowGame
             }
         }
 
-        public void PaintClue()
+        private void PaintClue()
         {
             if (colorCompleted.Count < pipeSolution.Count)
             {
@@ -344,6 +348,28 @@ namespace FreeFlowGame
                 else if (dirAct.x == -1) return -90f;
             }
             return anglePipe;
+        }
+
+        private void CreatePipe(Vector2 posAbsBoard)
+        {
+            //Antes de un posible cambio de dirección guardo la dir en la que iba
+            if (IsDirValid(dirAct)) dirAnt = dirAct;
+
+            dirAct = posAbsBoard - posAct;
+
+            if (IsDirValid(dirAct) && boardManager.GetTileAtPosition(posAbsBoard) != null)
+            {
+                Vector2 posTileAnt = lastTilePainted.GetPosTile();
+                Vector2 posPipe = posAct;
+                posAct = posAbsBoard;
+
+                if (dirAct.x > 0) posPipe = new Vector2(posTileAnt.x + 0.5f, posTileAnt.y);
+                else if (dirAct.x < 0) posPipe = new Vector2(posTileAnt.x - 0.5f, posTileAnt.y);
+                else if (dirAct.y > 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y + 0.5f);
+                else if (dirAct.y < 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y - 0.5f);
+
+                PaintPipe(posPipe, dirAct, true);
+            }
         }
     }
 
