@@ -11,14 +11,13 @@ namespace FreeFlowGame
         private Tile _tilePrefab;
 
         [SerializeField]
-        private GameObject pipeControllerPrefab;
+        private PipeController pipeControllerPrefab;
 
         [SerializeField] 
         private Transform _cam;
 
         [SerializeField]
         private Color[] pipesColor;
-
 
         [SerializeField]
         private Transform boardParent;
@@ -46,7 +45,7 @@ namespace FreeFlowGame
             Clear();
             setPipes();
             GenerateGrid();
-            pipeObject   = Instantiate(pipeControllerPrefab, gameObject.transform);
+            pipeObject = Instantiate(pipeControllerPrefab.gameObject, gameObject.transform);
         }
 
         private void Clear() 
@@ -109,5 +108,10 @@ namespace FreeFlowGame
             return pipesColor;
         }
         public List<List<Vector2>> getPipeSolution() { return pipes; }
+
+        public PipeController GetPipeController()
+        {
+            return pipeControllerPrefab;
+        }
     }
 }

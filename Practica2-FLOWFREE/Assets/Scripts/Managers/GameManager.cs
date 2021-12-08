@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     private DataSystem data;
     private static GameManager _instance;
 
+    private GameCanvasManager canvasManager;
     //Variable de la escena en la que estamos para saber que inicializar sin necesidad de pasar por MainMenu-LevelSelector-FreeFlow
     private Scene actualScene;
 
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
 
     private void InitData()
     {
+        //Habra que leer cuantas pistas nos quedan cuando se haga el guardado
         clues = 0;
         if (data == null)
         {
@@ -104,6 +106,10 @@ public class GameManager : MonoBehaviour
             saveCorrect = true;
             clues = data.clues;
         }
+
+        //Esto es temporal ya que hay que leerlo del data guardado, es para que funcione el boton de clue
+        clues = 2;
+        canvasManager.SetClueText(clues);
 
         //For de Categorias Intro-manias-rectangles
         for (int i = 0; i < categories.Length; i++)
@@ -161,6 +167,10 @@ public class GameManager : MonoBehaviour
         return boardManager;
     } 
     
+    public void ImCanvasManager(GameCanvasManager canvasManager_)
+    {
+        canvasManager = canvasManager_;
+    }
 
     public void LoadScene(string name)
     {
@@ -227,5 +237,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GetClue()
+    {
+        if(clues - 1 >= 0)
+        {
+            clues--;
+            boardManager.GetPipeController().PaintClue();
+            canvasManager.SetClueText(clues);
+        }
+    }
   
 }

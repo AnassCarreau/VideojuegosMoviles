@@ -305,8 +305,10 @@ namespace FreeFlowGame
             }
         }
 
-        private void PaintClue()
+        public void PaintClue()
         {
+            Debug.Log(colorCompleted);
+            Debug.Log(pipeSolution);
             if (colorCompleted.Count < pipeSolution.Count)
             {
                 Debug.Log(colorCompleted.Count + " " + pipeSolution.Count);
