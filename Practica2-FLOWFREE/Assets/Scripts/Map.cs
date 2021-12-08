@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Map
 {
-    int width;
-    int height;
-    int lvlnum;
-    int flownum;
-    List<int> bridge;
-    List<int> holes;
-    List<int> walls;
-    List<List<Vector2>> pipes;
-   
+    private int width;
+    private int height;
+    private int lvlnum;
+    private int flownum;
+    private List<int> bridge;
+    private List<int> holes;
+    private List<int> walls;
+    private List<List<Vector2>> pipes;
+
     public bool Parse(string lvl)
     {
         string[] data = lvl.Split(';');
@@ -63,9 +63,6 @@ public class Map
             }
             pipes.Add(aux);
         }
-
-
-
 
         return true;
     }

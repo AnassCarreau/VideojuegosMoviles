@@ -84,9 +84,11 @@ namespace FreeFlowGame
 
         void Update()
         {
-            Vector2 posInBoard = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D ra = Physics2D.Raycast(posInBoard, -Vector2.up, 0.1f);
-
+            Vector2 posInBoard;
+            RaycastHit2D ra;
+#if UNITY_EDITOR
+            posInBoard = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            ra = Physics2D.Raycast(posInBoard, -Vector2.up, 0.1f);
             if (ra.collider != null)
             {
                 //Primera pulsacion
@@ -115,6 +117,43 @@ namespace FreeFlowGame
                     tileAct = null;
                 }
             }
+#endif
+#if UNITY_ANDROID
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                posInBoard = Camera.main.ScreenToWorldPoint(touch.position);
+                ra = Physics2D.Raycast(posInBoard, -Vector2.up, 0.1f);
+                if (ra.collider != null)
+                {
+                    //Primera pulsacion
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        InitDrag(posInBoard);
+                    }
+                    //Arrastrar
+                    else if (draw && touch.phase == TouchPhase.Moved)
+                    {
+                        OnDrag(posInBoard);
+                    }
+                    //Si soltamos
+                    else if (touch.phase == TouchPhase.Ended)
+                    {
+                        if (AllPipesCompleted())
+                        {
+                            //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
+                            //Esto es temporal
+                            Debug.Log("Ganaste");
+                            GameManager.Instance.LoadScene("LevelSelector");
+                            return;
+                        }
+                        draw = false;
+                        tileIni = null;
+                        tileAct = null;
+                    }
+                }
+            }  
+#endif
 #if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif

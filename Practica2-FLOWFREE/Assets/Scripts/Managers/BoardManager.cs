@@ -66,7 +66,6 @@ namespace FreeFlowGame
             Debug.Log(lvl.levelIndex);
             m.Parse(GameManager.Instance.GetCategories()[lvl.category].lotes[lvl.slotIndex].levels[lvl.levelIndex]);
             pipes = m.GetPipes();
-       
         }
 
         public void  GenerateGrid()

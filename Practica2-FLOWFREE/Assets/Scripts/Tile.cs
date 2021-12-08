@@ -7,7 +7,6 @@ namespace FreeFlowGame
 {
     public class Tile : MonoBehaviour
     {
-        [SerializeField]
         private Color _color;
 
         [SerializeField]
@@ -25,10 +24,11 @@ namespace FreeFlowGame
 
         private int index;
 
-
         public void Init(bool emptyTile)
         {
-            _renderer.color = _color;
+            LvlActual lvl = GameManager.Instance.getActualPlay();
+            _renderer.color = GameManager.Instance.GetCategories()[lvl.category].categoryColor;
+
             free = true;
             index = -1;
             if (!emptyTile)
@@ -57,6 +57,7 @@ namespace FreeFlowGame
         {
             _color=c;
         }
+
         public Vector2 GetPosTile()
         {
             return posTile;
