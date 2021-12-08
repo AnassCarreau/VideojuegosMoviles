@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5415072373884990139}
     m_Modifications:
+    - target: {fileID: 1884765721755761756, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4251150188637013075, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
       propertyPath: m_Name
       value: Circle
@@ -67,16 +71,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7788251449213677334, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788251449213677334, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788251449213677334, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788251449213677334, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
---- !u!1 &746839875916910493 stripped
+--- !u!1 &3065359303171979154 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4251150188637013075, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1884765721755761756, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
   m_PrefabInstance: {fileID: 3504451952288500686}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &746839875916910482 stripped
+--- !u!212 &3557500575217133414 stripped
 SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4251150188637013084, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+  m_CorrespondingSourceObject: {fileID: 143155963208412328, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
   m_PrefabInstance: {fileID: 3504451952288500686}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3504451952465454541
@@ -137,11 +157,11 @@ PrefabInstance:
     - target: {fileID: 8900348549419669367, guid: a0040ca42d0a7624fa14f526514a0844, type: 3}
       propertyPath: circleObject
       value: 
-      objectReference: {fileID: 746839875916910493}
+      objectReference: {fileID: 3065359303171979154}
     - target: {fileID: 8900348549419669367, guid: a0040ca42d0a7624fa14f526514a0844, type: 3}
       propertyPath: circleRenderer
       value: 
-      objectReference: {fileID: 746839875916910482}
+      objectReference: {fileID: 3557500575217133414}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0040ca42d0a7624fa14f526514a0844, type: 3}
 --- !u!4 &5415072373884990139 stripped

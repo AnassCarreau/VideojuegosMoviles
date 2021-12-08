@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 1, g: 1, b: 1, a: 1}
   _renderer: {fileID: 3940601066664883673}
+  circleObject: {fileID: 1884765721755761756, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
+  circleRenderer: {fileID: 143155963208412328, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
 --- !u!212 &3940601066664883673
 SpriteRenderer:
   m_ObjectHideFlags: 0

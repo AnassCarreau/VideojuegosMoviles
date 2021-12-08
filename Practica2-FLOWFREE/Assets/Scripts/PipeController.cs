@@ -11,10 +11,11 @@ namespace FreeFlowGame
         [SerializeField]
         SpriteRenderer pipeRenderer;
 
+        [SerializeField]
+        GameObject clueStar;
+
         //Diccionario para tener un padre donde instanciar los pipes de un color especifico
         private Dictionary<Color, Transform> pipeParent;
-
-       
 
         //Set con los colores resueltos
         private HashSet<Color> colorCompleted;
@@ -23,6 +24,10 @@ namespace FreeFlowGame
         private Dictionary<Color, List<EachPipe>> pipeList;
 
         private Dictionary<Color, Tile> tilePipesIni;
+
+        //Diccionario donde guardamos si se ha puesto una pista en ese color para controlar que las estrellas salgan o no
+        private Dictionary<Color, bool> clueInPipe;
+        private Dictionary<Color, List<GameObject>> starsInPipes;
 
         private BoardManager boardManager;
 
@@ -62,6 +67,10 @@ namespace FreeFlowGame
 
             pipeSolution = boardManager.getPipeSolution();
             colorCompleted = new HashSet<Color>();
+
+            clueInPipe = new Dictionary<Color, bool>();
+            starsInPipes = new Dictionary<Color, List<GameObject>>();
+
             Color[] c = boardManager.getPipesColor();
             for (int i = 0; i < c.Length; i++)
             {
@@ -75,7 +84,6 @@ namespace FreeFlowGame
 
         void Update()
         {
-
             Vector2 posInBoard = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D ra = Physics2D.Raycast(posInBoard, -Vector2.up, 0.1f);
 
@@ -110,8 +118,8 @@ namespace FreeFlowGame
 #if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif
-
         }
+
         /// <summary>
         /// Destruye todos los hijos de un color
         /// </summary>
@@ -209,6 +217,12 @@ namespace FreeFlowGame
                     continueMoving = false;
                     colorCompleted.Add(pipeRenderer.color);
                     Debug.Log("Pipe Completada");
+                    //Comprobación de si hay estrellas en ese color
+                    if (clueInPipe.ContainsKey(pipeRenderer.color))
+                    {
+                        starsInPipes[pipeRenderer.color][0].SetActive(true);
+                        starsInPipes[pipeRenderer.color][1].SetActive(true);
+                    }
                 }
             }
         }
@@ -232,7 +246,7 @@ namespace FreeFlowGame
                     pipeRenderer.color = tileIni.GetCircleColor();
 
                     tilePipesIni[pipeRenderer.color] = tileIni;
-
+                  
                     DestroyChildren();
                 }
                 //Si es un pipe y tiene index destruimos los hermanos posteriores a ese indice
@@ -242,6 +256,12 @@ namespace FreeFlowGame
                     pipeRenderer.color = tileIni.GetColor();
                     posAct = posAbsBoard;
                     DestroyChildrenFromIndex(pipeParent[pipeRenderer.color], tileIni.getIndex() + 1);
+                }
+                //Comprobación de si hay estrellas en ese color
+                if (clueInPipe.ContainsKey(pipeRenderer.color))
+                {
+                    starsInPipes[pipeRenderer.color][0].SetActive(false);
+                    starsInPipes[pipeRenderer.color][1].SetActive(false);
                 }
             }
         }
@@ -274,18 +294,38 @@ namespace FreeFlowGame
                 pipeRenderer.color = color;
                 DestroyChildren();
 
+                pipeRenderer.color = color;
 
-                //Resto de pipes
+                //Instanciamos las estrellas en los extremos si estamos en ellos y guardamos que hemos puesto estrella
+                //si ya existen las estrellas simplemente las activamos
+                if (!clueInPipe.ContainsKey(color))
+                {
+                    Tile tile_initial = boardManager.GetTileAtPosition(l[0]);
+                    Tile tile_final = boardManager.GetTileAtPosition(l[l.Count - 1]);
+
+                    List<GameObject> starsAux = new List<GameObject>();
+                    starsAux.Add(Instantiate(clueStar, new Vector2(tile_initial.GetPosTile().x, tile_initial.GetPosTile().y), Quaternion.identity, pipeParent[pipeRenderer.color]));
+                    starsAux.Add(Instantiate(clueStar, new Vector2(tile_final.GetPosTile().x, tile_final.GetPosTile().y), Quaternion.identity, pipeParent[pipeRenderer.color]));
+                    starsInPipes.Add(color, starsAux);
+                    clueInPipe.Add(color, true);
+                }
+                else
+                {
+                    starsInPipes[color][0].SetActive(true);
+                    starsInPipes[color][1].SetActive(true);
+                }
+
+                //Pintado de la pista
                 for (int i = 1; i < l.Count; i++)
                 {
-                    Vector2 dir = l[i] - l[i-1];
+                    Vector2 dir = l[i] - l[i - 1];
                     Tile act = boardManager.GetTileAtPosition(l[i]);
-                    pipeRenderer.color = color;
+
                     if (act.GetColor() != pipeRenderer.color && !act.isFree() && !act.IsCircle())
                     {
                         DestroyChildrenFromIndex(pipeParent[act.GetColor()], act.getIndex());
                     }
-                    PaintPipe(act, l[i],centerPipe(l[i-1], dir), dir, false);
+                    PaintPipe(act, l[i], centerPipe(l[i-1], dir), dir, false);
                 }
 
                 colorCompleted.Add(color);
@@ -371,7 +411,7 @@ namespace FreeFlowGame
 
         private bool AllPipesCompleted()
         {
-            return colorCompleted.Count == boardManager.getPipesColor().Length;
+            return colorCompleted.Count == boardManager.getPipeSolution().Count;
         }
 
         private Vector2 centerPipe(Vector2 posTileAnt, Vector2 dirAct_)
