@@ -29,9 +29,14 @@ public class GameCanvasManager : MonoBehaviour
         GameManager.Instance.LoadScene("LevelSelector");
     }
 
+    public void UseClue()
+    {
+        GameManager.Instance.UseClue();
+    }
+
     public void GetNewClue()
     {
-        GameManager.Instance.GetClue();
+        GameManager.Instance.GetNewClue();
     }
 
     public void SetClueText(int clues)

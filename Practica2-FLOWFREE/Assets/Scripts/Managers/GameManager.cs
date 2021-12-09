@@ -148,14 +148,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DarPista() {
-        ads.PlayerRewardedAd(OnRewardedAdSuccess);
-    }
-
-    void OnRewardedAdSuccess() 
-    {
-        Debug.Log("Pista para tu body ");
-    }
 
     public void LevelSuccess() 
     {
@@ -237,7 +229,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GetClue()
+    public void UseClue()
     {
         if(clues - 1 >= 0)
         {
@@ -245,6 +237,15 @@ public class GameManager : MonoBehaviour
             boardManager.GetPipeController().PaintClue();
             canvasManager.SetClueText(clues);
         }
+    }
+    public void GetNewClue() {
+        ads.PlayerRewardedAd(OnRewardedAdSuccess);
+    }
+
+    void OnRewardedAdSuccess() 
+    {
+        clues++;
+        canvasManager.SetClueText(clues);
     }
   
 }

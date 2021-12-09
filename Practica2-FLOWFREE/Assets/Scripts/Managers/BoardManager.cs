@@ -30,7 +30,7 @@ namespace FreeFlowGame
 
         [SerializeField]private Object scene;
 
-        private GameObject pipeObject;
+        private PipeController pipeObject;
 
         private void Start()
         {
@@ -45,7 +45,7 @@ namespace FreeFlowGame
             Clear();
             setPipes();
             GenerateGrid();
-            pipeObject = Instantiate(pipeControllerPrefab.gameObject, gameObject.transform);
+            pipeObject = Instantiate(pipeControllerPrefab, gameObject.transform);
         }
 
         private void Clear() 
@@ -111,7 +111,7 @@ namespace FreeFlowGame
 
         public PipeController GetPipeController()
         {
-            return pipeControllerPrefab;
+            return pipeObject;
         }
     }
 }
