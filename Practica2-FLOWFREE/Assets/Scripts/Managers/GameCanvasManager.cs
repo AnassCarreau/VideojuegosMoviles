@@ -5,11 +5,19 @@ public class GameCanvasManager : MonoBehaviour
 {
     [SerializeField]
     private Text clueText;
-
+    [SerializeField]
+    private Text flowsText;
+    [SerializeField]
+    private Text bestText;
+    [SerializeField]
+    private Text movesText;
+    [SerializeField]
+    private Text pipePercentage;
     private void Awake()
     {
-        GameManager.Instance.ImCanvasManager(this);   
+        GameManager.Instance.ImCanvasManager(this);
     }
+
 
     public void ChangeNextLevel()
     {
@@ -42,5 +50,29 @@ public class GameCanvasManager : MonoBehaviour
     public void SetClueText(int clues)
     {
         clueText.text = clues + " x";
+    }
+
+    public void SetBestText(int n)
+    {
+        string s;
+        if (n == 0)
+        {
+            s = "-";
+        }
+        else { s = n.ToString(); }
+
+        bestText.text = "best : " + s;
+    }
+    public void SetflowsText(int n, int total)
+    {
+        flowsText.text = " flows : " + n + " / " + total;
+    }
+    public void SetMovesText(int n)
+    {
+        movesText.text = " moves : " + n;
+    }
+    public void SetPercentageText(int n)
+    {
+        pipePercentage.text = "pipe : " + n + " %";
     }
 }

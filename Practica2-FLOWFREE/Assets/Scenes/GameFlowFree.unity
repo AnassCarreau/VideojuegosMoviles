@@ -545,6 +545,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clueText: {fileID: 1981657329}
+  flowsText: {fileID: 451604581}
+  bestText: {fileID: 1180722210}
+  movesText: {fileID: 126905042}
+  pipePercentage: {fileID: 644726362}
 --- !u!1 &540558382
 GameObject:
   m_ObjectHideFlags: 0

@@ -247,5 +247,13 @@ public class GameManager : MonoBehaviour
         clues++;
         canvasManager.SetClueText(clues);
     }
-  
+    //TO DO HACER CANVAS SINGLETON
+    public void SetflowsText(int n) 
+    {
+        canvasManager.SetflowsText(n,boardManager.getPipeSolution().Count);
+    }
+    public void SetPercentageText(int n)
+    {
+        canvasManager.SetPercentageText(n);
+    }
 }
