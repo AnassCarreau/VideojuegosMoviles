@@ -46,6 +46,7 @@ namespace FreeFlowGame
             setPipes();
             GenerateGrid();
             pipeObject = Instantiate(pipeControllerPrefab, gameObject.transform);
+            pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetFlownum() );
         }
 
         private void Clear() 
