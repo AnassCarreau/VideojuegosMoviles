@@ -312,8 +312,6 @@ namespace FreeFlowGame
 
         public void PaintClue()
         {
-            Debug.Log(colorCompleted);
-            Debug.Log(pipeSolution);
             if (colorCompleted.Count < pipeSolution.Count)
             {
                 Debug.Log(colorCompleted.Count + " " + pipeSolution.Count);
@@ -347,6 +345,7 @@ namespace FreeFlowGame
                 if (!clueInPipe.ContainsKey(color))
                 {
                     Tile tile_initial = boardManager.GetTileAtPosition(l[0]);
+                    tilePipesIni[color] = tile_initial;
                     Tile tile_final = boardManager.GetTileAtPosition(l[l.Count - 1]);
 
                     List<GameObject> starsAux = new List<GameObject>();
