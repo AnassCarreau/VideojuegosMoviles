@@ -187,15 +187,27 @@ namespace FreeFlowGame
         {
             Debug.Log("DestroyChildren papaaaaaaaa");
             Color c = tileAct.IsCircle() ? tileAct.GetCircleColor() : tileAct.GetColor();
-            int k = pipeList[c].Count;
-            for (int i = index; i < k; i++)
+            int total = pipeList[c].Count;
+            Debug.Log("resta " + (total - index));
+            Debug.Log("index" + index);
+            if (colorCompleted.Contains(c) && total - index < index)
             {
-                
-                DestroyPipe(c, index);
+                for (int i = index; i < total; i++)
+                {
+                    DestroyPipe(c, 0);
+                }
             }
+            else
+            {
+                for (int i = index; i < total; i++)
+                {
+                    DestroyPipe(c, index);
+                }
+            }
+
+
             colorCompleted.Remove(c);
             Percentage();
-
         }
 
         private void DestroyPipe(Color c, int i)
@@ -250,24 +262,22 @@ namespace FreeFlowGame
 
                 //Si es la primera posicion y nos echamos para atras
                 if (tileAct.IsCircle() && pipeList[pipeRenderer.color].Count == 1
-                    && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) == tileAct
-                  )
+                    && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) == tileAct)
                 {
-                    DestroyChildrenFromIndex(pipeList[pipeRenderer.color].Count - 1);
+                    DestroyPipe(pipeRenderer.color, pipeList[pipeRenderer.color].Count - 1);
                     posAct = posIni;
                 }
                 //Si te echas para atras en un pipe
                 else if (!tileAct.isFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].GetPositionInBoard()))
                 {
                     continueMoving = true;
-                    DestroyChildrenFromIndex(pipeList[pipeRenderer.color].Count - 1);
+                    DestroyPipe(pipeRenderer.color, pipeList[pipeRenderer.color].Count - 1);
                     posAct = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
                 }
 
                 //Si hemos tocado el otro extremo
                 if (tileAct.IsCircle() && continueMoving && tileAct.GetCircleColor() == pipeRenderer.color
-                    && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct
-                  )
+                    && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct)
                 {
                     CreatePipe(posAbsBoard);
                     continueMoving = false;
