@@ -58,9 +58,14 @@ namespace FreeFlowGame
 
         private int numPipesInBoard;
         private int totalPipesInBoard;
+        private int moves;
+        private Vector2 lastPipe;
+        private bool lastPipeColor;
         void Start()
         {
+            moves = 0;
             numPipesInBoard = 0;
+            pipeRenderer.color = Color.black;
             //iNICIALIZACION DE LAS LISTAS 
             boardManager = GameManager.Instance.GetBoardManager();
             pipeParent = new Dictionary<Color, Transform>();
@@ -70,7 +75,7 @@ namespace FreeFlowGame
 
             pipeSolution = boardManager.getPipeSolution();
             colorCompleted = new HashSet<Color>();
-
+            lastPipe = new Vector2();
             clueInPipe = new Dictionary<Color, bool>();
             starsInPipes = new Dictionary<Color, List<GameObject>>();
 
@@ -84,6 +89,8 @@ namespace FreeFlowGame
                 pipeList.Add(c[i], new List<EachPipe>());
             }
             GameManager.Instance.SetflowsText(0);
+            GameManager.Instance.SetMovesText(moves);
+            GameManager.Instance.SetBestText();
             Percentage();
 
         }
@@ -110,15 +117,26 @@ namespace FreeFlowGame
                 //Si soltamos
                 else if (Input.GetMouseButtonUp(0))
                 {
+                    if (lastPipeColor && lastPipe != pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard())
+                    {
+                        Debug.Log(lastPipe);
+                        moves++;
+                        lastPipeColor = false;
+                        //lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
+                    }
+                    GameManager.Instance.SetMovesText(moves);
+
                     if (AllPipesCompleted())
                     {
                         //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
                         //Esto es temporal
                         Debug.Log("Ganaste");
+                        GameManager.Instance.SetScore(moves);
                         GameManager.Instance.LoadScene("LevelSelector");
                         return;
                     }
                     draw = false;
+
                     tileIni = null;
                     tileAct = null;
                 }
@@ -145,6 +163,8 @@ namespace FreeFlowGame
                     //Si soltamos
                     else if (touch.phase == TouchPhase.Ended)
                     {
+                        GameManager.Instance.SetMovesText(moves);
+
                         if (AllPipesCompleted())
                         {
                             //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
@@ -154,6 +174,7 @@ namespace FreeFlowGame
                             return;
                         }
                         draw = false;
+
                         tileIni = null;
                         tileAct = null;
                     }
@@ -163,6 +184,62 @@ namespace FreeFlowGame
 #if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif
+        }
+        private void InitDrag(Vector2 posInBoard)
+        {
+            Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
+            tileIni = boardManager.GetTileAtPosition(posAbsBoard);
+
+            if (tileIni != null)
+            {
+                tileAct = tileIni;
+                lastTilePainted = tileIni;
+
+                //Si es un circulo destruimos todos los pipes de su color
+                if (tileIni.IsCircle())
+                {
+                    draw = true;
+                    continueMoving = true;
+                    posIni = posAbsBoard;
+                    posAct = posAbsBoard;
+
+                    if (pipeRenderer.color != tileIni.GetCircleColor())
+                    {
+                        pipeRenderer.color = tileIni.GetCircleColor();
+                        lastPipeColor = true;
+                        if (pipeList[pipeRenderer.color].Count > 0)
+                        {
+                            lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
+                            Debug.Log("Init "+ lastPipe);
+                        }
+                    }
+
+
+                    tilePipesIni[pipeRenderer.color] = tileIni;
+                    DestroyChildren();
+
+                }
+                //Si es un pipe y tiene index destruimos los hermanos posteriores a ese indice
+                else if (tileIni.getIndex() != -1)
+                {
+                    draw = true;
+                    if (pipeRenderer.color != tileIni.GetColor())
+                    {
+                        lastPipeColor = true;
+                        pipeRenderer.color = tileIni.GetColor();
+                        lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
+                    }
+                    posAct = posAbsBoard;
+                    DestroyChildrenFromIndex(tileIni.getIndex() + 1);
+
+                }
+                //Comprobación de si hay estrellas en ese color
+                if (clueInPipe.ContainsKey(pipeRenderer.color))
+                {
+                    starsInPipes[pipeRenderer.color][0].SetActive(false);
+                    starsInPipes[pipeRenderer.color][1].SetActive(false);
+                }
+            }
         }
 
         /// <summary>
@@ -176,6 +253,7 @@ namespace FreeFlowGame
                 DestroyPipe(pipeRenderer.color, 0);
             }
             colorCompleted.Remove(pipeRenderer.color);
+            GameManager.Instance.SetflowsText(colorCompleted.Count);
             Percentage();
         }
         /// <summary>
@@ -185,28 +263,16 @@ namespace FreeFlowGame
         /// <param name="index">indice desde el cual se remueven todos los siguientes hijos</param>
         private void DestroyChildrenFromIndex(int index)
         {
-            Debug.Log("DestroyChildren papaaaaaaaa");
             Color c = tileAct.IsCircle() ? tileAct.GetCircleColor() : tileAct.GetColor();
             int total = pipeList[c].Count;
-            Debug.Log("resta " + (total - index));
-            Debug.Log("index" + index);
-            if (colorCompleted.Contains(c) && total - index < index)
+            int i = total - index;
+            while(i!=0)
             {
-                for (int i = index; i < total; i++)
-                {
-                    DestroyPipe(c, 0);
-                }
+                DestroyPipe(c, index);
+                i--;
             }
-            else
-            {
-                for (int i = index; i < total; i++)
-                {
-                    DestroyPipe(c, index);
-                }
-            }
-
-
             colorCompleted.Remove(c);
+            GameManager.Instance.SetflowsText(colorCompleted.Count);
             Percentage();
         }
 
@@ -293,46 +359,7 @@ namespace FreeFlowGame
                 }
             }
         }
-        private void InitDrag(Vector2 posInBoard)
-        {
-            Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
-            tileIni = boardManager.GetTileAtPosition(posAbsBoard);
-
-            if (tileIni != null)
-            {
-                tileAct = tileIni;
-                lastTilePainted = tileIni;
-
-                //Si es un circulo destruimos todos los pipes de su color
-                if (tileIni.IsCircle())
-                {
-                    draw = true;
-                    continueMoving = true;
-                    posIni = posAbsBoard;
-                    posAct = posAbsBoard;
-                    pipeRenderer.color = tileIni.GetCircleColor();
-
-                    tilePipesIni[pipeRenderer.color] = tileIni;
-
-                    DestroyChildren();
-                }
-                //Si es un pipe y tiene index destruimos los hermanos posteriores a ese indice
-                else if (tileIni.getIndex() != -1)
-                {
-                    draw = true;
-                    pipeRenderer.color = tileIni.GetColor();
-                    posAct = posAbsBoard;
-                    DestroyChildrenFromIndex(tileIni.getIndex() + 1);
-                }
-                //Comprobación de si hay estrellas en ese color
-                if (clueInPipe.ContainsKey(pipeRenderer.color))
-                {
-                    starsInPipes[pipeRenderer.color][0].SetActive(false);
-                    starsInPipes[pipeRenderer.color][1].SetActive(false);
-                }
-            }
-        }
-
+      
         public void PaintClue()
         {
             if (colorCompleted.Count < pipeSolution.Count)
@@ -509,7 +536,6 @@ namespace FreeFlowGame
 
         private void Percentage()
         {
-            Debug.Log((float)numPipesInBoard / (float)totalPipesInBoard * 100);
             int n = ((int)((float)numPipesInBoard / (float)totalPipesInBoard * 100));
             GameManager.Instance.SetPercentageText( n );
         }

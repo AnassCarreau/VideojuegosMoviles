@@ -7,11 +7,11 @@ using System.Collections.Generic;
 public class DataSystem
 {
     public int clues;
-    public Dictionary<string, List<int[]>> minFlow;
+    public Dictionary<int, List<int[]>> minFlow;
     public DataSystem(int clues)
     {
         this.clues = clues;
-        minFlow = new Dictionary<string, List<int[]>>();
+        minFlow = new Dictionary<int, List<int[]>>();
     }
 
 }

@@ -54,13 +54,13 @@ public class GameCanvasManager : MonoBehaviour
 
     public void SetBestText(int n)
     {
+        Debug.Log("TUS MUERTOS"+ n);
         string s;
         if (n == 0)
         {
             s = "-";
         }
         else { s = n.ToString(); }
-
         bestText.text = "best : " + s;
     }
     public void SetflowsText(int n, int total)

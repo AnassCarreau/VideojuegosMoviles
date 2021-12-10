@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("StartGameManager");
-        data = SaveSystem.LoadData();
+      //  data = SaveSystem.LoadData();
 
         actualScene = SceneManager.GetActiveScene();
         // ads.ShowBanner();
@@ -96,20 +96,19 @@ public class GameManager : MonoBehaviour
     {
         //Habra que leer cuantas pistas nos quedan cuando se haga el guardado
         clues = 0;
-        if (data == null)
-        {
-            saveCorrect = false;
-            data = new DataSystem(0);
-        }
-        else
-        {
-            saveCorrect = true;
-            clues = data.clues;
-        }
+        //if (data == null)
+        //{
+        //    saveCorrect = false;
+        //    data = new DataSystem(0);
+        //}
+        //else
+        //{
+        //    saveCorrect = true;
+        //    clues = data.clues;
+        //}
 
         //Esto es temporal ya que hay que leerlo del data guardado, es para que funcione el boton de clue
         clues = 2;
-        canvasManager.SetClueText(clues);
 
         //For de Categorias Intro-manias-rectangles
         for (int i = 0; i < categories.Length; i++)
@@ -127,28 +126,32 @@ public class GameManager : MonoBehaviour
                 categories[i].lotes[j].levels = lvls;
                 categories[i].lotes[j].bestScoresInLevels = new int[lvls.Length];
 
-                if (saveCorrect)
-                {
-                    categories[i].lotes[j].bestScoresInLevels = data.minFlow[categories[i].categoryName][j];
-                }
-                else
-                {
-                    if (data.minFlow.ContainsKey(categories[i].categoryName))
-                    {
-                        data.minFlow[categories[i].categoryName].Add(categories[i].lotes[j].bestScoresInLevels);
-                    }
-                    else
-                    {
-                        List<int[]> lminflow = new List<int[]>();
-                        lminflow.Add(categories[i].lotes[j].bestScoresInLevels);
-                        data.minFlow.Add(categories[i].categoryName, lminflow);
-                    }
-                }
+                //if (saveCorrect)
+                //{
+                //    categories[i].lotes[j].bestScoresInLevels = data.minFlow[i][j];
+                //}
+                //else
+                //{
+                //    if (data.minFlow.ContainsKey(i))
+                //    {
+                //        data.minFlow[i].Add(categories[i].lotes[j].bestScoresInLevels);
+                //    }
+                //    else
+                //    {
+                //        List<int[]> lminflow = new List<int[]>();
+                //        lminflow.Add(categories[i].lotes[j].bestScoresInLevels);
+                //        data.minFlow.Add(i, lminflow);
+                //    }
+                //}
             }
         }
     }
 
-
+    private void OnApplicationQuit()
+    {
+       // data.clues = clues;
+      //  SaveSystem.SaveData(data);
+    }
     public void LevelSuccess() 
     {
         ads.PlayAd();
@@ -201,7 +204,18 @@ public class GameManager : MonoBehaviour
     {
         act.levelIndex = lvl;
     }
+    public void SetScore(int n)
+    {
+        Debug.Log( "best "+ categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex]);
+        if (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] > n || categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] == 0)
+        {
+            categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] = n;
+            Debug.Log("best luego : " + categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex]);
+            //Luego se quita 
+            //data.minFlow[act.category][act.slotIndex][act.levelIndex] = categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex];
 
+        }
+    }
     public void Restart() 
     {
         //TO DO: Esto no esta hecho, habría que resetear los pipes
@@ -255,5 +269,16 @@ public class GameManager : MonoBehaviour
     public void SetPercentageText(int n)
     {
         canvasManager.SetPercentageText(n);
+    }
+    public void SetMovesText(int n)
+    {
+        canvasManager.SetMovesText(n);
+        
+    } 
+    public void SetBestText()
+    {
+        canvasManager.SetBestText(categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex]);
+        canvasManager.SetClueText(clues);
+        
     }
 }
