@@ -62,6 +62,7 @@ namespace FreeFlowGame
         private int moves;
         private Vector2 lastPipe;
         private bool lastPipeColor;
+        float scaleFactor;
         void Start()
         {
             moves = 0;
@@ -93,6 +94,8 @@ namespace FreeFlowGame
             GameManager.Instance.SetMovesText(moves);
             GameManager.Instance.SetBestText();
             Percentage();
+            scaleFactor = boardManager.getScaleFactor();
+            pipe.transform.localScale *= scaleFactor;
 
         }
 
@@ -103,8 +106,11 @@ namespace FreeFlowGame
 #if UNITY_EDITOR
             posInBoard = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             ra = Physics2D.Raycast(posInBoard, -Vector2.up, 0.1f);
+            posInBoard.x /= scaleFactor;
+            posInBoard.y /= scaleFactor;
             if (ra.collider != null)
             {
+               
                 //Primera pulsacion
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -449,9 +455,8 @@ namespace FreeFlowGame
             }
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
 
-            pipeList[pipeRenderer.color].Add(Instantiate<EachPipe>(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
-
-            pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_);
+            pipeList[pipeRenderer.color].Add(Instantiate(pipe,new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
+            pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_ );
 
             act.setFree(false);
             act.setIndex(pipeList[pipeRenderer.color].Count - 1);
@@ -525,7 +530,7 @@ namespace FreeFlowGame
             else if (dirAct_.y > 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y + 0.5f);
             else if (dirAct_.y < 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y - 0.5f);
 
-            return posPipe;
+            return posPipe * scaleFactor;
         }
 
         private void OnDestroy()
