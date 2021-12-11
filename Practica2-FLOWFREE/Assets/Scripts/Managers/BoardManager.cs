@@ -32,6 +32,8 @@ namespace FreeFlowGame
 
         private PipeController pipeObject;
 
+        private float scaleFactor = 1.0f;
+
         private void Start()
         {
             pipes = new List<List<Vector2>>();
@@ -68,7 +70,7 @@ namespace FreeFlowGame
             pipes = m.GetPipes();
         }
 
-        public void  GenerateGrid()
+        public void GenerateGrid()
         {
             _tiles = new Dictionary<Vector2, Tile>();
             
@@ -91,7 +93,27 @@ namespace FreeFlowGame
                 }
             }
 
-            _cam.transform.position = new Vector3((float)m.GetWidth() / 2 - 0.5f, (float)m.GetHeight() / 2 - 5f, -10);
+
+            float camHeight = Camera.main.orthographicSize * 2.0f;
+            float camWidth = camHeight * Camera.main.aspect;
+
+            float tileSizeY = camHeight / m.GetHeight();
+            float tileSizeX = camWidth / m.GetWidth();
+
+            if(tileSizeY > tileSizeX)
+            {
+                scaleFactor = tileSizeX;
+            }
+            else
+            {
+                scaleFactor = tileSizeY;
+                //TO DO: Landscape si eso xDDD
+                //Restarle en la y lo que tenemos de canvas
+            }
+
+            transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            _cam.transform.position = new Vector3((((float)m.GetWidth() / 2) - 0.5f)* scaleFactor, -((float)m.GetHeight() / 2)* scaleFactor, -10);
+
         }
 
         public Tile GetTileAtPosition(Vector2 pos)
@@ -113,6 +135,11 @@ namespace FreeFlowGame
         public PipeController GetPipeController()
         {
             return pipeObject;
+        }
+
+        public float getScaleFactor()
+        {
+            return scaleFactor;
         }
     }
 }

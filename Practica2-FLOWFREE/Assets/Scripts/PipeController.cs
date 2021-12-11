@@ -42,6 +42,7 @@ namespace FreeFlowGame
 
         private Tile tileIni;
         private Tile lastTilePainted;
+        [SerializeField]
         private Tile tileAct;
 
         //Lista de listas con las posiciones de las pipes en su solucion
@@ -142,6 +143,7 @@ namespace FreeFlowGame
                 }
             }
 #endif
+            /*
 #if UNITY_ANDROID
             if (Input.touchCount > 0)
             {
@@ -181,6 +183,7 @@ namespace FreeFlowGame
                 }
             }
 #endif
+            */
 #if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif
