@@ -95,8 +95,7 @@ namespace FreeFlowGame
             GameManager.Instance.SetBestText();
             Percentage();
             scaleFactor = boardManager.getScaleFactor();
-            pipe.transform.localScale *= scaleFactor;
-
+            //pipe.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
         }
 
         void Update()
@@ -148,9 +147,7 @@ namespace FreeFlowGame
                     tileAct = null;
                 }
             }
-#endif
-            /*
-#if UNITY_ANDROID
+#elif UNITY_ANDROID
             if (Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
@@ -189,7 +186,7 @@ namespace FreeFlowGame
                 }
             }
 #endif
-            */
+            
 #if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif
@@ -408,8 +405,8 @@ namespace FreeFlowGame
                     Tile tile_final = boardManager.GetTileAtPosition(l[l.Count - 1]);
 
                     List<GameObject> starsAux = new List<GameObject>();
-                    starsAux.Add(Instantiate(clueStar, new Vector2(tile_initial.GetPosTile().x, tile_initial.GetPosTile().y), Quaternion.identity, pipeParent[pipeRenderer.color]));
-                    starsAux.Add(Instantiate(clueStar, new Vector2(tile_final.GetPosTile().x, tile_final.GetPosTile().y), Quaternion.identity, pipeParent[pipeRenderer.color]));
+                    starsAux.Add(Instantiate(clueStar, new Vector2(tile_initial.GetPosTile().x * scaleFactor, tile_initial.GetPosTile().y * scaleFactor), Quaternion.identity, pipeParent[pipeRenderer.color]));
+                    starsAux.Add(Instantiate(clueStar, new Vector2(tile_final.GetPosTile().x * scaleFactor, tile_final.GetPosTile().y * scaleFactor), Quaternion.identity, pipeParent[pipeRenderer.color]));
                     starsInPipes.Add(color, starsAux);
                     clueInPipe.Add(color, true);
                 }
@@ -456,7 +453,8 @@ namespace FreeFlowGame
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
 
             pipeList[pipeRenderer.color].Add(Instantiate(pipe,new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
-            pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_ );
+            pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_);
+            pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].transform.localScale = new Vector3(scaleFactor, scaleFactor + 0.25f, 1.0f);
 
             act.setFree(false);
             act.setIndex(pipeList[pipeRenderer.color].Count - 1);

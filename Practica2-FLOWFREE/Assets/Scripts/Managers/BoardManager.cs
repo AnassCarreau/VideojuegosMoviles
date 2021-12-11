@@ -47,8 +47,9 @@ namespace FreeFlowGame
             Clear();
             setPipes();
             GenerateGrid();
+            //pipeObject.enabled = true;
             pipeObject = Instantiate(pipeControllerPrefab, gameObject.transform);
-            pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetFlownum() );
+            pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetFlownum());
         }
 
         private void Clear() 
@@ -115,8 +116,6 @@ namespace FreeFlowGame
             _cam.transform.position = new Vector3((((float)m.GetWidth() / 2) - 0.5f)* scaleFactor, -((float)m.GetHeight() / 2)* scaleFactor, -10);
 
         }
-
-       
 
         public Tile GetTileAtPosition(Vector2 pos)
         {
