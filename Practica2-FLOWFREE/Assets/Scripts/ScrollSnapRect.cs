@@ -10,12 +10,12 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     [Tooltip("Set starting page index - starting from 0")]
     private int startingPage = 0;
     [Tooltip("Threshold time for fast swipe in seconds")]
-   [SerializeField] private float fastSwipeThresholdTime = 0.3f;
+    [SerializeField] private float fastSwipeThresholdTime = 0.3f;
     [Tooltip("Threshold time for fast swipe in (unscaled) pixels")]
     [SerializeField] private int fastSwipeThresholdDistance = 100;
     [Tooltip("How fast will page lerp to target position")]
     [SerializeField] private float decelerationRate = 10f;
-    
+
     [Tooltip("Sprite for unselected page (optional)")]
     [SerializeField] private Color unselectedPage;
     [Tooltip("Sprite for selected page (optional)")]
@@ -54,7 +54,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     private List<GameObject> _pageSelectionImages;
 
 
-    [SerializeField] private LevelsScrollViewController lvlscroll; 
+    [SerializeField] private LevelsScrollViewController lvlscroll;
     //------------------------------------------------------------------------
     void Start()
     {
@@ -63,7 +63,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         _container = _scrollRectComponent.content;
         _pageCount = _container.childCount;
 
-      
+
 
         _lerp = false;
 
@@ -73,7 +73,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         //InitPageSelection();
         SetPageSelection(startingPage);
 
-     
+
     }
 
     //------------------------------------------------------------------------
@@ -262,7 +262,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     {
         // how much was container's content dragged
         float difference = _startPosition.x - _container.anchoredPosition.x;
-       
+
         // test for fast swipe - swipe that moves only +/-1 item
         if (Time.unscaledTime - _timeStamp < fastSwipeThresholdTime &&
             Mathf.Abs(difference) > fastSwipeThresholdDistance &&

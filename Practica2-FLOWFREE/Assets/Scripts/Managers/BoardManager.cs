@@ -7,13 +7,13 @@ namespace FreeFlowGame
     public class BoardManager : MonoBehaviour
     {
 
-        [SerializeField] 
+        [SerializeField]
         private Tile _tilePrefab;
 
         [SerializeField]
         private PipeController pipeControllerPrefab;
 
-        [SerializeField] 
+        [SerializeField]
         private Transform _cam;
 
         [SerializeField]
@@ -28,11 +28,18 @@ namespace FreeFlowGame
 
         private Map m;
 
-        [SerializeField]private Object scene;
+        [SerializeField] private Object scene;
 
         private PipeController pipeObject;
 
         private float scaleFactor = 1.0f;
+
+        [SerializeField]
+        RectTransform topHud;
+
+        [SerializeField]
+        RectTransform bottomHud;
+
 
         private void Start()
         {
@@ -55,20 +62,20 @@ namespace FreeFlowGame
             pipeObject.SetScaleFactor(scaleFactor);
         }
 
-        private void Clear() 
+        private void Clear()
         {
             foreach (Transform child in boardParent)
             {
                 Destroy(child.gameObject);
             }
-            if (pipeObject != null) 
+            if (pipeObject != null)
             {
                 Destroy(pipeObject);
             }
         }
         private void setPipes()
         {
-            LvlActual lvl= GameManager.Instance.getActualPlay();
+            LvlActual lvl = GameManager.Instance.getActualPlay();
             Debug.Log(lvl.levelIndex);
             m.Parse(GameManager.Instance.GetCategories()[lvl.category].lotes[lvl.slotIndex].levels[lvl.levelIndex]);
             pipes = m.GetPipes();
@@ -77,14 +84,14 @@ namespace FreeFlowGame
         public void GenerateGrid()
         {
             _tiles = new Dictionary<Vector2, Tile>();
-            
+
             for (int i = 0; i < m.GetFlownum(); i++)
             {
                 for (int j = 0; j < pipes[i].Count; j++)
-                {   
+                {
                     var spawnedTile = Instantiate(_tilePrefab, new Vector3(pipes[i][j].x, pipes[i][j].y), Quaternion.identity, boardParent);
                     spawnedTile.name = $"Tile {pipes[i][j].x} {pipes[i][j].y}";
-                    if(j == 0 || j == pipes[i].Count - 1)
+                    if (j == 0 || j == pipes[i].Count - 1)
                     {
                         spawnedTile.Init(false);
                         spawnedTile.SetCircleColor(pipesColor[i]);
@@ -103,22 +110,23 @@ namespace FreeFlowGame
 
             Debug.Log("Altura :" + m.GetHeight());
             Debug.Log("Anchura :" + m.GetWidth());
-            float tileSizeY = camHeight / m.GetHeight();
+
+            //Debug.Log("Tamanio topHud: " + topHud.rect.height);
+            //Debug.Log("Tamanio bottomHud: " + bottomHud.rect.height);
+            float tileSizeY = (camHeight - (topHud.rect.height + bottomHud.rect.height) / 100.0f )/ m.GetHeight();
             float tileSizeX = camWidth / m.GetWidth();
 
-            if(tileSizeY > tileSizeX)
+            if (tileSizeY > tileSizeX)
             {
                 scaleFactor = tileSizeX;
             }
             else
             {
                 scaleFactor = tileSizeY;
-                //TO DO: Landscape si eso xDDD
-                //Restarle en la y lo que tenemos de canvas
             }
 
             transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-            _cam.transform.position = new Vector3((((float)m.GetWidth() / 2) - 0.5f)* scaleFactor, -((float)m.GetHeight() / 2)* scaleFactor, -10);
+            _cam.transform.position = new Vector3((((float)m.GetWidth() / 2) - 0.5f) * scaleFactor, -((float)m.GetHeight() / 2) * scaleFactor, -10);
 
         }
 
@@ -128,11 +136,11 @@ namespace FreeFlowGame
             return null;
         }
 
-        public Object getScene() 
+        public Object getScene()
         {
             return scene;
-        } 
-        public Color[] getPipesColor() 
+        }
+        public Color[] getPipesColor()
         {
             return pipesColor;
         }
