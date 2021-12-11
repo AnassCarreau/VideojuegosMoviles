@@ -85,7 +85,8 @@ namespace FreeFlowGame
             for (int i = 0; i < c.Length; i++)
             {
                 GameObject par = new GameObject();
-                par.transform.SetParent(this.transform);
+                par.transform.SetParent(transform);
+                par.transform.localScale = Vector3.one;
                 par.name = c[i].ToString();
                 pipeParent.Add(c[i], par.transform);
                 pipeList.Add(c[i], new List<EachPipe>());
@@ -94,9 +95,10 @@ namespace FreeFlowGame
             GameManager.Instance.SetMovesText(moves);
             GameManager.Instance.SetBestText();
             Percentage();
-            scaleFactor = boardManager.getScaleFactor();
-            //pipe.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
         }
+
+
+      public void SetScaleFactor(float scale) { scaleFactor = scale; }
 
         void Update()
         {
@@ -123,9 +125,8 @@ namespace FreeFlowGame
                 //Si soltamos
                 else if (Input.GetMouseButtonUp(0))
                 {
-                    if (lastPipeColor && lastPipe != pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard())
+                    if (lastPipeColor && pipeList[pipeRenderer.color].Count> 0 && lastPipe != pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard())
                     {
-                        Debug.Log(lastPipe);
                         moves++;
                         lastPipeColor = false;
                         //lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
@@ -136,7 +137,6 @@ namespace FreeFlowGame
                     {
                         //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
                         //Esto es temporal
-                        Debug.Log("Ganaste");
                         GameManager.Instance.SetScore(moves);
                         GameManager.Instance.LoadScene("LevelSelector");
                         return;
@@ -174,7 +174,6 @@ namespace FreeFlowGame
                         {
                             //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
                             //Esto es temporal
-                            Debug.Log("Ganaste");
                             GameManager.Instance.LoadScene("LevelSelector");
                             return;
                         }
@@ -216,7 +215,6 @@ namespace FreeFlowGame
                         if (pipeList[pipeRenderer.color].Count > 0)
                         {
                             lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
-                            Debug.Log("Init "+ lastPipe);
                         }
                     }
 
@@ -355,7 +353,6 @@ namespace FreeFlowGame
                     continueMoving = false;
                     colorCompleted.Add(pipeRenderer.color);
                     GameManager.Instance.SetflowsText(colorCompleted.Count);
-                    Debug.Log("Pipe Completada");
                     //Comprobación de si hay estrellas en ese color
                     if (clueInPipe.ContainsKey(pipeRenderer.color))
                     {
@@ -370,7 +367,6 @@ namespace FreeFlowGame
         {
             if (colorCompleted.Count < pipeSolution.Count)
             {
-                Debug.Log(colorCompleted.Count + " " + pipeSolution.Count);
 
                 List<List<Vector2>> aux = new List<List<Vector2>>(pipeSolution);
                 bool pista = false;
@@ -384,7 +380,6 @@ namespace FreeFlowGame
                     if (!colorCompleted.Contains(color))
                     {
                         pista = true;
-                        Debug.Log("pIsta");
                     }
                     else
                     {
@@ -435,7 +430,6 @@ namespace FreeFlowGame
                 {
                     //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
                     //Esto es temporal
-                    Debug.Log("Ganaste");
                     GameManager.Instance.LoadScene("LevelSelector");
                     return;
                 }
@@ -454,7 +448,7 @@ namespace FreeFlowGame
 
             pipeList[pipeRenderer.color].Add(Instantiate(pipe,new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
             pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_);
-            pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].transform.localScale = new Vector3(scaleFactor, scaleFactor + 0.25f, 1.0f);
+            //pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].transform.localScale = new Vector3(scaleFactor, scaleFactor + 0.25f, 1.0f);
 
             act.setFree(false);
             act.setIndex(pipeList[pipeRenderer.color].Count - 1);

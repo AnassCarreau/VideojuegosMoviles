@@ -46,10 +46,13 @@ namespace FreeFlowGame
             Debug.Log("Initialize");
             Clear();
             setPipes();
+            transform.localScale = Vector3.one;
             GenerateGrid();
             //pipeObject.enabled = true;
+            if (pipeObject != null) Destroy(pipeObject.gameObject);
             pipeObject = Instantiate(pipeControllerPrefab, gameObject.transform);
             pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetFlownum());
+            pipeObject.SetScaleFactor(scaleFactor);
         }
 
         private void Clear() 
@@ -98,6 +101,8 @@ namespace FreeFlowGame
             float camHeight = Camera.main.orthographicSize * 2.0f;
             float camWidth = camHeight * Camera.main.aspect;
 
+            Debug.Log("Altura :" + m.GetHeight());
+            Debug.Log("Anchura :" + m.GetWidth());
             float tileSizeY = camHeight / m.GetHeight();
             float tileSizeX = camWidth / m.GetWidth();
 
