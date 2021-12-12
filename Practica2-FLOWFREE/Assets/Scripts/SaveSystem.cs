@@ -24,7 +24,6 @@ public class SaveSystem
 
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/save.fun";
-        Debug.Log(path);
         FileStream stream = new FileStream(path, FileMode.Create);
         //Aqui se inicializaria si no esta incializada
         formatter.Serialize(stream, data);

@@ -17,11 +17,7 @@ public class Map
     public bool Parse(string lvl)
     {
         string[] data = lvl.Split(';');
-
-        //Cabecera
-        //PREGUNTAR A PEBLO PORQUE NOS DA MAPAS ROTOS ALWAYS EN INGLES 
-        string cabecera = data[0].Trim('B', '+');
-
+        string cabecera = data[0].Replace("+B", "");
         string[] comas = cabecera.Split(',');
         List<int> dim = comas[0].Split(':').Select(int.Parse).ToList();
         width = dim[0];
@@ -29,22 +25,24 @@ public class Map
         lvlnum = int.Parse(comas[2]);
         flownum = int.Parse(comas[3]);
 
-        ///Otro dia se vera 
-        if (comas.Length > 4)
+        if (comas.Length > 4 && comas[4].Length > 0)
         {
+            Debug.Log("Puentes");
             bridge = comas[4].Split(':').Select(int.Parse).ToList();
         }
-        if (comas.Length > 5)
+        if (comas.Length > 5 && comas[5].Length > 0)
         {
+            Debug.Log("Holes");
             holes = comas[5].Split(':').Select(int.Parse).ToList();
         }
-        if (comas.Length > 6)
+        if (comas.Length > 6 && comas[6].Length > 0)
         {
-            walls = comas[6].Split('|').Select(int.Parse).ToList();
+            Debug.Log("Muros");
+            char[] sep = { '|', ':' };
+            walls = comas[6].Split(sep).Select(int.Parse).ToList();
         }
 
         pipes = new List<List<Vector2>>();
-
         for (int i = 1; i < data.Length; i++)
         {
             string[] pipe = data[i].Split(',');
@@ -63,7 +61,7 @@ public class Map
             }
             pipes.Add(aux);
         }
-
+       
         return true;
     }
 

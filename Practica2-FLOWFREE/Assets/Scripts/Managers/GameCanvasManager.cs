@@ -12,7 +12,11 @@ public class GameCanvasManager : MonoBehaviour
     [SerializeField]
     private Text movesText;
     [SerializeField]
-    private Text pipePercentage;
+    private Text pipePercentage; 
+    [SerializeField]
+    private Text levelText;
+    [SerializeField]
+    private Text dimentionsText;
     private void Awake()
     {
         GameManager.Instance.ImCanvasManager(this);
@@ -54,7 +58,6 @@ public class GameCanvasManager : MonoBehaviour
 
     public void SetBestText(int n)
     {
-        Debug.Log("TUS MUERTOS"+ n);
         string s;
         if (n == 0)
         {
@@ -75,4 +78,13 @@ public class GameCanvasManager : MonoBehaviour
     {
         pipePercentage.text = "pipe : " + n + " %";
     }
+
+    public void SetLevelText(int n , int w ,int h)
+    {
+        levelText.text = "Level " + n+ " ";
+        levelText.color = GameManager.Instance.categories[GameManager.Instance.getActualPlay().category].categoryColor;
+        dimentionsText.text = w + "x" + h;
+        dimentionsText.transform.position = new Vector2((levelText.text.Length)* levelText.fontSize /2 , dimentionsText.transform.position.y);
+    }
+
 }

@@ -76,9 +76,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetLevelText(int n,int w,int h)
+    {
+        canvasManager.SetLevelText(n, w, h);
+    }
+
     private void Start()
     {
-        Debug.Log("StartGameManager");
       //  data = SaveSystem.LoadData();
 
         actualScene = SceneManager.GetActiveScene();
@@ -210,7 +214,6 @@ public class GameManager : MonoBehaviour
         if (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] > n || categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] == 0)
         {
             categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] = n;
-            Debug.Log("best luego : " + categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex]);
             //Luego se quita 
             //data.minFlow[act.category][act.slotIndex][act.levelIndex] = categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex];
 
@@ -224,9 +227,11 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel() 
     {
-        Debug.Log(act.levelIndex);
         if (act.levelIndex + 1 < categories[act.category].lotes[act.slotIndex].levels.Length 
-            && (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex+1]>0 || !categories[act.category].lotes[act.slotIndex].levelblocked))
+            //to do descomentar 
+           // && (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex+1]>0 
+            //|| !categories[act.category].lotes[act.slotIndex].levelblocked))
+            )
         {
             act.levelIndex += 1;
             boardManager.Initialize();
@@ -234,8 +239,7 @@ public class GameManager : MonoBehaviour
     } 
     public void BackLevel() 
     {
-        Debug.Log("BackLeveñ");
-        Debug.Log(act.levelIndex);
+       
         if (act.levelIndex - 1 >= 0)
         {
             act.levelIndex -= 1;

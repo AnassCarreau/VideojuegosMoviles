@@ -159,6 +159,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8900348549419669367, guid: a0040ca42d0a7624fa14f526514a0844, type: 3}
+      propertyPath: wallObject
+      value: 
+      objectReference: {fileID: 6233814633214695719, guid: e8a3c33e0137f474f96183508ee92adb, type: 3}
+    - target: {fileID: 8900348549419669367, guid: a0040ca42d0a7624fa14f526514a0844, type: 3}
       propertyPath: circleObject
       value: 
       objectReference: {fileID: 3065359303171979154}

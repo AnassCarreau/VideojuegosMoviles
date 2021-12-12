@@ -15,15 +15,18 @@ namespace FreeFlowGame
         [SerializeField]
         private GameObject circleObject;
 
+
         [SerializeField]
         private SpriteRenderer circleRenderer;
 
+        [SerializeField]
+        private GameObject wallObject;
         private Vector2 posTile;
 
         private bool free;
 
         private int index;
-
+        bool[] walls;
         public void Init(bool emptyTile)
         {
             LvlActual lvl = GameManager.Instance.getActualPlay();
@@ -68,6 +71,42 @@ namespace FreeFlowGame
             posTile = pos;
         }
 
+        public void SetWalls(bool[]w) 
+        {
+            walls = w;
+            for (int i = 0; i < w.Length; i++)
+            {
+                if (w[i])
+                {
+                   
+                    GameObject o = Instantiate(wallObject, transform);
+                    wallObject.GetComponent<SpriteRenderer>().color = _renderer.color;
+                    float x= 0;
+                    float y= 0;
+                    if (i == 2)
+                    {
+                        y = -transform.localScale.y / 2;
+
+                    }
+                    if (i == 3)
+                    {
+                        x = -transform.localScale.x / 2;
+                    }
+                    if (i == 1) 
+                    {
+                        x = transform.localScale.x / 2;
+                    }if (i == 0) 
+                    {
+                        y = transform.localScale.y / 2;
+                    }
+
+                    Vector3 vectorFeo=new  Vector2(x ,  y );
+                    o.transform.rotation = Quaternion.Euler(0, 0, (i + 1) * 90);
+                    o.transform.position = transform.position + vectorFeo ;
+                    o.name = $"Muro {posTile.x} {posTile.y} + {i}";
+                }
+            }
+        }
         public bool IsCircle()
         {
             return circleObject.activeSelf;
