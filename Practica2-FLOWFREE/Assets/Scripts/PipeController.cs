@@ -234,7 +234,7 @@ namespace FreeFlowGame
                         lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
                     }
                     posAct = posAbsBoard;
-                    DestroyChildrenFromIndex(tileIni.GetIndex() + 1);
+                    DestroyChildrenFromIndex(tileAct,tileIni.GetIndex() + 1);
 
                 }
                 //Comprobación de si hay estrellas en ese color
@@ -281,7 +281,7 @@ namespace FreeFlowGame
                             starsInPipes[tileAct.GetColor()][0].SetActive(false);
                             starsInPipes[tileAct.GetColor()][1].SetActive(false);
                         }
-                        DestroyChildrenFromIndex(tileAct.GetIndex());
+                        DestroyChildrenFromIndex(tileAct,tileAct.GetIndex());
                     }
                 }
 
@@ -338,9 +338,9 @@ namespace FreeFlowGame
         /// </summary>
         /// <param name="tr">transform del padre</param>
         /// <param name="index">indice desde el cual se remueven todos los siguientes hijos</param>
-        private void DestroyChildrenFromIndex(int index)
+        private void DestroyChildrenFromIndex(Tile act, int index)
         {
-            Color c = tileAct.IsCircle() ? tileAct.GetCircleColor() : tileAct.GetColor();
+            Color c = act.IsCircle() ? act.GetCircleColor() : act.GetColor();
             int total = pipeList[c].Count;
             int i = total - index;
             while (i != 0)
@@ -421,7 +421,7 @@ namespace FreeFlowGame
 
                     if (act.GetColor() != pipeRenderer.color && !act.IsFree() && !act.IsCircle())
                     {
-                        DestroyChildrenFromIndex(act.GetIndex());
+                        DestroyChildrenFromIndex(act, act.GetIndex());
                     }
                     PaintPipe(act, l[i], centerPipe(l[i - 1], dir), dir, false);
                 }
@@ -450,7 +450,6 @@ namespace FreeFlowGame
 
             pipeList[pipeRenderer.color].Add(Instantiate(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
             pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_);
-            //pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].transform.localScale = new Vector3(scaleFactor, scaleFactor + 0.25f, 1.0f);
 
             act.SetFree(false);
             act.SetIndex(pipeList[pipeRenderer.color].Count - 1);
