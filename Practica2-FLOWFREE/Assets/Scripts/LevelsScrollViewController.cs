@@ -30,8 +30,9 @@ public class LevelsScrollViewController : MonoBehaviour
     // load level buttons on game start
     private void LoadScrollButtons()
     {
+        LvlActual act = GameManager.Instance.GetLvlActual();
 
-        numberOfLevels = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].levels.Length;
+        numberOfLevels = GameManager.Instance.GetLevels()[act.category][act.slotIndex].Length;
         bool blocked = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].levelblocked;
         bool nextLvlsBlockeds = false;
         int conAct = -1;
@@ -40,7 +41,7 @@ public class LevelsScrollViewController : MonoBehaviour
         {
             if (blocked)
             {
-                nextLvlsBlockeds = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].bestScoresInLevels[i] == 0 && i != 0;
+                nextLvlsBlockeds = GameManager.Instance.GetLevels()[act.category][act.slotIndex][i].bestMoves == 0 && i != 0;
             }
 
             if (i / 30 > conAct)

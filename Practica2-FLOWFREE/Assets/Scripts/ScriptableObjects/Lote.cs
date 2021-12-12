@@ -10,10 +10,7 @@ public class Lote : ScriptableObject
     public string packName;
     [Tooltip("Fichero que contiene los niveles del lote")]
     public TextAsset maps;
+    //TO DO: mirar esto y el de categories porque esta 2 veces
     [Tooltip("Tiene niveles bloqueados")]
     public bool levelblocked;
-    [Tooltip("Array con la mejor puntuacion de cada nivel")]
-    public int[] bestScoresInLevels;
-    [Tooltip("Array con cada nivel")]
-    public string[] levels;
 }

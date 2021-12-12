@@ -41,6 +41,20 @@ namespace FreeFlowGame
         [SerializeField]
         RectTransform bottomHud;
 
+        private static BoardManager _instance; 
+
+        public static BoardManager Instance { get { return _instance; } }
+        private void Awake()
+        {
+            if (_instance != null)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                _instance = this;
+            }
+        }
 
         private void Start()
         {
@@ -48,6 +62,7 @@ namespace FreeFlowGame
             m = new Map();
             Initialize();
         }
+
 
         public void Initialize()
         {
@@ -75,8 +90,8 @@ namespace FreeFlowGame
         private void setPipes()
         {
             LvlActual lvl = GameManager.Instance.getActualPlay();
-            m.Parse(GameManager.Instance.GetCategories()[lvl.category].lotes[lvl.slotIndex].levels[lvl.levelIndex]);
-            GameManager.Instance.SetLevelText(lvl.levelIndex + 1, m.GetWidth(), m.GetHeight());
+            m.Parse(GameManager.Instance.GetCurrentLevel());
+            LevelManager.Instance.SetLevelText(lvl.levelIndex + 1, m.GetWidth(), m.GetHeight());
             pipes = m.GetPipes();
         }
 

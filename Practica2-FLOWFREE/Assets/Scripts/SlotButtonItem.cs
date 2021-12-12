@@ -29,16 +29,19 @@ public class SlotButtonItem : MonoBehaviour
     {
         text.text = tex;
         text.color = c;
-        int index;
+        LvlActual act = GameManager.Instance.GetLvlActual();
+        int index = 0;
         if (GameManager.Instance.GetCategories()[category].lotes[slotIndex].levelblocked)
         {
-             index = Array.IndexOf(GameManager.Instance.GetCategories()[category].lotes[slotIndex].bestScoresInLevels, 0);
+            //TO DO: HACER
+             //index = Array.IndexOf(GameManager.Instance.GetLevels()[act.category][act.slotIndex].bestScoresInLevels, 0);
         }
         else 
         {
-            index = Array.FindAll(GameManager.Instance.GetCategories()[category].lotes[slotIndex].bestScoresInLevels, i => i > 0).Length;
+            //TO DO: HACER
+            //index = Array.FindAll(GameManager.Instance.GetCategories()[category].lotes[slotIndex].bestScoresInLevels, i => i > 0).Length;
         }
-        int total = GameManager.Instance.GetCategories()[category].lotes[slotIndex].levels.Length;
+        int total = GameManager.Instance.GetLevels()[category][slotIndex].Length;
         textRight.text = index + " / " +total;
     }
     // click event of level button

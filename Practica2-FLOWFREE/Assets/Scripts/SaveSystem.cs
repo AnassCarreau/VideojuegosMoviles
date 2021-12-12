@@ -7,19 +7,18 @@ using System.Collections.Generic;
 public class DataSystem
 {
     public int clues;
-    public Dictionary<int, List<int[]>> minFlow;
-    public DataSystem(int clues)
-    {
-        this.clues = clues;
-        minFlow = new Dictionary<int, List<int[]>>();
-    }
 
+    public List<List<int[]>> bestScores;
+    //Hash
+    public string hash;
+
+    //public bool isPremium;
 }
 public class SaveSystem
 {
 
-  //se puede inicializar la data antes o en el propio metodo 
-    public static void SaveData(DataSystem data) 
+    //se puede inicializar la data antes o en el propio metodo 
+    public static void SaveData(DataSystem data)
     {
 
         BinaryFormatter formatter = new BinaryFormatter();
@@ -42,6 +41,6 @@ public class SaveSystem
             stream.Close();
             return data;
         }
-        else {return null; }
+        else { return null; }
     }
 }

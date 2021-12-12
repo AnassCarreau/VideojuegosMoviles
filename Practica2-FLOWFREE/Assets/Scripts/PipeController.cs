@@ -69,7 +69,7 @@ namespace FreeFlowGame
             numPipesInBoard = 0;
             pipeRenderer.color = Color.black;
             //iNICIALIZACION DE LAS LISTAS 
-            boardManager = GameManager.Instance.GetBoardManager();
+            boardManager = BoardManager.Instance;
             pipeParent = new Dictionary<Color, Transform>();
             pipeList = new Dictionary<Color, List<EachPipe>>();
 
@@ -91,9 +91,9 @@ namespace FreeFlowGame
                 pipeParent.Add(c[i], par.transform);
                 pipeList.Add(c[i], new List<EachPipe>());
             }
-            GameManager.Instance.SetflowsText(0);
-            GameManager.Instance.SetMovesText(moves);
-            GameManager.Instance.SetBestText();
+            LevelManager.Instance.SetflowsText(0);
+            LevelManager.Instance.SetMovesText(moves);
+            LevelManager.Instance.SetBestText();
             Percentage();
         }
 
@@ -129,9 +129,14 @@ namespace FreeFlowGame
                     {
                         moves++;
                         lastPipeColor = false;
-                        //lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
                     }
-                    GameManager.Instance.SetMovesText(moves);
+
+                    //Si hemos completado un pipe actualizamos el hud
+                    if (!continueMoving)
+                        LevelManager.Instance.SetflowsText(colorCompleted.Count);
+
+                    //Aumentamos en uno los movimientos empleados para resolver el tablero
+                    LevelManager.Instance.SetMovesText(moves);
 
                     if (AllPipesCompleted())
                     {
@@ -141,10 +146,12 @@ namespace FreeFlowGame
                         GameManager.Instance.LoadScene("LevelSelector");
                         return;
                     }
-                    draw = false;
 
+                    continueMoving = true;
+                    draw = false;
                     tileIni = null;
                     tileAct = null;
+                    lastTilePainted = null;
                 }
             }
 #elif UNITY_ANDROID
@@ -204,7 +211,6 @@ namespace FreeFlowGame
                 if (tileIni.IsCircle())
                 {
                     draw = true;
-                    continueMoving = true;
                     posIni = posAbsBoard;
                     posAct = posAbsBoard;
 
@@ -307,7 +313,7 @@ namespace FreeFlowGame
                     CreatePipe(posAbsBoard);
                     continueMoving = false;
                     colorCompleted.Add(pipeRenderer.color);
-                    GameManager.Instance.SetflowsText(colorCompleted.Count);
+                    
                     //Comprobación de si hay estrellas en ese color
                     if (clueInPipe.ContainsKey(pipeRenderer.color))
                     {
@@ -329,7 +335,7 @@ namespace FreeFlowGame
                 DestroyPipe(pipeRenderer.color, 0);
             }
             colorCompleted.Remove(pipeRenderer.color);
-            GameManager.Instance.SetflowsText(colorCompleted.Count);
+            LevelManager.Instance.SetflowsText(colorCompleted.Count);
             Percentage();
         }
 
@@ -349,7 +355,7 @@ namespace FreeFlowGame
                 i--;
             }
             colorCompleted.Remove(c);
-            GameManager.Instance.SetflowsText(colorCompleted.Count);
+            LevelManager.Instance.SetflowsText(colorCompleted.Count);
             Percentage();
         }
 
@@ -558,7 +564,7 @@ namespace FreeFlowGame
         private void Percentage()
         {
             int n = ((int)((float)numPipesInBoard / (float)totalPipesInBoard * 100));
-            GameManager.Instance.SetPercentageText(n);
+            LevelManager.Instance.SetPercentageText(n);
         }
     }
 }

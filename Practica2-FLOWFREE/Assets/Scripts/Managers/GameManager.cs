@@ -12,13 +12,18 @@ public struct LvlActual
     public int levelIndex;
 }
 
+public struct Nivel
+{
+    public string nivel;
+    public int bestMoves;
+}
+
+
 public class GameManager : MonoBehaviour
 {
     #region SerializeVariables
     [SerializeField]
-    private FreeFlowGame.BoardManager boardManager;
-
-    //[SerializeField] private LectutaLote lvlManager;
+    private FreeFlowGame.LevelManager levelManager;
     #endregion
 
     #region PublicVariables
@@ -29,6 +34,9 @@ public class GameManager : MonoBehaviour
 
     //de momento publico para que podamos darle a las escenas sin que se joda 
     private LvlActual act;
+
+    //Lista de categorias con su correspondiente lista de lotes y cada lote con sus niveles (ya separados)
+    private List<List<Nivel[]>> levels;
 
 #if UNITY_EDITOR
     [SerializeField]
@@ -45,13 +53,10 @@ public class GameManager : MonoBehaviour
     private DataSystem data;
     private static GameManager _instance;
 
-    private GameCanvasManager canvasManager;
-    //Variable de la escena en la que estamos para saber que inicializar sin necesidad de pasar por MainMenu-LevelSelector-FreeFlow
-    private Scene actualScene;
+    //private FreeFlowGame.GameCanvasManager canvasManager;
 
     //Variable que controla el numero de pistas
     private int clues;
-    private bool saveCorrect;
     #endregion
 
     public static GameManager Instance { get { return _instance; } }
@@ -61,7 +66,7 @@ public class GameManager : MonoBehaviour
     {
         if (_instance != null)
         {
-            _instance.boardManager = boardManager;
+            _instance.levelManager = levelManager;
             Destroy(this.gameObject);
         }
         else
@@ -76,16 +81,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetLevelText(int n,int w,int h)
-    {
-        canvasManager.SetLevelText(n, w, h);
-    }
+    
 
     private void Start()
     {
       //  data = SaveSystem.LoadData();
 
-        actualScene = SceneManager.GetActiveScene();
         // ads.ShowBanner();
         
         //Pequeño chanchullo de momento para poder probar la funcionalidad directamente sin empezar el menu todo el rato
@@ -113,22 +114,29 @@ public class GameManager : MonoBehaviour
 
         //Esto es temporal ya que hay que leerlo del data guardado, es para que funcione el boton de clue
         clues = 2;
-
+        levels = new List<List<Nivel[]>>();
+        
         //For de Categorias Intro-manias-rectangles
         for (int i = 0; i < categories.Length; i++)
         {
+            levels.Add(new List<Nivel[]>());
             int numLotes = categories[i].lotes.Length;
             //For leyendo los archivos de cada categoría, es decir cada lote
             TextAsset[] slot = new TextAsset[numLotes];
             for (int j = 0; j < numLotes; j++)
-            {
+            { 
                 slot[j] = categories[i].lotes[j].maps;
                 //TO DO FULL CERDADA
                 char[] c = new char[1] { '\n' };
-                string[] lvls = slot[j].text.Split(c, StringSplitOptions.RemoveEmptyEntries);
-
-                categories[i].lotes[j].levels = lvls;
-                categories[i].lotes[j].bestScoresInLevels = new int[lvls.Length];
+                string[] lvs = slot[j].text.Split(c, StringSplitOptions.RemoveEmptyEntries);
+                levels[i].Add(new Nivel[lvs.Length]);
+               
+                for(int k = 0; k < lvs.Length; k++)
+                {
+                    levels[i][j][k].nivel = lvs[k];
+                    levels[i][j][k].bestMoves = 0;
+                }
+                
 
                 //if (saveCorrect)
                 //{
@@ -161,15 +169,12 @@ public class GameManager : MonoBehaviour
         ads.PlayAd();
     }
 
-    public FreeFlowGame.BoardManager GetBoardManager()
+    public FreeFlowGame.LevelManager GetLevelManager()
     {
-        return boardManager;
+        return levelManager;
     } 
     
-    public void ImCanvasManager(GameCanvasManager canvasManager_)
-    {
-        canvasManager = canvasManager_;
-    }
+   
 
     public void LoadScene(string name)
     {
@@ -208,52 +213,25 @@ public class GameManager : MonoBehaviour
     {
         act.levelIndex = lvl;
     }
+
     public void SetScore(int n)
     {
-        Debug.Log( "best "+ categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex]);
-        if (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] > n || categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] == 0)
+        int bestCurrentLvlScore =  levels[act.category][act.slotIndex][act.levelIndex].bestMoves;
+        if (bestCurrentLvlScore > n || bestCurrentLvlScore == 0)
         {
-            categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex] = n;
+            levels[act.category][act.slotIndex][act.levelIndex].bestMoves = n;
             //Luego se quita 
             //data.minFlow[act.category][act.slotIndex][act.levelIndex] = categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex];
 
         }
     }
-    public void Restart() 
-    {
-        //TO DO: Esto no esta hecho, habría que resetear los pipes
-        boardManager.Initialize();
-    }
-
-    public void NextLevel() 
-    {
-        if (act.levelIndex + 1 < categories[act.category].lotes[act.slotIndex].levels.Length 
-            //to do descomentar 
-           // && (categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex+1]>0 
-            //|| !categories[act.category].lotes[act.slotIndex].levelblocked))
-            )
-        {
-            act.levelIndex += 1;
-            boardManager.Initialize();
-        }
-    } 
-    public void BackLevel() 
-    {
-       
-        if (act.levelIndex - 1 >= 0)
-        {
-            act.levelIndex -= 1;
-            boardManager.Initialize();
-        }
-    }
+   
 
     public void UseClue()
     {
         if(clues - 1 >= 0)
         {
             clues--;
-            boardManager.GetPipeController().PaintClue();
-            canvasManager.SetClueText(clues);
         }
     }
     public void GetNewClue() {
@@ -263,26 +241,14 @@ public class GameManager : MonoBehaviour
     void OnRewardedAdSuccess() 
     {
         clues++;
-        canvasManager.SetClueText(clues);
+        if (levelManager != null) levelManager.setClueText();
     }
-    //TO DO HACER CANVAS SINGLETON
-    public void SetflowsText(int n) 
-    {
-        canvasManager.SetflowsText(n,boardManager.getPipeSolution().Count);
-    }
-    public void SetPercentageText(int n)
-    {
-        canvasManager.SetPercentageText(n);
-    }
-    public void SetMovesText(int n)
-    {
-        canvasManager.SetMovesText(n);
-        
-    } 
-    public void SetBestText()
-    {
-        canvasManager.SetBestText(categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex]);
-        canvasManager.SetClueText(clues);
-        
-    }
+
+    public LvlActual GetLvlActual() { return act; }
+
+    public int GetNumClues() { return clues; }
+
+    public string GetCurrentLevel() { return levels[act.category][act.slotIndex][act.levelIndex].nivel; }
+
+    public List<List<Nivel[]>> GetLevels() { return levels; }
 }
