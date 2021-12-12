@@ -98,7 +98,7 @@ namespace FreeFlowGame
         }
 
 
-      public void SetScaleFactor(float scale) { scaleFactor = scale; }
+        public void SetScaleFactor(float scale) { scaleFactor = scale; }
 
         void Update()
         {
@@ -111,7 +111,7 @@ namespace FreeFlowGame
             posInBoard.y /= scaleFactor;
             if (ra.collider != null)
             {
-               
+
                 //Primera pulsacion
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -125,7 +125,7 @@ namespace FreeFlowGame
                 //Si soltamos
                 else if (Input.GetMouseButtonUp(0))
                 {
-                    if (lastPipeColor && pipeList[pipeRenderer.color].Count> 0 && lastPipe != pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard())
+                    if (lastPipeColor && pipeList[pipeRenderer.color].Count > 0 && lastPipe != pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard())
                     {
                         moves++;
                         lastPipeColor = false;
@@ -185,7 +185,7 @@ namespace FreeFlowGame
                 }
             }
 #endif
-            
+
 #if UNITY_EDITOR
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif
@@ -224,7 +224,7 @@ namespace FreeFlowGame
 
                 }
                 //Si es un pipe y tiene index destruimos los hermanos posteriores a ese indice
-                else if (tileIni.getIndex() != -1)
+                else if (tileIni.GetIndex() != -1)
                 {
                     draw = true;
                     if (pipeRenderer.color != tileIni.GetColor())
@@ -234,7 +234,7 @@ namespace FreeFlowGame
                         lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
                     }
                     posAct = posAbsBoard;
-                    DestroyChildrenFromIndex(tileIni.getIndex() + 1);
+                    DestroyChildrenFromIndex(tileIni.GetIndex() + 1);
 
                 }
                 //Comprobación de si hay estrellas en ese color
@@ -244,51 +244,6 @@ namespace FreeFlowGame
                     starsInPipes[pipeRenderer.color][1].SetActive(false);
                 }
             }
-        }
-
-        /// <summary>
-        /// Destruye todos los hijos de un color
-        /// </summary>
-        /// <param name="tr"> transform del padre </param>
-        private void DestroyChildren()
-        {
-            while (pipeList[pipeRenderer.color].Count != 0)
-            { 
-                DestroyPipe(pipeRenderer.color, 0);
-            }
-            colorCompleted.Remove(pipeRenderer.color);
-            GameManager.Instance.SetflowsText(colorCompleted.Count);
-            Percentage();
-        }
-        /// <summary>
-        /// Destruye todos los hijos de un color desde un indice especifico
-        /// </summary>
-        /// <param name="tr">transform del padre</param>
-        /// <param name="index">indice desde el cual se remueven todos los siguientes hijos</param>
-        private void DestroyChildrenFromIndex(int index)
-        {
-            Color c = tileAct.IsCircle() ? tileAct.GetCircleColor() : tileAct.GetColor();
-            int total = pipeList[c].Count;
-            int i = total - index;
-            while(i!=0)
-            {
-                DestroyPipe(c, index);
-                i--;
-            }
-            colorCompleted.Remove(c);
-            GameManager.Instance.SetflowsText(colorCompleted.Count);
-            Percentage();
-        }
-
-        private void DestroyPipe(Color c, int i)
-        {
-            EachPipe pipeToRemove = pipeList[c][i];
-            pipeList[c].Remove(pipeToRemove);
-            Tile childTile = boardManager.GetTileAtPosition(pipeToRemove.GetPositionInBoard());
-            childTile.setFree(true);
-            childTile.setIndex(-1);
-            Destroy(pipeToRemove.gameObject);
-            numPipesInBoard--;
         }
 
         private void OnDrag(Vector2 posInBoard)
@@ -314,7 +269,7 @@ namespace FreeFlowGame
                 if (!tileAct.IsCircle())
                 {
                     //Si esta vacio pintamos 
-                    if (tileAct.isFree() && continueMoving)
+                    if (tileAct.IsFree() && continueMoving)
                     {
                         CreatePipe(posAbsBoard);
                     }
@@ -326,7 +281,7 @@ namespace FreeFlowGame
                             starsInPipes[tileAct.GetColor()][0].SetActive(false);
                             starsInPipes[tileAct.GetColor()][1].SetActive(false);
                         }
-                        DestroyChildrenFromIndex(tileAct.getIndex());
+                        DestroyChildrenFromIndex(tileAct.GetIndex());
                     }
                 }
 
@@ -338,7 +293,7 @@ namespace FreeFlowGame
                     posAct = posIni;
                 }
                 //Si te echas para atras en un pipe
-                else if (!tileAct.isFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].GetPositionInBoard()))
+                else if (!tileAct.IsFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].GetPositionInBoard()))
                 {
                     continueMoving = true;
                     DestroyPipe(pipeRenderer.color, pipeList[pipeRenderer.color].Count - 1);
@@ -362,12 +317,59 @@ namespace FreeFlowGame
                 }
             }
         }
-      
+
+        /// <summary>
+        /// Destruye todos los hijos de un color
+        /// </summary>
+        /// <param name="tr"> transform del padre </param>
+        private void DestroyChildren()
+        {
+            while (pipeList[pipeRenderer.color].Count != 0)
+            {
+                DestroyPipe(pipeRenderer.color, 0);
+            }
+            colorCompleted.Remove(pipeRenderer.color);
+            GameManager.Instance.SetflowsText(colorCompleted.Count);
+            Percentage();
+        }
+
+        /// <summary>
+        /// Destruye todos los hijos de un color desde un indice especifico
+        /// </summary>
+        /// <param name="tr">transform del padre</param>
+        /// <param name="index">indice desde el cual se remueven todos los siguientes hijos</param>
+        private void DestroyChildrenFromIndex(int index)
+        {
+            Color c = tileAct.IsCircle() ? tileAct.GetCircleColor() : tileAct.GetColor();
+            int total = pipeList[c].Count;
+            int i = total - index;
+            while (i != 0)
+            {
+                DestroyPipe(c, index);
+                i--;
+            }
+            colorCompleted.Remove(c);
+            GameManager.Instance.SetflowsText(colorCompleted.Count);
+            Percentage();
+        }
+
+        private void DestroyPipe(Color c, int i)
+        {
+            EachPipe pipeToRemove = pipeList[c][i];
+            pipeList[c].Remove(pipeToRemove);
+            Tile childTile = boardManager.GetTileAtPosition(pipeToRemove.GetPositionInBoard());
+            childTile.SetFree(true);
+            childTile.SetIndex(-1);
+            Destroy(pipeToRemove.gameObject);
+            numPipesInBoard--;
+        }
+
+       
+
         public void PaintClue()
         {
             if (colorCompleted.Count < pipeSolution.Count)
             {
-
                 List<List<Vector2>> aux = new List<List<Vector2>>(pipeSolution);
                 bool pista = false;
                 List<Vector2> l = new List<Vector2>();
@@ -417,9 +419,9 @@ namespace FreeFlowGame
                     Vector2 dir = l[i] - l[i - 1];
                     Tile act = boardManager.GetTileAtPosition(l[i]);
 
-                    if (act.GetColor() != pipeRenderer.color && !act.isFree() && !act.IsCircle())
+                    if (act.GetColor() != pipeRenderer.color && !act.IsFree() && !act.IsCircle())
                     {
-                        DestroyChildrenFromIndex(act.getIndex());
+                        DestroyChildrenFromIndex(act.GetIndex());
                     }
                     PaintPipe(act, l[i], centerPipe(l[i - 1], dir), dir, false);
                 }
@@ -446,12 +448,12 @@ namespace FreeFlowGame
             }
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
 
-            pipeList[pipeRenderer.color].Add(Instantiate(pipe,new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
+            pipeList[pipeRenderer.color].Add(Instantiate(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
             pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_);
             //pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].transform.localScale = new Vector3(scaleFactor, scaleFactor + 0.25f, 1.0f);
 
-            act.setFree(false);
-            act.setIndex(pipeList[pipeRenderer.color].Count - 1);
+            act.SetFree(false);
+            act.SetIndex(pipeList[pipeRenderer.color].Count - 1);
             act.SetColor(pipeRenderer.color);
             numPipesInBoard++;
             Percentage();
@@ -461,6 +463,28 @@ namespace FreeFlowGame
         {
             if (Vector2.SqrMagnitude(dir) == 1) return true;
             else return false;
+        }
+
+        private bool IsThereWallInDir(Tile tileAnt, Vector2 dir)
+        {
+            int i = 0;
+            if (dir.x == 0 && dir.y == 1)
+            {
+                i = 0;
+            }
+            else if (dir.x == 0 && dir.y == -1)
+            {
+                i = 2;
+            }
+            else if (dir.y == 0 && dir.x == 1)
+            {
+                i = 3;
+            }
+            else if (dir.y == 0 && dir.x == -1)
+            {
+                i = 1;
+            }
+            return tileAnt.GetWalls()[i];
         }
 
         private float GetAngleRotation()
@@ -495,13 +519,11 @@ namespace FreeFlowGame
 
             dirAct = posAbsBoard - posAct;
 
-            if (IsDirValid(dirAct) && boardManager.GetTileAtPosition(posAbsBoard) != null)
+            Vector2 posLastPainted = lastTilePainted.GetPosTile();
+            if (IsDirValid(dirAct) && !IsThereWallInDir(tileAct, dirAct) && IsDirValid(posLastPainted - posAbsBoard) && boardManager.GetTileAtPosition(posAbsBoard) != null)
             {
-                Vector2 posTileAnt = lastTilePainted.GetPosTile();
                 posAct = posAbsBoard;
-
-                Vector2 posPipe = centerPipe(posTileAnt, dirAct);
-
+                Vector2 posPipe = centerPipe(posLastPainted, dirAct);
                 PaintPipe(tileAct, posAct, posPipe, dirAct, true);
             }
         }
@@ -537,7 +559,7 @@ namespace FreeFlowGame
         private void Percentage()
         {
             int n = ((int)((float)numPipesInBoard / (float)totalPipesInBoard * 100));
-            GameManager.Instance.SetPercentageText( n );
+            GameManager.Instance.SetPercentageText(n);
         }
     }
 }

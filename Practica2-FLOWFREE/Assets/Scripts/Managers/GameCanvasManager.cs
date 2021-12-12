@@ -84,7 +84,6 @@ public class GameCanvasManager : MonoBehaviour
         levelText.text = "Level " + n+ " ";
         levelText.color = GameManager.Instance.categories[GameManager.Instance.getActualPlay().category].categoryColor;
         dimentionsText.text = w + "x" + h;
-        dimentionsText.transform.position = new Vector2((levelText.text.Length)* levelText.fontSize /2 , dimentionsText.transform.position.y);
     }
 
 }

@@ -58,7 +58,7 @@ namespace FreeFlowGame
 
         public void SetColor(Color c)
         {
-            _color=c;
+            _color = c;
         }
 
         public Vector2 GetPosTile()
@@ -71,59 +71,61 @@ namespace FreeFlowGame
             posTile = pos;
         }
 
-        public void SetWalls(bool[]w) 
+        public void SetWalls(bool[] w)
         {
             walls = w;
             for (int i = 0; i < w.Length; i++)
             {
-                if (w[i])
+                if (!w[i]) continue;
+
+                GameObject o = Instantiate(wallObject, transform);
+                wallObject.GetComponent<SpriteRenderer>().color = _renderer.color;
+                float x = 0;
+                float y = 0;
+                switch (i)
                 {
-                   
-                    GameObject o = Instantiate(wallObject, transform);
-                    wallObject.GetComponent<SpriteRenderer>().color = _renderer.color;
-                    float x= 0;
-                    float y= 0;
-                    if (i == 2)
-                    {
-                        y = -transform.localScale.y / 2;
-
-                    }
-                    if (i == 3)
-                    {
-                        x = -transform.localScale.x / 2;
-                    }
-                    if (i == 1) 
-                    {
-                        x = transform.localScale.x / 2;
-                    }if (i == 0) 
-                    {
+                    case 2://Pared Arriba
                         y = transform.localScale.y / 2;
-                    }
-
-                    Vector3 vectorFeo=new  Vector2(x ,  y );
-                    o.transform.rotation = Quaternion.Euler(0, 0, (i + 1) * 90);
-                    o.transform.position = transform.position + vectorFeo ;
-                    o.name = $"Muro {posTile.x} {posTile.y} + {i}";
+                        break;
+                    case 1: //Pared derecha
+                        x = transform.localScale.x / 2;
+                        break;
+                    case 0: //Pared abajo
+                        y = -transform.localScale.y / 2;
+                        break;
+                    case 3: //Pared izquierda
+                        x = -transform.localScale.x / 2;
+                        break;
+                    default:
+                        break;
                 }
+
+                Vector3 v = new Vector2(x, y);
+                o.transform.rotation = Quaternion.Euler(0, 0, (i + 1) * 90);
+                o.transform.position = transform.position + v;
+                o.name = $"Muro {posTile.x} {posTile.y} + {i}";
             }
+
         }
         public bool IsCircle()
         {
             return circleObject.activeSelf;
         }
-        public bool isFree() { return free; }
+        public bool IsFree() { return free; }
 
-        public void setFree(bool active) 
+        public void SetFree(bool active)
         {
             free = active;
-        }  
-        public void setIndex(int i)
+        }
+        public void SetIndex(int i)
         {
             this.index = i;
         }
-        public int getIndex()
+        public int GetIndex()
         {
-            return index ;
+            return index;
         }
+
+        public bool [] GetWalls() { return walls; }
     }
 }

@@ -44,7 +44,6 @@ namespace FreeFlowGame
 
         private void Start()
         {
-
             pipes = new List<List<Vector2>>();
             m = new Map();
             Initialize();
@@ -52,17 +51,14 @@ namespace FreeFlowGame
 
         public void Initialize()
         {
-            // Debug.Log("Initialize");
             Clear();
             setPipes();
             transform.localScale = Vector3.one;
             GenerateGrid();
-            //pipeObject.enabled = true;
             if (pipeObject != null) Destroy(pipeObject.gameObject);
             pipeObject = Instantiate(pipeControllerPrefab, gameObject.transform);
             pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetFlownum());
             pipeObject.SetScaleFactor(scaleFactor);
-
         }
 
         private void Clear()
@@ -79,44 +75,15 @@ namespace FreeFlowGame
         private void setPipes()
         {
             LvlActual lvl = GameManager.Instance.getActualPlay();
-            // Debug.Log(lvl.levelIndex);
             m.Parse(GameManager.Instance.GetCategories()[lvl.category].lotes[lvl.slotIndex].levels[lvl.levelIndex]);
             GameManager.Instance.SetLevelText(lvl.levelIndex + 1, m.GetWidth(), m.GetHeight());
             pipes = m.GetPipes();
         }
 
-        private Dictionary<Vector2, int> GenerateDictionary()
-        {
-
-            Dictionary<Vector2, int> wallsPos = new Dictionary<Vector2, int>();
-            List<int> walls = m.Getwalls();
-            int height = m.GetHeight();
-            int width = m.GetWidth();
-            for (int j = 0; j < walls.Count - 1; j += 2)
-            {
-                int valor = walls[j];
-                int valor2 = walls[j + 1];
-                int wall = 0;
-                if (valor + 1 == valor2) { wall = 1; }
-                else if (valor - 1 == valor2) { wall = 3; }
-                else if (valor + height == valor2) { wall = 2; }
-
-                int posX = valor % width;
-                int posY = valor / height;
-                if (width != height)
-                {
-                    if (width < height) posY = valor / width;
-                }
-                Vector2 posCasilla = new Vector2(posX, -posY);
-                wallsPos.Add( posCasilla, wall);
-            }
-            return wallsPos;
-        }
-
         public void GenerateGrid()
         {
             _tiles = new Dictionary<Vector2, Tile>();
-            Dictionary<Vector2, int> walls = GenerateDictionary();
+            Dictionary<Vector2, bool[]> walls = m.GetWallsInBoard();
             for (int i = 0; i < m.GetFlownum(); i++)
             {
                 for (int j = 0; j < pipes[i].Count; j++)
@@ -132,12 +99,15 @@ namespace FreeFlowGame
                     else spawnedTile.Init(true);
 
                     spawnedTile.SetPosTile(pos);
-
-                    bool[] w = new bool[4] { pos.y + 1 > 0, pos.x + 1 == m.GetWidth(), pos.y - 1 == -(m.GetHeight()), pos.x - 1 < 0 };
+                    //Ponemos paredes en los bordes del tablero
+                    bool[] w = new bool[4] { pos.y - 1 == -(m.GetHeight()), pos.x + 1 == m.GetWidth(), pos.y + 1 > 0 , pos.x - 1 < 0 };
+                    
                     if (walls.ContainsKey(pos))
-                    { 
-                        w[walls[pos]] = true;
-                        Debug.Log("diABLO");
+                    {
+                        for(int k = 0; k < w.Length; k++)
+                        {
+                            if (walls[pos][k]) w[k] = true;
+                        }
                     }
                     spawnedTile.SetWalls(w);
                     _tiles[new Vector2(pipes[i][j].x, pipes[i][j].y)] = spawnedTile;
@@ -148,12 +118,16 @@ namespace FreeFlowGame
             float camHeight = Camera.main.orthographicSize * 2.0f;
             float camWidth = camHeight * Camera.main.aspect;
 
-          //  Debug.Log("Altura :" + m.GetHeight());
-          //  Debug.Log("Anchura :" + m.GetWidth());
+            float topFactor = topHud.rect.width / topHud.rect.height;
+            float bottomFactor = bottomHud.rect.width / bottomHud.rect.height;
+            
+            float topHeight = camWidth / topFactor;
+            float bottomHeight = camWidth / bottomFactor;
 
-            //Debug.Log("Tamanio topHud: " + topHud.rect.height);
-            //Debug.Log("Tamanio bottomHud: " + bottomHud.rect.height);
-            float tileSizeY = (camHeight - (topHud.rect.height + bottomHud.rect.height) / 100.0f )/ m.GetHeight();
+            Debug.Log(topHeight);
+            Debug.Log(bottomHeight);
+
+            float tileSizeY = (camHeight - (topHeight + bottomHeight) )/ m.GetHeight();
             float tileSizeX = camWidth / m.GetWidth();
 
             if (tileSizeY > tileSizeX)
@@ -170,13 +144,6 @@ namespace FreeFlowGame
 
         }
 
-        /*
-        public bool[] GetWalls(Vector2 pos, KeyValuePair<Vector2, int> nextWall)
-        {
-            bool[]w = new bool[4] { pos.y + 1 > 0, pos.x + 1 == m.GetWidth(), pos.y - 1 == -(m.GetHeight()), pos.x - 1 < 0 };
-            if ( pos == nextWall.Key) { w[nextWall.Value] = true; }
-            return w;
-        }*/
         public Tile GetTileAtPosition(Vector2 pos)
         {
             if (_tiles.TryGetValue(pos, out var tile)) return tile;
