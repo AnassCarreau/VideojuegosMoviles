@@ -12,8 +12,7 @@ public class LevelButtonItem : MonoBehaviour
 {
 
      private int levelIndex;    
-     private Color color;
-     private Text levelButtonText;
+     
     [SerializeField] private Object scene;
     [SerializeField] private Image img; 
     [SerializeField] private Text text; 

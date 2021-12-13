@@ -19,11 +19,10 @@ namespace FreeFlowGame
         private Text levelText;
         [SerializeField]
         private Text dimentionsText;
-        
-        private void Start()
-        {
-            LevelManager.Instance.ImCanvasManager(this);
-        }
+        [SerializeField]
+        private GameObject winningPannel;
+        [SerializeField]
+        private Text pannelText;
 
         public void ChangeNextLevel()
         {
@@ -88,5 +87,14 @@ namespace FreeFlowGame
             dimentionsText.text = w + "x" + h;
         }
 
+        public void SetPanelActive(bool active)
+        {
+            winningPannel.SetActive(active);
+        }
+
+        public void SetPannelText(int moves)
+        {
+            pannelText.text = "Completaste el nivel en " + moves + " pasos.";
+        }
     }
 }

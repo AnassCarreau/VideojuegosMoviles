@@ -33,8 +33,7 @@ namespace FreeFlowGame
 
         public void Restart()
         {
-            //TO DO: Esto no esta hecho, habría que resetear los pipes
-            BoardManager.Instance.Initialize();
+            BoardManager.Instance.GetPipeController().ResetPipes();
         }
 
         public void NextLevel()
@@ -47,7 +46,8 @@ namespace FreeFlowGame
                  && (levels[act.category][act.slotIndex][act.levelIndex + 1].bestMoves > 0
                 || !categories[act.category].lotes[act.slotIndex].levelblocked))
             {
-                act.levelIndex += 1;
+                Debug.Log("Cambio de nivel");
+                GameManager.Instance.SetLevel(act.levelIndex + 1);
                 BoardManager.Instance.Initialize();
             }
         }
@@ -56,7 +56,8 @@ namespace FreeFlowGame
             LvlActual act = GameManager.Instance.GetLvlActual();
             if (act.levelIndex - 1 >= 0)
             {
-                act.levelIndex -= 1;
+                Debug.Log("Cambio de nivel");
+                GameManager.Instance.SetLevel(act.levelIndex - 1);
                 BoardManager.Instance.Initialize();
             }
         }
@@ -71,11 +72,6 @@ namespace FreeFlowGame
         public void SetLevelText(int n, int w, int h)
         {
             canvasManager.SetLevelText(n, w, h);
-        }
-
-        public void ImCanvasManager(FreeFlowGame.GameCanvasManager canvasManager_)
-        {
-            canvasManager = canvasManager_;
         }
 
         public void SetflowsText(int n)
@@ -103,6 +99,14 @@ namespace FreeFlowGame
         public void setClueText()
         {
             canvasManager.SetClueText(GameManager.Instance.GetNumClues());
+        }
+
+        public void LevelCompleted(int moves)
+        {
+            //TO DO: Desbloquear el nivel siguiente y guardar cosos supongo
+
+            canvasManager.SetPannelText(moves);
+            canvasManager.SetPanelActive(true);
         }
     }
 }

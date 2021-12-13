@@ -143,7 +143,8 @@ namespace FreeFlowGame
                         //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
                         //Esto es temporal
                         GameManager.Instance.SetScore(moves);
-                        GameManager.Instance.LoadScene("LevelSelector");
+                        //GameManager.Instance.LoadScene("LevelSelector");
+                        LevelManager.Instance.LevelCompleted(moves);
                         return;
                     }
 
@@ -181,7 +182,8 @@ namespace FreeFlowGame
                         {
                             //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
                             //Esto es temporal
-                            GameManager.Instance.LoadScene("LevelSelector");
+                            //GameManager.Instance.LoadScene("LevelSelector");
+                            LevelManager.Instance.LevelCompleted(moves);
                             return;
                         }
                         draw = false;
@@ -240,7 +242,7 @@ namespace FreeFlowGame
                         lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
                     }
                     posAct = posAbsBoard;
-                    DestroyChildrenFromIndex(tileAct,tileIni.GetIndex() + 1);
+                    DestroyChildrenFromIndex(tileAct, tileIni.GetIndex() + 1);
 
                 }
                 //Comprobación de si hay estrellas en ese color
@@ -287,7 +289,7 @@ namespace FreeFlowGame
                             starsInPipes[tileAct.GetColor()][0].SetActive(false);
                             starsInPipes[tileAct.GetColor()][1].SetActive(false);
                         }
-                        DestroyChildrenFromIndex(tileAct,tileAct.GetIndex());
+                        DestroyChildrenFromIndex(tileAct, tileAct.GetIndex());
                     }
                 }
 
@@ -311,7 +313,7 @@ namespace FreeFlowGame
                 //Si te echas para atras en cualquier pipe tuyo
                 //
                 //iNTENTAR ROMPER 
-                else if (!tileAct.IsFree() && tileAct.GetIndex()!= pipeList[pipeRenderer.color].Count-1 && pipeList[pipeRenderer.color].Count > 1 && tileAct.GetColor() == pipeRenderer.color)
+                else if (!tileAct.IsFree() && tileAct.GetIndex() != pipeList[pipeRenderer.color].Count - 1 && pipeList[pipeRenderer.color].Count > 1 && tileAct.GetColor() == pipeRenderer.color)
                 {
                     Debug.Log("ATRAS");
                     continueMoving = true;
@@ -327,7 +329,7 @@ namespace FreeFlowGame
                     CreatePipe(posAbsBoard);
                     continueMoving = false;
                     colorCompleted.Add(pipeRenderer.color);
-                    
+
                     //Comprobación de si hay estrellas en ese color
                     if (clueInPipe.ContainsKey(pipeRenderer.color))
                     {
@@ -384,7 +386,7 @@ namespace FreeFlowGame
             numPipesInBoard--;
         }
 
-       
+
 
         public void PaintClue()
         {
@@ -452,7 +454,8 @@ namespace FreeFlowGame
                 {
                     //TODO Llamar a levelManager para que muestre la ventanita del siguiente nivel
                     //Esto es temporal
-                    GameManager.Instance.LoadScene("LevelSelector");
+                    //GameManager.Instance.LoadScene("LevelSelector");
+                    LevelManager.Instance.LevelCompleted(moves);
                     return;
                 }
             }
@@ -579,6 +582,48 @@ namespace FreeFlowGame
         {
             int n = ((int)((float)numPipesInBoard / (float)totalPipesInBoard * 100));
             LevelManager.Instance.SetPercentageText(n);
+        }
+
+        public void ResetPipes()
+        {
+            //Borrar tuberias
+            foreach (Color c in pipeParent.Keys)
+            {
+                int i = 0;
+                while (pipeList[c].Count > 0)
+                {
+                    DestroyPipe(c, 0);
+                    i++;
+                }
+            }
+
+            //Borrar estrellas (pistas)
+            foreach (Color c in starsInPipes.Keys)
+            {
+                while (starsInPipes[c].Count > 0)
+                {
+                    Destroy(starsInPipes[c][0].gameObject);
+                    starsInPipes[c].RemoveAt(0);
+                }
+
+            }
+
+            numPipesInBoard = 0;
+            moves = 0;
+            colorCompleted.Clear();
+            starsInPipes.Clear();
+            clueInPipe.Clear();
+            continueMoving = true;
+            draw = false;
+            tileIni = null;
+            tileAct = null;
+            lastTilePainted = null;
+
+            //Actualizamos HUD
+            Percentage();
+            LevelManager.Instance.SetflowsText(colorCompleted.Count);
+            LevelManager.Instance.SetMovesText(moves);
+
         }
     }
 }
