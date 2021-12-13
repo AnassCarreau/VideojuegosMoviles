@@ -66,6 +66,7 @@ namespace FreeFlowGame
         private Vector2 lastPipe;
         private bool lastPipeColor;
         float scaleFactor;
+
         void Start()
         {
             moves = 0;
@@ -99,7 +100,6 @@ namespace FreeFlowGame
             LevelManager.Instance.SetBestText();
             Percentage();
         }
-
 
         public void SetScaleFactor(float scale) { scaleFactor = scale; }
 
@@ -202,6 +202,7 @@ namespace FreeFlowGame
             if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif
         }
+
         private void InitDrag(Vector2 posInBoard)
         {
             Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
@@ -263,7 +264,10 @@ namespace FreeFlowGame
             Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
             //Tile correspondiente a la posicion posAbsBoard
             Tile aux = boardManager.GetTileAtPosition(posAbsBoard);
-            if (aux == tileAct)return;
+            
+            //Si no nos hemos movido no hacemos nada
+            if (aux == tileAct) return;
+
             //Si estamos en un tile que no sea circulo de un color distinto al que estamos pintando y ese tile
             //y la posicion del ultimo tile en el que hemos pintado son adyacentes
             if (aux != null && !(aux.IsCircle() && aux.GetCircleColor() != pipeRenderer.color) && IsDirValid(posAbsBoard - posAct))
@@ -277,52 +281,57 @@ namespace FreeFlowGame
            
             if (tileAct != null )
             {
-
                 if (!tileAct.IsCircle())
                 {
-
-                   
-
                     //Si esta vacio pintamos 
                     if (tileAct.IsFree() && continueMoving)
                     {
+                        Debug.Log("estoy libre y pinto");
                         CreatePipe(posAbsBoard);
                     }
                     //Si no esta vacio y es de un color diferente al actual rompemos la linea
                     else if (continueMoving && tileAct.GetColor() != pipeRenderer.color)
                     {
+                        Debug.Log("He entrado -> un rulo tranqui");
+                        //Si tenia estrellas porque se habia dado una pista sobre ese color se desactivan dichas estrellas de los
+                        //extremos del pipe
                         if (clueInPipe.ContainsKey(tileAct.GetColor()))
                         {
                             starsInPipes[tileAct.GetColor()][0].SetActive(false);
                             starsInPipes[tileAct.GetColor()][1].SetActive(false);
                         }
+
+                        //Nos guardamos la lista del pipe que vamos a romper
                         List<EachPipe> listeach = new List<EachPipe>(pipeList[tileAct.GetColor()]);
+
+                        //Eliminamos (provisional) desde el indice 0 hasta el indice del tile en el que nos encontramos
                         listeach.RemoveRange(0, tileAct.GetIndex());
+
+                        //añadimos a la cola un par con el tile anterior al que hemos atravesado y la lista con las tuberías restantes del pipe a romper 
                         brokePipes.Enqueue(new KeyValuePair<Tile, Stack<EachPipe>>(boardManager.GetTileAtPosition(posAct), new Stack<EachPipe>(listeach)));
+
                         // DestroyChildrenFromIndex(tileAct, tileAct.GetIndex());
                         Debug.Log("metido");
                         foreach (EachPipe a in listeach)
                         {
                             Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
                             t.SetFree(true);
-                            Debug.Log("1");
                             a.transform.gameObject.SetActive(false);
                         }
                         CreatePipe(posAbsBoard);
                     }
                 }
-
-
+                //Si la cola que contiene las roturas provisionales no esta vacia y estoy ahora en el tile desde el que rompi
+                //volvemos a activar las tuberías desactivadas y quitamos el elemento de la cola
                 if (brokePipes.Count > 0 && tileAct == brokePipes.Peek().Key)
                 {
                     Debug.Log("sacado");
-
                     foreach (EachPipe a in brokePipes.Peek().Value)
                     {
                         a.transform.gameObject.SetActive(true);
                         Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
                         t.SetFree(false);
-                        Debug.Log(a.GetColorInBoard());
+                        //Debug.Log(a.GetColorInBoard());
                         t.SetColor(a.GetColorInBoard());
                     }
                     brokePipes.Dequeue();
@@ -350,12 +359,10 @@ namespace FreeFlowGame
                 //iNTENTAR ROMPER 
                 else if (!tileAct.IsFree() && tileAct.GetIndex() != pipeList[pipeRenderer.color].Count - 1 && pipeList[pipeRenderer.color].Count > 1 && tileAct.GetColor() == pipeRenderer.color)
                 {
-                 
                     continueMoving = true;
                     posAct = pipeList[pipeRenderer.color][tileAct.GetIndex()].GetPositionInBoard();
                     DestroyChildrenFromIndex(tileAct, tileAct.GetIndex() + 1);
                 }
-
 
                 //Si hemos tocado el otro extremo
                 if (tileAct.IsCircle() && continueMoving && tileAct.GetCircleColor() == pipeRenderer.color
