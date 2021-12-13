@@ -34,8 +34,8 @@ namespace FreeFlowGame
 
         private BoardManager boardManager;
 
-        private bool draw = false;
-        private bool continueMoving = false;
+        private bool draw;
+        private bool continueMoving;
 
         private Vector2 posIni;
         private Vector2 posAct;
@@ -69,6 +69,9 @@ namespace FreeFlowGame
 
         void Start()
         {
+            //Pone las variables principales del dibujado como deben empezar
+            ResetVariables();
+
             moves = 0;
             numPipesInBoard = 0;
             pipeRenderer.color = Color.black;
@@ -114,7 +117,6 @@ namespace FreeFlowGame
             posInBoard.y /= scaleFactor;
             if (ra.collider != null)
             {
-
                 //Primera pulsacion
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -128,6 +130,7 @@ namespace FreeFlowGame
                 //Si soltamos
                 else if (Input.GetMouseButtonUp(0))
                 {
+                    //¿Hemos hecho un ultimo movimiento?
                     if (lastPipeColor && pipeList[pipeRenderer.color].Count > 0 && lastPipe != pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard())
                     {
                         moves++;
@@ -151,11 +154,7 @@ namespace FreeFlowGame
                         return;
                     }
 
-                    continueMoving = true;
-                    draw = false;
-                    tileIni = null;
-                    tileAct = null;
-                    lastTilePainted = null;
+                    ResetVariables();
                 }
             }
 #elif UNITY_ANDROID
@@ -205,7 +204,10 @@ namespace FreeFlowGame
 
         private void InitDrag(Vector2 posInBoard)
         {
+            //posAbsBoard son las coordenadas de la pulsación en coordenadas del tablero, es decir, (0, 0), (0, -1) ... en formato
+            //(x, y)
             Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
+            //Tile correspondiente a la primera pulsación
             tileIni = boardManager.GetTileAtPosition(posAbsBoard);
 
             if (tileIni != null)
@@ -220,6 +222,7 @@ namespace FreeFlowGame
                     posIni = posAbsBoard;
                     posAct = posAbsBoard;
 
+                    //Gestion para los movimientos y el cambio de color
                     if (pipeRenderer.color != tileIni.GetCircleColor())
                     {
                         pipeRenderer.color = tileIni.GetCircleColor();
@@ -229,16 +232,17 @@ namespace FreeFlowGame
                             lastPipe = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
                         }
                     }
-
-
+                    //Guardamos el tile inicial en un diccionario de colores, para saber en qué tile/circulo empezamos
                     tilePipesIni[pipeRenderer.color] = tileIni;
-                    DestroyChildren();
-
+                    //si hubiese ya tuberia de ese color se destruye con todo lo que eso conlleva
+                    if(pipeList[pipeRenderer.color].Count > 0) DestroyChildren();
                 }
+
                 //Si es un pipe y tiene index destruimos los hermanos posteriores a ese indice
                 else if (tileIni.GetIndex() != -1)
                 {
                     draw = true;
+                    //control del color y lastpipe para los movimientos
                     if (pipeRenderer.color != tileIni.GetColor())
                     {
                         lastPipeColor = true;
@@ -247,7 +251,6 @@ namespace FreeFlowGame
                     }
                     posAct = posAbsBoard;
                     DestroyChildrenFromIndex(tileAct, tileIni.GetIndex() + 1);
-
                 }
                 //Comprobaci�n de si hay estrellas en ese color
                 if (clueInPipe.ContainsKey(pipeRenderer.color))
@@ -260,7 +263,7 @@ namespace FreeFlowGame
 
         private void OnDrag(Vector2 posInBoard)
         {
-            //Posicion del raton en posiciones del tablero
+            //Posicion del raton en posiciones del tablero, al igual que en InitDrag
             Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
             //Tile correspondiente a la posicion posAbsBoard
             Tile aux = boardManager.GetTileAtPosition(posAbsBoard);
@@ -279,7 +282,7 @@ namespace FreeFlowGame
                 }
             }
            
-            if (tileAct != null )
+            if (tileAct != null)
             {
                 if (!tileAct.IsCircle())
                 {
@@ -385,7 +388,6 @@ namespace FreeFlowGame
         /// <summary>
         /// Destruye todos los hijos de un color
         /// </summary>
-        /// <param name="tr"> transform del padre </param>
         private void DestroyChildren()
         {
             while (pipeList[pipeRenderer.color].Count != 0)
@@ -667,6 +669,15 @@ namespace FreeFlowGame
             LevelManager.Instance.SetflowsText(colorCompleted.Count);
             LevelManager.Instance.SetMovesText(moves);
 
+        }
+
+        private void ResetVariables()
+        {
+            draw = false;
+            continueMoving = true;
+            tileIni = null;
+            tileAct = null;
+            lastTilePainted = null;
         }
     }
 }
