@@ -29,6 +29,9 @@ namespace FreeFlowGame
         private Dictionary<Color, bool> clueInPipe;
         private Dictionary<Color, List<GameObject>> starsInPipes;
 
+        //Cada tile que rompemos guardamos el anterior con los trozos de tuberia que he roto 
+        private Queue<KeyValuePair<Tile, Stack<EachPipe>>> brokePipes;
+
         private BoardManager boardManager;
 
         private bool draw = false;
@@ -80,7 +83,7 @@ namespace FreeFlowGame
             lastPipe = new Vector2();
             clueInPipe = new Dictionary<Color, bool>();
             starsInPipes = new Dictionary<Color, List<GameObject>>();
-
+            brokePipes = new Queue<KeyValuePair<Tile, Stack<EachPipe>>>();
             Color[] c = boardManager.getPipesColor();
             for (int i = 0; i < c.Length; i++)
             {
@@ -245,7 +248,7 @@ namespace FreeFlowGame
                     DestroyChildrenFromIndex(tileAct, tileIni.GetIndex() + 1);
 
                 }
-                //Comprobación de si hay estrellas en ese color
+                //Comprobaciï¿½n de si hay estrellas en ese color
                 if (clueInPipe.ContainsKey(pipeRenderer.color))
                 {
                     starsInPipes[pipeRenderer.color][0].SetActive(false);
@@ -260,7 +263,7 @@ namespace FreeFlowGame
             Vector2 posAbsBoard = new Vector2(Mathf.RoundToInt(posInBoard.x), Mathf.RoundToInt(posInBoard.y));
             //Tile correspondiente a la posicion posAbsBoard
             Tile aux = boardManager.GetTileAtPosition(posAbsBoard);
-
+            if (aux == tileAct)return;
             //Si estamos en un tile que no sea circulo de un color distinto al que estamos pintando y ese tile
             //y la posicion del ultimo tile en el que hemos pintado son adyacentes
             if (aux != null && !(aux.IsCircle() && aux.GetCircleColor() != pipeRenderer.color) && IsDirValid(posAbsBoard - posAct))
@@ -271,11 +274,15 @@ namespace FreeFlowGame
                     tileAct = aux;
                 }
             }
-
-            if (tileAct != null)
+           
+            if (tileAct != null )
             {
+
                 if (!tileAct.IsCircle())
                 {
+
+                   
+
                     //Si esta vacio pintamos 
                     if (tileAct.IsFree() && continueMoving)
                     {
@@ -289,8 +296,36 @@ namespace FreeFlowGame
                             starsInPipes[tileAct.GetColor()][0].SetActive(false);
                             starsInPipes[tileAct.GetColor()][1].SetActive(false);
                         }
-                        DestroyChildrenFromIndex(tileAct, tileAct.GetIndex());
+                        List<EachPipe> listeach = new List<EachPipe>(pipeList[tileAct.GetColor()]);
+                        listeach.RemoveRange(0, tileAct.GetIndex());
+                        brokePipes.Enqueue(new KeyValuePair<Tile, Stack<EachPipe>>(boardManager.GetTileAtPosition(posAct), new Stack<EachPipe>(listeach)));
+                        // DestroyChildrenFromIndex(tileAct, tileAct.GetIndex());
+                        Debug.Log("metido");
+                        foreach (EachPipe a in listeach)
+                        {
+                            Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
+                            t.SetFree(true);
+                            Debug.Log("1");
+                            a.transform.gameObject.SetActive(false);
+                        }
+                        CreatePipe(posAbsBoard);
                     }
+                }
+
+
+                if (brokePipes.Count > 0 && tileAct == brokePipes.Peek().Key)
+                {
+                    Debug.Log("sacado");
+
+                    foreach (EachPipe a in brokePipes.Peek().Value)
+                    {
+                        a.transform.gameObject.SetActive(true);
+                        Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
+                        t.SetFree(false);
+                        Debug.Log(a.GetColorInBoard());
+                        t.SetColor(a.GetColorInBoard());
+                    }
+                    brokePipes.Dequeue();
                 }
 
                 //Si es la primera posicion y nos echamos para atras
@@ -315,7 +350,7 @@ namespace FreeFlowGame
                 //iNTENTAR ROMPER 
                 else if (!tileAct.IsFree() && tileAct.GetIndex() != pipeList[pipeRenderer.color].Count - 1 && pipeList[pipeRenderer.color].Count > 1 && tileAct.GetColor() == pipeRenderer.color)
                 {
-                    Debug.Log("ATRAS");
+                 
                     continueMoving = true;
                     posAct = pipeList[pipeRenderer.color][tileAct.GetIndex()].GetPositionInBoard();
                     DestroyChildrenFromIndex(tileAct, tileAct.GetIndex() + 1);
@@ -330,7 +365,7 @@ namespace FreeFlowGame
                     continueMoving = false;
                     colorCompleted.Add(pipeRenderer.color);
 
-                    //Comprobación de si hay estrellas en ese color
+                    //Comprobaciï¿½n de si hay estrellas en ese color
                     if (clueInPipe.ContainsKey(pipeRenderer.color))
                     {
                         starsInPipes[pipeRenderer.color][0].SetActive(true);
@@ -473,6 +508,7 @@ namespace FreeFlowGame
 
             pipeList[pipeRenderer.color].Add(Instantiate(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
             pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetPositionInBoard(posAct_);
+            pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].SetColorInBoard(pipeRenderer.color);
 
             act.SetFree(false);
             act.SetIndex(pipeList[pipeRenderer.color].Count - 1);
@@ -536,7 +572,7 @@ namespace FreeFlowGame
 
         private void CreatePipe(Vector2 posAbsBoard)
         {
-            //Antes de un posible cambio de dirección guardo la dir en la que iba
+            //Antes de un posible cambio de direcciï¿½n guardo la dir en la que iba
             if (IsDirValid(dirAct)) dirAnt = dirAct;
 
             dirAct = posAbsBoard - posAct;

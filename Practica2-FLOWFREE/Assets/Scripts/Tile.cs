@@ -24,14 +24,14 @@ namespace FreeFlowGame
         private Vector2 posTile;
 
         private bool free;
-
+        private bool semifree;
         private int index;
         bool[] walls;
         public void Init(bool emptyTile)
         {
             LvlActual lvl = GameManager.Instance.getActualPlay();
             _renderer.color = GameManager.Instance.GetCategories()[lvl.category].categoryColor;
-
+            semifree = false;
             free = true;
             index = -1;
             if (!emptyTile)
