@@ -20,7 +20,7 @@ namespace FreeFlowGame
         [SerializeField]
         private Text dimentionsText;
         
-        private void Awake()
+        private void Start()
         {
             LevelManager.Instance.ImCanvasManager(this);
         }

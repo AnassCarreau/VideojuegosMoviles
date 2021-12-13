@@ -298,13 +298,27 @@ namespace FreeFlowGame
                     DestroyPipe(pipeRenderer.color, pipeList[pipeRenderer.color].Count - 1);
                     posAct = posIni;
                 }
-                //Si te echas para atras en un pipe
-                else if (!tileAct.IsFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].GetPositionInBoard()))
+                //
+                //VERSION ANTIGUA
+                //
+                ////Si te echas para atras en un pipe
+                //else if (!tileAct.IsFree() && pipeList[pipeRenderer.color].Count > 1 && tileAct == boardManager.GetTileAtPosition(pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 2].GetPositionInBoard()))
+                //{
+                //    continueMoving = true;
+                //    DestroyPipe(pipeRenderer.color, pipeList[pipeRenderer.color].Count - 1);
+                //    posAct = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
+                //}
+                //Si te echas para atras en cualquier pipe tuyo
+                //
+                //iNTENTAR ROMPER 
+                else if (!tileAct.IsFree() && tileAct.GetIndex()!= pipeList[pipeRenderer.color].Count-1 && pipeList[pipeRenderer.color].Count > 1 && tileAct.GetColor() == pipeRenderer.color)
                 {
+                    Debug.Log("ATRAS");
                     continueMoving = true;
-                    DestroyPipe(pipeRenderer.color, pipeList[pipeRenderer.color].Count - 1);
-                    posAct = pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard();
+                    posAct = pipeList[pipeRenderer.color][tileAct.GetIndex()].GetPositionInBoard();
+                    DestroyChildrenFromIndex(tileAct, tileAct.GetIndex() + 1);
                 }
+
 
                 //Si hemos tocado el otro extremo
                 if (tileAct.IsCircle() && continueMoving && tileAct.GetCircleColor() == pipeRenderer.color
