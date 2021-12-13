@@ -38,6 +38,7 @@ namespace FreeFlowGame
         private bool continueMoving;
 
         private Vector2 posIni;
+        [SerializeField]
         private Vector2 posAct;
 
         private Vector2 dirAct;
@@ -318,6 +319,7 @@ namespace FreeFlowGame
                         foreach (EachPipe a in listeach)
                         {
                             Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
+                            Debug.Log("Pongo libre el tile: " + t.GetPosTile());
                             t.SetFree(true);
                             a.transform.gameObject.SetActive(false);
                         }
@@ -333,13 +335,12 @@ namespace FreeFlowGame
                     {
                         a.transform.gameObject.SetActive(true);
                         Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
+                        Debug.Log("Pongo NO libre el tile: " + t.GetPosTile());
                         t.SetFree(false);
-                        //Debug.Log(a.GetColorInBoard());
                         t.SetColor(a.GetColorInBoard());
                     }
                     brokePipes.Dequeue();
                 }
-
                 //Si es la primera posicion y nos echamos para atras
                 if (tileAct.IsCircle() && pipeList[pipeRenderer.color].Count == 1
                     && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) == tileAct)
@@ -424,8 +425,11 @@ namespace FreeFlowGame
             EachPipe pipeToRemove = pipeList[c][i];
             pipeList[c].Remove(pipeToRemove);
             Tile childTile = boardManager.GetTileAtPosition(pipeToRemove.GetPositionInBoard());
-            childTile.SetFree(true);
-            childTile.SetIndex(-1);
+            if (brokePipes.Count > 0 && childTile != brokePipes.Peek().Key)
+            {
+                childTile.SetFree(true);
+                childTile.SetIndex(-1);
+            }
             Destroy(pipeToRemove.gameObject);
             numPipesInBoard--;
         }
