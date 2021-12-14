@@ -271,7 +271,7 @@ namespace FreeFlowGame
                 }
                 //Otro extremo
                 else if (tileAct.IsCircle() && continueMoving && tileAct.GetColor() == pipeRenderer.color
-                     && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct)
+                && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct)
                 {
                     CreatePipe(posAbsBoard);
                     continueMoving = false;
@@ -776,7 +776,7 @@ namespace FreeFlowGame
 
                 //Buscamos el extremo con mas tuberias
                 if (range1 < tileAct.GetIndex())
-                    listeach.RemoveRange(0, tileAct.GetIndex());
+                    listeach.RemoveRange(0, tileAct.GetIndex() + 1);
                 else
                 {
                     listeach.RemoveRange(tileAct.GetIndex() + 2, range1 - 1);
@@ -787,24 +787,24 @@ namespace FreeFlowGame
             // listeach.RemoveRange(0, tileAct.GetIndex());
             ///
             //COdigo de mierda para hacer el reverse 
-            if (rev)
-            {
-                listeach.Reverse();
+            //if (rev)
+            //{
+            //    listeach.Reverse();
 
-                //Damos la vuelta a la lista -> ahora el que esta en el indice 0 es el
-                //que tiene el extremo del circulo
-                pipeList[tileAct.GetColor()].Reverse();
+            //    //Damos la vuelta a la lista -> ahora el que esta en el indice 0 es el
+            //    //que tiene el extremo del circulo
+            //    pipeList[tileAct.GetColor()].Reverse();
 
-                //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
-                for (int i = 0; i < pipeList[tileAct.GetColor()].Count; i++)
-                {
-                    pipeList[tileAct.GetColor()][i].SetPipeIndex(i);
-                    boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][i].GetPositionInBoard()).SetIndex(i);
-                }
+            //    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
+            //    for (int i = 0; i < pipeList[tileAct.GetColor()].Count; i++)
+            //    {
+            //        pipeList[tileAct.GetColor()][i].SetPipeIndex(i);
+            //        boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][i].GetPositionInBoard()).SetIndex(i);
+            //    }
 
-                //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
-                tilePipesIni[tileAct.GetColor()] = boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][0].GetPositionInBoard());
-            }
+            //    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
+            //    tilePipesIni[tileAct.GetColor()] = boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][0].GetPositionInBoard());
+            //}
 
             int j = 0;
             //Este bucle recorre los pipes hasta que uno esta desactivado significando que ya se rompio antes luego los siguientes tambien estaran 
@@ -817,6 +817,7 @@ namespace FreeFlowGame
                 {
                     Debug.Log("Trozo temporalmente destruido " + t);
                     t.SetFree(true);
+                    t.SetIndex(-1);
                     a.transform.gameObject.SetActive(false);
                     j++;
                 }
@@ -834,10 +835,9 @@ namespace FreeFlowGame
                     break;
                 }
             }
-
-            foreach (EachPipe a in listeach)
+            if (rev)
             {
-               // Debug.Log(a.GetPositionInBoard());
+
             }
 
             //añadimos a la cola un par con el tile anterior al que hemos atravesado (porque posAct se actualiza en 
