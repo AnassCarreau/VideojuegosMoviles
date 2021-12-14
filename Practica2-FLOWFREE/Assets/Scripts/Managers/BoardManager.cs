@@ -109,7 +109,7 @@ namespace FreeFlowGame
                     if (j == 0 || j == pipes[i].Count - 1)
                     {
                         spawnedTile.Init(false);
-                        spawnedTile.SetCircleColor(pipesColor[i]);
+                        spawnedTile.SetColor(pipesColor[i]);
                     }
                     else spawnedTile.Init(true);
 

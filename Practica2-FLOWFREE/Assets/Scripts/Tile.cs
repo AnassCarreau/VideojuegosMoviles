@@ -42,16 +42,7 @@ namespace FreeFlowGame
             }
         }
 
-        public void SetCircleColor(Color c)
-        {
-            circleRenderer.color = c;
-        }
-
-        public Color GetCircleColor()
-        {
-            return circleRenderer.color;
-        }
-
+      
         public Color GetColor()
         {
             return _color;
@@ -60,6 +51,7 @@ namespace FreeFlowGame
         public void SetColor(Color c)
         {
             _color = c;
+            circleRenderer.color = c;
         }
 
         public Vector2 GetPosTile()
@@ -104,7 +96,7 @@ namespace FreeFlowGame
                 Vector3 v = new Vector2(x, y);
                 o.transform.rotation = Quaternion.Euler(0, 0, (i + 1) * 90);
                 o.transform.position = transform.position + v;
-                o.name = $"Muro {posTile.x} {posTile.y} + {i}";
+                o.name = $"Muro {posTile.x} {posTile.y}";
             }
 
         }
