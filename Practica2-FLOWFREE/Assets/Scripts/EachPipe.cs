@@ -6,6 +6,8 @@ public class EachPipe : MonoBehaviour
 {
     private Vector2 posInBoard;
     private Color c;
+    [SerializeField]
+    private int pipeIndex = 0;
     public void SetPositionInBoard(Vector2 p)
     {
         posInBoard = p;
@@ -23,5 +25,15 @@ public class EachPipe : MonoBehaviour
     public Color GetColorInBoard()
     {
         return c;
+    }
+
+    public int GetPipeIndex()
+    {
+        return pipeIndex;
+    }
+
+    public void SetPipeIndex(int index)
+    {
+        pipeIndex = index;
     }
 }
