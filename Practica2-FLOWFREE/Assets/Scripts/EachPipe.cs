@@ -5,7 +5,8 @@ using UnityEngine;
 public class EachPipe : MonoBehaviour
 {
     private Vector2 posInBoard;
-    private Color c;
+    private Color color;
+    
     [SerializeField]
     private int pipeIndex = 0;
     public void SetPositionInBoard(Vector2 p)
@@ -17,14 +18,14 @@ public class EachPipe : MonoBehaviour
     {
         return posInBoard;
     }
-    public void SetColorInBoard(Color color)
+    public void SetPipeColor(Color color)
     {
-        c = color;
+        this.color = color;
     }
 
-    public Color GetColorInBoard()
+    public Color GetPipeColor()
     {
-        return c;
+        return color;
     }
 
     public int GetPipeIndex()

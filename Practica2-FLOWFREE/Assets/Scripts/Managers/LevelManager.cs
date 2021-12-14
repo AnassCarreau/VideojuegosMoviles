@@ -76,7 +76,7 @@ namespace FreeFlowGame
 
         public void SetflowsText(int n)
         {
-            canvasManager.SetflowsText(n, BoardManager.Instance.getPipeSolution().Count);
+            canvasManager.SetflowsText(n, BoardManager.Instance.GetPipeSolution().Count);
         }
 
         public void SetPercentageText(int n)

@@ -7,7 +7,6 @@ namespace FreeFlowGame
 
     public class BoardManager : MonoBehaviour
     {
-
         [SerializeField]
         private Tile _tilePrefab;
 
@@ -28,8 +27,6 @@ namespace FreeFlowGame
         private Dictionary<Vector2, Tile> _tiles;
 
         private Map m;
-
-        [SerializeField] private Object scene;
 
         private PipeController pipeObject;
 
@@ -67,10 +64,13 @@ namespace FreeFlowGame
         public void Initialize()
         {
             Clear();
-            setPipes();
+            SetPipes();
             transform.localScale = Vector3.one;
             GenerateGrid();
+            SetBoardScale();
+           
             if (pipeObject != null) Destroy(pipeObject.gameObject);
+            
             pipeObject = Instantiate(pipeControllerPrefab, gameObject.transform);
             pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetFlownum());
             pipeObject.SetScaleFactor(scaleFactor);
@@ -87,7 +87,7 @@ namespace FreeFlowGame
                 Destroy(pipeObject);
             }
         }
-        private void setPipes()
+        private void SetPipes()
         {
             LvlActual lvl = GameManager.Instance.getActualPlay();
             m.Parse(GameManager.Instance.GetCurrentLevel());
@@ -129,34 +129,30 @@ namespace FreeFlowGame
                 }
             }
 
+        }
 
+        private void SetBoardScale()
+        {
             float camHeight = Camera.main.orthographicSize * 2.0f;
             float camWidth = camHeight * Camera.main.aspect;
 
             float topFactor = topHud.rect.width / topHud.rect.height;
             float bottomFactor = bottomHud.rect.width / bottomHud.rect.height;
-            
+
             float topHeight = camWidth / topFactor;
             float bottomHeight = camWidth / bottomFactor;
 
-            Debug.Log(topHeight);
-            Debug.Log(bottomHeight);
-
-            float tileSizeY = (camHeight - (topHeight + bottomHeight) )/ m.GetHeight();
+            float tileSizeY = (camHeight - (topHeight + bottomHeight)) / m.GetHeight();
             float tileSizeX = camWidth / m.GetWidth();
 
             if (tileSizeY > tileSizeX)
-            {
                 scaleFactor = tileSizeX;
-            }
             else
-            {
                 scaleFactor = tileSizeY;
-            }
 
             transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            
             _cam.transform.position = new Vector3((((float)m.GetWidth() / 2) - 0.5f) * scaleFactor, -((float)m.GetHeight() / 2) * scaleFactor, -10);
-
         }
 
         public Tile GetTileAtPosition(Vector2 pos)
@@ -165,15 +161,11 @@ namespace FreeFlowGame
             return null;
         }
 
-        public Object getScene()
-        {
-            return scene;
-        }
-        public Color[] getPipesColor()
+        public Color[] GetPipesColor()
         {
             return pipesColor;
         }
-        public List<List<Vector2>> getPipeSolution() { return pipes; }
+        public List<List<Vector2>> GetPipeSolution() { return pipes; }
 
         public PipeController GetPipeController()
         {
@@ -184,7 +176,7 @@ namespace FreeFlowGame
         {
             return m;
         }
-        public float getScaleFactor()
+        public float GetScaleFactor()
         {
             return scaleFactor;
         }
