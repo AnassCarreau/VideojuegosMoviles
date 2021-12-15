@@ -256,6 +256,7 @@ namespace FreeFlowGame
                 //Si esta vacio pintamos 
                 if (tileAct.IsFree() && continueMoving && !tileAct.IsCircle())
                 {
+                    Debug.Log("AAAA");
                     CreatePipe(posAbsBoard);
                 }
                 //Si no esta vacio y es de un color diferente al actual rompemos la linea
@@ -277,6 +278,7 @@ namespace FreeFlowGame
                 else if (tileAct.IsCircle() && continueMoving && tileAct.GetColor() == pipeRenderer.color
                 && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct)
                 {
+                    Debug.Log("BBBBB");
                     CreatePipe(posAbsBoard);
                     continueMoving = false;
                     colorCompleted.Add(pipeRenderer.color);
@@ -290,12 +292,18 @@ namespace FreeFlowGame
                 }
                 else if (!tileAct.IsFree() && tileAct.GetColor() == pipeRenderer.color)
                 {
+                    Debug.Log("CCCC");
+
                     if (tileAct.GetIndex() != -1)
                     {
+                        Debug.Log("C1");
+
                         DestroyChildrenFromIndex(tileAct.GetColor(), tileAct.GetIndex() + 1);
                     }
                     else
                     {
+                        Debug.Log("C2");
+
                         DestroyChildren();
                     }
                     posAct = pipeList[pipeRenderer.color].Count != 0 ? pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard() : posIni;
@@ -369,30 +377,49 @@ namespace FreeFlowGame
             if (brokePipes.Count > 0 && brokePipes.ContainsKey(tile))
             {
 
-                if (colorCompleted.Contains(tile.GetColor()))
-                {
-                    Color c = brokePipes[tile].Peek().GetPipeColor();
-                    copypipeList[c].Reverse();
+                Debug.Log("¿Reconstruccion?");
+                //if (colorCompleted.Contains(tile.GetColor()))
+                //{
+                //    Debug.Log("Da la vuelta");
+                //    Color c = brokePipes[tile].Peek().GetPipeColor();
+                //    copypipeList[c].Reverse();
 
-                    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
-                    for (int i = 0; i < copypipeList[c].Count; i++)
-                    {
-                        copypipeList[c][i].SetPipeIndex(i);
-                        boardManager.GetTileAtPosition(pipeList[c][i].GetPositionInBoard()).SetIndex(i);
-                    }
+                //    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
+                //    for (int i = 0; i < copypipeList[c].Count; i++)
+                //    {
+                //        copypipeList[c][i].SetPipeIndex(i);
+                //        boardManager.GetTileAtPosition(pipeList[c][i].GetPositionInBoard()).SetIndex(i);
+                //    }
 
-                    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
-                    //tilePipesIni[c] = boardManager.GetTileAtPosition(pipeList[c][0].GetPositionInBoard());
-                }
+                //    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
+                //    //tilePipesIni[c] = boardManager.GetTileAtPosition(pipeList[c][0].GetPositionInBoard());
+                //}
                 ////
-                foreach (EachPipe a in brokePipes[tile])
+                EachPipe[] aux = brokePipes[tile].ToArray();
+                Debug.Log("Que mierdas esta pasando???");
+                foreach (EachPipe p in copypipeList[tileAct.GetColor()])
                 {
-                    Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
-                    t.SetFree(false);
-                    t.SetColor(a.GetPipeColor());
-                    t.SetIndex(a.GetPipeIndex());
-                    a.transform.gameObject.SetActive(true);
+                    Debug.Log("Indice en copyPipeList: " + p.GetPipeIndex());
                 }
+
+
+                for (int i = aux.Length - 1; i >= 0; i--)
+                {
+                    Debug.Log("Añadiendo pipe con indice: " + aux[i].GetPipeIndex());
+                    Tile t = boardManager.GetTileAtPosition(aux[i].GetPositionInBoard());
+                    t.SetFree(false);
+                    t.SetColor(aux[i].GetPipeColor());
+                    t.SetIndex(aux[i].GetPipeIndex());
+                    aux[i].transform.gameObject.SetActive(true);
+                    copypipeList[tile.GetColor()].Add(aux[i]);
+
+                }
+
+                foreach (EachPipe p in copypipeList[tileAct.GetColor()])
+                {
+                    Debug.Log("Indice en copyPipeList: " + p.GetPipeIndex());
+                }
+
                 brokePipes.Remove(tile);
             }
 
@@ -446,8 +473,10 @@ namespace FreeFlowGame
         {
             EachPipe pipeToRemove = pipeList[c][i];
             Tile childTile = boardManager.GetTileAtPosition(pipeToRemove.GetPositionInBoard());
-
+            Debug.Log(copypipeList[c].Count);
             pipeList[c].Remove(pipeToRemove);
+            Debug.Log(copypipeList[c].Count);
+
             //¿Estoy destruyendo por rotura? No, pues entonces podemos poner el tile a free y el index a -1
             if (brokePipes.Count > 0 && !brokePipes.ContainsKey(childTile) || brokePipes.Count == 0)
             {
@@ -542,13 +571,13 @@ namespace FreeFlowGame
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
 
             //Añadimos Pipe ->el que pintamos
-            pipeList[pipeRenderer.color].Add(Instantiate(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
+            copypipeList[pipeRenderer.color].Add(Instantiate(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
 
             //Setteamos valores al eachpipe
-            int index = pipeList[pipeRenderer.color].Count - 1;
-            pipeList[pipeRenderer.color][index].SetPositionInBoard(posAct_);
-            pipeList[pipeRenderer.color][index].SetPipeColor(pipeRenderer.color);
-            pipeList[pipeRenderer.color][index].SetPipeIndex(index);
+            int index = copypipeList[pipeRenderer.color].Count - 1;
+            copypipeList[pipeRenderer.color][index].SetPositionInBoard(posAct_);
+            copypipeList[pipeRenderer.color][index].SetPipeColor(pipeRenderer.color);
+            copypipeList[pipeRenderer.color][index].SetPipeIndex(index);
 
             //Setteamos valores actualizados al tile actual
             act.SetFree(false);
@@ -759,8 +788,17 @@ namespace FreeFlowGame
                     //}
                 }
                 pipeList = new Dictionary<Color, List<EachPipe>>(copypipeList);
+                foreach (Color color in copypipeList.Keys)
+                {
+                    Debug.Log("Color: " + color);
+                    foreach (EachPipe i in copypipeList[color])
+                    {
+                        Debug.Log("Contiene indice: " + i.GetPipeIndex());
+                    }
+                }
                 LevelManager.Instance.SetflowsText(colorCompleted.Count);
                 brokePipes.Clear();
+                Debug.Log("Clear copyPipeList");
                 copypipeList.Clear();
             }
         }
@@ -779,24 +817,58 @@ namespace FreeFlowGame
                 //Buscamos el extremo con mas tuberias
                 if (range1 < tileAct.GetIndex())
                 {
-                    copypipeList[tileAct.GetColor()].RemoveRange(tileAct.GetIndex(), range1 - 1);
+                    Debug.Log("QuitamosRango");
+                    copypipeList[tileAct.GetColor()].RemoveRange(tileAct.GetIndex(), listeach.Count - tileAct.GetIndex());
                     listeach.RemoveRange(0, tileAct.GetIndex());
+
+                    foreach (EachPipe p in copypipeList[tileAct.GetColor()])
+                    {
+                        Debug.Log("Indice en copyPipeList: " + p.GetPipeIndex());
+                    }
+                    //foreach (EachPipe p in listeach)
+                    //{
+                    //    Debug.Log("Indice en listeach: " + p.GetPipeIndex());
+                    //}
                 }
                 else
                 {
+                    Debug.Log("QuitamosRango");
+
                     copypipeList[tileAct.GetColor()].RemoveRange(0, tileAct.GetIndex() + 2);
                     listeach.RemoveRange(tileAct.GetIndex() + 2, range1 - 1);
 
+
+                    //foreach (EachPipe p in copypipeList[tileAct.GetColor()])
+                    //{
+                    //    Debug.Log("Indice en copyPipeList: " + p.GetPipeIndex());
+                    //}
+                    //foreach (EachPipe p in listeach)
+                    //{
+                    //    Debug.Log("Indice en listeach: " + p.GetPipeIndex());
+                    //}
                     //rev = true;
+
+                    //Si hemos quitado de 0 a index en este fragmento, deberiamos darle la vuelta al pipe
+                    Debug.Log("Damos vuelta");
+                    copypipeList[tileAct.GetColor()].Reverse();
+
+                    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
+                    for (int i = 0; i < copypipeList[tileAct.GetColor()].Count; i++)
+                    {
+                        copypipeList[tileAct.GetColor()][i].SetPipeIndex(i);
+                        boardManager.GetTileAtPosition(copypipeList[tileAct.GetColor()][i].GetPositionInBoard()).SetIndex(i);
+                    }
                 }
 
                 colorCompleted.Remove(tileAct.GetColor());
             }
             else
             {
-                Debug.Log("Index: " + tileAct.GetIndex());
-                Debug.Log("Range: " + (range1 + 1));
-                Debug.Log("Count: " + listeach.Count);
+                Debug.Log("QuitamosRango");
+
+                //Debug.Log("Index: " + tileAct.GetIndex());
+                //Debug.Log("Range: " + (range1 + 1));
+                //Debug.Log("Count: " + listeach.Count);
                 copypipeList[tileAct.GetColor()].RemoveRange(tileAct.GetIndex(), range1 + 1);
                 listeach.RemoveRange(0, tileAct.GetIndex());
             }
@@ -844,6 +916,8 @@ namespace FreeFlowGame
                     Debug.Log(j);
                     if (!rev)
                     {
+                        Debug.Log("QuitamosRango (Pero no de la lista que nos interesa)");
+
                         listeach.RemoveRange(j, listeach.Count - j);
                     }
                     else { }
