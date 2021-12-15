@@ -23,7 +23,7 @@ namespace FreeFlowGame
 
         //Diccionario con los pipes de cada color
         private Dictionary<Color, List<EachPipe>> pipeList;
-        private Dictionary<Color, List<EachPipe>> copypipeList;
+      //  private Dictionary<Color, List<EachPipe>> copypipeList;
 
         private Dictionary<Color, Tile> tilePipesIni;
 
@@ -70,6 +70,7 @@ namespace FreeFlowGame
         private bool lastPipeColor;
         float scaleFactor;
 
+        #region MonoBehaviour
         void Start()
         {
             //Pone las variables principales del dibujado como deben empezar
@@ -82,7 +83,7 @@ namespace FreeFlowGame
             boardManager = BoardManager.Instance;
             pipeParent = new Dictionary<Color, Transform>();
             pipeList = new Dictionary<Color, List<EachPipe>>();
-            copypipeList = new Dictionary<Color, List<EachPipe>>();
+         //   copypipeList = new Dictionary<Color, List<EachPipe>>();
 
             tilePipesIni = new Dictionary<Color, Tile>();
 
@@ -107,9 +108,6 @@ namespace FreeFlowGame
             LevelManager.Instance.SetBestText();
             Percentage();
         }
-
-        public void SetScaleFactor(float scale) { scaleFactor = scale; }
-
         void Update()
         {
             Vector2 posInBoard;
@@ -165,10 +163,12 @@ namespace FreeFlowGame
 #endif
 
 #if UNITY_EDITOR
-            if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
+            //if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
 #endif
         }
+        #endregion
 
+        #region DragMood
         private void InitDrag(Vector2 posInBoard)
         {
             //posAbsBoard son las coordenadas de la pulsación en coordenadas del tablero, es decir, (0, 0), (0, -1) ... en formato
@@ -203,6 +203,8 @@ namespace FreeFlowGame
                     tilePipesIni[pipeRenderer.color] = tileIni;
                     //si hubiese ya tuberia de ese color se destruye con todo lo que eso conlleva
                     if (pipeList[pipeRenderer.color].Count > 0) DestroyChildren();
+
+                    CreatePipe(posAbsBoard);
                 }
 
                 //Si es un pipe y tiene index destruimos los hermanos posteriores a ese indice
@@ -227,9 +229,8 @@ namespace FreeFlowGame
                 }
             }
 
-            copypipeList = new Dictionary<Color, List<EachPipe>>(pipeList);
+          //  copypipeList = new Dictionary<Color, List<EachPipe>>(pipeList);
         }
-
         private void OnDrag(Vector2 posInBoard)
         {
             //Posicion del raton en posiciones del tablero, al igual que en InitDrag
@@ -254,8 +255,9 @@ namespace FreeFlowGame
             if (tileAct != null)
             {
                 //Si esta vacio pintamos 
-                if (tileAct.IsFree() && continueMoving && !tileAct.IsCircle())
+                if (tileAct.IsFree() && !tileAct.IsCircle() && continueMoving)
                 {
+                    Debug.Log("creo");
                     CreatePipe(posAbsBoard);
                 }
                 //Si no esta vacio y es de un color diferente al actual rompemos la linea
@@ -277,6 +279,7 @@ namespace FreeFlowGame
                 else if (tileAct.IsCircle() && continueMoving && tileAct.GetColor() == pipeRenderer.color
                 && boardManager.GetTileAtPosition(tilePipesIni[pipeRenderer.color].GetPosTile()) != tileAct)
                 {
+                    Debug.Log("extremo");
                     CreatePipe(posAbsBoard);
                     continueMoving = false;
                     colorCompleted.Add(pipeRenderer.color);
@@ -288,8 +291,10 @@ namespace FreeFlowGame
                         starsInPipes[pipeRenderer.color][1].SetActive(true);
                     }
                 }
-                else if (!tileAct.IsFree() && tileAct.GetColor() == pipeRenderer.color)
+                else if ((!tileAct.IsFree() || tileAct.IsCircle() )  && tileAct.GetColor() == pipeRenderer.color)
                 {
+                    Debug.Log("destruir");
+
                     if (tileAct.GetIndex() != -1)
                     {
                         DestroyChildrenFromIndex(tileAct.GetColor(), tileAct.GetIndex() + 1);
@@ -298,6 +303,7 @@ namespace FreeFlowGame
                     {
                         DestroyChildren();
                     }
+
                     posAct = pipeList[pipeRenderer.color].Count != 0 ? pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard() : posIni;
                     continueMoving = true;
                 }
@@ -322,7 +328,6 @@ namespace FreeFlowGame
 
             }
         }
-
         private void OnRelease()
         {
             DestroyBrokenPipes();
@@ -348,55 +353,13 @@ namespace FreeFlowGame
                 return;
             }
 
-            //TO DO: BORRAR, Es para debuggear
-            //foreach (Color color in pipeList.Keys)
-            //{
-            //    Debug.Log("Color: " + color);
-            //    foreach (EachPipe pipe in pipeList[color])
-            //    {
-            //        Debug.Log(pipe.GetPipeIndex());
-            //    }
-            //}
+
 
             ResetVariables();
         }
+        #endregion
 
-        private void Reconstruction(Tile tile)
-        {
-            // Debug.Log(tile);
-            ///
-            //COdigo de mierda para rehacer el reverse 
-            if (brokePipes.Count > 0 && brokePipes.ContainsKey(tile))
-            {
-
-                if (colorCompleted.Contains(tile.GetColor()))
-                {
-                    Color c = brokePipes[tile].Peek().GetPipeColor();
-                    copypipeList[c].Reverse();
-
-                    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
-                    for (int i = 0; i < copypipeList[c].Count; i++)
-                    {
-                        copypipeList[c][i].SetPipeIndex(i);
-                        boardManager.GetTileAtPosition(pipeList[c][i].GetPositionInBoard()).SetIndex(i);
-                    }
-
-                    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
-                    //tilePipesIni[c] = boardManager.GetTileAtPosition(pipeList[c][0].GetPositionInBoard());
-                }
-                ////
-                foreach (EachPipe a in brokePipes[tile])
-                {
-                    Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
-                    t.SetFree(false);
-                    t.SetColor(a.GetPipeColor());
-                    t.SetIndex(a.GetPipeIndex());
-                    a.transform.gameObject.SetActive(true);
-                }
-                brokePipes.Remove(tile);
-            }
-
-        }
+        #region Destroy
         /// <summary>
         /// Destruye todos los hijos de un color
         /// </summary>
@@ -413,6 +376,7 @@ namespace FreeFlowGame
                 }
                 i--;
             }
+            
             colorCompleted.Remove(pipeRenderer.color);
             LevelManager.Instance.SetflowsText(colorCompleted.Count);
             Percentage();
@@ -426,6 +390,8 @@ namespace FreeFlowGame
         private void DestroyChildrenFromIndex(Color c, int index)
         {
             int i = pipeList[c].Count;
+            Debug.Log(i);
+            Debug.Log(index);
             while (i != index)
             {
                 DestroyPipe(c, i - 1);
@@ -451,14 +417,268 @@ namespace FreeFlowGame
             //¿Estoy destruyendo por rotura? No, pues entonces podemos poner el tile a free y el index a -1
             if (brokePipes.Count > 0 && !brokePipes.ContainsKey(childTile) || brokePipes.Count == 0)
             {
-                childTile.SetFree(true);
                 childTile.SetIndex(-1);
             }
             Destroy(pipeToRemove.gameObject);
             numPipesInBoard--;
         }
+        private void OnDestroy()
+        {
+            foreach (Color c in boardManager.GetPipesColor())
+            {
+                Destroy(pipeParent[c].gameObject);
+            }
+        }
 
-        public void PaintClue()
+        private void DestroyBrokenPipes()
+        {
+            //Si hemos roto alguna tuberia, destruimos los gameObject que hemos desactivado
+            if (brokePipes.Count > 0)
+            {
+                foreach (Tile tile in brokePipes.Keys)
+                {
+                    Color pipeColor = brokePipes[tile].Peek().GetPipeColor();
+
+                    if (colorCompleted.Contains(pipeColor)) colorCompleted.Remove(pipeColor);
+
+                    int fistIndex = brokePipes[tile].Peek().GetPipeIndex();
+                    int lastIndex = fistIndex;
+                    while (brokePipes[tile].Count != 0)
+                    {
+                        EachPipe pipeToDestroy = brokePipes[tile].Pop();
+                        lastIndex = pipeToDestroy.GetPipeIndex();
+                        Destroy(pipeToDestroy.gameObject);
+                    }
+
+                    //int range;
+                    //if (lastIndex < fistIndex)
+                    //{
+                    //    range = fistIndex - lastIndex;
+                    //}
+                    //else
+                    //{
+                    //    range = lastIndex - fistIndex;
+                    //}
+
+                    ////Removemos estos pipes de la lista de pipes 
+                    //pipeList[pipeColor].RemoveRange(Math.Min(fistIndex, lastIndex), range + 1);
+
+                    ////Si cortamos el principio, la organizacion por indices se nos descuadra, asi que
+                    ////la vamos a colocar bien
+                    //if (pipeList[pipeColor].Count > 0 && pipeList[pipeColor][0].GetPipeIndex() != 0)
+                    //{
+                    //    //Damos la vuelta a la lista -> ahora el que esta en el indice 0 es el
+                    //    //que tiene el extremo del circulo
+                    //    pipeList[pipeColor].Reverse();
+
+                    //    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
+                    //    for (int i = 0; i < pipeList[pipeColor].Count; i++)
+                    //    {
+                    //        pipeList[pipeColor][i].SetPipeIndex(i);
+                    //        boardManager.GetTileAtPosition(pipeList[pipeColor][i].GetPositionInBoard()).SetIndex(i);
+                    //    }
+
+                    //    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
+                    //    tilePipesIni[pipeColor] = boardManager.GetTileAtPosition(pipeList[pipeColor][0].GetPositionInBoard());
+                    //}
+                }
+               // pipeList = new Dictionary<Color, List<EachPipe>>(copypipeList);
+                LevelManager.Instance.SetflowsText(colorCompleted.Count);
+                brokePipes.Clear();
+               // copypipeList.Clear();
+            }
+        }
+
+        private void DestroyPipeTemporarily()
+        {
+            //Nos guardamos la lista del pipe que vamos a romper
+           // List<EachPipe> listeach = new List<EachPipe>(copypipeList[tileAct.GetColor()]);
+            List<EachPipe> listeach = new List<EachPipe>(pipeList[tileAct.GetColor()]);
+
+            //Si la tubería esta completa nos quedamos con la parte mas larga de la tuberia 
+            //si no esta completa desactivamos desde el indice 0 hasta el indice del tile
+            Debug.Log("index de shit " + tileAct.GetIndex());
+            int range = (listeach.Count - 1) - tileAct.GetIndex();
+            bool rev = false;
+            if (colorCompleted.Contains(tileAct.GetColor()))
+            {
+                //Buscamos el extremo con mas tuberias
+                if (range <= tileAct.GetIndex())
+                {
+                    //copypipeList[tileAct.GetColor()].RemoveRange(tileAct.GetIndex(), range - 1);
+                    Debug.Log("TOSTUS");
+                    listeach.RemoveRange(0, tileAct.GetIndex());
+                }
+                else
+                {
+                    Debug.Log("TOSTUS2");
+                    //copypipeList[tileAct.GetColor()].RemoveRange(0, tileAct.GetIndex() + 2);
+                    listeach.Reverse();
+                    listeach.RemoveRange(0,  tileAct.GetIndex() + 1 );
+
+                    rev = true;
+                }
+
+                colorCompleted.Remove(tileAct.GetColor());
+            }
+            else
+            {
+                Debug.Log("Index: " + tileAct.GetIndex());
+                Debug.Log("Range: " + (range + 1));
+                Debug.Log("Count: " + listeach.Count);
+                //copypipeList[tileAct.GetColor()].RemoveRange(tileAct.GetIndex(), range + 1);
+                listeach.RemoveRange(0, tileAct.GetIndex());
+            }
+            
+            if (rev)
+            {
+                
+                //Damos la vuelta a la lista -> ahora el que esta en el indice 0 es el
+                //que tiene el extremo del circulo
+                pipeList[tileAct.GetColor()].Reverse();
+
+                //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
+                for (int i = 0; i < pipeList[tileAct.GetColor()].Count; i++)
+                {
+                    pipeList[tileAct.GetColor()][i].SetPipeIndex(i);
+                    boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][i].GetPositionInBoard()).SetIndex(i);
+                }
+
+                //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
+                tilePipesIni[tileAct.GetColor()] = boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][0].GetPositionInBoard());
+            }
+
+            int j = 0;
+            //Este bucle recorre los pipes hasta que uno esta desactivado significando que ya se rompio antes luego los siguientes tambien estaran 
+            // rotos asi que quitamos ese rango y nos quedamos solo con los que nosotros ponemos a false 
+            foreach (EachPipe a in listeach)
+            {
+                Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
+                Debug.Log(" Lista de TROZO A DESTRUIR " + t);
+            }
+
+            foreach (EachPipe a in listeach)
+            {
+                Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
+                //Si el objeto esta activo lo desactivamos y ponemos el tile como libre
+                if (a.transform.gameObject.activeSelf)
+                {
+                   
+                    t.SetIndex(-1);
+                    a.transform.gameObject.SetActive(false);
+                    j++;
+                }
+                //Si no esta activo eliminamos de la lista desde el indice en el que estamos hasta el numero de pipes
+                //que hay menos el indice
+                else
+                {
+                    Debug.Log("ayuda");
+                    Debug.Log(j);
+                    Debug.Log(listeach.Count - j);
+                    if (rev)
+                    {
+                        listeach.RemoveRange(j + 1, listeach.Count - j - 1);
+
+                    }
+                    else
+                    {
+                        listeach.RemoveRange(j, listeach.Count - j);
+
+                    }
+                    break;
+                }
+            }
+
+            //añadimos a la cola un par con el tile anterior al que hemos atravesado (porque posAct se actualiza en 
+            //CreatePipe entonces sigue siendo el del anterior tile) y la lista con las tuberías restantes del pipe a romper 
+            brokePipes.Add(boardManager.GetTileAtPosition(posAct), new Stack<EachPipe>(listeach));
+        }
+        #endregion
+
+        #region Create
+        private void CreatePipe(Vector2 posAbsBoard)
+        {
+            //Antes de un posible cambio de direccion guardo la dir en la que iba
+            if (IsDirValid(dirAct)) dirAnt = dirAct;
+
+            dirAct = posAbsBoard - posAct;
+
+            Vector2 posLastPainted = lastTilePainted.GetPosTile();
+            if (tileAct.IsCircle() || ( IsDirValid(dirAct) && !IsThereWallInDir(tileAct, dirAct) && IsDirValid(posLastPainted - posAbsBoard) && boardManager.GetTileAtPosition(posAbsBoard) != null))
+            {
+                posAct = posAbsBoard;
+                Vector2 posPipe = centerPipe(posLastPainted, dirAct);
+                PaintPipe(tileAct, posAct, posPipe, dirAct, true);
+            }
+        }
+
+        private void PaintPipe(Tile act, Vector2 posAct_, Vector2 posPipe, Vector2 dir, bool calculateAngle)
+        {
+            float angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
+            if (calculateAngle)
+            {
+                anglePipe = GetAngleRotation();
+                angle = anglePipe;
+            }
+            Quaternion rot = Quaternion.Euler(0f, 0f, angle);
+
+            //Añadimos Pipe ->el que pintamos
+            pipeList[pipeRenderer.color].Add(Instantiate(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
+
+            //Setteamos valores al eachpipe
+            int index = pipeList[pipeRenderer.color].Count - 1;
+            pipeList[pipeRenderer.color][index].SetPositionInBoard(posAct_);
+            pipeList[pipeRenderer.color][index].SetPipeColor(pipeRenderer.color);
+            pipeList[pipeRenderer.color][index].SetPipeIndex(index);
+
+            //Setteamos valores actualizados al tile actual
+            act.SetIndex(index);
+            act.SetColor(pipeRenderer.color);
+
+            numPipesInBoard++;
+            Percentage();
+        }
+        private void Reconstruction(Tile tile)
+        {
+            // Debug.Log(tile);
+            ///
+            //COdigo de mierda para rehacer el reverse 
+            if (brokePipes.Count > 0 && brokePipes.ContainsKey(tile))
+            {
+
+                if (colorCompleted.Contains(tile.GetColor()))
+                {
+                    Color c = brokePipes[tile].Peek().GetPipeColor();
+                    pipeList[c].Reverse();
+                   // copypipeList[c].Reverse();
+
+                    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
+                    for (int i = 0; i < pipeList[c].Count; i++)
+                    {
+                        //copypipeList[c][i].SetPipeIndex(i);
+                        pipeList[c][i].SetPipeIndex(i);
+                        boardManager.GetTileAtPosition(pipeList[c][i].GetPositionInBoard()).SetIndex(i);
+                    }
+
+                    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
+                    //tilePipesIni[c] = boardManager.GetTileAtPosition(pipeList[c][0].GetPositionInBoard());
+                }
+                ////
+                foreach (EachPipe a in brokePipes[tile])
+                {
+                    Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
+                    t.SetColor(a.GetPipeColor());
+                    t.SetIndex(a.GetPipeIndex());
+                    a.transform.gameObject.SetActive(true);
+                }
+                brokePipes.Remove(tile);
+            }
+
+        }
+        #endregion
+
+        #region Clue
+       /* public void PaintClue()
         {
             if (colorCompleted.Count < pipeSolution.Count)
             {
@@ -529,41 +749,16 @@ namespace FreeFlowGame
                     return;
                 }
             }
-        }
+        }*/
+        #endregion
 
-        private void PaintPipe(Tile act, Vector2 posAct_, Vector2 posPipe, Vector2 dir, bool calculateAngle)
-        {
-            float angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
-            if (calculateAngle)
-            {
-                anglePipe = GetAngleRotation();
-                angle = anglePipe;
-            }
-            Quaternion rot = Quaternion.Euler(0f, 0f, angle);
-
-            //Añadimos Pipe ->el que pintamos
-            pipeList[pipeRenderer.color].Add(Instantiate(pipe, new Vector2(posPipe.x, posPipe.y), rot, pipeParent[pipeRenderer.color]));
-
-            //Setteamos valores al eachpipe
-            int index = pipeList[pipeRenderer.color].Count - 1;
-            pipeList[pipeRenderer.color][index].SetPositionInBoard(posAct_);
-            pipeList[pipeRenderer.color][index].SetPipeColor(pipeRenderer.color);
-            pipeList[pipeRenderer.color][index].SetPipeIndex(index);
-
-            //Setteamos valores actualizados al tile actual
-            act.SetFree(false);
-            act.SetIndex(index);
-            act.SetColor(pipeRenderer.color);
-
-            numPipesInBoard++;
-            Percentage();
-        }
-
+        #region Aux
         private bool IsDirValid(Vector2 dir)
         {
             if (Vector2.SqrMagnitude(dir) == 1) return true;
             else return false;
         }
+        public void SetScaleFactor(float scale) { scaleFactor = scale; }
 
         private bool IsThereWallInDir(Tile tileAnt, Vector2 dir)
         {
@@ -612,22 +807,7 @@ namespace FreeFlowGame
             return anglePipe;
         }
 
-        private void CreatePipe(Vector2 posAbsBoard)
-        {
-            //Antes de un posible cambio de direcci�n guardo la dir en la que iba
-            if (IsDirValid(dirAct)) dirAnt = dirAct;
-
-            dirAct = posAbsBoard - posAct;
-
-            Vector2 posLastPainted = lastTilePainted.GetPosTile();
-            if (IsDirValid(dirAct) && !IsThereWallInDir(tileAct, dirAct) && IsDirValid(posLastPainted - posAbsBoard) && boardManager.GetTileAtPosition(posAbsBoard) != null)
-            {
-                posAct = posAbsBoard;
-                Vector2 posPipe = centerPipe(posLastPainted, dirAct);
-                PaintPipe(tileAct, posAct, posPipe, dirAct, true);
-            }
-        }
-
+        
         private bool AllPipesCompleted()
         {
             return colorCompleted.Count == boardManager.GetPipeSolution().Count;
@@ -635,7 +815,7 @@ namespace FreeFlowGame
 
         private Vector2 centerPipe(Vector2 posTileAnt, Vector2 dirAct_)
         {
-            Vector2 posPipe = new Vector2(0, 0);
+            Vector2 posPipe = new Vector2(posTileAnt.x, posTileAnt.y);
 
             if (dirAct_.x > 0) posPipe = new Vector2(posTileAnt.x + 0.5f, posTileAnt.y);
             else if (dirAct_.x < 0) posPipe = new Vector2(posTileAnt.x - 0.5f, posTileAnt.y);
@@ -645,13 +825,7 @@ namespace FreeFlowGame
             return posPipe * scaleFactor;
         }
 
-        private void OnDestroy()
-        {
-            foreach (Color c in boardManager.GetPipesColor())
-            {
-                Destroy(pipeParent[c].gameObject);
-            }
-        }
+       
         public void SetTotalPipesInBoard(int n) { totalPipesInBoard = n; }
 
         private void Percentage()
@@ -705,155 +879,7 @@ namespace FreeFlowGame
             tileAct = null;
             lastTilePainted = null;
         }
+        #endregion
 
-        private void DestroyBrokenPipes()
-        {
-            //Si hemos roto alguna tuberia, destruimos los gameObject que hemos desactivado
-            if (brokePipes.Count > 0)
-            {
-                foreach (Tile tile in brokePipes.Keys)
-                {
-                    Color pipeColor = brokePipes[tile].Peek().GetPipeColor();
-
-                    if (colorCompleted.Contains(pipeColor)) colorCompleted.Remove(pipeColor);
-
-                    int fistIndex = brokePipes[tile].Peek().GetPipeIndex();
-                    int lastIndex = fistIndex;
-                    while (brokePipes[tile].Count != 0)
-                    {
-                        EachPipe pipeToDestroy = brokePipes[tile].Pop();
-                        lastIndex = pipeToDestroy.GetPipeIndex();
-                        Destroy(pipeToDestroy.gameObject);
-                    }
-
-                    //int range;
-                    //if (lastIndex < fistIndex)
-                    //{
-                    //    range = fistIndex - lastIndex;
-                    //}
-                    //else
-                    //{
-                    //    range = lastIndex - fistIndex;
-                    //}
-
-                    ////Removemos estos pipes de la lista de pipes 
-                    //pipeList[pipeColor].RemoveRange(Math.Min(fistIndex, lastIndex), range + 1);
-
-                    ////Si cortamos el principio, la organizacion por indices se nos descuadra, asi que
-                    ////la vamos a colocar bien
-                    //if (pipeList[pipeColor].Count > 0 && pipeList[pipeColor][0].GetPipeIndex() != 0)
-                    //{
-                    //    //Damos la vuelta a la lista -> ahora el que esta en el indice 0 es el
-                    //    //que tiene el extremo del circulo
-                    //    pipeList[pipeColor].Reverse();
-
-                    //    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
-                    //    for (int i = 0; i < pipeList[pipeColor].Count; i++)
-                    //    {
-                    //        pipeList[pipeColor][i].SetPipeIndex(i);
-                    //        boardManager.GetTileAtPosition(pipeList[pipeColor][i].GetPositionInBoard()).SetIndex(i);
-                    //    }
-
-                    //    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
-                    //    tilePipesIni[pipeColor] = boardManager.GetTileAtPosition(pipeList[pipeColor][0].GetPositionInBoard());
-                    //}
-                }
-                pipeList = new Dictionary<Color, List<EachPipe>>(copypipeList);
-                LevelManager.Instance.SetflowsText(colorCompleted.Count);
-                brokePipes.Clear();
-                copypipeList.Clear();
-            }
-        }
-
-        private void DestroyPipeTemporarily()
-        {
-            //Nos guardamos la lista del pipe que vamos a romper
-            List<EachPipe> listeach = new List<EachPipe>(copypipeList[tileAct.GetColor()]);
-
-            //Si la tubería esta completa nos quedamos con la parte mas larga de la tuberia 
-            //si no esta completa desactivamos desde el indice 0 hasta el indice del tile
-            bool rev = false;
-            int range1 = (listeach.Count - 1) - tileAct.GetIndex();
-            if (colorCompleted.Contains(tileAct.GetColor()))
-            {
-                //Buscamos el extremo con mas tuberias
-                if (range1 < tileAct.GetIndex())
-                {
-                    copypipeList[tileAct.GetColor()].RemoveRange(tileAct.GetIndex(), range1 - 1);
-                    listeach.RemoveRange(0, tileAct.GetIndex());
-                }
-                else
-                {
-                    copypipeList[tileAct.GetColor()].RemoveRange(0, tileAct.GetIndex() + 2);
-                    listeach.RemoveRange(tileAct.GetIndex() + 2, range1 - 1);
-
-                    //rev = true;
-                }
-
-                colorCompleted.Remove(tileAct.GetColor());
-            }
-            else
-            {
-                Debug.Log("Index: " + tileAct.GetIndex());
-                Debug.Log("Range: " + (range1 + 1));
-                Debug.Log("Count: " + listeach.Count);
-                copypipeList[tileAct.GetColor()].RemoveRange(tileAct.GetIndex(), range1 + 1);
-                listeach.RemoveRange(0, tileAct.GetIndex());
-            }
-            // listeach.RemoveRange(0, tileAct.GetIndex());
-            ///
-            //COdigo de mierda para hacer el reverse 
-            //if (rev)
-            //{
-            //    listeach.Reverse();
-
-            //    //Damos la vuelta a la lista -> ahora el que esta en el indice 0 es el
-            //    //que tiene el extremo del circulo
-            //    pipeList[tileAct.GetColor()].Reverse();
-
-            //    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
-            //    for (int i = 0; i < pipeList[tileAct.GetColor()].Count; i++)
-            //    {
-            //        pipeList[tileAct.GetColor()][i].SetPipeIndex(i);
-            //        boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][i].GetPositionInBoard()).SetIndex(i);
-            //    }
-
-            //    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
-            //    tilePipesIni[tileAct.GetColor()] = boardManager.GetTileAtPosition(pipeList[tileAct.GetColor()][0].GetPositionInBoard());
-            //}
-
-            int j = 0;
-            //Este bucle recorre los pipes hasta que uno esta desactivado significando que ya se rompio antes luego los siguientes tambien estaran 
-            // rotos asi que quitamos ese rango y nos quedamos solo con los que nosotros ponemos a false 
-            foreach (EachPipe a in listeach)
-            {
-                Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
-                //Si el objeto esta activo lo desactivamos y ponemos el tile como libre
-                if (a.transform.gameObject.activeSelf)
-                {
-                    t.SetFree(true);
-                    t.SetIndex(-1);
-                    a.transform.gameObject.SetActive(false);
-                    j++;
-                }
-                //Si no esta activo eliminamos de la lista desde el indice en el que estamos hasta el numero de pipes
-                //que hay menos el indice
-                else
-                {
-                    Debug.Log("ayuda");
-                    Debug.Log(j);
-                    if (!rev)
-                    {
-                        listeach.RemoveRange(j, listeach.Count - j);
-                    }
-                    else { }
-                    break;
-                }
-            }
-
-            //añadimos a la cola un par con el tile anterior al que hemos atravesado (porque posAct se actualiza en 
-            //CreatePipe entonces sigue siendo el del anterior tile) y la lista con las tuberías restantes del pipe a romper 
-            brokePipes.Add(boardManager.GetTileAtPosition(posAct), new Stack<EachPipe>(listeach));
-        }
     }
 }
