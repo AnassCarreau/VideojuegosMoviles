@@ -291,9 +291,9 @@ namespace FreeFlowGame
                     if (tileAct.GetIndex() != -1)
                     {
                         DestroyChildrenFromIndex(tileAct.GetColor(), tileAct.GetIndex() + 1);
-                        //TO DO: esto rompe el deshacer una a una, pero si quitas esto, si rompes de una
+                        //TO DO: descomentar esto rompe el deshacer una a una, pero si quitas esto, si rompes de una
                         //forma especifica el juego se va a la puta
-                        DestroyPipeTemporarily();
+                        //DestroyPipeTemporarily();
                     }
                     else
                     {
@@ -707,24 +707,24 @@ namespace FreeFlowGame
                             boardManager.GetTileAtPosition(pipeList[pipeColor][i].GetPositionInBoard()).SetIndex(i);
                         }
 
-                    //    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
-                    //    for (int i = 0; i < pipeList[pipeColor].Count; i++)
-                    //    {
-                    //        pipeList[pipeColor][i].SetPipeIndex(i);
-                    //        boardManager.GetTileAtPosition(pipeList[pipeColor][i].GetPositionInBoard()).SetIndex(i);
-                    //    }
+                        //    //Ponemos bien los indices para que vayan de 0 a pipeList.Count - 1
+                        //    for (int i = 0; i < pipeList[pipeColor].Count; i++)
+                        //    {
+                        //        pipeList[pipeColor][i].SetPipeIndex(i);
+                        //        boardManager.GetTileAtPosition(pipeList[pipeColor][i].GetPositionInBoard()).SetIndex(i);
+                        //    }
 
-                    //    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
-                    //    tilePipesIni[pipeColor] = boardManager.GetTileAtPosition(pipeList[pipeColor][0].GetPositionInBoard());
-                    //}
+                        //    //Ahora el tile inicial es el contrario (porque hemos cortado un pipe que estaba completo)
+                        //    tilePipesIni[pipeColor] = boardManager.GetTileAtPosition(pipeList[pipeColor][0].GetPositionInBoard());
+                        //}
+                    }
+                    pipeList = new Dictionary<Color, List<EachPipe>>(copypipeList);
+                    LevelManager.Instance.SetflowsText(colorCompleted.Count);
+                    brokePipes.Clear();
+                    copypipeList.Clear();
                 }
-                pipeList = new Dictionary<Color, List<EachPipe>>(copypipeList);
-                LevelManager.Instance.SetflowsText(colorCompleted.Count);
-                brokePipes.Clear();
-                copypipeList.Clear();
             }
         }
-
         private void DestroyPipeTemporarily()
         {
             //Nos guardamos la lista del pipe que vamos a romper
@@ -751,4 +751,5 @@ namespace FreeFlowGame
             brokePipes.Add(boardManager.GetTileAtPosition(posAct), new Stack<EachPipe>(listeach));
         }
     }
+
 }
