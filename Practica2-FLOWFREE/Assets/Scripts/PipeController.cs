@@ -287,6 +287,8 @@ namespace FreeFlowGame
                     if (tileAct.GetIndex() != -1)
                     {
                         DestroyChildrenFromIndex(tileAct.GetColor(), tileAct.GetIndex() + 1);
+                        //TO DO: esto rompe el deshacer una a una, pero si quitas esto, si rompes de una
+                        //forma especifica el juego se va a la puta
                         DestroyPipeTemporarily();
                     }
                     else
@@ -372,15 +374,13 @@ namespace FreeFlowGame
         /// <param name="index">indice desde el cual se remueven todos los siguientes hijos</param>
         private void DestroyChildrenFromIndex(Color c, int index)
         {
-            int i = pipeList[c].Count - 1;
-
-            List<Tile> tilesConReconstruccion = new List<Tile>();
-            while (i != (index-1))
+            int i = pipeList[c].Count;
+            while (i != index)
             {
-                DestroyPipe(c, i);
+                DestroyPipe(c, i - 1);
                 if (brokePipes.Count > 0)
                 {
-                    Tile re = boardManager.GetTileAtPosition(pipeList[c][i - 1].GetPositionInBoard());
+                    Tile re = boardManager.GetTileAtPosition(pipeList[c][i - 2].GetPositionInBoard());
                     Reconstruction(re);
                 }
 
@@ -718,7 +718,6 @@ namespace FreeFlowGame
             List<EachPipe> listeach = new List<EachPipe>(pipeList[tileAct.GetColor()]);
 
             listeach.RemoveRange(0, tileAct.GetIndex());
-            int j = 0;
             //Este bucle recorre los pipes hasta que uno esta desactivado significando que ya se rompio antes luego los siguientes tambien estaran 
             // rotos asi que quitamos ese rango y nos quedamos solo con los que nosotros ponemos a false 
             foreach (EachPipe a in listeach)
@@ -731,7 +730,6 @@ namespace FreeFlowGame
                     t.SetFree(true);
                     t.SetIndex(-1);
                     a.transform.gameObject.SetActive(false);
-                    j++;
                 }
             }
 
