@@ -291,9 +291,7 @@ namespace FreeFlowGame
                     if (tileAct.GetIndex() != -1)
                     {
                         DestroyChildrenFromIndex(tileAct.GetColor(), tileAct.GetIndex() + 1);
-                        //TO DO: descomentar esto rompe el deshacer una a una, pero si quitas esto, si rompes de una
-                        //forma especifica el juego se va a la puta
-                        //DestroyPipeTemporarily();
+                       
                     }
                     else
                     {
@@ -733,6 +731,7 @@ namespace FreeFlowGame
             listeach.RemoveRange(0, tileAct.GetIndex());
             //Este bucle recorre los pipes hasta que uno esta desactivado significando que ya se rompio antes luego los siguientes tambien estaran 
             // rotos asi que quitamos ese rango y nos quedamos solo con los que nosotros ponemos a false 
+            int j = 0;
             foreach (EachPipe a in listeach)
             {
                 Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
@@ -743,7 +742,9 @@ namespace FreeFlowGame
                     t.SetFree(true);
                     t.SetIndex(-1);
                     a.transform.gameObject.SetActive(false);
+                    j++;
                 }
+                else { listeach.RemoveRange(j, listeach.Count - j); break; }
             }
 
             //añadimos a la cola un par con el tile anterior al que hemos atravesado (porque posAct se actualiza en 
