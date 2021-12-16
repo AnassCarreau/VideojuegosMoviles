@@ -473,12 +473,7 @@ namespace FreeFlowGame
 
         private void PaintPipe(Tile act, Vector2 posAct_, Vector2 posPipe, Vector2 dir, bool calculateAngle)
         {
-            float angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
-            if (calculateAngle)
-            {
-                anglePipe = GetAngleRotation();
-                angle = anglePipe;
-            }
+            float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
 
             //Añadimos Pipe ->el que pintamos
@@ -510,31 +505,7 @@ namespace FreeFlowGame
             return tileAnt.GetWalls()[(int)(angle % 360.0f / 90.0f)];
         }
 
-        private float GetAngleRotation()
-        {
-
-            if (dirAct.x != dirAnt.x && dirAct.y != dirAnt.y)
-            {
-                //cambio de der/izq hacia abajo
-                if (dirAnt.x != 0 && dirAct.x == 0)
-                {
-                    if (dirAct.y == -1) return 0f;
-                    else if (dirAct.y == 1) return 180f;
-                }
-                //cambio de subir/bajar hacia der/izq
-                else if (dirAnt.y != 0 && dirAct.y == 0)
-                {
-                    if (dirAct.x == 1) return 90f;
-                    else if (dirAct.x == -1) return -90f;
-                }
-            }
-            else if (dirAnt.x == 0 && dirAnt.y == 0)
-            {
-                if (dirAct.x == 1) return 90f;
-                else if (dirAct.x == -1) return -90f;
-            }
-            return anglePipe;
-        }
+       
 
         private void CreatePipe(Vector2 posAbsBoard)
         {
@@ -559,7 +530,10 @@ namespace FreeFlowGame
 
         private Vector2 centerPipe(Vector2 posTileAnt, Vector2 dirAct_)
         {
-            Vector2 posPipe = new Vector2(0, 0);
+            float angle = Mathf.Atan2(dirAct_.y, dirAct_.x) * Mathf.Rad2Deg;
+            Debug.Log(angle/90);
+
+            Vector2 posPipe = new Vector2(posTileAnt.x + 0.5f * ((angle/180 )* -1)  , posTileAnt.y + 0.5f * (angle/90) % 2);
 
             if (dirAct_.x > 0) posPipe = new Vector2(posTileAnt.x + 0.5f, posTileAnt.y);
             else if (dirAct_.x < 0) posPipe = new Vector2(posTileAnt.x - 0.5f, posTileAnt.y);

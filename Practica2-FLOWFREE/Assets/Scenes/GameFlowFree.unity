@@ -184,11 +184,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: nivel
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: categoria
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: boardManager
@@ -1194,7 +1194,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &540558385
 MonoBehaviour:
   m_ObjectHideFlags: 0
