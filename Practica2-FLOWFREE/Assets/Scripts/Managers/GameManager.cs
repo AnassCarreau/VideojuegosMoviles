@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     //Variable que controla el numero de pistas
     private int clues;
+    private List<Cat> bestdata;
     #endregion
 
     public static GameManager Instance { get { return _instance; } }
@@ -77,88 +78,78 @@ public class GameManager : MonoBehaviour
             act.slotIndex = lote;
             act.levelIndex = nivel;
 #endif
+            data = SaveSystem.LoadData();
             InitData();
             DontDestroyOnLoad(_instance);
         }
     }
 
-    
+
 
     private void Start()
     {
-      //  data = SaveSystem.LoadData();
-
-        // ads.ShowBanner();
-
         
+        // ads.ShowBanner();  
     }
 
     private void InitData()
     {
+        bool loadCorrect=false;
         //Habra que leer cuantas pistas nos quedan cuando se haga el guardado
-        clues = 0;
-        //if (data == null)
-        //{
-        //    saveCorrect = false;
-        //    data = new DataSystem(0);
-        //}
-        //else
-        //{
-        //    saveCorrect = true;
-        //    clues = data.clues;
-        //}
-
-        //Esto es temporal ya que hay que leerlo del data guardado, es para que funcione el boton de clue
         clues = 2;
+        if (data != null)
+        {
+            clues = data.clues;
+            bestdata = data.bestScores;
+            loadCorrect = true;
+        }
+        else
+        {
+            data = new DataSystem();
+            bestdata = new List<Cat>();
+        }
+
+        
+        //Esto es temporal ya que hay que leerlo del data guardado, es para que funcione el boton de clue
         levels = new List<List<Nivel[]>>();
         
         //For de Categorias Intro-manias-rectangles
         for (int i = 0; i < categories.Length; i++)
         {
             levels.Add(new List<Nivel[]>());
+            if (!loadCorrect)bestdata.Add(new Cat());
             int numLotes = categories[i].lotes.Length;
             //For leyendo los archivos de cada categoría, es decir cada lote
             TextAsset[] slot = new TextAsset[numLotes];
             for (int j = 0; j < numLotes; j++)
             { 
                 slot[j] = categories[i].lotes[j].maps;
-                //TO DO FULL CERDADA
                 char[] c = new char[1] { '\n' };
                 string[] lvs = slot[j].text.Split(c, StringSplitOptions.RemoveEmptyEntries);
                 levels[i].Add(new Nivel[lvs.Length]);
-               
+
+                if (!loadCorrect)
+                {
+                    Lot l = new Lot();
+                    l.lvl = new int[lvs.Length];
+                    bestdata[i].cat.Add(l);
+
+                }
                 for(int k = 0; k < lvs.Length; k++)
                 {
                     levels[i][j][k].nivel = lvs[k];
-                    levels[i][j][k].bestMoves = 0;
+                    levels[i][j][k].bestMoves = bestdata[i].cat[j].lvl[k] ;
                 }
-                
-
-                //if (saveCorrect)
-                //{
-                //    categories[i].lotes[j].bestScoresInLevels = data.minFlow[i][j];
-                //}
-                //else
-                //{
-                //    if (data.minFlow.ContainsKey(i))
-                //    {
-                //        data.minFlow[i].Add(categories[i].lotes[j].bestScoresInLevels);
-                //    }
-                //    else
-                //    {
-                //        List<int[]> lminflow = new List<int[]>();
-                //        lminflow.Add(categories[i].lotes[j].bestScoresInLevels);
-                //        data.minFlow.Add(i, lminflow);
-                //    }
-                //}
             }
         }
     }
 
     private void OnApplicationQuit()
     {
-       // data.clues = clues;
-      //  SaveSystem.SaveData(data);
+        Debug.Log(data);
+        data.clues = clues;
+        data.bestScores = bestdata;
+        SaveSystem.SaveData(data);
     }
     public void LevelSuccess() 
     {
@@ -180,12 +171,7 @@ public class GameManager : MonoBehaviour
     public DataSystem getData() { return data; }
     public void setData(DataSystem data) { this.data = data; }
 
-    public void Quit()
-    {
-        SaveSystem.SaveData(data);
-       // PlayerPrefs.Save();
-        Application.Quit();
-    }
+   
 
     public CategoryPack[] GetCategories()
     {
@@ -211,9 +197,7 @@ public class GameManager : MonoBehaviour
         if (bestCurrentLvlScore > n || bestCurrentLvlScore == 0)
         {
             levels[act.category][act.slotIndex][act.levelIndex].bestMoves = n;
-            //Luego se quita 
-            //data.minFlow[act.category][act.slotIndex][act.levelIndex] = categories[act.category].lotes[act.slotIndex].bestScoresInLevels[act.levelIndex];
-
+            bestdata[act.category].cat[act.slotIndex].lvl[act.levelIndex] = levels[act.category][act.slotIndex][act.levelIndex].bestMoves;
         }
     }
    
