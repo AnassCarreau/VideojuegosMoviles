@@ -32,7 +32,7 @@ namespace FreeFlowGame
         bool[] walls;
         public void Init(bool emptyTile)
         {
-            LvlActual lvl = GameManager.Instance.getActualPlay();
+            LvlActual lvl = GameManager.Instance.GetLvlActual();
             _renderer.color = GameManager.Instance.GetCategories()[lvl.category].categoryColor;
             index = -1;
             if (!emptyTile)

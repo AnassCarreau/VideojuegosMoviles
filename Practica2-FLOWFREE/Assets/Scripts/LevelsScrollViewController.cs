@@ -21,7 +21,7 @@ public class LevelsScrollViewController : MonoBehaviour
     {
         get { return listIndicator; }
     }
-    private void Awake()
+    private void Start()
     {
         listIndicator = new List<GameObject>();
         LoadScrollButtons();
@@ -31,14 +31,15 @@ public class LevelsScrollViewController : MonoBehaviour
     private void LoadScrollButtons()
     {
         LvlActual act = GameManager.Instance.GetLvlActual();
-
+        Debug.Log(act.category + " " + act.slotIndex);
         numberOfLevels = GameManager.Instance.GetLevels()[act.category][act.slotIndex].Length;
-        bool blocked = GameManager.Instance.GetCategories()[GameManager.Instance.getActualPlay().category].lotes[slotIndex].levelblocked;
+        bool blocked = GameManager.Instance.GetCategories()[act.category].lotes[slotIndex].levelblocked;
         bool nextLvlsBlockeds = false;
         int conAct = -1;
         GameObject levelBtnParentAux = new GameObject();
         for (int i = 0; i < numberOfLevels; i++)
         {
+            //Si el lote en el que estamos tiene niveles bloqueados miramos que esté sin jugar y que no sea el primero del lote 
             if (blocked)
             {
                 nextLvlsBlockeds = GameManager.Instance.GetLevels()[act.category][act.slotIndex][i].bestMoves == 0 && i != 0;
@@ -52,7 +53,6 @@ public class LevelsScrollViewController : MonoBehaviour
             }
 
             LevelButtonItem levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.transform);
-            ///to do quitar get component
             levelBtnObj.SetLvl(i);
             if (!blocked || !nextLvlsBlockeds) levelBtnObj.SetColor(pipesColor[i / 30]);
             else { levelBtnObj.SetColor(Color.black); }

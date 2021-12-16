@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
             act.slotIndex = lote;
             act.levelIndex = nivel;
 #endif
+            InitData();
             DontDestroyOnLoad(_instance);
         }
     }
@@ -88,13 +89,8 @@ public class GameManager : MonoBehaviour
       //  data = SaveSystem.LoadData();
 
         // ads.ShowBanner();
-        
-        //Pequeño chanchullo de momento para poder probar la funcionalidad directamente sin empezar el menu todo el rato
-        //Basicamente inicializo boardManager en el start de gameManager si es la escena del juego la primera 
-        //To do quitarlo e intentar que lecturalote no dependa de monobehvoiur
-        //LectutaLote.Instance.Initialize();
 
-        InitData();
+        
     }
 
     private void InitData()
@@ -189,11 +185,6 @@ public class GameManager : MonoBehaviour
         SaveSystem.SaveData(data);
        // PlayerPrefs.Save();
         Application.Quit();
-    }
-
-    public LvlActual getActualPlay() 
-    {
-        return act;
     }
 
     public CategoryPack[] GetCategories()

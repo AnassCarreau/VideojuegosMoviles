@@ -91,7 +91,7 @@ namespace FreeFlowGame
         public void SetLevelText(int n, int w, int h)
         {
             levelText.text = "Level " + n + " ";
-            levelText.color = GameManager.Instance.categories[GameManager.Instance.getActualPlay().category].categoryColor;
+            levelText.color = GameManager.Instance.categories[GameManager.Instance.GetLvlActual().category].categoryColor;
             dimentionsText.text = w + "x" + h;
         }
 

@@ -89,7 +89,7 @@ namespace FreeFlowGame
         }
         private void SetPipes()
         {
-            LvlActual lvl = GameManager.Instance.getActualPlay();
+            LvlActual lvl = GameManager.Instance.GetLvlActual();
             m.Parse(GameManager.Instance.GetCurrentLevel());
             LevelManager.Instance.SetLevelText(lvl.levelIndex + 1, m.GetWidth(), m.GetHeight());
             pipes = m.GetPipes();
