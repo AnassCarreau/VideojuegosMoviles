@@ -23,7 +23,15 @@ namespace FreeFlowGame
         private GameObject winningPannel;
         [SerializeField]
         private Text pannelText;
+        [SerializeField]
+        private Text nextLevelButtonText;
+        [SerializeField]
+        private Button nextLevelButton;
+        [SerializeField]
+        private Button prevLevelButton;
 
+
+        //TO DO: quitarlos de aqui y en el inspector llamar a los de gameManager/levelManager
         public void ChangeNextLevel()
         {
             LevelManager.Instance.NextLevel();
@@ -92,9 +100,23 @@ namespace FreeFlowGame
             winningPannel.SetActive(active);
         }
 
-        public void SetPannelText(int moves)
+        public void SetPannelText(string text)
         {
-            pannelText.text = "Completaste el nivel en " + moves + " pasos.";
+            pannelText.text =text;
+        }
+
+        public void SetPannelButtonText(string text)
+        {
+            nextLevelButtonText.text = text;
+        }
+
+        public void isNextLevelButtonInteractuable( bool active)
+        {
+            nextLevelButton.interactable = active;
+        }
+        public void isPrevLevelButtonInteractuable( bool active)
+        {
+            prevLevelButton.interactable = active;
         }
     }
 }

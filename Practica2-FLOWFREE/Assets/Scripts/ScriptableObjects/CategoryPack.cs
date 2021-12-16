@@ -9,8 +9,6 @@ public class CategoryPack : ScriptableObject
     public string categoryName;
     [Tooltip("Color que representa la categoría")]
     public Color categoryColor;
-    [Tooltip("Tiene niveles bloqueados")]
-    public bool allLevelsUnblocked;
     [Tooltip("Lotes incluidos en la categoría")]
     public Lote[] lotes;
 }

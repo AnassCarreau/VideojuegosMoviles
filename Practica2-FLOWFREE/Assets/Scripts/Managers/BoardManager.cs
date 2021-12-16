@@ -180,5 +180,10 @@ namespace FreeFlowGame
         {
             return scaleFactor;
         }
+
+        public void EnablePipeController()
+        {
+            pipeControllerPrefab.enabled = true;
+        }
     }
 }
