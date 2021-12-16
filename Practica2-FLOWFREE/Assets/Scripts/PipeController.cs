@@ -156,7 +156,7 @@ namespace FreeFlowGame
 #endif
 
 #if UNITY_EDITOR
-            if (Input.GetKeyUp(KeyCode.Space)) { PaintClue(); }
+            if (Input.GetKeyUp(KeyCode.A)) { PaintClue(); }
 #endif
         }
 
@@ -426,7 +426,6 @@ namespace FreeFlowGame
                 pipeRenderer.color = color;
                 DestroyChildren();
 
-                pipeRenderer.color = color;
 
                 //Instanciamos las estrellas en los extremos si estamos en ellos y guardamos que hemos puesto estrella
                 //si ya existen las estrellas simplemente las activamos
@@ -460,7 +459,7 @@ namespace FreeFlowGame
                     }
                     PaintPipe(act, l[i], centerPipe(l[i - 1], dir), dir, false);
                 }
-
+                moves++;
                 colorCompleted.Add(color);
 
                 if (AllPipesCompleted())
@@ -513,6 +512,7 @@ namespace FreeFlowGame
 
         private float GetAngleRotation()
         {
+
             if (dirAct.x != dirAnt.x && dirAct.y != dirAnt.y)
             {
                 //cambio de der/izq hacia abajo
@@ -586,29 +586,19 @@ namespace FreeFlowGame
 
         public void ResetPipes()
         {
+
             //Borrar tuberias
             foreach (Color c in pipeParent.Keys)
             {
-                Debug.Log("Peto aqui aaaa");
-                int i = 0;
-                while (pipeList[c].Count > 0)
-                {
-                    Debug.Log("Peto aqui aaaa");
-
-                    DestroyPipe(c, 0);
-                    i++;
-                }
+                pipeRenderer.color = c;
+                DestroyChildren();
             }
 
             //Borrar estrellas (pistas)
             foreach (Color c in starsInPipes.Keys)
             {
-                Debug.Log("Peto aqui aaaa");
-
                 while (starsInPipes[c].Count > 0)
                 {
-                    Debug.Log("Peto aqui aaaa");
-
                     Destroy(starsInPipes[c][0].gameObject);
                     starsInPipes[c].RemoveAt(0);
                 }
@@ -617,17 +607,15 @@ namespace FreeFlowGame
 
             numPipesInBoard = 0;
             moves = 0;
-            colorCompleted.Clear();
             starsInPipes.Clear();
             clueInPipe.Clear();
-            ResetVariables();
             brokePipes.Clear();
-            pipeList.Clear();
 
             //Actualizamos HUD
             Percentage();
             LevelManager.Instance.SetflowsText(colorCompleted.Count);
             LevelManager.Instance.SetMovesText(moves);
+            ResetVariables();
         }
 
         private void ResetVariables()

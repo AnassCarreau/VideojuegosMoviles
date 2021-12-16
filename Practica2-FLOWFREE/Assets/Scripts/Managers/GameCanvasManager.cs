@@ -52,7 +52,7 @@ namespace FreeFlowGame
 
         public void UseClue()
         {
-            GameManager.Instance.UseClue();
+            LevelManager.Instance.UseClue();
         }
 
         public void GetNewClue()

@@ -88,9 +88,11 @@ namespace FreeFlowGame
 
         public void UseClue()
         {
-            GameManager.Instance.UseClue();
-            BoardManager.Instance.GetPipeController().PaintClue();
-            canvasManager.SetClueText(GameManager.Instance.GetNumClues());
+            if (GameManager.Instance.UseClue())
+            {
+                BoardManager.Instance.GetPipeController().PaintClue();
+                canvasManager.SetClueText(GameManager.Instance.GetNumClues());
+            }
         }
 
         public void SetLevelText(int n, int w, int h)

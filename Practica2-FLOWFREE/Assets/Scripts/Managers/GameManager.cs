@@ -227,12 +227,15 @@ public class GameManager : MonoBehaviour
     }
    
 
-    public void UseClue()
+    public bool UseClue()
     {
-        if(clues - 1 >= 0)
+
+        if (clues - 1 >= 0)
         {
             clues--;
+            return true;
         }
+        else return false;
     }
     public void GetNewClue() {
         ads.PlayerRewardedAd(OnRewardedAdSuccess);
