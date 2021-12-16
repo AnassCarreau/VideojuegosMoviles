@@ -10,8 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class LevelButtonItem : MonoBehaviour
 {
-
-     private int levelIndex;    
+     private int levelIndex;
      
     [SerializeField] private Object scene;
     [SerializeField] private Image img; 
@@ -20,14 +19,13 @@ public class LevelButtonItem : MonoBehaviour
     {
         img.color = color;
     }
-   
 
     public void SetLvl(int lvl)
     {
        levelIndex = lvl;
        text.text = (levelIndex + 1).ToString();
-
     }
+
     // click event of level button
     public void OnLevelButtonClick()
     {

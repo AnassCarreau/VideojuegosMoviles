@@ -5,16 +5,13 @@ using UnityEngine.UI;
 
 public class CategoryTextItem : MonoBehaviour
 {
-
-
     [SerializeField] Image background;
     [SerializeField] Image line;
     [SerializeField] Text  text;
-   
 
-   public void SetName(string name) 
+    public void SetName(string name) 
     {
-        text.text = name;
+         text.text = name;
     }
     public void SetColor(Color color) 
     {
