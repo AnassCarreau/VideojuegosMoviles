@@ -530,16 +530,8 @@ namespace FreeFlowGame
 
         private Vector2 centerPipe(Vector2 posTileAnt, Vector2 dirAct_)
         {
-            float angle = Mathf.Atan2(dirAct_.y, dirAct_.x) * Mathf.Rad2Deg;
-            Debug.Log(angle/90);
-
-            Vector2 posPipe = new Vector2(posTileAnt.x + 0.5f * ((angle/180 )* -1)  , posTileAnt.y + 0.5f * (angle/90) % 2);
-
-            if (dirAct_.x > 0) posPipe = new Vector2(posTileAnt.x + 0.5f, posTileAnt.y);
-            else if (dirAct_.x < 0) posPipe = new Vector2(posTileAnt.x - 0.5f, posTileAnt.y);
-            else if (dirAct_.y > 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y + 0.5f);
-            else if (dirAct_.y < 0) posPipe = new Vector2(posTileAnt.x, posTileAnt.y - 0.5f);
-
+            float angle = Mathf.Atan2(dirAct_.y, dirAct_.x) ;
+            Vector2 posPipe = new Vector2(posTileAnt.x + 0.5f * Mathf.Cos(angle), posTileAnt.y + 0.5f * Mathf.Sin(angle));
             return posPipe * scaleFactor;
         }
 

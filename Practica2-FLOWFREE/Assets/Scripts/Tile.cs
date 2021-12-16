@@ -22,6 +22,8 @@ namespace FreeFlowGame
 
         [SerializeField]
         private GameObject wallObject;
+        [SerializeField]
+        private SpriteRenderer wallRenderer;
         private Vector2 posTile;
 
        
@@ -70,28 +72,9 @@ namespace FreeFlowGame
                 if (!w[i]) continue;
 
                 GameObject o = Instantiate(wallObject, transform);
-                wallObject.GetComponent<SpriteRenderer>().color = _renderer.color;
-                float x = 0;
-                float y = 0;
-                switch (i)
-                {
-                    case 2://Pared Arriba
-                        y = transform.localScale.y / 2;
-                        break;
-                    case 1: //Pared derecha
-                        x = transform.localScale.x / 2;
-                        break;
-                    case 0: //Pared abajo
-                        y = -transform.localScale.y / 2;
-                        break;
-                    case 3: //Pared izquierda
-                        x = -transform.localScale.x / 2;
-                        break;
-                    default:
-                        break;
-                }
-
-                Vector3 v = new Vector2(x, y);
+                wallRenderer.color = _renderer.color;
+                float angle = 90 * (i-1);
+                Vector3 v = new Vector2(transform.localScale.x / 2 * Mathf.Cos(angle * Mathf.Deg2Rad), transform.localScale.y/ 2 * Mathf.Sin(angle* Mathf.Deg2Rad));
                 o.transform.rotation = Quaternion.Euler(0, 0, (i + 1) * 90);
                 o.transform.position = transform.position + v;
                 o.name = $"Muro {posTile.x} {posTile.y}";
