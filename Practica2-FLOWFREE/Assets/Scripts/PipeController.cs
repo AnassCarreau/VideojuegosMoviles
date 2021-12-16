@@ -286,9 +286,9 @@ namespace FreeFlowGame
                         starsInPipes[pipeRenderer.color][1].SetActive(true);
                     }
                 }
-                else if (!tileAct.IsFree() && tileAct.GetColor() == pipeRenderer.color)
+                else if ((!tileAct.IsFree() || tileAct.IsCircle() ) && tileAct.GetColor() == pipeRenderer.color)
                 {
-                    if (tileAct.GetIndex() != -1)
+                    if (!tileAct.IsCircle())
                     {
                         DestroyChildrenFromIndex(tileAct.GetColor(), tileAct.GetIndex() + 1);
                        
@@ -339,7 +339,6 @@ namespace FreeFlowGame
                 {
                     Tile t = boardManager.GetTileAtPosition(a.GetPositionInBoard());
                     if (brokePipes.ContainsKey(t)) brokePipes.Remove(t);
-                    t.SetFree(false);
                     t.SetColor(a.GetPipeColor());
                     t.SetIndex(a.GetPipeIndex());
                     a.transform.gameObject.SetActive(true);
@@ -402,7 +401,6 @@ namespace FreeFlowGame
             //¿Estoy destruyendo por rotura? No, pues entonces podemos poner el tile a free y el index a -1
             if (brokePipes.Count > 0 && !brokePipes.ContainsKey(childTile) || brokePipes.Count == 0)
             {
-                childTile.SetFree(true);
                 childTile.SetIndex(-1);
             }
             Destroy(pipeToRemove.gameObject);
@@ -502,7 +500,6 @@ namespace FreeFlowGame
             pipeList[pipeRenderer.color][index].SetPipeIndex(index);
 
             //Setteamos valores actualizados al tile actual
-            act.SetFree(false);
             act.SetIndex(index);
             act.SetColor(pipeRenderer.color);
 
@@ -739,7 +736,6 @@ namespace FreeFlowGame
                 if (a.transform.gameObject.activeSelf)
                 {
                     //Debug.Log("Trozo temporalmente destruido " + t);
-                    t.SetFree(true);
                     t.SetIndex(-1);
                     a.transform.gameObject.SetActive(false);
                     j++;
