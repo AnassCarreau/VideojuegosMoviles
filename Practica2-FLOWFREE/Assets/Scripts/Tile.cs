@@ -24,8 +24,7 @@ namespace FreeFlowGame
         private GameObject wallObject;
         private Vector2 posTile;
 
-        [SerializeField]
-        private bool free;
+       
         [SerializeField]
         private int index;
         bool[] walls;
@@ -33,11 +32,10 @@ namespace FreeFlowGame
         {
             LvlActual lvl = GameManager.Instance.getActualPlay();
             _renderer.color = GameManager.Instance.GetCategories()[lvl.category].categoryColor;
-            free = true;
             index = -1;
             if (!emptyTile)
             {
-                free = false;
+
                 circleObject.SetActive(true);
             }
         }
@@ -104,12 +102,9 @@ namespace FreeFlowGame
         {
             return circleObject.activeSelf;
         }
-        public bool IsFree() { return free; }
+        public bool IsFree() { return index==-1; }
 
-        public void SetFree(bool active)
-        {
-            free = active;
-        }
+        
         public void SetIndex(int i)
         {
             this.index = i;
