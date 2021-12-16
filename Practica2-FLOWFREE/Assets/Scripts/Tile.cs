@@ -73,9 +73,9 @@ namespace FreeFlowGame
 
                 GameObject o = Instantiate(wallObject, transform);
                 wallRenderer.color = _renderer.color;
-                float angle = 90 * (i-1);
-                Vector3 v = new Vector2(transform.localScale.x / 2 * Mathf.Cos(angle * Mathf.Deg2Rad), transform.localScale.y/ 2 * Mathf.Sin(angle* Mathf.Deg2Rad));
-                o.transform.rotation = Quaternion.Euler(0, 0, (i + 1) * 90);
+                float angle = 90 * (i+1);
+                Vector3 v = new Vector2(-transform.localScale.x / 2 * Mathf.Cos(angle * Mathf.Deg2Rad), -transform.localScale.y/ 2 * Mathf.Sin(angle* Mathf.Deg2Rad));
+                o.transform.rotation = Quaternion.Euler(0, 0, angle);
                 o.transform.position = transform.position + v;
                 o.name = $"Muro {posTile.x} {posTile.y}";
             }

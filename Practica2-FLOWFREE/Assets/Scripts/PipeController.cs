@@ -457,7 +457,7 @@ namespace FreeFlowGame
                     {
                         DestroyChildrenFromIndex(act.GetColor(), act.GetIndex());
                     }
-                    PaintPipe(act, l[i], centerPipe(l[i - 1], dir), dir, false);
+                    PaintPipe(act, l[i], centerPipe(l[i - 1], dir), dir);
                 }
                 moves++;
                 colorCompleted.Add(color);
@@ -471,7 +471,7 @@ namespace FreeFlowGame
             }
         }
 
-        private void PaintPipe(Tile act, Vector2 posAct_, Vector2 posPipe, Vector2 dir, bool calculateAngle)
+        private void PaintPipe(Tile act, Vector2 posAct_, Vector2 posPipe, Vector2 dir)
         {
             float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
@@ -519,7 +519,7 @@ namespace FreeFlowGame
             {
                 posAct = posAbsBoard;
                 Vector2 posPipe = centerPipe(posLastPainted, dirAct);
-                PaintPipe(tileAct, posAct, posPipe, dirAct, true);
+                PaintPipe(tileAct, posAct, posPipe, dirAct);
             }
         }
 
@@ -530,7 +530,7 @@ namespace FreeFlowGame
 
         private Vector2 centerPipe(Vector2 posTileAnt, Vector2 dirAct_)
         {
-            float angle = Mathf.Atan2(dirAct_.y, dirAct_.x) ;
+            float angle = Mathf.Atan2(dirAct_.y, dirAct_.x);
             Vector2 posPipe = new Vector2(posTileAnt.x + 0.5f * Mathf.Cos(angle), posTileAnt.y + 0.5f * Mathf.Sin(angle));
             return posPipe * scaleFactor;
         }
