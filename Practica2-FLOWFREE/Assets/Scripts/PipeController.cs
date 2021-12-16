@@ -22,7 +22,6 @@ namespace FreeFlowGame
 
         //Diccionario con los pipes de cada color
         private Dictionary<Color, List<EachPipe>> pipeList;
-        private Dictionary<Color, List<EachPipe>> copypipeList;
 
         private Dictionary<Color, Tile> tilePipesIni;
 
@@ -55,13 +54,7 @@ namespace FreeFlowGame
 
         private float anglePipe;
 
-        public struct Pipe
-        {
-            public Vector2 ini;
-            public Vector2 fin;
-            public int tam;
-        }
-
+       
         private int numPipesInBoard;
         private int totalPipesInBoard;
         private int moves;
@@ -81,7 +74,6 @@ namespace FreeFlowGame
             boardManager = BoardManager.Instance;
             pipeParent = new Dictionary<Color, Transform>();
             pipeList = new Dictionary<Color, List<EachPipe>>();
-            copypipeList = new Dictionary<Color, List<EachPipe>>();
 
             tilePipesIni = new Dictionary<Color, Tile>();
 
@@ -226,7 +218,6 @@ namespace FreeFlowGame
                 }
             }
 
-            copypipeList = new Dictionary<Color, List<EachPipe>>(pipeList);
         }
 
         private void OnDrag(Vector2 posInBoard)
@@ -486,6 +477,7 @@ namespace FreeFlowGame
             if (calculateAngle)
             {
                 anglePipe = GetAngleRotation();
+                Debug.Log(anglePipe);
                 angle = anglePipe;
             }
             Quaternion rot = Quaternion.Euler(0f, 0f, angle);
@@ -515,28 +507,13 @@ namespace FreeFlowGame
 
         private bool IsThereWallInDir(Tile tileAnt, Vector2 dir)
         {
-            int i = 0;
-            if (dir.x == 0 && dir.y == 1)
-            {
-                i = 0;
-            }
-            else if (dir.x == 0 && dir.y == -1)
-            {
-                i = 2;
-            }
-            else if (dir.y == 0 && dir.x == 1)
-            {
-                i = 3;
-            }
-            else if (dir.y == 0 && dir.x == -1)
-            {
-                i = 1;
-            }
-            return tileAnt.GetWalls()[i];
+            float angle =  360 + Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;          
+            return tileAnt.GetWalls()[ (int)( angle % 360.0f /90.0f)];
         }
 
         private float GetAngleRotation()
         {
+        
             if (dirAct.x != dirAnt.x && dirAct.y != dirAnt.y)
             {
                 //cambio de der/izq hacia abajo
@@ -713,19 +690,17 @@ namespace FreeFlowGame
                         //    tilePipesIni[pipeColor] = boardManager.GetTileAtPosition(pipeList[pipeColor][0].GetPositionInBoard());
                         //}
                     }
-                    pipeList = new Dictionary<Color, List<EachPipe>>(copypipeList);
                     LevelManager.Instance.SetflowsText(colorCompleted.Count);
                     brokePipes.Clear();
-                    copypipeList.Clear();
                 }
             }
         }
         private void DestroyPipeTemporarily()
         {
             //Nos guardamos la lista del pipe que vamos a romper
-            List<EachPipe> listeach = new List<EachPipe>(copypipeList[tileAct.GetColor()]);
+            List<EachPipe> listeach = new List<EachPipe>(pipeList[tileAct.GetColor()]);
 
-            listeach.RemoveRange(0, tileAct.GetIndex());
+            listeach.RemoveRange(0, tileAct.GetIndex() );
             //Este bucle recorre los pipes hasta que uno esta desactivado significando que ya se rompio antes luego los siguientes tambien estaran 
             // rotos asi que quitamos ese rango y nos quedamos solo con los que nosotros ponemos a false 
             int j = 0;
