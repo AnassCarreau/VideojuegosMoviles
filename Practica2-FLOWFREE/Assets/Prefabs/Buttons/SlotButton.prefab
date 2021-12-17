@@ -232,3 +232,4 @@ MonoBehaviour:
   scene: LevelSelector
   text: {fileID: 759632001928761617}
   textRight: {fileID: 8585600417894749040}
+  button: {fileID: 5352275633760052679}

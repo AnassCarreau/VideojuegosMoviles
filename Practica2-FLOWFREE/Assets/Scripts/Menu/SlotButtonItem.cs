@@ -16,6 +16,7 @@ namespace FlowFreeGame.Menu
         {
             button.onClick.AddListener(() => OnSlotButtonClick());
         }
+
         public void SetCategory(int cat)
         {
             category = cat;

@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour
         data.bestScores = bestdata;
         SaveSystem.SaveData(data);
     }
+
     public void LevelSuccess()
     {
         ads.PlayAd();
