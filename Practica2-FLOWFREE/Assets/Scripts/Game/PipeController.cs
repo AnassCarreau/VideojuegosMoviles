@@ -38,22 +38,16 @@ namespace FlowFreeGame
         private bool continueMoving;
 
         private Vector2 posIni;
-        [SerializeField]
         private Vector2 posAct;
 
         private Vector2 dirAct;
-        private Vector2 dirAnt;
 
         private Tile tileIni;
         private Tile lastTilePainted;
-        [SerializeField]
         private Tile tileAct;
 
         //Lista de listas con las posiciones de las pipes en su solucion
         private List<List<Vector2>> pipeSolution;
-
-        private float anglePipe;
-
 
         private int numPipesInBoard;
         private int totalPipesInBoard;
@@ -510,13 +504,8 @@ namespace FlowFreeGame
             return tileAnt.GetWalls()[(int)(angle % 360.0f / 90.0f)];
         }
 
-       
-
         private void CreatePipe(Vector2 posAbsBoard)
         {
-            //Antes de un posible cambio de direcci�n guardo la dir en la que iba
-            if (IsDirValid(dirAct)) dirAnt = dirAct;
-
             dirAct = posAbsBoard - posAct;
 
             Vector2 posLastPainted = lastTilePainted.GetPosTile();

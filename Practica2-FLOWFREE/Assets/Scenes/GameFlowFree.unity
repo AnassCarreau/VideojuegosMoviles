@@ -195,6 +195,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
+      propertyPath: indexTheme
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: boardManager
       value: 
       objectReference: {fileID: 1378276131947600855}
@@ -206,6 +210,18 @@ PrefabInstance:
       propertyPath: act.levelIndex
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
+      propertyPath: colorsThemes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 503b3f264b9dd43488348096ed9c1efa, type: 2}
+    - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
+      propertyPath: colorsThemes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 27316a0a688bfd54b9e607b10f4ce5ee, type: 2}
+    - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
+      propertyPath: colorsThemes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: bd9fa3e79b06c614399cd6df648040a1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
 --- !u!1 &26826457

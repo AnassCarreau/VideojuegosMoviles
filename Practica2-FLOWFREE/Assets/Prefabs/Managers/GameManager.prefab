@@ -49,11 +49,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a480e4b68c9bdc64996eab9f5ef3e25a, type: 2}
   - {fileID: 11400000, guid: d939cb1cf7e451443811f34aa6e9aa2b, type: 2}
   - {fileID: 11400000, guid: 95d2f4d4bd0eabe4fb8e7981b9fdd44f, type: 2}
-  colorTheme: {fileID: 11400000, guid: 503b3f264b9dd43488348096ed9c1efa, type: 2}
+  colorsThemes:
+  - {fileID: 11400000, guid: 503b3f264b9dd43488348096ed9c1efa, type: 2}
+  - {fileID: 11400000, guid: 27316a0a688bfd54b9e607b10f4ce5ee, type: 2}
+  - {fileID: 11400000, guid: bd9fa3e79b06c614399cd6df648040a1, type: 2}
   nivel: 0
   lote: 0
   categoria: 0
   ads: {fileID: 697968438477719397}
+  indexTheme: 0
 --- !u!114 &697968438477719397
 MonoBehaviour:
   m_ObjectHideFlags: 0

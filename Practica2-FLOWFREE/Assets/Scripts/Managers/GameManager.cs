@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private CategoryPack[] categories;
 
     [SerializeField]
-    private Theme colorTheme;
+    private Theme[] colorsThemes = new Theme[3];
 
     //Variables auxiliares para no tener que empezar siempre desde el menu principal
 #if UNITY_EDITOR
@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     //Controlador de anuncios
     [SerializeField]
     private AdsManager ads;
+    [SerializeField]
+    private int indexTheme;
 #endif
     #endregion
 
@@ -52,6 +54,8 @@ public class GameManager : MonoBehaviour
     private LvlActual act;
     //Lista de categorias con su correspondiente lista de lotes y cada lote con sus niveles (ya separados)
     private List<List<string[]>> levels;
+    //Tema usado actualmente
+    private Theme themeAct;
     #endregion
 
     public static GameManager Instance { get { return _instance; } }
@@ -86,10 +90,12 @@ public class GameManager : MonoBehaviour
     {
         bool loadCorrect = false;
         clues = 3;
+        themeAct = colorsThemes[indexTheme];
         if (data != null)
         {
             clues = data.clues;
             bestdata = data.bestScores;
+            themeAct = colorsThemes[data.theme];
             loadCorrect = true;
         }
         else
@@ -139,6 +145,8 @@ public class GameManager : MonoBehaviour
     {
         data.clues = clues;
         data.bestScores = bestdata;
+        if (themeAct != null) data.theme = themeAct.index;
+        else data.theme = 0;
         SaveSystem.SaveData(data);
     }
 
@@ -235,5 +243,5 @@ public class GameManager : MonoBehaviour
         return bestdata[lvl.category].cat[lvl.slotIndex].lvls[lvl.levelIndex].perfect;
     }
 
-    public Theme GetColorTheme() { return colorTheme; }
+    public Theme GetColorTheme() { return themeAct; }
 }

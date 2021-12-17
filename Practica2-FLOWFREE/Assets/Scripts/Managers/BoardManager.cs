@@ -36,6 +36,7 @@ namespace FlowFreeGame
         private static BoardManager _instance; 
 
         public static BoardManager Instance { get { return _instance; } }
+
         private void Awake()
         {
             if (_instance != null)
@@ -54,7 +55,6 @@ namespace FlowFreeGame
             m = new Map();
             Initialize();
         }
-
 
         public void Initialize()
         {
@@ -82,6 +82,7 @@ namespace FlowFreeGame
                 Destroy(pipeObject);
             }
         }
+
         private void SetPipes()
         {
             LvlActual lvl = GameManager.Instance.GetLvlActual();
@@ -169,6 +170,7 @@ namespace FlowFreeGame
         {
             return m;
         }
+
         public float GetScaleFactor()
         {
             return scaleFactor;

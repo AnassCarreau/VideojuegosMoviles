@@ -10,8 +10,8 @@ public class DataSystem
 {
     public string hash=string.Empty;
     public int clues;
+    public int theme;
     public List<Cat> bestScores;
-
 }
 
 [System.Serializable]
@@ -29,7 +29,7 @@ public class Lot
 [System.Serializable]
 public class Lvl
 {
-    public int bestMoves = 0 ;
+    public int bestMoves = 0;
     public bool perfect = false;
 }
 
