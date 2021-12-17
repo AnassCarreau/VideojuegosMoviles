@@ -192,7 +192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: categoria
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: indexTheme
@@ -2065,6 +2065,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 786683320}
   m_CullTransparentMesh: 1
+--- !u!1 &925978026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1378276130725834338, guid: aca59640d284c5443903dae297d94076, type: 3}
+  m_PrefabInstance: {fileID: 1378276131947600854}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &925978028
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925978026}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: c96b1f17402af5d4391cf0ebf2e8ccf6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: c96b1f17402af5d4391cf0ebf2e8ccf6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1180722208
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,6 +3579,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1378276130725834336, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834336, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378276130725834336, guid: aca59640d284c5443903dae297d94076, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -3620,7 +3649,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
   m_PrefabInstance: {fileID: 1378276131947600854}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 925978026}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2031ebb82cee8774fbafd1cab7aeef51, type: 3}
@@ -3660,6 +3689,10 @@ PrefabInstance:
       propertyPath: canvasManager
       value: 
       objectReference: {fileID: 534984198}
+    - target: {fileID: 8944974148565182044, guid: 5fb74084800011546b520bd77e9b0f52, type: 3}
+      propertyPath: boardAnimation
+      value: 
+      objectReference: {fileID: 925978028}
     - target: {fileID: 8944974148565182045, guid: 5fb74084800011546b520bd77e9b0f52, type: 3}
       propertyPath: m_RootOrder
       value: 4

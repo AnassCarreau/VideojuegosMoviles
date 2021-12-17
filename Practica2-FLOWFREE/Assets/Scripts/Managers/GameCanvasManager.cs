@@ -29,7 +29,7 @@ namespace FlowFreeGame
         private Button nextLevelButton;
         [SerializeField]
         private Button prevLevelButton;
-
+       
 
         //TO DO: quitarlos de aqui y en el inspector llamar a los de gameManager/levelManager
         public void ChangeNextLevel()

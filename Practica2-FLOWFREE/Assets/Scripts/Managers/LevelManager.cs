@@ -8,7 +8,8 @@ namespace FlowFreeGame
     {
         [SerializeField]
         GameCanvasManager canvasManager;
-
+        [SerializeField]
+        private Animation boardAnimation;
         private static LevelManager _instance;
 
         public static LevelManager Instance { get { return _instance; } }
@@ -55,13 +56,20 @@ namespace FlowFreeGame
                 //Habilitamos/Desabilitamos los botones de pasar nivel o no
                 ActivateButtons();
                 //Iniciamos el tablero de la siguiente partida
-                BoardManager.Instance.Initialize();
+                boardAnimation.Play();
+                Invoke("Init", 1);
+                //BoardManager.Instance.Initialize();
+                
             }
             //Hemos acabado lote
             else if(act.levelIndex + 1 == levels)
             {
                 GameManager.Instance.LoadScene("MainMenuFlowFree");
             }
+        }
+        void Init() 
+        {
+            BoardManager.Instance.Initialize();
         }
         public void BackLevel()
         {
