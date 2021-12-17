@@ -1,16 +1,31 @@
 using UnityEngine;
 using SOC;
+using UnityEngine.UI;
 
 namespace FlowFreeGame.Menu
 {
     public class SlotsScrollViewController : MonoBehaviour
     {
 
-        [SerializeField] public CategoryTextItem CatPref;
-        [SerializeField] public SlotButtonItem SlotPref;
+        [SerializeField] private CategoryTextItem CatPref;
+        [SerializeField] private SlotButtonItem SlotPref;
+        [SerializeField] private Text l1Text;
+        [SerializeField] private Text e1Text;
+        [SerializeField] private Text vText;
+        [SerializeField] private Text e2Text;
+        [SerializeField] private Text l2Text;
+        [SerializeField] private Text sText;
 
+        private Color[] lettersColors;
         private void Start()
         {
+            lettersColors = GameManager.Instance.GetColorTheme().colorTheme;
+            l1Text.color = lettersColors[0];
+            e1Text.color = lettersColors[1];
+            vText.color = lettersColors[2];
+            e2Text.color = lettersColors[3];
+            l2Text.color = lettersColors[4];
+            sText.color = lettersColors[5];
             LoadLevelButtons();
         }
 
