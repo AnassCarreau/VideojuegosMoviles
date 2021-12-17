@@ -66,7 +66,6 @@ namespace FreeFlowGame
         {
             //Pone las variables principales del dibujado como deben empezar
             ResetVariables();
-
             moves = 0;
             numPipesInBoard = 0;
             pipeRenderer.color = Color.black;
@@ -96,6 +95,7 @@ namespace FreeFlowGame
             LevelManager.Instance.SetflowsText(0);
             LevelManager.Instance.SetMovesText(moves);
             LevelManager.Instance.SetBestText();
+            LevelManager.Instance.setClueText();
             Percentage();
         }
 
@@ -313,9 +313,15 @@ namespace FreeFlowGame
             if (AllPipesCompleted())
             {
                 GameManager.Instance.SetScore(moves);
+                if (moves == colorCompleted.Count) 
+                {
+                    Debug.Log("anaaaas");
+                    GameManager.Instance.SetPerfect();
+                }
                 LevelManager.Instance.LevelCompleted(moves);
                 //Para no actualizar los pipes cuando hemos pasado el nivel
                 enabled = false;
+                GameManager.Instance.LevelSuccess();
                 return;
             }
 

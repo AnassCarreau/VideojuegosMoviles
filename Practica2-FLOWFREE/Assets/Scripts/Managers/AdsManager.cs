@@ -42,6 +42,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     {
         if (Advertisement.IsReady(nameADBanner))
         {
+
             Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
             Advertisement.Banner.Show(nameADBanner);
         }

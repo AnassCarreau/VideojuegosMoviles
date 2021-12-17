@@ -16,6 +16,7 @@ public struct Nivel
 {
     public string nivel;
     public int bestMoves;
+    public bool perfect;
 }
 
 
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         
-        // ads.ShowBanner();  
+         ads.ShowBanner();  
     }
 
     private void InitData()
@@ -168,11 +169,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
-    public DataSystem getData() { return data; }
-    public void setData(DataSystem data) { this.data = data; }
-
-   
-
     public CategoryPack[] GetCategories()
     {
         return categories;
@@ -229,4 +225,5 @@ public class GameManager : MonoBehaviour
     public string GetCurrentLevel() { return levels[act.category][act.slotIndex][act.levelIndex].nivel; }
 
     public List<List<Nivel[]>> GetLevels() { return levels; }
+    public void SetPerfect() { levels[act.category][act.slotIndex][act.levelIndex].perfect = true; }
 }

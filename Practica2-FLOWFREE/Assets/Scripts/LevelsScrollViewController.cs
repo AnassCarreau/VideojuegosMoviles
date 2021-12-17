@@ -39,10 +39,11 @@ public class LevelsScrollViewController : MonoBehaviour
         GameObject levelBtnParentAux = new GameObject();
         for (int i = 0; i < numberOfLevels; i++)
         {
+            Nivel lvl = GameManager.Instance.GetLevels()[act.category][act.slotIndex][i];
             //Si el lote en el que estamos tiene niveles bloqueados miramos que esté sin jugar y que no sea el primero del lote 
             if (blocked)
             {
-                nextLvlsBlockeds = GameManager.Instance.GetLevels()[act.category][act.slotIndex][i].bestMoves == 0 && i != 0;
+                nextLvlsBlockeds = lvl.bestMoves == 0 && i != 0;
             }
 
             if (i / 30 > conAct)
@@ -56,15 +57,28 @@ public class LevelsScrollViewController : MonoBehaviour
             levelBtnObj.SetLvl(i);
             if (!blocked || !nextLvlsBlockeds) levelBtnObj.SetColor(pipesColor[i / 30]);
             else { levelBtnObj.SetColor(Color.black); }
-        }
 
+            //TO DO CAMBIAR A SCRIPT DEL PREFAB Y ASIGNARLE SUS DOS HIJOS
+            if (lvl.perfect)
+            {
+                levelBtnObj.transform.GetChild(1).transform.gameObject.SetActive(true);
+                levelBtnObj.SetColor(Color.black);
+            }
+            else if (lvl.bestMoves > 0)
+            {
+                levelBtnObj.transform.GetChild(2).transform.gameObject.SetActive(true);
+                levelBtnObj.SetColor(Color.black);
+
+            }
+            else if (!blocked || !nextLvlsBlockeds) levelBtnObj.SetColor(pipesColor[i / 30]);
+            else { levelBtnObj.SetColor(Color.black); }
+
+        }
+        //TO DO  QUITAR GET
         IndicatorParent.transform.position = new Vector2(IndicatorParent.transform.position.x - IndicatorPrefab.GetComponent<RectTransform>().rect.width * (float)conAct, IndicatorParent.transform.position.y);
     }
 
-    public void SetLvl(int slot)
-    {
-        slotIndex = slot;
-    }
+    
 
 
 }
