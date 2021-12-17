@@ -23,7 +23,14 @@ public class Cat
 [System.Serializable]
 public class Lot
 {
-    public int[] lvl;
+    public Lvl[] lvls;
+}
+
+[System.Serializable]
+public class Lvl
+{
+    public int bestMoves = 0 ;
+    public bool perfect = false;
 }
 
 public class SaveSystem
@@ -54,7 +61,6 @@ public class SaveSystem
             data.hash = string.Empty;
             if (Hash(JsonUtility.ToJson(data)).Equals(hash))
             {
-                Debug.Log("verificado");
                 return data;
             }
             else return null; 

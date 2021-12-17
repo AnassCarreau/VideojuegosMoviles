@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using SOC;
 
 public struct LvlActual
 {
@@ -12,33 +11,21 @@ public struct LvlActual
     public int levelIndex;
 }
 
-public struct Nivel
-{
-    public string nivel;
-    public int bestMoves;
-    public bool perfect;
-}
-
-
 public class GameManager : MonoBehaviour
 {
     #region SerializeVariables
+    //Level manager de la escena (si tiene)
     [SerializeField]
-    private FreeFlowGame.LevelManager levelManager;
-    #endregion
+    private FlowFreeGame.LevelManager levelManager;
 
-    #region PublicVariables
     //Array de los lotes sobre los que vamos a trabajar Intro-Manias-Rectangles
-    public CategoryPack[] categories;
-    //
-    public AdsManager ads;
+    [SerializeField]
+    private CategoryPack[] categories;
 
-    //de momento publico para que podamos darle a las escenas sin que se joda 
-    private LvlActual act;
+    [SerializeField]
+    private Theme colorTheme;
 
-    //Lista de categorias con su correspondiente lista de lotes y cada lote con sus niveles (ya separados)
-    private List<List<Nivel[]>> levels;
-
+    //Variables auxiliares para no tener que empezar siempre desde el menu principal
 #if UNITY_EDITOR
     [SerializeField]
     private int nivel;
@@ -46,23 +33,28 @@ public class GameManager : MonoBehaviour
     private int lote;
     [SerializeField]
     private int categoria;
+    //Controlador de anuncios
+    [SerializeField]
+    private AdsManager ads;
 #endif
-
-#endregion
+    #endregion
 
     #region PrivateVariables
-    private DataSystem data;
-    private static GameManager _instance;
-
-    //private FreeFlowGame.GameCanvasManager canvasManager;
-
-    //Variable que controla el numero de pistas
+    //Numero de pistas
     private int clues;
+    //Instancia del gameManager
+    private static GameManager _instance;
+    //Datos de guardado
+    private DataSystem data;
+    //Lista sobre la que hacemos modificaciones para despues sobreescribir los datos de guardado
     private List<Cat> bestdata;
+    //Nivel actual
+    private LvlActual act;
+    //Lista de categorias con su correspondiente lista de lotes y cada lote con sus niveles (ya separados)
+    private List<List<string[]>> levels;
     #endregion
 
     public static GameManager Instance { get { return _instance; } }
-
 
     private void Awake()
     {
@@ -85,19 +77,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     private void Start()
     {
-        
-         ads.ShowBanner();  
+        ads.ShowBanner();
     }
 
     private void InitData()
     {
-        bool loadCorrect=false;
-        //Habra que leer cuantas pistas nos quedan cuando se haga el guardado
-        clues = 2;
+        bool loadCorrect = false;
+        clues = 3;
         if (data != null)
         {
             clues = data.clues;
@@ -110,36 +98,38 @@ public class GameManager : MonoBehaviour
             bestdata = new List<Cat>();
         }
 
-        
-        //Esto es temporal ya que hay que leerlo del data guardado, es para que funcione el boton de clue
-        levels = new List<List<Nivel[]>>();
-        
+        levels = new List<List<string[]>>();
+
         //For de Categorias Intro-manias-rectangles
         for (int i = 0; i < categories.Length; i++)
         {
-            levels.Add(new List<Nivel[]>());
-            if (!loadCorrect)bestdata.Add(new Cat());
+            levels.Add(new List<string[]>());
+            if (!loadCorrect) bestdata.Add(new Cat());
             int numLotes = categories[i].lotes.Length;
+
             //For leyendo los archivos de cada categoría, es decir cada lote
             TextAsset[] slot = new TextAsset[numLotes];
             for (int j = 0; j < numLotes; j++)
-            { 
+            {
                 slot[j] = categories[i].lotes[j].maps;
                 char[] c = new char[1] { '\n' };
                 string[] lvs = slot[j].text.Split(c, StringSplitOptions.RemoveEmptyEntries);
-                levels[i].Add(new Nivel[lvs.Length]);
+                levels[i].Add(new string[lvs.Length]);
 
                 if (!loadCorrect)
                 {
                     Lot l = new Lot();
-                    l.lvl = new int[lvs.Length];
+                    l.lvls = new Lvl[lvs.Length];
+                    for(int k = 0; k < l.lvls.Length; k++)
+                    {
+                        l.lvls[k] = new Lvl();
+                    }
                     bestdata[i].cat.Add(l);
-
                 }
-                for(int k = 0; k < lvs.Length; k++)
+
+                for (int k = 0; k < lvs.Length; k++)
                 {
-                    levels[i][j][k].nivel = lvs[k];
-                    levels[i][j][k].bestMoves = bestdata[i].cat[j].lvl[k] ;
+                    levels[i][j][k]= lvs[k];
                 }
             }
         }
@@ -147,22 +137,19 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Debug.Log(data);
         data.clues = clues;
         data.bestScores = bestdata;
         SaveSystem.SaveData(data);
     }
-    public void LevelSuccess() 
+    public void LevelSuccess()
     {
         ads.PlayAd();
     }
 
-    public FreeFlowGame.LevelManager GetLevelManager()
+    public FlowFreeGame.LevelManager GetLevelManager()
     {
         return levelManager;
-    } 
-    
-   
+    }
 
     public void LoadScene(string name)
     {
@@ -174,7 +161,7 @@ public class GameManager : MonoBehaviour
         return categories;
     }
 
-    public void SetCategory(int cat) 
+    public void SetCategory(int cat)
     {
         act.category = cat;
     }
@@ -189,14 +176,13 @@ public class GameManager : MonoBehaviour
 
     public void SetScore(int n)
     {
-        int bestCurrentLvlScore =  levels[act.category][act.slotIndex][act.levelIndex].bestMoves;
+        int bestCurrentLvlScore = bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves;
         if (bestCurrentLvlScore > n || bestCurrentLvlScore == 0)
         {
-            levels[act.category][act.slotIndex][act.levelIndex].bestMoves = n;
-            bestdata[act.category].cat[act.slotIndex].lvl[act.levelIndex] = levels[act.category][act.slotIndex][act.levelIndex].bestMoves;
+            //levels[act.category][act.slotIndex][act.levelIndex].bestMoves = n;
+            bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves = n;//levels[act.category][act.slotIndex][act.levelIndex].bestMoves;
         }
     }
-   
 
     public bool UseClue()
     {
@@ -208,11 +194,13 @@ public class GameManager : MonoBehaviour
         }
         else return false;
     }
-    public void GetNewClue() {
+
+    public void GetNewClue()
+    {
         ads.PlayerRewardedAd(OnRewardedAdSuccess);
     }
 
-    void OnRewardedAdSuccess() 
+    void OnRewardedAdSuccess()
     {
         clues++;
         if (levelManager != null) levelManager.setClueText();
@@ -222,8 +210,29 @@ public class GameManager : MonoBehaviour
 
     public int GetNumClues() { return clues; }
 
-    public string GetCurrentLevel() { return levels[act.category][act.slotIndex][act.levelIndex].nivel; }
+    public string GetCurrentLevel() { return levels[act.category][act.slotIndex][act.levelIndex]; }
 
-    public List<List<Nivel[]>> GetLevels() { return levels; }
-    public void SetPerfect() { levels[act.category][act.slotIndex][act.levelIndex].perfect = true; }
+    public List<List<string[]>> GetLevels() { return levels; }
+
+    public void SetPerfect() { 
+        bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].perfect = true; 
+    }
+
+    public void ActualizeCurrentLevelBestScore(int n)
+    {
+        if(bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves > n 
+            || bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves == 0)
+        bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves = n;
+    }
+
+    public int GetLevelBestMoves(LvlActual lvl)
+    {
+        return bestdata[lvl.category].cat[lvl.slotIndex].lvls[lvl.levelIndex].bestMoves;
+    }
+    public bool GetIsLevelPerfect(LvlActual lvl)
+    {
+        return bestdata[lvl.category].cat[lvl.slotIndex].lvls[lvl.levelIndex].perfect;
+    }
+
+    public Theme GetColorTheme() { return colorTheme; }
 }

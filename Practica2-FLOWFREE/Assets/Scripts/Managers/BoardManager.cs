@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FreeFlowGame
+namespace FlowFreeGame
 {
-
     public class BoardManager : MonoBehaviour
     {
         [SerializeField]
@@ -15,9 +13,6 @@ namespace FreeFlowGame
 
         [SerializeField]
         private Transform _cam;
-
-        [SerializeField]
-        private Color[] pipesColor;
 
         [SerializeField]
         private Transform boardParent;
@@ -99,6 +94,8 @@ namespace FreeFlowGame
         {
             _tiles = new Dictionary<Vector2, Tile>();
             Dictionary<Vector2, bool[]> walls = m.GetWallsInBoard();
+            Color[] colorTheme = GameManager.Instance.GetColorTheme().colorTheme;
+
             for (int i = 0; i < m.GetFlownum(); i++)
             {
                 for (int j = 0; j < pipes[i].Count; j++)
@@ -109,7 +106,7 @@ namespace FreeFlowGame
                     if (j == 0 || j == pipes[i].Count - 1)
                     {
                         spawnedTile.Init(false);
-                        spawnedTile.SetColor(pipesColor[i]);
+                        spawnedTile.SetColor(colorTheme[i]);
                     }
                     else spawnedTile.Init(true);
 
@@ -161,10 +158,6 @@ namespace FreeFlowGame
             return null;
         }
 
-        public Color[] GetPipesColor()
-        {
-            return pipesColor;
-        }
         public List<List<Vector2>> GetPipeSolution() { return pipes; }
 
         public PipeController GetPipeController()

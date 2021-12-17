@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-namespace FreeFlowGame
+
+namespace FlowFreeGame
 {
     public class PipeController : MonoBehaviour
     {
@@ -82,7 +82,7 @@ namespace FreeFlowGame
             clueInPipe = new Dictionary<Color, bool>();
             starsInPipes = new Dictionary<Color, List<GameObject>>();
             brokePipes = new Dictionary<Tile, Stack<EachPipe>>();
-            Color[] c = boardManager.GetPipesColor();
+            Color[] c = GameManager.Instance.GetColorTheme().colorTheme;
             for (int i = 0; i < c.Length; i++)
             {
                 GameObject par = new GameObject();
@@ -315,7 +315,6 @@ namespace FreeFlowGame
                 GameManager.Instance.SetScore(moves);
                 if (moves == colorCompleted.Count) 
                 {
-                    Debug.Log("anaaaas");
                     GameManager.Instance.SetPerfect();
                 }
                 LevelManager.Instance.LevelCompleted(moves);
@@ -543,7 +542,7 @@ namespace FreeFlowGame
 
         private void OnDestroy()
         {
-            foreach (Color c in boardManager.GetPipesColor())
+            foreach (Color c in GameManager.Instance.GetColorTheme().colorTheme)
             {
                 Destroy(pipeParent[c].gameObject);
             }

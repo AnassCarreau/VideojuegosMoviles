@@ -44,15 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ecc61e8d6458c45beb8b5adeb6eec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardManager: {fileID: 0}
+  levelManager: {fileID: 0}
   categories:
   - {fileID: 11400000, guid: a480e4b68c9bdc64996eab9f5ef3e25a, type: 2}
   - {fileID: 11400000, guid: d939cb1cf7e451443811f34aa6e9aa2b, type: 2}
   - {fileID: 11400000, guid: 95d2f4d4bd0eabe4fb8e7981b9fdd44f, type: 2}
-  ads: {fileID: 697968438477719397}
+  colorTheme: {fileID: 11400000, guid: 503b3f264b9dd43488348096ed9c1efa, type: 2}
+  nivel: 0
   lote: 0
-  pack: 0
-  level: 0
+  categoria: 0
+  ads: {fileID: 697968438477719397}
 --- !u!114 &697968438477719397
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -179,8 +179,12 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
+      propertyPath: ads
+      value: 
+      objectReference: {fileID: 1455672870}
+    - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: lote
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: nivel
@@ -188,7 +192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: categoria
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: boardManager
@@ -302,7 +306,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 26826461}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 534984198}
+        m_TargetAssemblyTypeName: FreeFlowGame.GameCanvasManager, Assembly-CSharp
+        m_MethodName: GetNewClue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &26826461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1616,7 +1632,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 638738992}
   m_OnClick:
     m_PersistentCalls:
@@ -2506,6 +2522,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425070280}
   m_CullTransparentMesh: 1
+--- !u!114 &1455672870 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 697968438477719397, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
+  m_PrefabInstance: {fileID: 22271590}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2331542a516dcc841a1e73061852a677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1552146312
 GameObject:
   m_ObjectHideFlags: 0
@@ -3184,7 +3211,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2029096941}
   m_OnClick:
     m_PersistentCalls:
@@ -3304,7 +3331,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2029205976}
   m_OnClick:
     m_PersistentCalls:

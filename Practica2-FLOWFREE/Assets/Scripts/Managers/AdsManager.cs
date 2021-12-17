@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using System;
+
 public class AdsManager : MonoBehaviour, IUnityAdsListener
 {
-
     [SerializeField] private string GameId;
     [SerializeField] private string nameADPista;
     [SerializeField] private string nameADNivelSuperado;
@@ -17,9 +16,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     {
         Advertisement.Initialize(GameId);
         Advertisement.AddListener(this);
-
     }
-
 
     public void PlayAd()
     {
@@ -28,6 +25,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
             Advertisement.Show(nameADNivelSuperado);
         }
     }
+
     public void PlayerRewardedAd(Action onSuccess)
     {
         onRewardedSuccess = onSuccess;
@@ -42,7 +40,6 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     {
         if (Advertisement.IsReady(nameADBanner))
         {
-
             Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
             Advertisement.Banner.Show(nameADBanner);
         }
@@ -63,18 +60,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         ShowBanner();
     }
 
-    public void OnUnityAdsReady(string placementId)
-    {
-        Debug.Log("Add lista");
-    }
-    public void OnUnityAdsDidError(string message)
-    {
-        Debug.Log("Error en el anuncio" + message);
-    }
-    public void OnUnityAdsDidStart(string placementId)
-    {
-        Debug.Log("Empieza el video conchatumare");
-    }
+    public void OnUnityAdsReady(string placementId) { }
+    public void OnUnityAdsDidError(string message) { }
+    public void OnUnityAdsDidStart(string placementId) { }
 
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {

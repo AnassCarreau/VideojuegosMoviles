@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SOC;
 
-namespace FreeFlowGame
+namespace FlowFreeGame
 {
     public class LevelManager : MonoBehaviour
     {
@@ -28,14 +28,7 @@ namespace FreeFlowGame
         // Start is called before the first frame update
         void Start()
         {
-            LvlActual act = GameManager.Instance.GetLvlActual();
-            List<List<Nivel[]>> levels = GameManager.Instance.GetLevels();
-
-            if (act.levelIndex  == levels[act.category][act.slotIndex].Length - 1) canvasManager.isNextLevelButtonInteractuable(false);
-            else canvasManager.isNextLevelButtonInteractuable(true);
-
-            if (act.levelIndex == 0) canvasManager.isPrevLevelButtonInteractuable(false);
-            else canvasManager.isPrevLevelButtonInteractuable(true);
+            ActivateButtons();
         }
 
         public void Restart()
@@ -47,28 +40,25 @@ namespace FreeFlowGame
         {
             LvlActual act = GameManager.Instance.GetLvlActual();
             CategoryPack[] categories = GameManager.Instance.GetCategories();
-            List<List<Nivel[]>> levels = GameManager.Instance.GetLevels();
+            int levels = GameManager.Instance.GetLevels()[act.category][act.slotIndex].Length;
 
             //Si podemos seguir avanzando en el lote nivel a nivel
-            if (act.levelIndex + 1 < levels[act.category][act.slotIndex].Length
-                 && (levels[act.category][act.slotIndex][act.levelIndex].bestMoves > 0
+            if (act.levelIndex + 1 < levels
+                 && (GameManager.Instance.GetLevelBestMoves(act) > 0
                 || !categories[act.category].lotes[act.slotIndex].levelblocked))
             {
-                Debug.Log("Cambio de nivel");
                 //Desactivamos el panel que sale cuando completas un nivel
                 canvasManager.SetPanelActive(false);
-
-                //Hacemos que sea interactuable o no el boton de pasar nivel
-                if (act.levelIndex + 1 == levels[act.category][act.slotIndex].Length - 1) canvasManager.isNextLevelButtonInteractuable(false);
-                else canvasManager.isNextLevelButtonInteractuable(true);
                 
                 //Actualizamos nuestro nivel actual
                 GameManager.Instance.SetLevel(act.levelIndex + 1);
+                //Habilitamos/Desabilitamos los botones de pasar nivel o no
+                ActivateButtons();
                 //Iniciamos el tablero de la siguiente partida
                 BoardManager.Instance.Initialize();
             }
             //Hemos acabado lote
-            else if(act.levelIndex + 1 == levels[act.category][act.slotIndex].Length)
+            else if(act.levelIndex + 1 == levels)
             {
                 GameManager.Instance.LoadScene("MainMenuFlowFree");
             }
@@ -79,9 +69,8 @@ namespace FreeFlowGame
             if (act.levelIndex - 1 >= 0)
             {
                 Debug.Log("Cambio de nivel");
-                if (act.levelIndex - 1 == 0) canvasManager.isPrevLevelButtonInteractuable(false);
-                else canvasManager.isPrevLevelButtonInteractuable(true);
                 GameManager.Instance.SetLevel(act.levelIndex - 1);
+                ActivateButtons();
                 BoardManager.Instance.Initialize();
             }
         }
@@ -117,9 +106,8 @@ namespace FreeFlowGame
 
         public void SetBestText()
         {
-            LvlActual act = GameManager.Instance.GetLvlActual();
-            List<List<Nivel[]>> levels = GameManager.Instance.GetLevels();
-            canvasManager.SetBestText(levels[act.category][act.slotIndex][act.levelIndex].bestMoves);
+
+            canvasManager.SetBestText(GameManager.Instance.GetLevelBestMoves(GameManager.Instance.GetLvlActual()));
         }
 
         public void setClueText()
@@ -128,12 +116,12 @@ namespace FreeFlowGame
         }
 
         public void LevelCompleted(int moves)
-        {
-            //TO DO: guardar cosos supongo
-            
+        {            
             LvlActual act = GameManager.Instance.GetLvlActual();
-            List<List<Nivel[]>> levels = GameManager.Instance.GetLevels();
-            levels[act.category][act.slotIndex][act.levelIndex].bestMoves = moves;
+            List<List<string[]>> levels = GameManager.Instance.GetLevels();
+            
+            //Guardamos que hemos conseguido superar el nivel en ese numero de movimientos
+            GameManager.Instance.ActualizeCurrentLevelBestScore(moves);
 
             //Setteamos los textos del panel segun si hemos completado el slot o no
             if (act.levelIndex + 1 < levels[act.category][act.slotIndex].Length)
@@ -149,6 +137,22 @@ namespace FreeFlowGame
                 canvasManager.SetPannelButtonText("elige próximo paquete");
             }
             canvasManager.SetPanelActive(true);
+        }
+
+        private void ActivateButtons()
+        {
+            LvlActual act = GameManager.Instance.GetLvlActual();
+            List<List<string[]>> levels = GameManager.Instance.GetLevels();
+
+            if (act.levelIndex == levels[act.category][act.slotIndex].Length - 1 || 
+                (GameManager.Instance.GetCategories()[act.category].lotes[act.slotIndex].levelblocked && GameManager.Instance.GetLevelBestMoves(act) == 0))
+                canvasManager.isNextLevelButtonInteractuable(false);
+            else
+                canvasManager.isNextLevelButtonInteractuable(true);
+            
+
+            if (act.levelIndex == 0) canvasManager.isPrevLevelButtonInteractuable(false);
+            else canvasManager.isPrevLevelButtonInteractuable(true);
         }
     }
 }

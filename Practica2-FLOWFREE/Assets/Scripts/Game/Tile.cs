@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-namespace FreeFlowGame
+
+namespace FlowFreeGame
 {
     public class Tile : MonoBehaviour
     {
@@ -16,20 +13,19 @@ namespace FreeFlowGame
         [SerializeField]
         private GameObject circleObject;
 
-
         [SerializeField]
         private SpriteRenderer circleRenderer;
 
         [SerializeField]
         private GameObject wallObject;
+
         [SerializeField]
         private SpriteRenderer wallRenderer;
-        private Vector2 posTile;
 
-       
-        [SerializeField]
+        private Vector2 posTile;
         private int index;
         bool[] walls;
+
         public void Init(bool emptyTile)
         {
             LvlActual lvl = GameManager.Instance.GetLvlActual();
@@ -37,12 +33,11 @@ namespace FreeFlowGame
             index = -1;
             if (!emptyTile)
             {
-
                 circleObject.SetActive(true);
             }
         }
 
-      
+
         public Color GetColor()
         {
             return _color;
@@ -67,14 +62,15 @@ namespace FreeFlowGame
         public void SetWalls(bool[] w)
         {
             walls = w;
+            wallRenderer.color = _renderer.color;
+            
             for (int i = 0; i < w.Length; i++)
             {
                 if (!w[i]) continue;
 
                 GameObject o = Instantiate(wallObject, transform);
-                wallRenderer.color = _renderer.color;
-                float angle = 90 * (i+1);
-                Vector3 v = new Vector2(-transform.localScale.x / 2 * Mathf.Cos(angle * Mathf.Deg2Rad), -transform.localScale.y/ 2 * Mathf.Sin(angle* Mathf.Deg2Rad));
+                float angle = 90 * (i + 1);
+                Vector3 v = new Vector2(-transform.localScale.x / 2 * Mathf.Cos(angle * Mathf.Deg2Rad), -transform.localScale.y / 2 * Mathf.Sin(angle * Mathf.Deg2Rad));
                 o.transform.rotation = Quaternion.Euler(0, 0, angle);
                 o.transform.position = transform.position + v;
                 o.name = $"Muro {posTile.x} {posTile.y}";
@@ -85,9 +81,9 @@ namespace FreeFlowGame
         {
             return circleObject.activeSelf;
         }
-        public bool IsFree() { return index==-1; }
+        public bool IsFree() { return index == -1; }
 
-        
+
         public void SetIndex(int i)
         {
             this.index = i;
@@ -97,6 +93,6 @@ namespace FreeFlowGame
             return index;
         }
 
-        public bool [] GetWalls() { return walls; }
+        public bool[] GetWalls() { return walls; }
     }
 }

@@ -229,6 +229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74b708a5c6e6474493385f42eb525e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: {fileID: 102900000, guid: 7c63c62e9e9729b4eae0081a7685552b, type: 3}
+  scene: LevelSelector
   text: {fileID: 759632001928761617}
   textRight: {fileID: 8585600417894749040}
