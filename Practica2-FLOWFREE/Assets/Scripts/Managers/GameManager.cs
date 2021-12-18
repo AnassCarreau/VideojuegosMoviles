@@ -15,15 +15,15 @@ public class GameManager : MonoBehaviour
 {
     #region SerializeVariables
     //Level manager de la escena (si tiene)
-    [SerializeField]
-    private FlowFreeGame.LevelManager levelManager;
+    [SerializeField] private FlowFreeGame.LevelManager levelManager;
 
     //Array de los lotes sobre los que vamos a trabajar Intro-Manias-Rectangles
-    [SerializeField]
-    private CategoryPack[] categories;
+    [SerializeField] private CategoryPack[] categories;
 
-    [SerializeField]
-    private Theme[] colorsThemes = new Theme[3];
+    //Array con todos los temas que hay disponibles en la aplicacion, como no hay menu de
+    //tienda en nuestra implementacion y necesitabamos guardar cual tema estabamos usando
+    //guardamos como dato serializado el indice en este array que representa al tema
+    [SerializeField] private Theme[] colorsThemes = new Theme[3];
 
     //Variables auxiliares para no tener que empezar siempre desde el menu principal
 #if UNITY_EDITOR
@@ -33,12 +33,11 @@ public class GameManager : MonoBehaviour
     private int lote;
     [SerializeField]
     private int categoria;
-    //Controlador de anuncios
-    [SerializeField]
-    private AdsManager ads;
-    [SerializeField]
-    private int indexTheme;
 #endif
+    //Controlador de anuncios
+    [SerializeField] private AdsManager ads;
+    //Indice en el array de temas que representa al que esta en uso
+    [SerializeField] private int indexTheme;
     #endregion
 
     #region PrivateVariables
@@ -90,12 +89,11 @@ public class GameManager : MonoBehaviour
     {
         bool loadCorrect = false;
         clues = 3;
-        themeAct = colorsThemes[indexTheme];
         if (data != null)
         {
             clues = data.clues;
             bestdata = data.bestScores;
-            themeAct = colorsThemes[data.theme];
+            indexTheme = data.theme;
             loadCorrect = true;
         }
         else
@@ -104,6 +102,7 @@ public class GameManager : MonoBehaviour
             bestdata = new List<Cat>();
         }
 
+        themeAct = colorsThemes[indexTheme];
         levels = new List<List<string[]>>();
 
         //For de Categorias Intro-manias-rectangles
@@ -188,14 +187,12 @@ public class GameManager : MonoBehaviour
         int bestCurrentLvlScore = bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves;
         if (bestCurrentLvlScore > n || bestCurrentLvlScore == 0)
         {
-            //levels[act.category][act.slotIndex][act.levelIndex].bestMoves = n;
-            bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves = n;//levels[act.category][act.slotIndex][act.levelIndex].bestMoves;
+            bestdata[act.category].cat[act.slotIndex].lvls[act.levelIndex].bestMoves = n;
         }
     }
 
     public bool UseClue()
     {
-
         if (clues - 1 >= 0)
         {
             clues--;

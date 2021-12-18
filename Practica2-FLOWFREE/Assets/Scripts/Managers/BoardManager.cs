@@ -178,7 +178,7 @@ namespace FlowFreeGame
 
         public void EnablePipeController()
         {
-            pipeControllerPrefab.enabled = true;
+            pipeObject.enabled = true;
         }
     }
 }

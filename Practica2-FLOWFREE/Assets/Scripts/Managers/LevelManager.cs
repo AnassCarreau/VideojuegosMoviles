@@ -57,7 +57,7 @@ namespace FlowFreeGame
                 ActivateButtons();
                 //Iniciamos el tablero de la siguiente partida
                 boardAnimation.Play();
-                Invoke("Init", 1);
+                Invoke("Init", 1.03f);
                 //BoardManager.Instance.Initialize();
                 
             }
