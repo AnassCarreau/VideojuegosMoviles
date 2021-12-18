@@ -128,6 +128,8 @@ namespace FlowFreeGame
                 Touch touch = Input.GetTouch(0);
                 posInBoard = Camera.main.ScreenToWorldPoint(touch.position);
                 ra = Physics2D.Raycast(posInBoard, -Vector2.up, 0.1f);
+                posInBoard.x /= scaleFactor;
+                posInBoard.y /= scaleFactor;
                 if (ra.collider != null)
                 {
                     //Primera pulsacion
@@ -244,7 +246,7 @@ namespace FlowFreeGame
                 }
                 //Si no esta vacio y es de un color diferente al actual rompemos la linea
                 else if (continueMoving && tileAct.GetColor() != pipeRenderer.color)
-                { 
+                {
                     //Si tenia estrellas porque se habia dado una pista sobre ese color se desactivan dichas estrellas de los
                     //extremos del pipe
                     if (clueInPipe.ContainsKey(tileAct.GetColor()))
@@ -278,7 +280,7 @@ namespace FlowFreeGame
                     else if (continueMoving)
                         DestroyChildren();
                     else return;
-                    
+
                     posAct = pipeList[pipeRenderer.color].Count != 0 ? pipeList[pipeRenderer.color][pipeList[pipeRenderer.color].Count - 1].GetPositionInBoard() : posIni;
                     continueMoving = true;
                 }
@@ -308,7 +310,7 @@ namespace FlowFreeGame
             {
 
                 GameManager.Instance.SetScore(moves);
-                if (moves == colorCompleted.Count) 
+                if (moves == colorCompleted.Count)
                 {
                     GameManager.Instance.SetPerfect();
                 }
