@@ -607,7 +607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: indexTheme
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
@@ -723,10 +723,10 @@ RectTransform:
   m_Father: {fileID: 129504774}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.07447917}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -122.11087}
-  m_SizeDelta: {x: 0, y: -122.11}
+  m_SizeDelta: {x: 0, y: -122.155396}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &640045059
 MonoBehaviour:
@@ -1090,7 +1090,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -898.94495}
+  m_AnchoredPosition: {x: 0, y: -827.4232}
   m_SizeDelta: {x: 1080, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1448341057

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: ClassicPack
   m_EditorClassIdentifier: 
   packName: Classic Pack
+  nameEach30levels:
+  - 5 x 5 - easy
+  - 6 x 6
+  - 7 x 7 - medium
+  - 8 x 8
+  - 9 x 9 - hard
   maps: {fileID: 4900000, guid: 31cf2cb05508c5844b1590561a62d348, type: 3}
+  levelblocked: 0

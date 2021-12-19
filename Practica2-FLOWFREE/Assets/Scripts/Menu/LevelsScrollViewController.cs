@@ -1,28 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FlowFreeGame.Menu
 {
     public class LevelsScrollViewController : MonoBehaviour
     {
-
+        private int contGrids;
         private int slotIndex;
         private int numberOfLevels;
+        private Color[] pipesColor;
+        private Text dimensionsText;
+
         [SerializeField] private LevelButtonItem levelBtnPref;
-        [SerializeField] private GameObject levelBtnParent;
-        [SerializeField] private Color[] pipesColor;
-        [SerializeField] private Color[] IndicatorColor;
-        [SerializeField] private GameObject IndicatorParent;
-        [SerializeField] private GameObject IndicatorPrefab;
-        //TO DO PONER PRIVADA CON GET
-        private List<GameObject> listIndicator;
-        public List<GameObject> listInd
-        {
-            get { return listIndicator; }
-        }
+        [SerializeField] private ContentScrollScript contentScroll;
+
         private void Start()
         {
-            listIndicator = new List<GameObject>();
+            dimensionsText = contentScroll.GetDimensionsText();
+            contGrids = 0;
+            pipesColor = GameManager.Instance.GetColorTheme().colorTheme;
             LoadScrollButtons();
         }
 
@@ -35,8 +32,7 @@ namespace FlowFreeGame.Menu
 
             bool nextLvlsBlockeds = false;
             int conAct = -1;
-            GameObject levelBtnParentAux = new GameObject();
-
+            ContentScrollScript levelBtnParentAux = new ContentScrollScript();
 
             for (int i = 0; i < numberOfLevels; i++)
             {
@@ -55,11 +51,11 @@ namespace FlowFreeGame.Menu
                 if (i / 30 > conAct)
                 {
                     conAct++;
-                    levelBtnParentAux = Instantiate(levelBtnParent, transform);
-                    listIndicator.Add(Instantiate(IndicatorPrefab, IndicatorParent.transform));
+                    dimensionsText.text = GameManager.Instance.GetCategories()[act.category].lotes[slotIndex].nameEach30levels[conAct];
+                    levelBtnParentAux = Instantiate(contentScroll, transform);
                 }
 
-                LevelButtonItem levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.transform);
+                LevelButtonItem levelBtnObj = Instantiate(levelBtnPref, levelBtnParentAux.GetGridObject().transform);
                 levelBtnObj.SetLvl(i);
                 levelBtnObj.SetColor(pipesColor[i / 30]);
                 if (!blocked || !nextLvlsBlockeds)
@@ -71,19 +67,16 @@ namespace FlowFreeGame.Menu
                     levelBtnObj.SetButtonInteractable(false);
                 }
 
-                //TO DO CAMBIAR A SCRIPT DEL PREFAB Y ASIGNARLE SUS DOS HIJOS
+                //En función de si el nivel está perfecto o no activamos la estrella o el tick
                 if (GameManager.Instance.GetIsLevelPerfect(act))
                 {
-                    levelBtnObj.transform.GetChild(1).transform.gameObject.SetActive(true);
+                    levelBtnObj.GetStarObject().SetActive(true);
                 }
                 else if (GameManager.Instance.GetLevelBestMoves(act) > 0)
                 {
-                    levelBtnObj.transform.GetChild(2).transform.gameObject.SetActive(true);
+                    levelBtnObj.GetTickObject().SetActive(true);
                 }
-
             }
-            //TO DO  QUITAR GET
-            IndicatorParent.transform.position = new Vector2(IndicatorParent.transform.position.x - IndicatorPrefab.GetComponent<RectTransform>().rect.width * (float)conAct, IndicatorParent.transform.position.y);
         }
     }
 }

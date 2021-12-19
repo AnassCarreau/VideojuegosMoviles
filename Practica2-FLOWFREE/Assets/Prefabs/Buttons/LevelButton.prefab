@@ -152,6 +152,8 @@ MonoBehaviour:
   img: {fileID: 2482575236098690552}
   text: {fileID: 2482575237342596927}
   button: {fileID: 2482575236098690553}
+  starObject: {fileID: 0}
+  tickObject: {fileID: 0}
 --- !u!1 &2482575237342596925
 GameObject:
   m_ObjectHideFlags: 0

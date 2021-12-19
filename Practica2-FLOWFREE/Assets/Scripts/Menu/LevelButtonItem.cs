@@ -11,6 +11,8 @@ namespace FlowFreeGame.Menu
         [SerializeField] private Image img;
         [SerializeField] private Text text;
         [SerializeField] private Button button;
+        [SerializeField] private GameObject starObject;
+        [SerializeField] private GameObject tickObject;
 
         private void Start()
         {
@@ -38,5 +40,14 @@ namespace FlowFreeGame.Menu
             button.interactable = interactuable;
         }
 
+        public GameObject GetStarObject()
+        {
+            return starObject;
+        }
+
+        public GameObject GetTickObject()
+        {
+            return tickObject;
+        }
     }
 }

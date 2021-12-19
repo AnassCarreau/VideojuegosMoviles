@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: GreenPack
   m_EditorClassIdentifier: 
   packName: Green Pack
+  nameEach30levels:
+  - 5 x 5 - easy
+  - 6 x 6
+  - 7 x 7 - medium
+  - 8 x 8
+  - 9 x 9 - hard
   maps: {fileID: 4900000, guid: c007ba5a1ca63e1458d462d5fb04fdc2, type: 3}
+  levelblocked: 0
