@@ -90,7 +90,7 @@ namespace FlowFreeGame
             pipes = m.GetPipes();
         }
 
-        public void GenerateGrid()
+        private void GenerateGrid()
         {
             transform.localScale = Vector3.one;
             _tiles = new Dictionary<Vector2, Tile>();

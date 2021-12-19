@@ -11,8 +11,9 @@ namespace FlowFreeGame
         [SerializeField]
         SpriteRenderer pipeRenderer;
 
-        [SerializeField]
-        GameObject clueStar;
+        //Prefab con el gameObject de la estrella que se colocara sobre el tile cuando
+        //pidamos una pista
+        [SerializeField] GameObject clueStar;
 
         //Diccionario para tener un padre donde instanciar los pipes de un color especifico
         private Dictionary<Color, Transform> pipeParent;
@@ -23,6 +24,7 @@ namespace FlowFreeGame
         //Diccionario con los pipes de cada color
         private Dictionary<Color, List<EachPipe>> pipeList;
 
+        //Diccionario con el tile 
         private Dictionary<Color, Tile> tilePipesIni;
 
         //Diccionario donde guardamos si se ha puesto una pista en ese color para controlar que las estrellas salgan o no
@@ -32,15 +34,15 @@ namespace FlowFreeGame
         //Cada tile que rompemos guardamos el anterior con los trozos de tuberia que he roto 
         private Dictionary<Tile, Stack<EachPipe>> brokePipes;
 
+        //Referencia al boardmanager -> para no llamar a Instance todo el rato
         private BoardManager boardManager;
 
+        //Booleano que determina si estamos pintando o no
         private bool draw;
         private bool continueMoving;
 
         private Vector2 posIni;
         private Vector2 posAct;
-
-        private Vector2 dirAct;
 
         private Tile tileIni;
         private Tile lastTilePainted;
@@ -49,8 +51,11 @@ namespace FlowFreeGame
         //Lista de listas con las posiciones de las pipes en su solucion
         private List<List<Vector2>> pipeSolution;
 
+        //Cuantas casillas de las que pueden tener tuberías actualmente las tienen
         private int numPipesInBoard;
+        //Numero máximo de tuberías que puedes tener (numero de tuberias cuando solucionas el tablero)
         private int totalPipesInBoard;
+        //Movimientos en los que se 
         private int moves;
         private Vector2 lastPipe;
         private bool lastPipeColor;
@@ -63,19 +68,19 @@ namespace FlowFreeGame
             moves = 0;
             numPipesInBoard = 0;
             pipeRenderer.color = Color.black;
-            //iNICIALIZACION DE LAS LISTAS 
+
+            //Inicializacion de la listas/diccionarios
             boardManager = BoardManager.Instance;
             pipeParent = new Dictionary<Color, Transform>();
             pipeList = new Dictionary<Color, List<EachPipe>>();
-
             tilePipesIni = new Dictionary<Color, Tile>();
-
             pipeSolution = boardManager.GetPipeSolution();
             colorCompleted = new HashSet<Color>();
             lastPipe = new Vector2();
             clueInPipe = new Dictionary<Color, bool>();
             starsInPipes = new Dictionary<Color, List<GameObject>>();
             brokePipes = new Dictionary<Tile, Stack<EachPipe>>();
+
             Color[] c = GameManager.Instance.GetColorTheme().colorTheme;
             for (int i = 0; i < c.Length; i++)
             {
@@ -86,10 +91,11 @@ namespace FlowFreeGame
                 pipeParent.Add(c[i], par.transform);
                 pipeList.Add(c[i], new List<EachPipe>());
             }
+
             LevelManager.Instance.SetflowsText(0);
             LevelManager.Instance.SetMovesText(moves);
             LevelManager.Instance.SetBestText();
-            LevelManager.Instance.setClueText();
+            LevelManager.Instance.SetClueText();
             Percentage();
         }
 
@@ -152,6 +158,7 @@ namespace FlowFreeGame
 #endif
 
 #if UNITY_EDITOR
+            //Para hacer mas sencilla la resolucion cuando estamos en el editor
             if (Input.GetKeyUp(KeyCode.A)) { PaintClue(); }
 #endif
         }
@@ -510,7 +517,7 @@ namespace FlowFreeGame
 
         private void CreatePipe(Vector2 posAbsBoard)
         {
-            dirAct = posAbsBoard - posAct;
+            Vector2 dirAct = posAbsBoard - posAct;
 
             Vector2 posLastPainted = lastTilePainted.GetPosTile();
             if (IsDirValid(dirAct) && !IsThereWallInDir(tileAct, dirAct) && IsDirValid(posLastPainted - posAbsBoard) && boardManager.GetTileAtPosition(posAbsBoard) != null)
@@ -647,5 +654,3 @@ namespace FlowFreeGame
         }
     }
 }
-
-

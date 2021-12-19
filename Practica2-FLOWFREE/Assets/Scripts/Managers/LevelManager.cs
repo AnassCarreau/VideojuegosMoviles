@@ -118,7 +118,7 @@ namespace FlowFreeGame
             canvasManager.SetBestText(GameManager.Instance.GetLevelBestMoves(GameManager.Instance.GetLvlActual()));
         }
 
-        public void setClueText()
+        public void SetClueText()
         {
             canvasManager.SetClueText(GameManager.Instance.GetNumClues());
         }
@@ -155,13 +155,13 @@ namespace FlowFreeGame
 
             if (act.levelIndex == levels[act.category][act.slotIndex].Length - 1 || 
                 (GameManager.Instance.GetCategories()[act.category].lotes[act.slotIndex].levelblocked && GameManager.Instance.GetLevelBestMoves(act) == 0))
-                canvasManager.isNextLevelButtonInteractuable(false);
+                canvasManager.IsNextLevelButtonInteractuable(false);
             else
-                canvasManager.isNextLevelButtonInteractuable(true);
+                canvasManager.IsNextLevelButtonInteractuable(true);
             
 
-            if (act.levelIndex == 0) canvasManager.isPrevLevelButtonInteractuable(false);
-            else canvasManager.isPrevLevelButtonInteractuable(true);
+            if (act.levelIndex == 0) canvasManager.IsPrevLevelButtonInteractuable(false);
+            else canvasManager.IsPrevLevelButtonInteractuable(true);
         }
     }
 }

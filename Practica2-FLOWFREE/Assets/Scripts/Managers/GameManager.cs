@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour
     void OnRewardedAdSuccess()
     {
         clues++;
-        if (levelManager != null) levelManager.setClueText();
+        if (levelManager != null) levelManager.SetClueText();
     }
 
     public LvlActual GetLvlActual() { return act; }

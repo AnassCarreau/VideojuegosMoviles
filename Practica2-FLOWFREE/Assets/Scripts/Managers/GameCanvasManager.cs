@@ -110,11 +110,11 @@ namespace FlowFreeGame
             nextLevelButtonText.text = text;
         }
 
-        public void isNextLevelButtonInteractuable( bool active)
+        public void IsNextLevelButtonInteractuable( bool active)
         {
             nextLevelButton.interactable = active;
         }
-        public void isPrevLevelButtonInteractuable( bool active)
+        public void IsPrevLevelButtonInteractuable( bool active)
         {
             prevLevelButton.interactable = active;
         }
