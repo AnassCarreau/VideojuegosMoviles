@@ -130,6 +130,7 @@ namespace FlowFreeGame
             
             //Guardamos que hemos conseguido superar el nivel en ese numero de movimientos
             GameManager.Instance.ActualizeCurrentLevelBestScore(moves);
+            GameManager.Instance.SaveState();
 
             //Setteamos los textos del panel segun si hemos completado el slot o no
             if (act.levelIndex + 1 < levels[act.category][act.slotIndex].Length)

@@ -140,15 +140,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnApplicationQuit()
-    {
-        data.clues = clues;
-        data.bestScores = bestdata;
-        if (themeAct != null) data.theme = themeAct.index;
-        else data.theme = 0;
-        SaveSystem.SaveData(data);
-    }
-
     public void LevelSuccess()
     {
         ads.PlayAd();
@@ -241,4 +232,13 @@ public class GameManager : MonoBehaviour
     }
 
     public Theme GetColorTheme() { return themeAct; }
+
+    public void SaveState()
+    {
+        data.clues = clues;
+        data.bestScores = bestdata;
+        if (themeAct != null) data.theme = themeAct.index;
+        else data.theme = 0;
+        SaveSystem.SaveData(data);
+    }
 }
