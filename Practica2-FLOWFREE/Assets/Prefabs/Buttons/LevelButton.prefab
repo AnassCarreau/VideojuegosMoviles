@@ -152,8 +152,8 @@ MonoBehaviour:
   img: {fileID: 2482575236098690552}
   text: {fileID: 2482575237342596927}
   button: {fileID: 2482575236098690553}
-  starObject: {fileID: 0}
-  tickObject: {fileID: 0}
+  starObject: {fileID: 6811940205984858036}
+  tickObject: {fileID: 9219325363767705815}
 --- !u!1 &2482575237342596925
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3248849523460286768
 RectTransform:
   m_ObjectHideFlags: 0
@@ -325,7 +325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3827798483580217379
 RectTransform:
   m_ObjectHideFlags: 0

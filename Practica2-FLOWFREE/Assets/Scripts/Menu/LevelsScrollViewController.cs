@@ -66,7 +66,7 @@ namespace FlowFreeGame.Menu
                 {
                     levelBtnObj.SetButtonInteractable(false);
                 }
-
+                
                 //En función de si el nivel está perfecto o no activamos la estrella o el tick
                 if (GameManager.Instance.GetIsLevelPerfect(act))
                 {

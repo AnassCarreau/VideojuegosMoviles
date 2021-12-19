@@ -14,9 +14,11 @@ namespace FlowFreeGame.Menu
         [SerializeField] private GameObject starObject;
         [SerializeField] private GameObject tickObject;
 
-        private void Start()
+        private void Awake()
         {
             button.onClick.AddListener(() => OnLevelButtonClick());
+            starObject.SetActive(false);
+            tickObject.SetActive(false);
         }
         public void SetColor(Color color)
         {
