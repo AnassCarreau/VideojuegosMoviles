@@ -39,47 +39,51 @@ namespace FlowFreeGame
 
         public void NextLevel()
         {
-            LvlActual act = GameManager.Instance.GetLvlActual();
-            CategoryPack[] categories = GameManager.Instance.GetCategories();
-            int levels = GameManager.Instance.GetLevels()[act.category][act.slotIndex].Length;
+            if (!BoardManager.Instance.IsPlayingAnimation())
+            {
+                LvlActual act = GameManager.Instance.GetLvlActual();
+                CategoryPack[] categories = GameManager.Instance.GetCategories();
+                int levels = GameManager.Instance.GetLevels()[act.category][act.slotIndex].Length;
 
-            //Si podemos seguir avanzando en el lote nivel a nivel
-            if (act.levelIndex + 1 < levels
-                 && (GameManager.Instance.GetLevelBestMoves(act) > 0
-                || !categories[act.category].lotes[act.slotIndex].levelblocked))
-            {
-                //Desactivamos el panel que sale cuando completas un nivel
-                canvasManager.SetPanelActive(false);
-                
-                //Actualizamos nuestro nivel actual
-                GameManager.Instance.SetLevel(act.levelIndex + 1);
-                //Habilitamos/Desabilitamos los botones de pasar nivel o no
-                ActivateButtons();
-                //Iniciamos el tablero de la siguiente partida
-                boardAnimation.Play();
-                Invoke("Init", 1.03f);
-                //BoardManager.Instance.Initialize();
-                
-            }
-            //Hemos acabado lote
-            else if(act.levelIndex + 1 == levels)
-            {
-                GameManager.Instance.LoadScene("MainMenuFlowFree");
+                //Si podemos seguir avanzando en el lote nivel a nivel
+                if (act.levelIndex + 1 < levels
+                     && (GameManager.Instance.GetLevelBestMoves(act) > 0
+                    || !categories[act.category].lotes[act.slotIndex].levelblocked))
+                {
+                    //Desactivamos el panel que sale cuando completas un nivel
+                    canvasManager.SetPanelActive(false);
+
+                    //Actualizamos nuestro nivel actual
+                    GameManager.Instance.SetLevel(act.levelIndex + 1);
+                    //Habilitamos/Desabilitamos los botones de pasar nivel o no
+                    ActivateButtons();
+                    //Iniciamos el tablero de la siguiente partida
+                    BoardManager.Instance.PlayAnimation();
+
+                }
+                //Hemos acabado lote
+                else if (act.levelIndex + 1 == levels)
+                {
+                    GameManager.Instance.LoadScene("MainMenuFlowFree");
+                }
             }
         }
-        void Init() 
-        {
-            BoardManager.Instance.Initialize();
-        }
+
+      
+       
+       
         public void BackLevel()
         {
-            LvlActual act = GameManager.Instance.GetLvlActual();
-            if (act.levelIndex - 1 >= 0)
+            if (!BoardManager.Instance.IsPlayingAnimation())
             {
-                Debug.Log("Cambio de nivel");
-                GameManager.Instance.SetLevel(act.levelIndex - 1);
-                ActivateButtons();
-                BoardManager.Instance.Initialize();
+                LvlActual act = GameManager.Instance.GetLvlActual();
+                if (act.levelIndex - 1 >= 0)
+                {
+                    Debug.Log("Cambio de nivel");
+                    GameManager.Instance.SetLevel(act.levelIndex - 1);
+                    ActivateButtons();
+                    BoardManager.Instance.PlayAnimation();
+                }
             }
         }
 

@@ -31,17 +31,14 @@ namespace FlowFreeGame
 
             if (comas.Length > 4 && comas[4].Length > 0)
             {
-                Debug.Log("Puentes");
                 bridge = comas[4].Split(':').Select(int.Parse).ToList();
             }
             if (comas.Length > 5 && comas[5].Length > 0)
             {
-                Debug.Log("Holes");
                 holes = comas[5].Split(':').Select(int.Parse).ToList();
             }
             if (comas.Length > 6 && comas[6].Length > 0)
             {
-                Debug.Log("Muros");
                 char[] sep = { '|', ':' };
                 List<int> walls = comas[6].Split(sep).Select(int.Parse).ToList();
 

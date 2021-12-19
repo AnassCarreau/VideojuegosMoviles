@@ -33,6 +33,9 @@ namespace FlowFreeGame
         [SerializeField]
         RectTransform bottomHud;
 
+        [SerializeField]
+        private Animation boardAnimation;
+
         private static BoardManager _instance; 
 
         public static BoardManager Instance { get { return _instance; } }
@@ -56,6 +59,31 @@ namespace FlowFreeGame
             Initialize();
         }
 
+        public void PlayAnimation()
+        {
+            Debug.Log("play");
+            Initialize();
+            // create a curve to move the GameObject and assign to the clip
+            Keyframe[] keys;
+            keys = new Keyframe[3];
+            keys[0] = new Keyframe(0.0f, transform.localScale.x);
+            // within 12 seconds rotate to 120°
+            keys[1] = new Keyframe(0.5f, 0.0f);
+            // Whatever you need as 3. keyframe
+            keys[2] = new Keyframe(1.0f, transform.localScale.x);
+
+            var curve = new AnimationCurve(keys);
+            boardAnimation.clip.SetCurve("", typeof(Transform), "localScale.x", curve);
+
+            curve = new AnimationCurve(new Keyframe(0.0f, transform.localScale.y));
+            boardAnimation.clip.SetCurve("", typeof(Transform), "localScale.y", curve);
+
+            boardAnimation.Play();
+        }
+        public bool IsPlayingAnimation() 
+        {
+            return boardAnimation.isPlaying;
+        }
         public void Initialize()
         {
             Clear();
@@ -172,6 +200,30 @@ namespace FlowFreeGame
         public void EnablePipeController()
         {
             pipeObject.enabled = true;
+        }
+
+
+
+       
+
+
+
+        public void FinishAnimation()
+        {
+            // create a curve to move the GameObject and assign to the clip
+            Keyframe[] keys;
+            keys = new Keyframe[3];
+            keys[0] = new Keyframe(0.0f, 0.0f);
+            // within 12 seconds rotate to 120°
+            keys[1] = new Keyframe(12.0f, 120f);
+            // Whatever you need as 3. keyframe
+            keys[2] = new Keyframe(16.0f, 0f);
+
+            var curve = new AnimationCurve(keys);
+
+
+            boardAnimation.clip.SetCurve("Body/RightShoulder/RightArm", typeof(Transform), "position.x", curve);
+
         }
     }
 }

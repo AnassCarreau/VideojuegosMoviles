@@ -192,7 +192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: categoria
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8771741808646712897, guid: 4e12e7ea4cf8e9b40957987ea4067167, type: 3}
       propertyPath: indexTheme
@@ -3620,7 +3620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1378276130725834336, guid: aca59640d284c5443903dae297d94076, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1378276130725834336, guid: aca59640d284c5443903dae297d94076, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -3642,6 +3642,10 @@ PrefabInstance:
       propertyPath: bottomHud
       value: 
       objectReference: {fileID: 1198191986}
+    - target: {fileID: 1378276130725834339, guid: aca59640d284c5443903dae297d94076, type: 3}
+      propertyPath: boardAnimation
+      value: 
+      objectReference: {fileID: 925978028}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aca59640d284c5443903dae297d94076, type: 3}
 --- !u!114 &1378276131947600855 stripped
