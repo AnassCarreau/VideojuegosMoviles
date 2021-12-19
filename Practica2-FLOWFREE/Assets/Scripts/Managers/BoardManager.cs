@@ -60,14 +60,15 @@ namespace FlowFreeGame
         {
             Clear();
             SetPipes();
-            transform.localScale = Vector3.one;
+            LvlActual lvl = GameManager.Instance.GetLvlActual();
+            LevelManager.Instance.SetLevelText(lvl.levelIndex + 1, m.GetWidth(), m.GetHeight());
             GenerateGrid();
             SetBoardScale();
            
             if (pipeObject != null) Destroy(pipeObject.gameObject);
             
             pipeObject = Instantiate(pipeControllerPrefab, gameObject.transform);
-            pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetFlownum());
+            pipeObject.SetTotalPipesInBoard(m.GetWidth() * m.GetHeight() - m.GetNumPipes());
             pipeObject.SetScaleFactor(scaleFactor);
         }
 
@@ -85,25 +86,27 @@ namespace FlowFreeGame
 
         private void SetPipes()
         {
-            LvlActual lvl = GameManager.Instance.GetLvlActual();
             m.Parse(GameManager.Instance.GetCurrentLevel());
-            LevelManager.Instance.SetLevelText(lvl.levelIndex + 1, m.GetWidth(), m.GetHeight());
             pipes = m.GetPipes();
         }
 
         public void GenerateGrid()
         {
+            transform.localScale = Vector3.one;
             _tiles = new Dictionary<Vector2, Tile>();
             Dictionary<Vector2, bool[]> walls = m.GetWallsInBoard();
             Color[] colorTheme = GameManager.Instance.GetColorTheme().colorTheme;
 
-            for (int i = 0; i < m.GetFlownum(); i++)
+            for (int i = 0; i < m.GetNumPipes(); i++)
             {
                 for (int j = 0; j < pipes[i].Count; j++)
                 {
                     Vector2 pos= new Vector2(pipes[i][j].x, pipes[i][j].y);
                     var spawnedTile = Instantiate(_tilePrefab,pos, Quaternion.identity, boardParent);
                     spawnedTile.name = $"Tile {pipes[i][j].x} {pipes[i][j].y}";
+                    
+                    //Si eres la primera o la ultima posicion de las tuberias, significa que
+                    //eres un circulo
                     if (j == 0 || j == pipes[i].Count - 1)
                     {
                         spawnedTile.Init(false);
@@ -164,16 +167,6 @@ namespace FlowFreeGame
         public PipeController GetPipeController()
         {
             return pipeObject;
-        }
-
-        public Map GetMap() 
-        {
-            return m;
-        }
-
-        public float GetScaleFactor()
-        {
-            return scaleFactor;
         }
 
         public void EnablePipeController()

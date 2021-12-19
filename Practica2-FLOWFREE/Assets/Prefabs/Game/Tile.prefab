@@ -52,7 +52,6 @@ MonoBehaviour:
   circleRenderer: {fileID: 3557500575217133414}
   wallObject: {fileID: 6233814633214695719, guid: e8a3c33e0137f474f96183508ee92adb, type: 3}
   wallRenderer: {fileID: 1322797238983960429, guid: e8a3c33e0137f474f96183508ee92adb, type: 3}
-  index: 0
 --- !u!212 &436149535211081748
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -221,7 +220,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5313497766276117998, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9320550779f97784cadc010fed77b4ad, type: 3}
 --- !u!1 &3065359303171979154 stripped
 GameObject:

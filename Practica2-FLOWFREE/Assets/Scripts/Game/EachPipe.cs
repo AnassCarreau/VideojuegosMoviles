@@ -6,9 +6,8 @@ namespace FlowFreeGame
     {
         private Vector2 posInBoard;
         private Color color;
-
-        [SerializeField]
         private int pipeIndex = 0;
+
         public void SetPositionInBoard(Vector2 p)
         {
             posInBoard = p;

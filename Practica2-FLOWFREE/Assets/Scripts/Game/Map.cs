@@ -8,12 +8,10 @@ namespace FlowFreeGame
     {
         private int width;
         private int height;
-        private int lvlnum;
-        private int flownum;
+        private int numPipes;
 
         private List<int> bridge;
         private List<int> holes;
-        private List<int> walls;
         private List<List<Vector2>> pipes;
 
         //Vector2-> posicion en el tablero, int -> cara en la que hay pared
@@ -28,8 +26,8 @@ namespace FlowFreeGame
             List<int> dim = comas[0].Split(':').Select(int.Parse).ToList();
             width = dim[0];
             height = dim.Count == 1 ? width : dim[1];
-            lvlnum = int.Parse(comas[2]);
-            flownum = int.Parse(comas[3]);
+            int lvlnum = int.Parse(comas[2]);
+            numPipes = int.Parse(comas[3]);
 
             if (comas.Length > 4 && comas[4].Length > 0)
             {
@@ -45,7 +43,7 @@ namespace FlowFreeGame
             {
                 Debug.Log("Muros");
                 char[] sep = { '|', ':' };
-                walls = comas[6].Split(sep).Select(int.Parse).ToList();
+                List<int> walls = comas[6].Split(sep).Select(int.Parse).ToList();
 
                 for (int j = 0; j < walls.Count - 1; j += 2)
                 {
@@ -61,8 +59,8 @@ namespace FlowFreeGame
                     else if (valor + height == valor2) { wall = 2; }
 
 
-                    addWallToDictionary(getPosInBoard(valor), wall);
-                    addWallToDictionary(getPosInBoard(valor2), (wall + 2) % 4);
+                    AddWallToDictionary(GetPosInBoard(valor), wall);
+                    AddWallToDictionary(GetPosInBoard(valor2), (wall + 2) % 4);
                 }
             }
 
@@ -73,7 +71,7 @@ namespace FlowFreeGame
                 List<Vector2> aux = new List<Vector2>();
                 for (int j = 0; j < pipe.Length; j++)
                 {
-                    aux.Add(getPosInBoard(int.Parse(pipe[j])));
+                    aux.Add(GetPosInBoard(int.Parse(pipe[j])));
                 }
                 pipes.Add(aux);
             }
@@ -81,7 +79,7 @@ namespace FlowFreeGame
             return true;
         }
 
-        private Vector2 getPosInBoard(int valor)
+        private Vector2 GetPosInBoard(int valor)
         {
             int posX = valor % width;
             int posY = valor / height;
@@ -92,7 +90,7 @@ namespace FlowFreeGame
             return new Vector2(posX, -posY);
         }
 
-        private void addWallToDictionary(Vector2 pos, int wallPos)
+        private void AddWallToDictionary(Vector2 pos, int wallPos)
         {
             if (!wallsInBoard.ContainsKey(pos))
             {
@@ -109,15 +107,11 @@ namespace FlowFreeGame
 
         public List<int> Getholes() { return holes; }
 
-        public List<int> Getwalls() { return walls; }
-
         public int GetWidth() { return width; }
 
         public int GetHeight() { return height; }
 
-        public int GetFlownum() { return flownum; }
-
-        public int GetLvlnum() { return lvlnum; }
+        public int GetNumPipes() { return numPipes; }
 
         public Dictionary<Vector2, bool[]> GetWallsInBoard() { return wallsInBoard; }
 
